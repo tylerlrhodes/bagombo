@@ -1,0 +1,30 @@
+﻿
+<!doctype html>
+
+<html>
+<head>
+    <title>Test Page</title>
+    <link type="text/css" rel="stylesheet" asp-href-include="lib/bootstrap/dist/css/*.min.css" />
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Tyler's Blog</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="@((string)(ViewContext.RouteData.Values["action"]) == "Index" ? "active" : "")"><a asp-action="Index">Home</a></li>
+                <li class="@((string)(ViewContext.RouteData.Values["action"]) == "RecentPosts" ? "active" : "")"><a asp-action="RecentPosts">Recent Posts</a></li>
+                <li class="@((string)(ViewContext.RouteData.Values["action"]) == "AllPosts" ? "active" : "")"><a asp-action="AllPosts">All Posts</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="@((string)(ViewContext.RouteData.Values["action"]) == "Contact" ? "active" : "")"><a asp-action="Contact">Contact</a></li>
+                <li class="@((string)(ViewContext.RouteData.Values["action"]) == "About" ? "active" : "")"><a asp-action="About">About</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div>
+        @RenderBody();
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "name": "blog",
+  "description": "Tyler's Blog",
+  "main": "",
+  "keywords": [
+    "C#",
+    "Design",
+    "Patterns",
+    "ASP.NET",
+    "Core",
+    "MVC"
+  ],
+  "authors": [
+    "Tyler Rhodes"
+  ],
+  "license": "MIT",
+  "homepage": "bagombo.org",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "wwwroot/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}

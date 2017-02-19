@@ -1,0 +1,11 @@
+﻿
+@{ 
+    Layout = "_Layout";
+}
+<p>
+    This is the index page!
+</p>
+<p>
+    @ViewContext.RouteData.Values["action"]
+    @ViewContext.HttpContext.Connection
+</p>
