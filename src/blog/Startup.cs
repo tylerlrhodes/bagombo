@@ -7,19 +7,28 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace blog
 {
-  struct Test
-  {
-    public int MyProperty { get; set; }
-  }
+
   public class Startup
   {
+    IConfiguration Configuration;
+    public Startup(IHostingEnvironment env)
+    {
+      var builder = new ConfigurationBuilder()
+          .SetBasePath(env.ContentRootPath)
+          .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+          .AddEnvironmentVariables();
+
+      Configuration = builder.Build();
+    }
     // This method gets called by the runtime. Use this method to add services to the container.
     // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
+      var cs = Configuration["Database:ConnectionString"];
       services.AddMvc();
     }
 
@@ -32,6 +41,7 @@ namespace blog
 
       if (env.IsDevelopment())
       {
+        app.UseStatusCodePages();
         app.UseDeveloperExceptionPage();
       }
 

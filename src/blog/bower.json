@@ -25,6 +25,7 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "simplemde": "^1.11.2"
   }
 }

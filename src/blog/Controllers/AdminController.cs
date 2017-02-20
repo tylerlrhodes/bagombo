@@ -9,33 +9,17 @@ using blog.Infrastructure;
 
 namespace blog.Controllers
 {
-  public class HomeController : Controller
+  public class AdminController : Controller
   {
     // GET: /<controller>/
     public IActionResult Index()
     {
       return View();
     }
-    public IActionResult RecentPosts()
+    [HttpsOnly]
+    public IActionResult AddPost()
     {
       return View();
-    }
-    [RequireHttps]
-    public IActionResult AllPosts()
-    {
-      return View();
-    }
-    public IActionResult Contact()
-    {
-      return View();
-    }
-    public IActionResult About()
-    {
-      return View();
-    }
-    public IActionResult NoWhere()
-    {
-      return NotFound();
     }
   }
 }
