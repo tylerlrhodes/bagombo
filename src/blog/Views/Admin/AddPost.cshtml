@@ -5,11 +5,31 @@
   Layout = "_Layout";
 }
 
-This is the add my post page
+<button type="submit" class="btn btn-default">Submit</button>
 
 <textarea style="width:500px; height:1000px">Test</textarea>
 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/simplemde/dist/simplemde.min.js"></script>
+
 <script type="text/javascript">
     var simplemde = new SimpleMDE();
+
+    $("button").click(function () {
+        var blogText = simplemde.value();
+        var data = {
+            Title: "Blog Entry Generic Title",
+            Content: blogText
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/api/blog/addpost',
+            data: data,
+            success: function (result) {
+                alert("Saved: " + result.content + "\n" + result.authorId);
+            }
+
+        })
+    })
 </script>
+

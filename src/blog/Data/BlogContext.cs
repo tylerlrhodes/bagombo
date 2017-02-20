@@ -19,6 +19,7 @@ namespace blog.Data
     {
       modelBuilder.Entity<BlogPost>().ToTable("BlogPost");
       modelBuilder.Entity<Author>().ToTable("Author");
+      modelBuilder.Entity<Author>().HasAlternateKey(e => new { e.FirstName, e.LastName });
     }
   }
 }
