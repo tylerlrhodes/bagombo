@@ -41,6 +41,8 @@ namespace blog.Migrations
 
                     b.Property<int>("AuthorId");
 
+                    b.Property<int>("CategoryId");
+
                     b.Property<string>("Content");
 
                     b.Property<string>("Title");
@@ -49,7 +51,21 @@ namespace blog.Migrations
 
                     b.HasIndex("AuthorId");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("BlogPost");
+                });
+
+            modelBuilder.Entity("blog.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("blog.Models.BlogPost", b =>
@@ -57,6 +73,11 @@ namespace blog.Migrations
                     b.HasOne("blog.Models.Author", "Author")
                         .WithMany("BlogPosts")
                         .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("blog.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }

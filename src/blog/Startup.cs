@@ -31,6 +31,7 @@ namespace blog
     {
       var ConnectionString = Configuration["Database:ConnectionString"];
 
+      services.AddCors();
       services.AddDbContext<BlogContext>(options => options.UseSqlServer(ConnectionString));
       services.AddMvc();
     }
@@ -40,12 +41,14 @@ namespace blog
     {
       loggerFactory.AddConsole();
 
+      app.UseCors( builder => builder.WithOrigins("https://maxcdn.bootstrapcdn.com/").AllowAnyHeader().AllowAnyHeader() );
       app.UseStaticFiles();
 
       if (env.IsDevelopment())
       {
         app.UseStatusCodePages();
         app.UseDeveloperExceptionPage();
+        app.UseBrowserLink();
       }
 
       app.UseMvcWithDefaultRoute();

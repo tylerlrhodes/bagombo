@@ -19,15 +19,45 @@ namespace blog.Controllers
     {
       _context = context;
     }
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeletePost(int? id)
+    {
+      if (id != null)
+      {
+        BlogPost toRemove = _context.BlogPosts.Find(id);
+        _context.BlogPosts.Remove(toRemove);
+        await _context.SaveChangesAsync();
+        return Ok(id);
+      }
+      return NotFound();
+    }
+    [HttpPost]
+    public async Task<JsonResult> EditPost(BlogPost post)
+    {
+      if(ModelState.IsValid)
+      {
+        BlogPost update = _context.BlogPosts.Find(post.Id);
+        update.Content = post.Content;
+        update.Title = post.Title;
+        await _context.SaveChangesAsync();
+        return Json(update);
+      }
+      return Json(null);
+    }
     [HttpPost]
     public async Task<JsonResult> AddPost(BlogPost post)
     {
+      int j = (from c in _context.Authors
+              where c.FirstName == "Tyler" && c.LastName == "Rhodes"
+              select c.Id).FirstOrDefault();
+
       int id = _context.Authors
           .Where(c => c.FirstName == "Tyler" && c.LastName == "Rhodes")
           .Select(c => c.Id).FirstOrDefault();
 
       // Add Post to DB
       post.AuthorId = id;
+      post.CategoryId = 1;
 
       _context.BlogPosts.Add(post);
 
