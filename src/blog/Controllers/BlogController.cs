@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using blog.Models;
 using blog.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,9 +16,11 @@ namespace blog.Controllers
   public class BlogController : Controller
   {
     BlogContext _context;
-    public BlogController(BlogContext context)
+    private readonly ILogger _logger;
+    public BlogController(BlogContext context, ILogger<BlogController> logger)
     {
       _context = context;
+      _logger = logger;
     }
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePost(int? id)

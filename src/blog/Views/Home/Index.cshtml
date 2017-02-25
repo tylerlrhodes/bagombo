@@ -2,10 +2,18 @@
 @{ 
     Layout = "_Layout";
 }
-<p>
-    This is the index page!
-</p>
-<p>
-    @ViewContext.RouteData.Values["action"]
-    @ViewContext.HttpContext.Connection
-</p>
+
+<div id="IndexCarousel" class="carousel" data-ride="carousel" style="background-color:lightgray; border-radius:10px; margin:auto; height:auto; width:auto;">
+    <ol class="carousel-indicators">
+        <li data-target="#IndexCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#IndexCarousel" data-slide-to="1"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        <div class="item active" style="width:200px; height:200px; background-color:#FFCC00;">
+            Hello there
+        </div>
+        <div class="item">
+            Item 2
+        </div>
+    </div>
+</div>

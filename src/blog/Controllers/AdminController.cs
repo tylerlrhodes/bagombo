@@ -29,7 +29,7 @@ namespace blog.Controllers
     [HttpGet]
     public IActionResult ListPosts()
     {
-      ListPostsViewModel lpvm = new ListPostsViewModel();
+      AdminListPostsViewModel lpvm = new AdminListPostsViewModel();
       lpvm.posts = _context.BlogPosts.Include(a => a.Author).AsEnumerable();
       return View(lpvm);
     }

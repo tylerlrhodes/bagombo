@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using blog.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace blog
 {
@@ -21,7 +23,8 @@ namespace blog
       var builder = new ConfigurationBuilder()
           .SetBasePath(env.ContentRootPath)
           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-          .AddEnvironmentVariables();
+          .AddEnvironmentVariables()
+          .AddUserSecrets();
 
       Configuration = builder.Build();
     }
@@ -29,17 +32,21 @@ namespace blog
     // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
-      var ConnectionString = Configuration["Database:ConnectionString"];
+      var ConnectionString = Configuration["ConnectionString"];
 
       services.AddCors();
       services.AddDbContext<BlogContext>(options => options.UseSqlServer(ConnectionString));
-      services.AddMvc();
+      services.AddMvc().AddJsonOptions(options =>
+      {
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+      });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
     {
       loggerFactory.AddConsole();
+      loggerFactory.AddFile("Logs/ts-{Date}.txt");
 
       app.UseCors( builder => builder.WithOrigins("https://maxcdn.bootstrapcdn.com/").AllowAnyHeader().AllowAnyHeader() );
       app.UseStaticFiles();

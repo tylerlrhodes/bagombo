@@ -1,6 +1,9 @@
 ﻿
 // JavaScript Here
 
+/// <reference path="jquery.d.ts"/>
+
+
 $("a.delpost").click(function (e) {
     var eid = $(this).attr('eid');
     if (eid === undefined)

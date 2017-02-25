@@ -8,30 +8,29 @@
     <link type="text/css" rel="stylesheet" asp-href-include="lib/simplemde/dist/simplemde.min.css" />
 </head>
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" asp-action="Index">Tyler's Blog</a>
+    <div class="container">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" asp-action="Index">Tyler's Blog</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="@((string)(ViewContext.RouteData.Values["action"]) == "Index" ? "active" : "")"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="@((string)(ViewContext.RouteData.Values["action"]) == "RecentPosts" ? "active" : "")"><a asp-controller="Home" asp-action="RecentPosts">Recent Posts</a></li>
+                    <li class="@((string)(ViewContext.RouteData.Values["action"]) == "AllPosts" ? "active" : "")"><a asp-controller="Home" asp-action="AllPosts">All Posts</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="@((string)(ViewContext.RouteData.Values["action"]) == "Contact" ? "active" : "")"><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li class="@((string)(ViewContext.RouteData.Values["action"]) == "About" ? "active" : "")"><a asp-controller="Home" asp-action="About">About</a></li>
+                </ul>
             </div>
-            <ul class="nav navbar-nav">
-                <li class="@((string)(ViewContext.RouteData.Values["action"]) == "Index" ? "active" : "")"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                <li class="@((string)(ViewContext.RouteData.Values["action"]) == "RecentPosts" ? "active" : "")"><a asp-controller="Home" asp-action="RecentPosts">Recent Posts</a></li>
-                <li class="@((string)(ViewContext.RouteData.Values["action"]) == "AllPosts" ? "active" : "")"><a asp-controller="Home" asp-action="AllPosts">All Posts</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="@((string)(ViewContext.RouteData.Values["action"]) == "Contact" ? "active" : "")"><a asp-controller="Home" asp-action="Contact">Contact</a></li>
-                <li class="@((string)(ViewContext.RouteData.Values["action"]) == "About" ? "active" : "")"><a asp-controller="Home" asp-action="About">About</a></li>
-            </ul>
-        </div>
-    </nav>
+        </nav>
 
-    <script type="text/javascript" asp-src-include="~/lib/jquery/dist/jquery.js"></script>
-
-    <div>
         @RenderBody()
+
     </div>
-
-
+    <script type="text/javascript" asp-src-include="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" asp-src-include="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="~/js/JavaScript.js"></script>
     
 </body>

@@ -16,6 +16,7 @@ namespace blog
           .UseContentRoot(Directory.GetCurrentDirectory())
           .UseIISIntegration()
           .UseStartup<Startup>()
+          //.UseStartup("blog")
           .Build();
 
       host.Run();

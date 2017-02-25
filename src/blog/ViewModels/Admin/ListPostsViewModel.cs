@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace blog.ViewModels.Admin
 {
-  public class ListPostsViewModel
+  public class AdminListPostsViewModel
   {
     public IEnumerable<BlogPost> posts;
   }

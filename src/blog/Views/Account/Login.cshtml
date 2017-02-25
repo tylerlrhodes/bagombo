@@ -1,0 +1,28 @@
+﻿
+@using blog.ViewModels.Account
+@model AccountLoginViewModel
+
+@{
+  Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Login:</div>
+            <div class="panel-body">
+                <form method="post" asp-action="login" asp-controller="Account">
+                    <div class="form-group">
+                        <label for="Email">Email:</label>
+                        <input class="form-control" asp-for="Email" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Password">Password:</label>
+                        <input type="password" class="form-control" asp-for="Password" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
