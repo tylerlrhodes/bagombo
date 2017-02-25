@@ -37,13 +37,13 @@ namespace blog.Controllers
     [HttpPost]
     public async Task<JsonResult> EditPost(BlogPost post)
     {
-      if(ModelState.IsValid)
+      if (ModelState.IsValid)
       {
         BlogPost update = _context.BlogPosts.Find(post.Id);
         update.Content = post.Content;
         update.Title = post.Title;
         await _context.SaveChangesAsync();
-        return Json(update);
+        return Json(post);
       }
       return Json(null);
     }
@@ -51,8 +51,8 @@ namespace blog.Controllers
     public async Task<JsonResult> AddPost(BlogPost post)
     {
       int j = (from c in _context.Authors
-              where c.FirstName == "Tyler" && c.LastName == "Rhodes"
-              select c.Id).FirstOrDefault();
+               where c.FirstName == "Tyler" && c.LastName == "Rhodes"
+               select c.Id).FirstOrDefault();
 
       int id = _context.Authors
           .Where(c => c.FirstName == "Tyler" && c.LastName == "Rhodes")

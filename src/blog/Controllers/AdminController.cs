@@ -27,11 +27,11 @@ namespace blog.Controllers
     }
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     [HttpGet]
-    public IActionResult ListPosts()
+    public IActionResult ManagePosts()
     {
-      AdminListPostsViewModel lpvm = new AdminListPostsViewModel();
-      lpvm.posts = _context.BlogPosts.Include(a => a.Author).AsEnumerable();
-      return View(lpvm);
+      AdminManagePostsViewModel mpvm = new AdminManagePostsViewModel();
+      mpvm.posts = _context.BlogPosts.Include(a => a.Author).AsEnumerable();
+      return View(mpvm);
     }
     [HttpGet]
     public IActionResult AddPost()
