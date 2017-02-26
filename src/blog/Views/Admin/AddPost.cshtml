@@ -43,7 +43,7 @@
         };
         $.ajax({
             type: 'POST',
-            url: '/api/blog/addpost',
+            url: '/api/blogapi/addpost',
             data: data,
             success: function (result) {
                 alert("Saved: " + result.content + "\n" + result.authorId);

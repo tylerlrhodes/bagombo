@@ -13,11 +13,11 @@ using Microsoft.Extensions.Logging;
 namespace blog.Controllers
 {
   [Route("api/[controller]/[action]")]
-  public class BlogController : Controller
+  public class BlogApiController : Controller
   {
     BlogContext _context;
     private readonly ILogger _logger;
-    public BlogController(BlogContext context, ILogger<BlogController> logger)
+    public BlogApiController(BlogContext context, ILogger<BlogApiController> logger)
     {
       _context = context;
       _logger = logger;

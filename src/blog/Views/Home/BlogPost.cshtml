@@ -1,0 +1,22 @@
+﻿
+@using blog.Models.ViewModels.BlogPostView
+@model BlogPostViewModel
+@{
+  Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="col-md-10 col-md-offset-1">
+        <p>
+            @Model.Title
+        </p>
+
+        <p>
+            by: @Model.Author
+        </p>
+
+        <div class="well">
+            @Html.Raw(Model.Content)
+        </div>
+    </div>
+</div>

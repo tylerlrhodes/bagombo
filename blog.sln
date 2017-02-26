@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "blog", "src\blog\blog.xproj", "{9CEE1C7C-A712-4D42-9AAA-F757BDA8D679}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "bagombo", "src\blog\bagombo.xproj", "{9CEE1C7C-A712-4D42-9AAA-F757BDA8D679}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{0059EE1B-BFDD-49E5-AECC-E7939FCE48FE}"
 	ProjectSection(SolutionItems) = preProject
