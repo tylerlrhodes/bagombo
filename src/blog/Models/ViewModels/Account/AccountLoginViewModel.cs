@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace blog.ViewModels.Account
+namespace blog.Models.ViewModels.Account
 {
   public class AccountLoginViewModel
   {

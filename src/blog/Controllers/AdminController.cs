@@ -7,7 +7,7 @@ using blog.Infrastructure;
 using blog.Data;
 using blog.Models;
 using Microsoft.EntityFrameworkCore;
-using blog.ViewModels.Admin;
+using blog.Models.ViewModels.Admin;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 

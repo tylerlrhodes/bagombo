@@ -48,7 +48,6 @@ namespace blog
       loggerFactory.AddConsole();
       loggerFactory.AddFile("Logs/ts-{Date}.txt");
 
-      app.UseCors( builder => builder.WithOrigins("https://maxcdn.bootstrapcdn.com/").AllowAnyHeader().AllowAnyHeader() );
       app.UseStaticFiles();
 
       if (env.IsDevelopment())
