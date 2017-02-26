@@ -14,6 +14,7 @@ namespace blog.Controllers
     // GET: /<controller>/
     public IActionResult Index()
     {
+      ViewBag.Title = "Bagombo Home";
       return View();
     }
     public IActionResult RecentPosts()
