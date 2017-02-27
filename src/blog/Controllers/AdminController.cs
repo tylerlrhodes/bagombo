@@ -51,7 +51,7 @@ namespace blog.Controllers
     }
     public IActionResult ManageUsers()
     {
-      return View(_userManager.Users);
+      return View(_userManager.Users.Include(u => u.Logins));
     }
     public ViewResult CreateUser() => View();
 
