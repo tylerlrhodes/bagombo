@@ -6,12 +6,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace blog.Models.ViewModels.Account
 {
-  public class AccountLoginViewModel
-  {
+    public class ExternalLoginConfirmationViewModel
+    {
     [Required]
+    [EmailAddress]
     public string Email { get; set; }
-    [Required]
-    public string Password { get; set; }
-    public bool Terms { get; set; }
   }
 }

@@ -8,15 +8,14 @@
 <div class="container">
     <div class="col-md-10 col-md-offset-1">
         <p>
-            @Model.Title
+            <h2>@Model.Title</h2>
         </p>
 
         <p>
-            by: @Model.Author
+            <h4>by: @Model.Author</h4>
         </p>
-
-        <div class="well">
+        <p>
             @Html.Raw(Model.Content)
-        </div>
+        </p>
     </div>
 </div>

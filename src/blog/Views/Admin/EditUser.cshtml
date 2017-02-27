@@ -1,0 +1,34 @@
+﻿
+@using blog.Models.ViewModels;
+@model UserViewModel
+@{
+  Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Edit User</div>
+            <div class="panel-body">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <form asp-action="EditUser" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" class="form-control" type="password" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <a asp-action="ManageUsers" class="btn btn-default">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -4,14 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace blog.Models.ViewModels.Account
+namespace blog.Models.ViewModels.Admin
 {
-  public class AccountLoginViewModel
+  public class UserViewModel
   {
+    public string Id { get; set; }
     [Required]
+    public string Name { get; set; }
     public string Email { get; set; }
-    [Required]
     public string Password { get; set; }
-    public bool Terms { get; set; }
   }
 }

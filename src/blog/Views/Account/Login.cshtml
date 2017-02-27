@@ -1,5 +1,5 @@
 ﻿
-@using blog.ViewModels.Account
+@using blog.Models.ViewModels.Account
 @model AccountLoginViewModel
 
 @{
@@ -11,7 +11,9 @@
         <div class="panel panel-default">
             <div class="panel-heading">Login:</div>
             <div class="panel-body">
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <form method="post" asp-action="login" asp-controller="Account">
+                    <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
                     <div class="form-group">
                         <label for="Email">Email:</label>
                         <input class="form-control" asp-for="Email" />
@@ -20,7 +22,11 @@
                         <label for="Password">Password:</label>
                         <input type="password" class="form-control" asp-for="Password" />
                     </div>
+                    <div class="radio form-group">
+                        <input asp-for="Terms" /><label asp-for="Terms">Test Here</label>
+                    </div>
                     <button type="submit" class="btn btn-primary">Login</button>
+                    <a class="btn btn-info" asp-action="TwitterLogin" asp-route-returnUrl="@ViewBag.returnUrl">Log In With Twitter</a>
                 </form>
             </div>
         </div>

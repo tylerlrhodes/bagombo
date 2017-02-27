@@ -1,0 +1,27 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using blog.Models.ViewModels;
+@model UserViewModel
+@{
+  Layout = "_Layout";
+}
+
+<div class="bg-primary panel-body"><h4>Create User</h4></div>
+<div asp-validation-summary="All" class="text-danger"></div>
+<form asp-action="CreateUser" method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" type="password" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="ManageUsers" class="btn btn-default">Cancel</a>
+</form>

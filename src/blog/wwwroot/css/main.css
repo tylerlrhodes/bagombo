@@ -2,6 +2,7 @@
     padding: 5px;
 }
 
+/* Get rid of highlighting on navbar-brand*/
 .navbar-default .navbar-brand:hover, 
 .navbar-default .navbar-brand:focus {
   background-color: transparent;
@@ -9,6 +10,7 @@
   cursor:default;
 }
 
+/* Limit height of the simpleMde edit control*/
 .CodeMirror {
     height: 600px;
 }
@@ -20,3 +22,6 @@ ul.nostyle, ul.nostyle > li {
     padding: 0px;
 }
 
+div.center-text {
+    text-align: center;
+}

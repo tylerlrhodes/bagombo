@@ -15,10 +15,16 @@ namespace blog.Controllers
 {
   public class HomeController : Controller
   {
+    BlogContext _context;
+
+    public HomeController(BlogContext context)
+    {
+      _context = context;
+    }
     // GET: /<controller>/
     public IActionResult Index()
     {
-      ViewBag.Title = "Bagombo Home";
+      ViewData["Title"] = "Bagombo Home";
       return View();
     }
     public IActionResult RecentPosts()
@@ -33,7 +39,7 @@ namespace blog.Controllers
     {
       return View();
     }
-    public IActionResult BlogPost(int? id, [FromServices] BlogContext _context)
+    public IActionResult BlogPost(int? id)
     {
       if (id != null)
       {

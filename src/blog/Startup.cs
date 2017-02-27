@@ -12,6 +12,8 @@ using blog.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Twitter;
+using blog.Models;
 
 namespace blog
 {
@@ -34,12 +36,21 @@ namespace blog
     {
       var ConnectionString = Configuration["ConnectionString"];
 
-      services.AddCors();
       services.AddDbContext<BlogContext>(options => options.UseSqlServer(ConnectionString));
+
       services.AddMvc().AddJsonOptions(options =>
       {
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
       });
+
+      services.AddDbContext<BlogIdentityDbContext>(options =>
+                  options.UseSqlServer(Configuration["ConnectionString"]));
+
+      services.AddIdentity<ApplicationUser, IdentityRole>(opts => {
+        opts.User.RequireUniqueEmail = true;
+      }).AddEntityFrameworkStores<BlogIdentityDbContext>()
+        .AddDefaultTokenProviders();
+
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,7 +68,17 @@ namespace blog
         app.UseBrowserLink();
       }
 
+      app.UseIdentity();
+
+      app.UseTwitterAuthentication(new TwitterOptions()
+      {
+        ConsumerKey = Configuration["TwitterKey"],
+        ConsumerSecret = Configuration["TwitterSecret"]
+      });
+
       app.UseMvcWithDefaultRoute();
+
+      BlogIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
     }
   }
 }

@@ -12,30 +12,32 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading"><h3>Manage Posts</h3></div>
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>View</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var post in Model.posts)
-                    {
-                        var aid = $"a{post.Id}";
-                    <tr id="@post.Id">
-                        <td>@post.Title</td>
-                        <td>@post.Author.FirstName @post.Author.LastName</td>
-                        <td><a asp-controller="Home" asp-action="blogpost" asp-route-id="@post.Id">View</a></td>
-                        <td><a asp-controller="Admin" asp-action="editpost" asp-route-id="@post.Id">Edit</a></td>
-                        <td><a asp-controller="Blog" asp-action="deletepost" asp-route-id="@post.Id" id="@aid" eid="@post.Id" class="delpost">Delete</a></td>
-                    </tr>
-                    }
-                </tbody>
-            </table>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>View</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var post in Model.posts)
+                        {
+                            var aid = $"a{post.Id}";
+                        <tr id="@post.Id">
+                            <td>@post.Title</td>
+                            <td>@post.Author.FirstName @post.Author.LastName</td>
+                            <td><a asp-controller="Home" asp-action="blogpost" asp-route-id="@post.Id">View</a></td>
+                            <td><a asp-controller="Author" asp-action="editpost" asp-route-id="@post.Id">Edit</a></td>
+                            <td><a asp-controller="Blog" asp-action="deletepost" asp-route-id="@post.Id" id="@aid" eid="@post.Id" class="delpost">Delete</a></td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

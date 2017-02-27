@@ -43,36 +43,25 @@ namespace blog.Controllers
         update.Content = post.Content;
         update.Title = post.Title;
         await _context.SaveChangesAsync();
-        return Json(post);
+        return Json(update);
       }
       return Json(null);
     }
     [HttpPost]
     public async Task<JsonResult> AddPost(BlogPost post)
     {
-      int j = (from c in _context.Authors
+      int id = (from c in _context.Authors
                where c.FirstName == "Tyler" && c.LastName == "Rhodes"
                select c.Id).FirstOrDefault();
 
-      int id = _context.Authors
-          .Where(c => c.FirstName == "Tyler" && c.LastName == "Rhodes")
-          .Select(c => c.Id).FirstOrDefault();
-
       // Add Post to DB
       post.AuthorId = id;
-      post.CategoryId = 1;
+
+      post.CreatedAt = DateTime.Now;
 
       _context.BlogPosts.Add(post);
 
       await _context.SaveChangesAsync();
-
-      var bp = _context.BlogPosts
-          .Include(a => a.Author)
-          .ToList();
-
-      var authors = _context.Authors
-          .Include(a => a.BlogPosts)
-          .ToList();
 
       return Json(post);
     }

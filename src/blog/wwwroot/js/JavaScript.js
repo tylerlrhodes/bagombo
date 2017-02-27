@@ -12,7 +12,7 @@ $("a.delpost").click(function (e) {
     }
     $.ajax({
         type: 'DELETE',
-        url: '/api/blog/deletepost/' + eid,
+        url: '/api/blogapi/deletepost/' + eid,
         data: null,
         success: function (result) {
             alert("deleted result: " + result);
