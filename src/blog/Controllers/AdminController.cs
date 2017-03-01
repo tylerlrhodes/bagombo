@@ -146,6 +146,23 @@ namespace blog.Controllers
               ModelState.AddModelError("", error.Description);
             }
           }
+          var logins = await _userManager.GetLoginsAsync(au);
+          if ( logins.Count() != 0)
+          {
+            IdentityResult result = await _userManager.UpdateAsync(au);
+            if (result.Succeeded)
+            {
+              return RedirectToAction("ManageUsers");
+            }
+            else
+            {
+              foreach (var error in result.Errors)
+              {
+                ModelState.AddModelError("", error.Description);
+              }
+            }
+            return RedirectToAction("ManageUsers");
+          }
           if (!string.IsNullOrEmpty(user.Password))
           {
             IdentityResult validPassword = await _passwordValidator.ValidateAsync(_userManager, au, user.Password);

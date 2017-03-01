@@ -23,10 +23,10 @@
                         <input type="password" class="form-control" asp-for="Password" />
                     </div>
                     <div class="radio form-group">
-                        <input asp-for="Terms" /><label asp-for="Terms">Test Here</label>
+                        <input asp-for="RememberMe" /><label asp-for="RememberMe">Remember Me</label>
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
-                    <a class="btn btn-info" asp-action="TwitterLogin" asp-route-returnUrl="@ViewBag.returnUrl">Log In With Twitter</a>
+                    <a class="btn btn-default" asp-action="TwitterLogin" asp-route-returnUrl="@ViewBag.returnUrl"><img src="~/images/twitter-button.png" /></a>
                 </form>
             </div>
         </div>

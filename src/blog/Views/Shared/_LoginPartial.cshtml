@@ -19,7 +19,8 @@
 }
 else
 {
+  Uri url = new Uri(String.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path, Context.Request.QueryString));
 <ul class="nav navbar-nav navbar-right">
-    <li><a asp-controller="Account" asp-action="Login">Log in</a></li>
+    <li><a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@url">Log in</a></li>
 </ul>
 }

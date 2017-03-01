@@ -18,7 +18,6 @@ namespace blog.Controllers
   {
     UserManager<ApplicationUser> _userManager;
     SignInManager<ApplicationUser> _signInManager;
-
     public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
     {
       _userManager = userManager;
@@ -45,7 +44,6 @@ namespace blog.Controllers
         {
           await _signInManager.SignOutAsync();
           Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(au, alvm.Password, false, false);
-          await _userManager.AddClaimAsync(au, new System.Security.Claims.Claim("Test", "Test"));
           if (result.Succeeded)
           {
             return Redirect(returnUrl ?? "/");
@@ -64,7 +62,7 @@ namespace blog.Controllers
 
     public IActionResult TwitterLogin(string returnUrl)
     {
-      string redirectUrl = Url.Action("TwitterResponse", "Account", new { REturnUrl = returnUrl });
+      string redirectUrl = Url.Action("TwitterResponse", "Account", new { ReturnUrl = returnUrl });
       AuthenticationProperties properties = _signInManager.ConfigureExternalAuthenticationProperties("Twitter", redirectUrl);
       return new ChallengeResult("Twitter", properties);
     }
