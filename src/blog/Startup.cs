@@ -29,19 +29,19 @@ namespace blog
     {
       var ConnectionString = Configuration["ConnectionString"];
 
-      services.AddDbContext<BlogContext>(options => options.UseSqlServer(ConnectionString));
+      //services.AddDbContext<BlogContext>(options => options.UseSqlServer(ConnectionString));
 
       services.AddMvc().AddJsonOptions(options =>
       {
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
       });
 
-      services.AddDbContext<BlogIdentityDbContext>(options =>
+      services.AddDbContext<BlogDbContext>(options =>
                   options.UseSqlServer(Configuration["ConnectionString"]));
 
       services.AddIdentity<ApplicationUser, IdentityRole>(opts => {
         opts.User.RequireUniqueEmail = true;
-      }).AddEntityFrameworkStores<BlogIdentityDbContext>()
+      }).AddEntityFrameworkStores<BlogDbContext>()
         .AddDefaultTokenProviders();
 
     }
@@ -71,7 +71,8 @@ namespace blog
 
       app.UseMvcWithDefaultRoute();
 
-      BlogIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
+      BlogDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
+      BlogDbContext.CreateAuthorRole(app.ApplicationServices).Wait();
     }
   }
 }

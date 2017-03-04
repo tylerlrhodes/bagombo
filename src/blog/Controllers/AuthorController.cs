@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using blog.Models;
 using blog.Data;
 
@@ -11,11 +12,12 @@ using blog.Data;
 
 namespace blog.Controllers
 {
+  [Authorize(Roles = "Authors")]
   public class AuthorController : Controller
   {
-    BlogContext _context;
+    BlogDbContext _context;
 
-    public AuthorController(BlogContext context)
+    public AuthorController(BlogDbContext context)
     {
       _context = context;
     }

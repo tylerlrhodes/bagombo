@@ -15,14 +15,14 @@ namespace blog.Controllers
   [Route("api/[controller]/[action]")]
   public class BlogApiController : Controller
   {
-    BlogContext _context;
+    BlogDbContext _context;
     private readonly ILogger _logger;
-    public BlogApiController(BlogContext context, ILogger<BlogApiController> logger)
+    public BlogApiController(BlogDbContext context, ILogger<BlogApiController> logger)
     {
       _context = context;
       _logger = logger;
     }
-    [HttpDelete("{id}")]
+    [HttpPost("{id}")]
     public async Task<IActionResult> DeletePost(int? id)
     {
       if (id != null)
@@ -30,7 +30,7 @@ namespace blog.Controllers
         BlogPost toRemove = _context.BlogPosts.Find(id);
         _context.BlogPosts.Remove(toRemove);
         await _context.SaveChangesAsync();
-        return Ok(id);
+        return RedirectToAction("ManagePosts", "Admin");
       }
       return NotFound();
     }

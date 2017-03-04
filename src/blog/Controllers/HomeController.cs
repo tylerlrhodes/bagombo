@@ -15,9 +15,9 @@ namespace blog.Controllers
 {
   public class HomeController : Controller
   {
-    BlogContext _context;
+    BlogDbContext _context;
 
-    public HomeController(BlogContext context)
+    public HomeController(BlogDbContext context)
     {
       _context = context;
     }
@@ -55,7 +55,7 @@ namespace blog.Controllers
 
         BlogPostViewModel bpvm = x.FirstOrDefault();
 
-        bpvm.Content = CommonMark.CommonMarkConverter.Convert(bpvm.Content);
+        bpvm.Content = CommonMark.CommonMarkConverter.Convert(bpvm?.Content);
 
         if (bpvm != null)
           return View(bpvm);

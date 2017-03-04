@@ -18,9 +18,7 @@
                         <tr>
                             <th>Title</th>
                             <th>Author</th>
-                            <th>View</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,9 +28,13 @@
                         <tr id="@post.Id">
                             <td>@post.Title</td>
                             <td>@post.Author.FirstName @post.Author.LastName</td>
-                            <td><a asp-controller="Home" asp-action="blogpost" asp-route-id="@post.Id">View</a></td>
-                            <td><a asp-controller="Author" asp-action="editpost" asp-route-id="@post.Id">Edit</a></td>
-                            <td><a asp-controller="Blog" asp-action="deletepost" asp-route-id="@post.Id" id="@aid" eid="@post.Id" class="delpost">Delete</a></td>
+                            <td>
+                                <form asp-controller="BlogApi" asp-action="DeletePost" asp-route-id="@post.Id" method="post">
+                                    <a class="btn btn-primary btn-sm" asp-controller="Home" asp-action="blogpost" asp-route-id="@post.Id">View</a>
+                                    <a class="btn btn-primary btn-sm" asp-controller="Author" asp-action="editpost" asp-route-id="@post.Id">Edit</a>
+                                    <button class="btn btn-danger btn-sm delpost" type="submit">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                         }
                     </tbody>

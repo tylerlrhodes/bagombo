@@ -4,6 +4,17 @@
 /// <reference path="jquery.d.ts"/>
 
 
+$("#IsAuthor").change(function (e) {
+    if ($(this).is(":checked")) {
+        //alert('checked');
+        $("#authorfields").css('display', 'block');
+    }
+    else {
+        //alert('unchecked');
+        $("#authorfields").css('display', 'none');
+    }
+});
+
 $("a.delpost").click(function (e) {
     var eid = $(this).attr('eid');
     if (eid === undefined)

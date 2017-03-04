@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace blog.Models
 {
-    public class ApplicationUser : IdentityUser
-    {
-    }
+  public class ApplicationUser : IdentityUser
+  {
+    public Author Author { get; set; }
+  }
 }
