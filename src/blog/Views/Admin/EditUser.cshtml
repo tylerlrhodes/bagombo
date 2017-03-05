@@ -22,10 +22,22 @@
                         <label asp-for="Email"></label>
                         <input asp-for="Email" class="form-control" />
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Password"></label>
-                        <input asp-for="Password" class="form-control" type="password" />
-                    </div>
+                    @if (Model.ExternalLogins == false)
+                    {
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label asp-for="ChangePassword">
+                                    <input asp-for="ChangePassword" id="ChangePassword" /> Change Password?
+                                </label>
+                            </div>
+                        </div>
+                        <div id="passwordfield" style="display:none">
+                            <div class="form-group">
+                                <label asp-for="Password"></label>
+                                <input asp-for="Password" class="form-control" type="password" />
+                            </div>
+                        </div>
+                    }
                     <div class="form-group">
                         <div class="checkbox">
                             <label asp-for="IsAuthor">

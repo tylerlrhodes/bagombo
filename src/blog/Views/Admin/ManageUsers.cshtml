@@ -17,8 +17,7 @@
             <div class="panel-heading"><h3>Manage Users</h3></div>
             <table class="table table-condensed table-bordered">
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
+                    <th>User Name</th>
                     <th>Email</th>
                     <th>Login Providers</th>
                     <th>Author</th>
@@ -32,7 +31,6 @@
                     foreach (var user in Model)
                     {
                     <tr>
-                        <td>@user.Id</td>
                         <td>@user.UserName</td>
                         <td>@user.Email</td>
                         <td>

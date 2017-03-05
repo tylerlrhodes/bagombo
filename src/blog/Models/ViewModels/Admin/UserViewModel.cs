@@ -24,5 +24,9 @@ namespace blog.Models.ViewModels.Admin
     public string FirstName { get; set; }
     [Display(Name = "Last Name:")]
     public string LastName { get; set; }
+    public bool ExternalLogins { get; set; }
+    [Display(Name = "Reset Password?")]
+    [Required]
+    public bool ChangePassword { get; set; }
   }
 }

@@ -4,6 +4,17 @@
 /// <reference path="jquery.d.ts"/>
 
 
+$("#ChangePassword").change(function (e) {
+    if ($(this).is(":checked")) {
+        //alert('checked');
+        $("#passwordfield").css('display', 'block');
+    }
+    else {
+        //alert('unchecked');
+        $("#passwordfield").css('display', 'none');
+    }
+});
+
 $("#IsAuthor").change(function (e) {
     if ($(this).is(":checked")) {
         //alert('checked');

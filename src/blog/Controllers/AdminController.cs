@@ -22,21 +22,21 @@ namespace blog.Controllers
   {
     BlogDbContext _context;
     UserManager<ApplicationUser> _userManager;
-    //RoleManager<IdentityRole> _roleManager;
+    SignInManager<ApplicationUser> _signInManager;
     IPasswordHasher<ApplicationUser> _passwordHasher;
     IUserValidator<ApplicationUser> _userValidator;
     IPasswordValidator<ApplicationUser> _passwordValidator;
 
     public AdminController(BlogDbContext context,
                            UserManager<ApplicationUser> userManager,
-                           //RoleManager<ApplicationUser> roleManager,
+                           SignInManager<ApplicationUser> signInManager,
                            IPasswordHasher<ApplicationUser> passwordHasher,
                            IPasswordValidator<ApplicationUser> passwordValidator,
                            IUserValidator<ApplicationUser> userValidator)
     {
       _context = context;
       _userManager = userManager;
-      //_roleManager = roleManager;
+      _signInManager = signInManager;
       _passwordHasher = passwordHasher;
       _passwordValidator = passwordValidator;
       _userValidator = userValidator;
@@ -143,7 +143,7 @@ namespace blog.Controllers
 
     public IActionResult EditUser(string id)
     {
-      ApplicationUser user = _userManager.Users.Where(u => u.Id == id).Include(u => u.Author).FirstOrDefault();
+      ApplicationUser user = _userManager.Users.Where(u => u.Id == id).Include(u => u.Author).Include(u => u.Logins).FirstOrDefault();
 
       if (user != null)
       {
@@ -154,7 +154,8 @@ namespace blog.Controllers
           Password = "",
           IsAuthor = user.Author == null ? false : true,
           FirstName = user.Author?.FirstName,
-          LastName = user.Author?.LastName
+          LastName = user.Author?.LastName,
+          ExternalLogins = user.Logins.Count() == 0 ? false : true
         });
       }
       else
@@ -169,8 +170,9 @@ namespace blog.Controllers
     {
       if (ModelState.IsValid)
       {
+        //Get some info on the user
         ApplicationUser au = _userManager.Users.Where(u => u.Id == user.Id).Include(u => u.Author).FirstOrDefault();
-
+        // Make the user an author if it's not already, no author fields can be "updated right now"
         if (user.IsAuthor == true)
         { 
           if (String.IsNullOrEmpty(user.FirstName) || String.IsNullOrEmpty(user.LastName))
@@ -186,19 +188,34 @@ namespace blog.Controllers
               LastName = user.LastName
             };
             au.Author = author;
-            await _userManager.AddToRoleAsync(au, "Authors");
+            try
+            {
+              await _userManager.AddToRoleAsync(au, "Authors");
+            }
+            catch (Exception e)
+            {
+              // how to handle non unique entry to Author ....
+              ModelState.AddModelError("", "Error making the user an author, perhaps first and last name are not unique in database");
+              return View(user);
+            }
           }
         }
+        // It's not an author
         else
         {
           if (au.Author != null)
           {
+            // Remove it from authors if it was and remove the role
             _context.Authors.Remove(au.Author);
             await _userManager.RemoveFromRoleAsync(au, "Authors");
           }
         }
+        // The user should not be null!
         if (au != null)
         {
+          // Logic goes like this:
+          // Validate user with new email and username
+          // If it has an external login, just change the stuff and update the user assuming it passes validation
           au.Email = user.Email;
           au.UserName = user.UserName;
           IdentityResult validUser = await _userValidator.ValidateAsync(_userManager, au);
@@ -210,40 +227,55 @@ namespace blog.Controllers
             }
           }
           var logins = await _userManager.GetLoginsAsync(au);
-          if ( logins.Count() != 0)
+          if (logins.Count() != 0)
           {
             IdentityResult result = await _userManager.UpdateAsync(au);
+            if (au == await _userManager.GetUserAsync(User))
+            {
+              await _signInManager.RefreshSignInAsync(au);
+            }
             if (result.Succeeded)
             {
               return RedirectToAction("ManageUsers");
             }
             else
             {
-              foreach (var error in result.Errors)
-              {
-                ModelState.AddModelError("", error.Description);
-              }
+              // something happened, throw an exception or something
+              // for now just return to the edit page
             }
-            return RedirectToAction("ManageUsers");
           }
-          if (!string.IsNullOrEmpty(user.Password))
+          else
           {
-            IdentityResult validPassword = await _passwordValidator.ValidateAsync(_userManager, au, user.Password);
-            if (validPassword.Succeeded)
+            // If the password string isn't empty and they want to change the password
+            if (!string.IsNullOrEmpty(user.Password) && user.ChangePassword == true)
             {
-              au.PasswordHash = _passwordHasher.HashPassword(au, user.Password);
-              IdentityResult securityStampUpdate = await _userManager.UpdateSecurityStampAsync(au);
-              if (securityStampUpdate.Succeeded)
+              IdentityResult validPassword = await _passwordValidator.ValidateAsync(_userManager, au, user.Password);
+              if (validPassword.Succeeded)
               {
-                
-                IdentityResult result = await _userManager.UpdateAsync(au);
-                if (result.Succeeded)
+                au.PasswordHash = _passwordHasher.HashPassword(au, user.Password);
+                IdentityResult securityStampUpdate = await _userManager.UpdateSecurityStampAsync(au);
+                if (securityStampUpdate.Succeeded)
                 {
-                  return RedirectToAction("ManageUsers");
+                  IdentityResult result = await _userManager.UpdateAsync(au);
+                  if (result.Succeeded)
+                  {
+                    if (au == await _userManager.GetUserAsync(User))
+                    {
+                      await _signInManager.RefreshSignInAsync(au);
+                    }
+                    return RedirectToAction("ManageUsers");
+                  }
+                  else
+                  {
+                    foreach (var error in result.Errors)
+                    {
+                      ModelState.AddModelError("", error.Description);
+                    }
+                  }
                 }
                 else
                 {
-                  foreach (var error in result.Errors)
+                  foreach (var error in securityStampUpdate.Errors)
                   {
                     ModelState.AddModelError("", error.Description);
                   }
@@ -251,23 +283,37 @@ namespace blog.Controllers
               }
               else
               {
-                foreach (var error in securityStampUpdate.Errors)
+                foreach (var error in validPassword.Errors)
                 {
                   ModelState.AddModelError("", error.Description);
                 }
               }
             }
+            // Can't change the password and have no password there!
+            else if (string.IsNullOrEmpty(user.Password) && user.ChangePassword == true)
+            {
+              ModelState.AddModelError("", "Password can't be empty");
+            }
+            // Just update the user and don't change the password
             else
             {
-              foreach (var error in validPassword.Errors)
+              IdentityResult result = await _userManager.UpdateAsync(au);
+              if (result.Succeeded)
               {
-                ModelState.AddModelError("", error.Description);
+                if (au == await _userManager.GetUserAsync(User))
+                {
+                  await _signInManager.RefreshSignInAsync(au);
+                }
+                return RedirectToAction("ManageUsers");
+              }
+              else
+              {
+                foreach (var error in result.Errors)
+                {
+                  ModelState.AddModelError("", error.Description);
+                }
               }
             }
-          }
-          else
-          {
-            ModelState.AddModelError("", "Password can't be empty");
           }
         }
       }
