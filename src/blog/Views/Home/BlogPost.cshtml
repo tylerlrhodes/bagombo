@@ -1,21 +1,33 @@
 ﻿
-@using blog.Models.ViewModels.BlogPostView
-@model BlogPostViewModel
+@using blog.Models.ViewModels.Home
+@model ViewBlogPostViewModel
+
 @{
   Layout = "_Layout";
 }
 
-<div class="container">
+<div class="container-fluid">
     <div class="col-md-10 col-md-offset-1">
-        <p>
-            <h2>@Model.Title</h2>
-        </p>
-
-        <p>
-            <h4>by: @Model.Author</h4>
-        </p>
-        <p>
-            @Html.Raw(Model.Content)
-        </p>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <p>
+                    <h2>@Model.Title</h2>
+                </p>
+                <p>
+                    <h5>@Model.Description</h5>
+                </p>
+                <p>
+                    <h6>by: @Model.Author</h6>
+                </p>
+            </div>
+            <div class="panel-body">
+                <p>
+                    @Html.Raw(Model.Content)
+                </p>
+            </div>
+            <div class="panel-footer">
+                @Model.ModifiedAt
+            </div>
+        </div>
     </div>
 </div>

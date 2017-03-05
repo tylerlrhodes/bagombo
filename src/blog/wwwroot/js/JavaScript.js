@@ -26,6 +26,8 @@ $("#IsAuthor").change(function (e) {
     }
 });
 
+
+/*
 $("a.delpost").click(function (e) {
     var eid = $(this).attr('eid');
     if (eid === undefined)
@@ -47,3 +49,4 @@ $("a.delpost").click(function (e) {
     });
     e.preventDefault();
 });
+*/

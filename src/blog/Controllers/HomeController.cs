@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using blog.Infrastructure;
 using blog.Data;
-using blog.Models;
-using blog.Models.ViewModels.BlogPostView;
+using blog.Models.ViewModels.Home;
+//using blog.Models.ViewModels.BlogPostView;
 using CommonMark;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -41,27 +41,26 @@ namespace blog.Controllers
     }
     public IActionResult BlogPost(int? id)
     {
-      if (id != null)
-      {
-        var x = from bp in _context.BlogPosts
-                where bp.Id == id
-                join a in _context.Authors on bp.AuthorId equals a.Id
-                select new BlogPostViewModel
-                {
-                  Author = $"{a.FirstName} {a.LastName}",
-                  Content = bp.Content,
-                  Title = bp.Title
-                };
+      if (id == null)
+        return NotFound();
 
-        BlogPostViewModel bpvm = x.FirstOrDefault();
+      var bp = (from bps in _context.BlogPosts
+               where bps.Id == id
+               join a in _context.Authors on bps.AuthorId equals a.Id
+               select new ViewBlogPostViewModel
+               {
+                 Author = $"{a.FirstName} {a.LastName}",
+                 Title = bps.Title,
+                 Description = bps.Description,
+                 Content = bps.Content,
+                 ModifiedAt = bps.ModifiedAt
+               })
+               .FirstOrDefault();
 
-        bpvm.Content = CommonMark.CommonMarkConverter.Convert(bpvm?.Content);
+      if (bp == null)
+        return NotFound();
 
-        if (bpvm != null)
-          return View(bpvm);
-      }
-
-      return NotFound();
+      return View(bp);
     }
   }
 }

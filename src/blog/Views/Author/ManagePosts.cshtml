@@ -1,8 +1,7 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@* Author Manage Posts Page!!!*@
 @{
-  @model AdminManagePostsViewModel
+  @using blog.Models.ViewModels.Author
+  @model AuthorManagePostsViewModel
   Layout = "_Layout";
 }
 
@@ -11,13 +10,12 @@
 <div class="container-fluid">
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading"><h3>Admin - Manage Posts</h3></div>
+            <div class="panel-heading"><h3>Manage Posts</h3></div>
             <div class="panel-body">
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Author</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -27,7 +25,6 @@
                             var aid = $"a{post.Id}";
                         <tr id="@post.Id">
                             <td>@post.Title</td>
-                            <td>@post.Author.FirstName @post.Author.LastName</td>
                             <td>
                                 <form asp-controller="BlogApi" asp-action="DeletePost" asp-route-id="@post.Id" method="post">
                                     <a class="btn btn-primary btn-sm" asp-controller="Home" asp-action="blogpost" asp-route-id="@post.Id">View</a>

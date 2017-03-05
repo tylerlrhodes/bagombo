@@ -1,29 +1,35 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using blog.Models.ViewModels.Author
+@model AddBlogPostViewModel
+
 @{
   Layout = "_Layout";
 }
 
 <div class="container-fluid">
-    <div class="col-md-12">
-        <div class="form-inline">
-            <div class="form-group">
-                <label for="title">Title:</label><input class="form-control" type="text" id="title" />
+    <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3>Add Post</h3></div>
+            <div class="panel-body">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <form asp-action="AddPost" method="post">
+                    <div class="form-group">
+                        <label asp-for="Title">Title:</label>
+                        <input class="form-control" asp-for="Title" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description">Description:</label>
+                        <input class="form-control" asp-for="Description" />
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <textarea asp-for="Content"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a asp-action="ManagePosts" class="btn btn-danger">Cancel</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="category">Category</label><input type="text" class="form-control" list="categories" id="category" />
-                <datalist id="categories">
-                    <option label="C#" value="C#"></option>
-                </datalist>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-default">Submit</button>
-            </div>
-        </div>
-        <br />
-        <div class="form-group">
-            <textarea style="width:500px; height:1000px"></textarea>
         </div>
     </div>
 </div>
@@ -33,23 +39,5 @@
 
 <script type="text/javascript">
     var simplemde = new SimpleMDE();
-
-    $("button").click(function () {
-        var blogText = simplemde.value();
-        var blogTitle = $("#title").val();
-        var data = {
-            Title: blogTitle,
-            Content: blogText
-        };
-        $.ajax({
-            type: 'POST',
-            url: '/api/blogapi/addpost',
-            data: data,
-            success: function (result) {
-                alert("Saved: " + result.content + "\n" + result.authorId);
-            }
-
-        })
-    })
 </script>
 
