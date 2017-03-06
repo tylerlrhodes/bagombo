@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using blog.Infrastructure;
 using blog.Data;
 using blog.Models.ViewModels.Home;
 //using blog.Models.ViewModels.BlogPostView;
@@ -59,6 +58,8 @@ namespace blog.Controllers
 
       if (bp == null)
         return NotFound();
+
+      bp.Content = CommonMarkConverter.Convert(bp.Content);
 
       return View(bp);
     }

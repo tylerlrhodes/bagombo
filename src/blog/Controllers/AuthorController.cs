@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using blog.Models;
 using blog.Models.ViewModels.Author;
 using blog.Data;
+using CommonMark;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -96,6 +97,7 @@ namespace blog.Controllers
 
       EditBlogPostViewModel ebpvm = new EditBlogPostViewModel
       {
+        Id = id,
         Title = post.Title,
         Content = post.Content,
         Description = post.Description
@@ -105,9 +107,32 @@ namespace blog.Controllers
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> EditPost()
+    public async Task<IActionResult> EditPost(EditBlogPostViewModel model)
     {
-      return NotFound();
+      var post = await _context.BlogPosts.FindAsync(model.Id);
+      var curUser = await _userManager.GetUserAsync(User);
+      var author = (from u in _userManager.Users
+                    where u.Id == curUser.Id
+                    join a in _context.Authors on u.Id equals a.ApplicationUserId
+                    select a).FirstOrDefault();
+
+      post.Author = author;
+      post.Title = model.Title;
+      post.Description = model.Description;
+      post.Content = model.Content;
+
+      await _context.SaveChangesAsync();
+
+      return RedirectToAction("ManagePosts");
+    }
+    [HttpPost]
+    public ContentResult GetPreviewHtml(string content)
+    {
+      return new ContentResult()
+      {
+        Content = CommonMark.CommonMarkConverter.Convert(content),
+        ContentType = "text/html"
+      };
     }
   }
 

@@ -21,15 +21,37 @@
                         <input class="form-control" asp-for="Description" />
                     </div>
                     <br />
-                    <div class="form-group">
-                        <textarea asp-for="Content"></textarea>
+                    <div>
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#ContentEditorTab" aria-controls="home" role="tab" data-toggle="tab">Markdown</a></li>
+                        <li role="presentation"><a href="#PreviewTab" aria-controls="profile" role="tab" data-toggle="tab">Preview</a></li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="ContentEditorTab">
+                            <div class="form-group">
+                                <textarea class="form-control" style="height:600px" asp-for="Content"></textarea>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="PreviewTab">
+                            <br />
+                            <div id="PreviewTabInner">
+
+                            </div>
+                            <br />
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <a asp-action="ManagePosts" class="btn btn-danger">Cancel</a>
-                    </div>
-                </form>
+
             </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a asp-action="ManagePosts" class="btn btn-danger">Cancel</a>
+            </div>
+            </form>
+        </div>
         </div>
     </div>
 </div>
@@ -38,6 +60,6 @@
 <script src="~/lib/simplemde/dist/simplemde.min.js"></script>
 
 <script type="text/javascript">
-    var simplemde = new SimpleMDE();
+    //var simplemde = new SimpleMDE();
 </script>
 

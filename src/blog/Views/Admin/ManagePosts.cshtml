@@ -18,6 +18,8 @@
                         <tr>
                             <th>Title</th>
                             <th>Author</th>
+                            <th>Description</th>
+                            <th>Orphaned Author?</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -28,11 +30,19 @@
                         <tr id="@post.Id">
                             <td>@post.Title</td>
                             <td>@post.Author.FirstName @post.Author.LastName</td>
+                            <td>@post.Description</td>
+                            <td>@if (@post.Author.ApplicationUserId == null)
+                                {
+                                    <span>Yes</span>
+                                }
+                            </td>
                             <td>
                                 <form asp-controller="BlogApi" asp-action="DeletePost" asp-route-id="@post.Id" method="post">
-                                    <a class="btn btn-primary btn-sm" asp-controller="Home" asp-action="blogpost" asp-route-id="@post.Id">View</a>
-                                    <a class="btn btn-primary btn-sm" asp-controller="Author" asp-action="editpost" asp-route-id="@post.Id">Edit</a>
-                                    <button class="btn btn-danger btn-sm delpost" type="submit">Delete</button>
+                                    <span class="text-nowrap">
+                                        <a class="btn btn-primary btn-sm" asp-controller="Home" asp-action="blogpost" asp-route-id="@post.Id">View</a>
+                                        <a class="btn btn-primary btn-sm" asp-controller="Author" asp-action="editpost" asp-route-id="@post.Id">Edit</a>
+                                        <button class="btn btn-danger btn-sm delpost" type="submit">Delete</button>
+                                    </span>
                                 </form>
                             </td>
                         </tr>

@@ -189,7 +189,7 @@ namespace blog.Controllers
             {
               await _userManager.AddToRoleAsync(au, "Authors");
             }
-            catch (Exception e)
+            catch (Exception)
             {
               // how to handle non unique entry to Author ....
               ModelState.AddModelError("", "Error making the user an author, perhaps first and last name are not unique in database");
@@ -221,6 +221,7 @@ namespace blog.Controllers
             foreach (var error in validUser.Errors)
             {
               ModelState.AddModelError("", error.Description);
+              return View(user);
             }
           }
           var logins = await _userManager.GetLoginsAsync(au);
@@ -312,6 +313,7 @@ namespace blog.Controllers
               }
             }
           }
+        // end if au == null
         }
       }
       return View(user);

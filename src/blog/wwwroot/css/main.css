@@ -25,3 +25,7 @@ ul.nostyle, ul.nostyle > li {
 div.center-text {
     text-align: center;
 }
+
+.h600 {
+    height: 600px;
+}

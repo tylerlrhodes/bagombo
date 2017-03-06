@@ -3,6 +3,24 @@
 
 /// <reference path="jquery.d.ts"/>
 
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    var target = $(e.target).attr("href") // activated tab
+    if (target === "#PreviewTab")
+    {
+        //alert(target);
+        var c = $("#Content").val();
+        $.post({
+            url: "/author/GetPreviewHtml",
+            data: {
+                content: c
+            }
+        }, function (data) {
+            //alert("Got data...");
+            $("#PreviewTabInner").html(data);
+        });
+    }
+});
+
 
 $("#ChangePassword").change(function (e) {
     if ($(this).is(":checked")) {
@@ -25,28 +43,3 @@ $("#IsAuthor").change(function (e) {
         $("#authorfields").css('display', 'none');
     }
 });
-
-
-/*
-$("a.delpost").click(function (e) {
-    var eid = $(this).attr('eid');
-    if (eid === undefined)
-    {
-        return false;
-    }
-    $.ajax({
-        type: 'DELETE',
-        url: '/api/blogapi/deletepost/' + eid,
-        data: null,
-        success: function (result) {
-            alert("deleted result: " + result);
-            var sel = "#" + result;
-            $(sel).remove();
-        },
-        error: function (result) {
-            alert("Error!!!");
-        }
-    });
-    e.preventDefault();
-});
-*/
