@@ -7,26 +7,42 @@
 }
 
 <div class="container-fluid">
-    <div class="col-md-10 col-md-offset-1">
+    <div class="col-md-9">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <p>
                     <h2>@Model.Title</h2>
                 </p>
-                <p>
-                    <h5>@Model.Description</h5>
-                </p>
+            </div>
+            <div class="panel-body">
                 <p>
                     <h6>by: @Model.Author</h6>
                 </p>
-            </div>
-            <div class="panel-body">
+                <hr />
                 <p>
                     @Html.Raw(Model.Content)
                 </p>
             </div>
             <div class="panel-footer">
                 @Model.ModifiedAt
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h6>Author:</h6>
+            </div>
+            <div class="panel-body">
+                @Model.Author
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h6>Description:</h6>
+            </div>
+            <div class="panel-body">
+                @Model.Description
             </div>
         </div>
     </div>

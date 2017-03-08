@@ -11,6 +11,7 @@
             <div class="panel-heading"><h3>Edit Post</h3></div>
             <div class="panel-body">
                 <div asp-validation-summary="All" class="text-danger"></div>
+                <div SaveUpdate id="UpdateSavedMessage"></div>
                 <form asp-action="EditPost" method="post">
                     <input asp-for="Id" type="hidden" />
                     <div class="form-group">
@@ -28,6 +29,7 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#ContentEditorTab" aria-controls="home" role="tab" data-toggle="tab">Markdown</a></li>
                             <li role="presentation"><a href="#PreviewTab" aria-controls="profile" role="tab" data-toggle="tab">Preview</a></li>
+                            <li role="presentation"><a href="#PostSettings" aria-controls="profile" role="tab" data-toggle="tab">Post Settings</a></li>
                         </ul>
 
                         <!-- Tab panes -->
@@ -38,10 +40,38 @@
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="PreviewTab">
-                                <br />
                                 <div id="PreviewTabInner">
 
                                 </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="PostSettings">
+                                <br />
+                                <label>Associate with Feature:</label>
+                                <select multiple class="form-control">
+                                    <option>Sorting Algorithms</option>
+                                    <option>Data Structures</option>
+                                    <option>Searching Algorithms</option>
+                                    <option>HTML and Web Design</option>
+                                    <option>JavaScript Language</option>
+                                    <option>Node.js Programming</option>
+                                </select>
+                                <br />
+                                <label>Associate with Categories:</label>
+                                <br />
+                                <div class="container-fluid">
+                                    @{
+                                      var categories = new string[] { "C#", "C++", "C", "ASP.NET Core", "Bootstrap", "JavaScript", "Bag", "Queue", "Linked List", "Double Linked List",
+                                                                      "QuickSort", "Mergesort" };
+                                      foreach (var category in categories)
+                                      {
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="chk-@category" value="@category"> @category
+                                        </label>
+                                        <br />
+                                      }
+                                    }
+                                </div>
+                                <br />
                                 <br />
                             </div>
                         </div>
@@ -68,6 +98,12 @@
 <script type="text/javascript">
    // var simplemde = new SimpleMDE();
 
+    $(function () {
+        setTimeout(function () {
+            $("#UpdateSavedMessage").fadeOut("slow");
+
+        }, 10000);
+    });
 
 </script>
 

@@ -30,40 +30,9 @@ namespace blog.Controllers
         BlogPost toRemove = _context.BlogPosts.Find(id);
         _context.BlogPosts.Remove(toRemove);
         await _context.SaveChangesAsync();
-        return RedirectToAction("ManagePosts", "Admin");
+        return Redirect(Request.Headers["Referer"]);
       }
       return NotFound();
-    }
-    [HttpPost]
-    public async Task<JsonResult> EditPost(BlogPost post)
-    {
-      if (ModelState.IsValid)
-      {
-        BlogPost update = _context.BlogPosts.Find(post.Id);
-        update.Content = post.Content;
-        update.Title = post.Title;
-        await _context.SaveChangesAsync();
-        return Json(update);
-      }
-      return Json(null);
-    }
-    [HttpPost]
-    public async Task<JsonResult> AddPost(BlogPost post)
-    {
-      int id = (from c in _context.Authors
-               where c.FirstName == "Tyler" && c.LastName == "Rhodes"
-               select c.Id).FirstOrDefault();
-
-      // Add Post to DB
-      post.AuthorId = id;
-
-      post.CreatedAt = DateTime.Now;
-
-      _context.BlogPosts.Add(post);
-
-      await _context.SaveChangesAsync();
-
-      return Json(post);
     }
   }
 }

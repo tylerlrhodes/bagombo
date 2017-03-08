@@ -78,10 +78,16 @@ namespace blog.Controllers
           CreatedAt = DateTime.Now,
           ModifiedAt = DateTime.Now
         };
-
-        await _context.BlogPosts.AddAsync(bp);
-        await _context.SaveChangesAsync();
-
+        try
+        {
+          await _context.BlogPosts.AddAsync(bp);
+          await _context.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+          ModelState.AddModelError("", "Error saving to database!");
+          return View(model);
+        }
         return RedirectToAction("ManagePosts", "Author");
       }
       return View(model);
@@ -109,21 +115,32 @@ namespace blog.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditPost(EditBlogPostViewModel model)
     {
-      var post = await _context.BlogPosts.FindAsync(model.Id);
+      //var post = await _context.BlogPosts.FindAsync(model.Id);
+
+      // fix these queries, the query for author can select from the author table without the join
+
+      var post = _context.BlogPosts.Where(bp => bp.Id == model.Id).Include(bp => bp.Author).FirstOrDefault();
       var curUser = await _userManager.GetUserAsync(User);
       var author = (from u in _userManager.Users
                     where u.Id == curUser.Id
                     join a in _context.Authors on u.Id equals a.ApplicationUserId
                     select a).FirstOrDefault();
 
-      post.Author = author;
+      // An admin is taking ownership
+      if (post.Author == null)
+        post.Author = author;
+
       post.Title = model.Title;
       post.Description = model.Description;
       post.Content = model.Content;
 
       await _context.SaveChangesAsync();
 
-      return RedirectToAction("ManagePosts");
+      //return RedirectToAction("ManagePosts");
+      //return Redirect(Request.Headers["Referer"]);
+      ViewData["SavedMessage"] = "Post saved.";
+
+      return View(model); 
     }
     [HttpPost]
     public ContentResult GetPreviewHtml(string content)
