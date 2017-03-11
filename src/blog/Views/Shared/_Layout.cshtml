@@ -39,7 +39,7 @@
                 <ul class="nav navbar-nav">
                     <li class="@((string)(ViewContext.RouteData.Values["action"]) == "Index" ? "active" : "")"><a asp-controller="Home" asp-action="Index">Home</a></li>
                     <li class="@((string)(ViewContext.RouteData.Values["action"]) == "Features" ? "active" : "")"><a asp-controller="Home" asp-action="Features">Features</a></li>
-                    <li class="hidden-md hidden-sm @((string)(ViewContext.RouteData.Values["action"]) == "RecentPosts" ? "active" : "")"><a asp-controller="Home" asp-action="RecentPosts">Recent Posts</a></li>
+                    <!--li class="hidden-md hidden-sm @((string)(ViewContext.RouteData.Values["action"]) == "RecentPosts" ? "active" : "")"><a asp-controller="Home" asp-action="RecentPosts">Recent Posts</a></li>-->
                     <li class="hidden-sm @((string)(ViewContext.RouteData.Values["action"]) == "AllPosts" ? "active" : "")"><a asp-controller="Home" asp-action="AllPosts">All Posts</a></li>
                 </ul>
                 <form class="navbar-form navbar-left input-group-sm" role="search">
