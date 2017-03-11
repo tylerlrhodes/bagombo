@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using blog.Models;
 using blog.Data;
+using Microsoft.Extensions.Configuration.UserSecrets;
+
+[assembly: UserSecretsId("blog-secrets-1")]
 
 namespace blog
 {
@@ -19,7 +22,7 @@ namespace blog
           .SetBasePath(env.ContentRootPath)
           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
           .AddEnvironmentVariables()
-          .AddUserSecrets();
+          .AddUserSecrets<Startup>();
 
       Configuration = builder.Build();
     }
