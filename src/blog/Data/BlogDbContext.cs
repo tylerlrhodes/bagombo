@@ -19,6 +19,7 @@ namespace blog.Data
     public DbSet<Feature> Features { get; set; }
     public DbSet<BlogPostFeature> BlogPostFeature { get; set; }
     public DbSet<BlogPostCategory> BlogPostCategory { get; set; }
+    public DbSet<Category> Categories { get; set; }
 
     public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
     {
@@ -61,6 +62,7 @@ namespace blog.Data
 
       builder.Entity<Author>().ToTable("Author");
       builder.Entity<Feature>().ToTable("Feature");
+      builder.Entity<Category>().ToTable("Category");
 
       builder.Entity<Author>().HasAlternateKey(e => new { e.FirstName, e.LastName });
 

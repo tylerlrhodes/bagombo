@@ -38,10 +38,130 @@ namespace blog.Controllers
       _passwordValidator = passwordValidator;
       _userValidator = userValidator;
     }
+
     // GET: /<controller>/
     public IActionResult Index()
     {
       return View();
+    }
+
+    [HttpGet]
+    public IActionResult AddFeature() => View();
+
+    [HttpPost]
+    public async Task<IActionResult> AddFeature(FeatureViewModel model)
+    {
+      if (ModelState.IsValid)
+      {
+        var f = new Feature()
+        {
+          Title = model.Title,
+          Description = model.Description
+        };
+        await _context.Features.AddAsync(f);
+        await _context.SaveChangesAsync();
+        return RedirectToAction("ManageFeatures");
+      }
+      return View(model);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> EditFeature(int id)
+    {
+      var f = await _context.Features.FindAsync(id);
+      var vm = new FeatureViewModel()
+      {
+        Id = f.Id,
+        Title = f.Title,
+        Description = f.Description
+      };
+      return View(vm);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> EditFeature(FeatureViewModel model)
+    {
+      if (ModelState.IsValid)
+      {
+        var f = await _context.Features.FindAsync(model.Id);
+        f.Title = model.Title;
+        f.Description = model.Description;
+        await _context.SaveChangesAsync();
+        return RedirectToAction("ManageFeatures");
+      }
+      return View(model);
+    }
+
+    [HttpGet]
+    public IActionResult ManageFeatures()
+    {
+      AdminManageFeaturesViewModel amfvm = new AdminManageFeaturesViewModel();
+      amfvm.Features = _context.Features.AsEnumerable();
+      return View(amfvm);
+    }
+
+    [HttpGet]
+    public IActionResult AddCategory() => View();
+
+    [HttpPost]
+    public async Task<IActionResult> AddCategory(CategoryViewModel model)
+    {
+      if (ModelState.IsValid)
+      {
+        var c = new Category()
+        {
+          Name = model.Name,
+          Description = model.Description
+        };
+        _context.Categories.Add(c);
+        await _context.SaveChangesAsync();
+        return RedirectToAction("ManageCategories");
+      }
+      return View(model);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> EditCategory(int id)
+    {
+      var c = await _context.Categories.FindAsync(id);
+      var vm = new CategoryViewModel()
+      {
+        Name = c.Name,
+        Description = c.Description,
+        Id = c.Id
+      };
+      return View(vm);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> EditCategory(CategoryViewModel model)
+    {
+      if (ModelState.IsValid)
+      {
+        var c = await _context.Categories.FindAsync(model.Id);
+        c.Name = model.Name;
+        c.Description = model.Description;
+        await _context.SaveChangesAsync();
+        return RedirectToAction("ManageCategories");
+      }
+      return View(model);
+    }
+
+    [HttpGet]
+    public IActionResult ManageCategories()
+    {
+      AdminManageCategoriesViewModel amcvm = new AdminManageCategoriesViewModel();
+      amcvm.Categories = _context.Categories.AsEnumerable();
+      return View(amcvm);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteCategory(int id)
+    {
+      var c = await _context.Categories.FindAsync(id);
+      _context.Categories.Remove(c);
+      await _context.SaveChangesAsync();
+      return RedirectToAction("ManageCategories");
     }
 
     [HttpGet]
@@ -51,10 +171,12 @@ namespace blog.Controllers
       mpvm.posts = _context.BlogPosts.Include(a => a.Author).AsEnumerable();
       return View(mpvm);
     }
+
     public IActionResult ManageUsers()
     {
       return View(_userManager.Users.Include(u => u.Logins).Include(u => u.Author));
     }
+
     public ViewResult CreateUser() => View();
 
     [HttpPost]
@@ -97,7 +219,7 @@ namespace blog.Controllers
           return RedirectToAction("ManageUsers");
         }
         if (result.Succeeded && model.IsAuthor == true)
-        {       
+        {
           return RedirectToAction("ManageUsers");
         }
         else
@@ -116,7 +238,7 @@ namespace blog.Controllers
     public async Task<IActionResult> DeleteUser(string id)
     {
       ApplicationUser user = await _userManager.FindByIdAsync(id);
-      if(user != null)
+      if (user != null)
       {
         IdentityResult result = await _userManager.DeleteAsync(user);
         if (result.Succeeded)
@@ -144,7 +266,8 @@ namespace blog.Controllers
 
       if (user != null)
       {
-        return View(new UserViewModel {
+        return View(new UserViewModel
+        {
           Id = user.Id,
           UserName = user.UserName,
           Email = user.Email,
@@ -171,7 +294,7 @@ namespace blog.Controllers
         ApplicationUser au = _userManager.Users.Where(u => u.Id == user.Id).Include(u => u.Author).FirstOrDefault();
         // Make the user an author if it's not already, no author fields can be "updated right now"
         if (user.IsAuthor == true)
-        { 
+        {
           if (String.IsNullOrEmpty(user.FirstName) || String.IsNullOrEmpty(user.LastName))
           {
             ModelState.AddModelError("", "Author requires both first and last name to be set.");
@@ -313,7 +436,7 @@ namespace blog.Controllers
               }
             }
           }
-        // end if au == null
+          // end if au == null
         }
       }
       return View(user);

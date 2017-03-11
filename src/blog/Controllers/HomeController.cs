@@ -34,6 +34,13 @@ namespace blog.Controllers
     {
       return View();
     }
+    public IActionResult Features()
+    {
+      ViewFeaturesViewModel vfvm = new ViewFeaturesViewModel();
+      vfvm.Features = _context.Features.AsEnumerable();
+      return View(vfvm);
+    }
+
     public IActionResult About()
     {
       return View();

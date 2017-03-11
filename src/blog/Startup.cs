@@ -9,8 +9,6 @@ using blog.Models;
 using blog.Data;
 using Microsoft.Extensions.Configuration.UserSecrets;
 
-// Strange, seems to not be needed now with VS 2017 and CSPROJ
-//[assembly: UserSecretsId("blog-secrets-1")]
 
 namespace blog
 {

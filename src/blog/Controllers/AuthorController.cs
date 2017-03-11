@@ -106,7 +106,9 @@ namespace blog.Controllers
         Id = id,
         Title = post.Title,
         Content = post.Content,
-        Description = post.Description
+        Description = post.Description,
+        PublishOn = DateTime.Now + TimeSpan.FromDays(2),
+        Public = post.Public
       };
 
       return View(ebpvm);
@@ -133,6 +135,9 @@ namespace blog.Controllers
       post.Title = model.Title;
       post.Description = model.Description;
       post.Content = model.Content;
+      post.ModifiedAt = DateTime.Now;
+      post.PublishOn = model.PublishOn;
+      post.Public = model.Public;
 
       await _context.SaveChangesAsync();
 

@@ -17,6 +17,7 @@
 <html>
 <head>
     <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width" />
     <link type="text/css" rel="stylesheet" asp-href-include="lib/bootstrap/dist/css/*.min.css" />
     <link type="text/css" rel="stylesheet" asp-href-include="lib/simplemde/dist/simplemde.min.css" />
     <link type="text/css" rel="stylesheet" asp-href-include="css/main.css" />
@@ -56,9 +57,8 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin Tools <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a asp-controller="Admin" asp-action="ManagePosts">Manage Posts</a></li>
-                            <li><a asp-controller="Admin" asp-action="ManagePosts">Manage Features</a></li>
-                            <li><a asp-controller="Admin" asp-action="ManagePosts">Manage Categories</a></li>
-                            <li><a asp-controller="Admin" asp-action="ManagePosts">Manage Comments</a></li>
+                            <li><a asp-controller="Admin" asp-action="ManageFeatures">Manage Features</a></li>
+                            <li><a asp-controller="Admin" asp-action="ManageCategories">Manage Categories</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a asp-controller="Admin" asp-action="ManageUsers">Manage Users</a></li>
                         </ul>
