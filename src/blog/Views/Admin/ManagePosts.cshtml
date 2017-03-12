@@ -3,6 +3,7 @@
 *@
 @{
   @model AdminManagePostsViewModel
+  ViewData["Title"] = "Admin - Manage Posts";
   Layout = "_Layout";
 }
 
@@ -19,6 +20,8 @@
                             <th>Title</th>
                             <th>Author</th>
                             <th>Description</th>
+                            <th>Publish Date</th>
+                            <th>Is Public?</th>
                             <th>Orphaned Author?</th>
                             <th></th>
                         </tr>
@@ -31,6 +34,8 @@
                             <td>@post.Title</td>
                             <td>@post.Author.FirstName @post.Author.LastName</td>
                             <td>@post.Description</td>
+                            <td>@post.PublishOn</td>
+                            <td>@post.Public</td>
                             <td>@if (@post.Author.ApplicationUserId == null)
                                 {
                                     <span>Yes</span>

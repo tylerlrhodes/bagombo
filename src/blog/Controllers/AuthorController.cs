@@ -95,10 +95,6 @@ namespace blog.Controllers
     [HttpGet]
     public async Task<IActionResult> EditPost(int id)
     {
-      //var post = (from bps in _context.BlogPosts
-      //            where bps.Id == id
-      //            select bps).FirstOrDefault();
-
       var post = await _context.BlogPosts.FindAsync(id);
 
       EditBlogPostViewModel ebpvm = new EditBlogPostViewModel
@@ -108,8 +104,54 @@ namespace blog.Controllers
         Content = post.Content,
         Description = post.Description,
         PublishOn = DateTime.Now + TimeSpan.FromDays(2),
-        Public = post.Public
+        Public = post.Public,
+        FeaturesList = new List<FeaturesCheckBox>(),
+        CategoriesList = new List<CategoriesCheckBox>()
       };
+
+      var postHasCategories = (from bpc in _context.BlogPostCategory
+                               where bpc.BlogPostId == id
+                               join c in _context.Categories on bpc.CategoryId equals c.Id
+                               select c).ToList();
+
+      foreach (var category in _context.Categories)
+      {
+        var categoryCheckBox = new CategoriesCheckBox()
+        {
+          CategoryId = category.Id,
+          Name = category.Name,
+          IsSelected = false
+        };
+
+        if (postHasCategories.Contains(category))
+        {
+          categoryCheckBox.IsSelected = true;
+        }
+
+        ebpvm.CategoriesList.Add(categoryCheckBox);
+      }
+
+      var postHasFeatures = (from bpf in _context.BlogPostFeature
+                             where bpf.BlogPostId == id
+                             join f in _context.Features on bpf.FeatureId equals f.Id
+                             select f).ToList();
+
+      foreach (var feature in _context.Features)
+      {
+        var featureCheckBox = new FeaturesCheckBox()
+        {
+          FeatureId = feature.Id,
+          Title = feature.Title,
+          IsSelected = false
+        };
+
+        if (postHasFeatures.Contains(feature))
+        {
+          featureCheckBox.IsSelected = true;
+        }
+
+        ebpvm.FeaturesList.Add(featureCheckBox);
+      }
 
       return View(ebpvm);
     }
@@ -139,13 +181,55 @@ namespace blog.Controllers
       post.PublishOn = model.PublishOn;
       post.Public = model.Public;
 
+      var bpfts = from bpf in _context.BlogPostFeature
+                  where bpf.BlogPostId == post.Id
+                  select bpf;
+
+      _context.BlogPostFeature.RemoveRange(bpfts);
+
+      await _context.SaveChangesAsync();
+
+      foreach (var feature in model.FeaturesList)
+      {
+        if (feature.IsSelected)
+        {
+          BlogPostFeature bpf = new BlogPostFeature()
+          {
+            BlogPostId = post.Id,
+            FeatureId = feature.FeatureId
+          };
+          _context.BlogPostFeature.Add(bpf);
+        }
+      }
+
+      var bpcts = from bpc in _context.BlogPostCategory
+                  where bpc.BlogPostId == post.Id
+                  select bpc;
+
+      _context.BlogPostCategory.RemoveRange(bpcts);
+
+      await _context.SaveChangesAsync();
+
+      foreach (var category in model.CategoriesList)
+      {
+        if (category.IsSelected)
+        {
+          BlogPostCategory bpc = new BlogPostCategory()
+          {
+            BlogPostId = post.Id,
+            CategoryId = category.CategoryId
+          };
+          _context.BlogPostCategory.Add(bpc);
+        }
+      }
+
       await _context.SaveChangesAsync();
 
       //return RedirectToAction("ManagePosts");
       //return Redirect(Request.Headers["Referer"]);
       ViewData["SavedMessage"] = "Post saved.";
 
-      return View(model); 
+      return View(model);
     }
     [HttpPost]
     public ContentResult GetPreviewHtml(string content)

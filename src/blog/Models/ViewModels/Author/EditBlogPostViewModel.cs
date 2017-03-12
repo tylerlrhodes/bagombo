@@ -21,5 +21,23 @@ namespace blog.Models.ViewModels.Author
     public DateTime PublishOn { get; set; }
     [Required]
     public bool Public { get; set; }
+    [Required]
+    public List<FeaturesCheckBox> FeaturesList { get; set; }
+    [Required]
+    public List<CategoriesCheckBox> CategoriesList { get; set; }
+  }
+
+  public class CategoriesCheckBox
+  {
+    public int CategoryId { get; set; }
+    public string Name { get; set; }
+    public bool IsSelected { get; set; }
+  }
+
+  public class FeaturesCheckBox
+  {
+    public int FeatureId { get; set; }
+    public string Title { get; set; }
+    public bool IsSelected { get; set; }
   }
 }

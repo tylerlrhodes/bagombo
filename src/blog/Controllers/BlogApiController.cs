@@ -7,11 +7,13 @@ using blog.Models;
 using blog.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace blog.Controllers
 {
+  [Authorize(Roles = "Admins")]
   [Route("api/[controller]/[action]")]
   public class BlogApiController : Controller
   {

@@ -2,6 +2,7 @@
 @model AddBlogPostViewModel
 
 @{
+  ViewData["Title"] = "Add Post";
   Layout = "_Layout";
 }
 
@@ -56,10 +57,7 @@
     </div>
 </div>
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/simplemde/dist/simplemde.min.js"></script>
 
-<script type="text/javascript">
-    //var simplemde = new SimpleMDE();
-</script>
-
+@section Scripts {
+    <script type="text/javascript" src="~/js/AddEditPostPage.js"></script>
+}

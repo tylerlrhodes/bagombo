@@ -2,6 +2,7 @@
 @model EditBlogPostViewModel
 
 @{
+  ViewData["Title"] = "Edit Post";
   Layout = "_Layout";
 }
 
@@ -55,26 +56,31 @@
                             <div role="tabpanel" class="tab-pane" id="PostSettings">
                                 <br />
                                 <label>Associate with Feature:</label>
-                                <select multiple class="form-control">
-                                    <option>Sorting Algorithms</option>
-                                    <option>Data Structures</option>
-                                    <option>Searching Algorithms</option>
-                                    <option>HTML and Web Design</option>
-                                    <option>JavaScript Language</option>
-                                    <option>Node.js Programming</option>
-                                </select>
+                                <div class="container-fluid">
+                                    @{
+                                      for (int i = 0; i < Model.FeaturesList.Count(); i++)
+                                      {
+                                        <label asp-for="@Model.FeaturesList[i].Title" class="checkbox-inline">
+                                            <input asp-for="@Model.FeaturesList[i].IsSelected" />@Model.FeaturesList[i].Title
+                                        </label>
+                                        <input asp-for="@Model.FeaturesList[i].FeatureId" type="hidden" />
+                                        <input asp-for="@Model.FeaturesList[i].Title" type="hidden" />
+                                        <br />
+                                      }
+                                    }
+                                </div>
                                 <br />
                                 <label>Associate with Categories:</label>
                                 <br />
                                 <div class="container-fluid">
                                     @{
-                                      var categories = new string[] { "C#", "C++", "C", "ASP.NET Core", "Bootstrap", "JavaScript", "Bag", "Queue", "Linked List", "Double Linked List",
-                                                                      "QuickSort", "Mergesort" };
-                                      foreach (var category in categories)
+                                      for (int i = 0; i < Model.CategoriesList.Count(); i++)
                                       {
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" id="chk-@category" value="@category"> @category
+                                        <label asp-for="@Model.CategoriesList[i].Name" class="checkbox-inline">
+                                            <input asp-for="@Model.CategoriesList[i].IsSelected" />@Model.CategoriesList[i].Name
                                         </label>
+                                        <input asp-for="@Model.CategoriesList[i].CategoryId" type="hidden" />
+                                        <input asp-for="@Model.CategoriesList[i].Name" type="hidden" />
                                         <br />
                                       }
                                     }
@@ -100,17 +106,18 @@
 
 
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/simplemde/dist/simplemde.min.js"></script>
+@section Scripts {
+    <script type="text/javascript" src="~/js/AddEditPostPage.js"></script>
 
-<script type="text/javascript">
-   // var simplemde = new SimpleMDE();
+    <script type="text/javascript">
+       // var simplemde = new SimpleMDE();
 
-    $(function () {
-        setTimeout(function () {
-            $("#UpdateSavedMessage").fadeOut("slow");
-        }, 10000);
-    });
+        $(function () {
+            setTimeout(function () {
+                $("#UpdateSavedMessage").fadeOut("slow");
+            }, 10000);
+        });
 
-</script>
+    </script>
 
+}

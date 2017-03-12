@@ -11,6 +11,5 @@ namespace blog.Models
     public BlogPost BlogPost { get; set; }
     public int FeatureId { get; set; }
     public Feature Feature { get; set; }
-    public int Order { get; set; }
   }
 }

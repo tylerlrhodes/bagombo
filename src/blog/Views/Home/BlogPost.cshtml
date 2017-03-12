@@ -3,6 +3,7 @@
 @model ViewBlogPostViewModel
 
 @{
+  ViewData["Title"] = Model.Title;
   Layout = "_Layout";
 }
 
@@ -10,9 +11,7 @@
     <div class="col-md-9">
         <div class="panel panel-default">
             <div class="panel-body">
-                <p>
-                    <h2>@Model.Title</h2>
-                </p>
+                <h2>@Model.Title</h2>
                 <hr />
                 <p>
                     @Html.Raw(Model.Content)

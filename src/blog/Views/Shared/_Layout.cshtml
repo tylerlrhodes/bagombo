@@ -12,6 +12,7 @@
   var admin = User.IsInRole("Admins");  // get this the real way eventually
   var author = User.IsInRole("Authors");
 }
+
 <!doctype html>
 
 <html>
@@ -94,7 +95,9 @@
     <script type="text/javascript" asp-src-include="~/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" asp-src-include="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="//cdn.jsdelivr.net/highlight.js/9.9.0/highlight.min.js"></script>
-    <script type="text/javascript" src="~/js/JavaScript.js"></script>
+    <script type="text/javascript" src="~/js/Common.js"></script>
+
+    @RenderSection("scripts", false)
     
 </body>
 </html>
