@@ -58,7 +58,7 @@ namespace blog.Controllers
           Title = model.Title,
           Description = model.Description
         };
-        await _context.Features.AddAsync(f);
+        _context.Features.Add(f);
         await _context.SaveChangesAsync();
         return RedirectToAction("ManageFeatures");
       }
@@ -93,10 +93,10 @@ namespace blog.Controllers
     }
 
     [HttpGet]
-    public IActionResult ManageFeatures()
+    public async Task<IActionResult> ManageFeatures()
     {
       AdminManageFeaturesViewModel amfvm = new AdminManageFeaturesViewModel();
-      amfvm.Features = _context.Features.AsEnumerable();
+      amfvm.Features = await _context.Features.ToListAsync();
       return View(amfvm);
     }
 
@@ -148,10 +148,10 @@ namespace blog.Controllers
     }
 
     [HttpGet]
-    public IActionResult ManageCategories()
+    public async Task<IActionResult> ManageCategories()
     {
       AdminManageCategoriesViewModel amcvm = new AdminManageCategoriesViewModel();
-      amcvm.Categories = _context.Categories.AsEnumerable();
+      amcvm.Categories = await _context.Categories.ToListAsync();
       return View(amcvm);
     }
 
@@ -165,16 +165,16 @@ namespace blog.Controllers
     }
 
     [HttpGet]
-    public IActionResult ManagePosts()
+    public async Task<IActionResult> ManagePosts()
     {
       AdminManagePostsViewModel mpvm = new AdminManagePostsViewModel();
-      mpvm.posts = _context.BlogPosts.Include(a => a.Author).AsEnumerable();
+      mpvm.posts = await _context.BlogPosts.Include(a => a.Author).ToListAsync();
       return View(mpvm);
     }
 
-    public IActionResult ManageUsers()
+    public async Task<IActionResult> ManageUsers()
     {
-      return View(_userManager.Users.Include(u => u.Logins).Include(u => u.Author));
+      return View(await _userManager.Users.Include(u => u.Logins).Include(u => u.Author).ToListAsync());
     }
 
     public ViewResult CreateUser() => View();

@@ -7,6 +7,7 @@ using blog.Data;
 using blog.Models.ViewModels.Home;
 //using blog.Models.ViewModels.BlogPostView;
 using CommonMark;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,10 +35,10 @@ namespace blog.Controllers
     {
       return View();
     }
-    public IActionResult Features()
+    public async Task<IActionResult> Features()
     {
       ViewFeaturesViewModel vfvm = new ViewFeaturesViewModel();
-      vfvm.Features = _context.Features.AsEnumerable();
+      vfvm.Features = await _context.Features.ToListAsync();
       return View(vfvm);
     }
 
@@ -45,23 +46,23 @@ namespace blog.Controllers
     {
       return View();
     }
-    public IActionResult BlogPost(int? id)
+    public async Task<IActionResult> BlogPost(int? id)
     {
       if (id == null)
         return NotFound();
 
-      var bp = (from bps in _context.BlogPosts
-               where bps.Id == id
-               join a in _context.Authors on bps.AuthorId equals a.Id
-               select new ViewBlogPostViewModel
-               {
-                 Author = $"{a.FirstName} {a.LastName}",
-                 Title = bps.Title,
-                 Description = bps.Description,
-                 Content = bps.Content,
-                 ModifiedAt = bps.ModifiedAt
-               })
-               .FirstOrDefault();
+      var bp = await (from bps in _context.BlogPosts
+                      where bps.Id == id
+                      join a in _context.Authors on bps.AuthorId equals a.Id
+                      select new ViewBlogPostViewModel
+                      {
+                        Author = $"{a.FirstName} {a.LastName}",
+                        Title = bps.Title,
+                        Description = bps.Description,
+                        Content = bps.Content,
+                        ModifiedAt = bps.ModifiedAt
+                      })
+                      .FirstOrDefaultAsync();
 
       if (bp == null)
         return NotFound();

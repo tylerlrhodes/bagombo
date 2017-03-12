@@ -39,14 +39,14 @@ namespace blog.Controllers
 
       var curUser = await _userManager.GetUserAsync(User);
 
-      var author = (from u in _context.Users
-                    where u.Id == curUser.Id
-                    join a in _context.Authors on u.Id equals a.ApplicationUserId
-                    select a).FirstOrDefault();
+      var author = await (from u in _context.Users
+                          where u.Id == curUser.Id
+                          join a in _context.Authors on u.Id equals a.ApplicationUserId
+                          select a).FirstOrDefaultAsync();
 
-      var posts = (from bp in _context.BlogPosts
-                   where bp.AuthorId == author.Id
-                   select bp).AsEnumerable();
+      var posts = await (from bp in _context.BlogPosts
+                         where bp.AuthorId == author.Id
+                         select bp).ToListAsync();
 
       ampvm.posts = posts;
 
@@ -64,10 +64,10 @@ namespace blog.Controllers
       if (ModelState.IsValid)
       {
         var curUser = await _userManager.GetUserAsync(User);
-        var author = (from u in _userManager.Users
-                      where u.Id == curUser.Id
-                      join a in _context.Authors on u.Id equals a.ApplicationUserId
-                      select a).FirstOrDefault();
+        var author = await (from u in _userManager.Users
+                            where u.Id == curUser.Id
+                            join a in _context.Authors on u.Id equals a.ApplicationUserId
+                            select a).FirstOrDefaultAsync();
 
         BlogPost bp = new BlogPost
         {
@@ -80,7 +80,7 @@ namespace blog.Controllers
         };
         try
         {
-          await _context.BlogPosts.AddAsync(bp);
+          _context.BlogPosts.Add(bp);
           await _context.SaveChangesAsync();
         }
         catch (Exception)
@@ -88,7 +88,7 @@ namespace blog.Controllers
           ModelState.AddModelError("", "Error saving to database!");
           return View(model);
         }
-        return RedirectToAction("ManagePosts", "Author");
+        return RedirectToAction("EditPost", new { id = bp.Id });
       }
       return View(model);
     }
@@ -103,16 +103,16 @@ namespace blog.Controllers
         Title = post.Title,
         Content = post.Content,
         Description = post.Description,
-        PublishOn = DateTime.Now + TimeSpan.FromDays(2),
+        PublishOn = post.PublishOn,
         Public = post.Public,
         FeaturesList = new List<FeaturesCheckBox>(),
         CategoriesList = new List<CategoriesCheckBox>()
       };
 
-      var postHasCategories = (from bpc in _context.BlogPostCategory
-                               where bpc.BlogPostId == id
-                               join c in _context.Categories on bpc.CategoryId equals c.Id
-                               select c).ToList();
+      var postHasCategories = await (from bpc in _context.BlogPostCategory
+                                     where bpc.BlogPostId == id
+                                     join c in _context.Categories on bpc.CategoryId equals c.Id
+                                     select c).ToListAsync();
 
       foreach (var category in _context.Categories)
       {
@@ -131,10 +131,10 @@ namespace blog.Controllers
         ebpvm.CategoriesList.Add(categoryCheckBox);
       }
 
-      var postHasFeatures = (from bpf in _context.BlogPostFeature
-                             where bpf.BlogPostId == id
-                             join f in _context.Features on bpf.FeatureId equals f.Id
-                             select f).ToList();
+      var postHasFeatures = await (from bpf in _context.BlogPostFeature
+                                   where bpf.BlogPostId == id
+                                   join f in _context.Features on bpf.FeatureId equals f.Id
+                                   select f).ToListAsync();
 
       foreach (var feature in _context.Features)
       {
@@ -165,10 +165,10 @@ namespace blog.Controllers
 
       var post = _context.BlogPosts.Where(bp => bp.Id == model.Id).Include(bp => bp.Author).FirstOrDefault();
       var curUser = await _userManager.GetUserAsync(User);
-      var author = (from u in _userManager.Users
-                    where u.Id == curUser.Id
-                    join a in _context.Authors on u.Id equals a.ApplicationUserId
-                    select a).FirstOrDefault();
+      var author = await (from u in _userManager.Users
+                          where u.Id == curUser.Id
+                          join a in _context.Authors on u.Id equals a.ApplicationUserId
+                          select a).FirstOrDefaultAsync();
 
       // An admin is taking ownership
       if (post.Author == null)
