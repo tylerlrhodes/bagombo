@@ -2,6 +2,14 @@
 
 Simple blogging software using ASP.NET Core MVC and Entity Framework Core
 
+Features for 1.0:
+* Multi-Author support
+* Features allow for different topics to easily be created and viewed
+* Full text search
+* Edit posts in straight markdown/HTML
+* Export posts for portability
+* Themes
+
 MIT license
 
 ## Roadmap:
