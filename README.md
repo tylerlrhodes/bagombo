@@ -9,6 +9,10 @@ Features for 1.0:
 * Edit posts in straight markdown/HTML
 * Export posts for portability
 * Themes
+* Supports any database with EF Core Provider
+* Multi-Platform
+    * Initial release tested on Windows 2016 with SQL Server 2016 Express Edition
+	* 1.1 tested on additional platforms
 
 MIT license
 
