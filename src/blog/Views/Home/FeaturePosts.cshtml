@@ -1,0 +1,48 @@
+﻿
+@{
+  ViewData["Title"] = "Posts for Feature";
+  Layout = "_Layout";
+}
+@using blog.Models.ViewModels.Home
+@model ViewFeaturePostsViewModel
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h3>Posts for @Model.Feature.Title</h3>
+            <hr />
+        </div>
+    </div>
+    @foreach (var post in Model.BlogPosts)
+    {
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3>
+                            @post.Title
+                        </h3>
+                        <hr />
+                        <h5>
+                            @post.Description
+                        </h5>
+                        <hr />
+                        <h5>
+                            Author: @post.Author
+                        </h5>
+                        <h5>
+                            @foreach (var c in post.Categories)
+                            {
+                              <span class="label label-info"> @c.Name </span>  
+
+                            }
+                        </h5>
+                        <br />
+                        <a class="btn btn-primary" asp-action="BlogPost" asp-route-id="@post.Id">View Post</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>

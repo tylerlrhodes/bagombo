@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using blog.Data;
 using blog.Models.ViewModels.Home;
+using blog.Models;
 using CommonMark;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,6 +36,54 @@ namespace blog.Controllers
     public IActionResult AllPosts()
     {
       return View();
+    }
+
+    public async Task<IActionResult> FeaturePosts(int id)
+    {
+      var feature = await _context.Features.FindAsync(id);
+
+      var bps = await _context.BlogPostFeature
+                              .Where(bpf => bpf.FeatureId == feature.Id && bpf.BlogPost.Public == true && bpf.BlogPost.PublishOn < DateTime.Now)
+                              .Select(bpf => bpf.BlogPost)
+                              .ToListAsync();
+
+      var posts = await _context.BlogPosts
+                  .Include(bp => bp.Author)
+                  .Include(bp => bp.Categories)
+                  .Where(bp => bps.Contains(bp))
+                  .ToListAsync();
+
+      List<ViewBlogPostViewModel> viewPosts = new List<ViewBlogPostViewModel>();
+
+      foreach (var p in posts)
+      {
+        //var categories = p.Categories.Select(c => c.Category).ToList();
+
+        var categoryIds = p.Categories.Select(c => c.CategoryId);
+
+        var categories = await (from cat in _context.Categories
+                                where categoryIds.Contains(cat.Id)
+                                select cat).ToListAsync();
+
+        var bpView = new ViewBlogPostViewModel()
+        {
+          Author = $"{p.Author.FirstName} {p.Author.LastName}",
+          Title = p.Title,
+          Description = p.Description,
+          Categories = categories,
+          ModifiedAt = p.ModifiedAt,
+          Id = p.Id
+        };
+        viewPosts.Add(bpView);
+      }
+
+      ViewFeaturePostsViewModel vfpvm = new ViewFeaturePostsViewModel()
+      {
+        Feature = feature,
+        BlogPosts = viewPosts
+      };
+
+      return View(vfpvm);
     }
 
     public async Task<IActionResult> Features()
@@ -87,25 +136,34 @@ namespace blog.Controllers
       if (id == null)
         return NotFound();
 
-      var bp = await (from bps in _context.BlogPosts
-                      where bps.Id == id && bps.Public == true
-                      join a in _context.Authors on bps.AuthorId equals a.Id
-                      select new ViewBlogPostViewModel
-                      {
-                        Author = $"{a.FirstName} {a.LastName}",
-                        Title = bps.Title,
-                        Description = bps.Description,
-                        Content = bps.Content,
-                        ModifiedAt = bps.ModifiedAt
-                      })
-                      .FirstOrDefaultAsync();
+      var post = await _context.BlogPosts
+                          .Include(bp => bp.Author)
+                          .Include(bp => bp.Categories)
+                          .Where(bp => bp.Id == id && bp.Public == true && bp.PublishOn < DateTime.Now)
+                          .FirstOrDefaultAsync();
 
-      if (bp == null)
+      if (post == null)
         return NotFound();
 
-      bp.Content = CommonMarkConverter.Convert(bp.Content);
+      var categoryIds = post.Categories.Select(c => c.CategoryId);
 
-      return View(bp);
+      var categories = await (from cat in _context.Categories
+                              where categoryIds.Contains(cat.Id)
+                              select cat).ToListAsync();
+
+      var bpvm = new ViewBlogPostViewModel()
+      {
+        Author = $"{post.Author.FirstName} {post.Author.LastName}",
+        Title = post.Title,
+        Description = post.Description,
+        Content = post.Content,
+        ModifiedAt = post.ModifiedAt,
+        Categories = categories
+      };
+
+      bpvm.Content = CommonMarkConverter.Convert(bpvm.Content);
+
+      return View(bpvm);
     }
 
   }

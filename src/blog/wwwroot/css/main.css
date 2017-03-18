@@ -1,5 +1,5 @@
 ﻿body {
-    padding: 0px;
+    padding: 0;
 }
 
 /* Get rid of highlighting on navbar-brand*/
@@ -18,14 +18,18 @@
 ul.nostyle, ul.nostyle > li {
     list-style-type: none;
     list-style-position: inside;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
 }
 
-div.center-text {
+.center-text {
     text-align: center;
 }
 
 .h600 {
     height: 600px;
+}
+
+.label {
+    margin: 2px;
 }

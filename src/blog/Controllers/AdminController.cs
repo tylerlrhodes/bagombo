@@ -99,6 +99,15 @@ namespace blog.Controllers
       return View(amfvm);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> DeleteFeature(int id)
+    {
+      var feature = await _context.Features.FindAsync(id);
+      _context.Features.Remove(feature);
+      await _context.SaveChangesAsync();
+      return RedirectToAction("ManageFeatures");
+    }
+    
     [HttpGet]
     public IActionResult AddCategory() => View();
 

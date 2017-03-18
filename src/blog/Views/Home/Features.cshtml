@@ -28,11 +28,8 @@
                       <h5>
                           @feature.Description
                       </h5>
-                      <h5>
-                          @feature.BlogCount
-                      </h5>
                       <br />
-                      <a class="btn btn-primary" asp-action="FeaturePosts" asp-route-id="@feature.Id">See Posts...</a>
+                      <a class="btn btn-primary" asp-action="FeaturePosts" asp-route-id="@feature.Id">See Posts... <span class="badge">@feature.BlogCount</span></a>
                   </div>
               </div>
           </div>
