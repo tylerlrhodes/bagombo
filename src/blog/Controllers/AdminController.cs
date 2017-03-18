@@ -39,7 +39,6 @@ namespace blog.Controllers
       _userValidator = userValidator;
     }
 
-    // GET: /<controller>/
     public IActionResult Index()
     {
       return View();
@@ -441,6 +440,7 @@ namespace blog.Controllers
       }
       return View(user);
     }
+
   }
 
 }

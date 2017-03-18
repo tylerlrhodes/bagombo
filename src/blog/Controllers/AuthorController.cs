@@ -27,11 +27,12 @@ namespace blog.Controllers
       _context = context;
       _userManager = userManager;
     }
-    // GET: /<controller>/
+
     public IActionResult Index()
     {
       return View();
     }
+
     [HttpGet]
     public async Task<IActionResult> ManagePosts()
     {
@@ -52,11 +53,13 @@ namespace blog.Controllers
 
       return View(ampvm);
     }
+
     [HttpGet]
     public IActionResult AddPost()
     {
       return View();
     }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddPost(AddBlogPostViewModel model)
@@ -76,7 +79,9 @@ namespace blog.Controllers
           Content = model.Content,
           Description = model.Description,
           CreatedAt = DateTime.Now,
-          ModifiedAt = DateTime.Now
+          ModifiedAt = DateTime.Now,
+          Public = false,
+          PublishOn = DateTime.Now.AddDays(7)
         };
         try
         {
@@ -92,6 +97,7 @@ namespace blog.Controllers
       }
       return View(model);
     }
+
     [HttpGet]
     public async Task<IActionResult> EditPost(int id)
     {
@@ -155,6 +161,7 @@ namespace blog.Controllers
 
       return View(ebpvm);
     }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditPost(EditBlogPostViewModel model)
@@ -231,6 +238,7 @@ namespace blog.Controllers
 
       return View(model);
     }
+
     [HttpPost]
     public ContentResult GetPreviewHtml(string content)
     {
@@ -240,6 +248,7 @@ namespace blog.Controllers
         ContentType = "text/html"
       };
     }
+
   }
 
 }

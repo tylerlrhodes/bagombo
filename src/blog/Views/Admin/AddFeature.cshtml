@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-  ViewData["Add Feature"];
+  ViewData["Title"] = "Add Feature";
   Layout = "_Layout";
 }
 @using blog.Models.ViewModels.Admin
@@ -11,7 +11,7 @@
 <div class="container">
     <div class="col-md-6 col-md-offset-3">
         <div class="panel panel-default">
-            <div class="panel-heading">Add Category:</div>
+            <div class="panel-heading">Add Feature:</div>
             <div class="panel-body">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <form asp-action="AddFeature" method="post">
