@@ -20,15 +20,14 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h3>
-                            @post.Title
+                            <a asp-action="BlogPost" asp-route-id="@post.Id">@post.Title</a>
                         </h3>
-                        <hr />
                         <h5>
-                            @post.Description
+                            Author: @post.Author
                         </h5>
                         <hr />
                         <h5>
-                            Author: @post.Author
+                            @post.Description
                         </h5>
                         <h5>
                             @foreach (var c in post.Categories)
@@ -37,8 +36,6 @@
 
                             }
                         </h5>
-                        <br />
-                        <a class="btn btn-primary" asp-action="BlogPost" asp-route-id="@post.Id">View Post</a>
                     </div>
                 </div>
             </div>

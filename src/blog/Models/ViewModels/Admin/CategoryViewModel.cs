@@ -9,7 +9,7 @@ namespace blog.Models.ViewModels.Admin
   public class CategoryViewModel
   {
     [Required]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     [Required]
     public string Name { get; set; }

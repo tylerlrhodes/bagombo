@@ -7,9 +7,9 @@ namespace blog.Models
 {
   public class BlogPostFeature
   {
-    public int BlogPostId { get; set; }
+    public long BlogPostId { get; set; }
     public BlogPost BlogPost { get; set; }
-    public int FeatureId { get; set; }
+    public long FeatureId { get; set; }
     public Feature Feature { get; set; }
   }
 }

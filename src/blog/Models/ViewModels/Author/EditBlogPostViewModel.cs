@@ -9,7 +9,7 @@ namespace blog.Models.ViewModels.Author
   public class EditBlogPostViewModel
   {
     [Required]
-    public int Id { get; set; }
+    public long Id { get; set; }
     [Required]
     public string Title { get; set; }
     [Required]
@@ -21,22 +21,22 @@ namespace blog.Models.ViewModels.Author
     public DateTime PublishOn { get; set; }
     [Required]
     public bool Public { get; set; }
-    [Required]
+    //[Required]
     public List<FeaturesCheckBox> FeaturesList { get; set; }
-    [Required]
+    //[Required]
     public List<CategoriesCheckBox> CategoriesList { get; set; }
   }
 
   public class CategoriesCheckBox
   {
-    public int CategoryId { get; set; }
+    public long CategoryId { get; set; }
     public string Name { get; set; }
     public bool IsSelected { get; set; }
   }
 
   public class FeaturesCheckBox
   {
-    public int FeatureId { get; set; }
+    public long FeatureId { get; set; }
     public string Title { get; set; }
     public bool IsSelected { get; set; }
   }

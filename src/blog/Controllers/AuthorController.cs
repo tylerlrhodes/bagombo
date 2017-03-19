@@ -99,7 +99,7 @@ namespace blog.Controllers
     }
 
     [HttpGet]
-    public async Task<IActionResult> EditPost(int id)
+    public async Task<IActionResult> EditPost(long id)
     {
       var post = await _context.BlogPosts.FindAsync(id);
 
@@ -196,19 +196,25 @@ namespace blog.Controllers
 
       await _context.SaveChangesAsync();
 
-      foreach (var feature in model.FeaturesList)
-      {
-        if (feature.IsSelected)
+      if (model.FeaturesList != null)
+      { 
+        foreach (var feature in model.FeaturesList)
         {
-          BlogPostFeature bpf = new BlogPostFeature()
+          if (feature.IsSelected)
           {
-            BlogPostId = post.Id,
-            FeatureId = feature.FeatureId
-          };
-          _context.BlogPostFeature.Add(bpf);
+            BlogPostFeature bpf = new BlogPostFeature()
+            {
+              BlogPostId = post.Id,
+              FeatureId = feature.FeatureId
+            };
+            _context.BlogPostFeature.Add(bpf);
+          }
         }
       }
-
+      else
+      {
+        model.FeaturesList = new List<FeaturesCheckBox>();
+      }
       var bpcts = from bpc in _context.BlogPostCategory
                   where bpc.BlogPostId == post.Id
                   select bpc;
@@ -217,17 +223,24 @@ namespace blog.Controllers
 
       await _context.SaveChangesAsync();
 
-      foreach (var category in model.CategoriesList)
+      if (model.CategoriesList != null)
       {
-        if (category.IsSelected)
+        foreach (var category in model.CategoriesList)
         {
-          BlogPostCategory bpc = new BlogPostCategory()
+          if (category.IsSelected)
           {
-            BlogPostId = post.Id,
-            CategoryId = category.CategoryId
-          };
-          _context.BlogPostCategory.Add(bpc);
+            BlogPostCategory bpc = new BlogPostCategory()
+            {
+              BlogPostId = post.Id,
+              CategoryId = category.CategoryId
+            };
+            _context.BlogPostCategory.Add(bpc);
+          }
         }
+      }
+      else
+      {
+        model.CategoriesList = new List<CategoriesCheckBox>();
       }
 
       await _context.SaveChangesAsync();

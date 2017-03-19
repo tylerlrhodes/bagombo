@@ -25,7 +25,7 @@ namespace blog.Controllers
       _logger = logger;
     }
     [HttpPost("{id}")]
-    public async Task<IActionResult> DeletePost(int? id)
+    public async Task<IActionResult> DeletePost(long? id)
     {
       if (id != null)
       {

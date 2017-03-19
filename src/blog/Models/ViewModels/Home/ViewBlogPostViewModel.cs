@@ -7,7 +7,7 @@ namespace blog.Models.ViewModels.Home
 {
   public class ViewBlogPostViewModel
   {
-    public int Id { get; set; }
+    public long Id { get; set; }
     public string Title { get; set; }
     public string Author { get; set; }
     public string Description { get; set; }

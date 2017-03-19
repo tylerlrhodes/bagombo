@@ -38,7 +38,7 @@ namespace blog.Controllers
       return View();
     }
 
-    public async Task<IActionResult> FeaturePosts(int id)
+    public async Task<IActionResult> FeaturePosts(long id)
     {
       var feature = await _context.Features.FindAsync(id);
 
@@ -131,7 +131,7 @@ namespace blog.Controllers
       return View();
     }
 
-    public async Task<IActionResult> BlogPost(int? id)
+    public async Task<IActionResult> BlogPost(long? id)
     {
       if (id == null)
         return NotFound();

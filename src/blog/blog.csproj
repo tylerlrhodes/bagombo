@@ -64,4 +64,8 @@
     <None Include="Views\Admin\EditCategory.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

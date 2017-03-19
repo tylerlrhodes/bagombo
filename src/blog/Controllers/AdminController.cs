@@ -65,7 +65,7 @@ namespace blog.Controllers
     }
 
     [HttpGet]
-    public async Task<IActionResult> EditFeature(int id)
+    public async Task<IActionResult> EditFeature(long id)
     {
       var f = await _context.Features.FindAsync(id);
       var vm = new FeatureViewModel()
@@ -100,7 +100,7 @@ namespace blog.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> DeleteFeature(int id)
+    public async Task<IActionResult> DeleteFeature(long id)
     {
       var feature = await _context.Features.FindAsync(id);
       _context.Features.Remove(feature);
@@ -129,7 +129,7 @@ namespace blog.Controllers
     }
 
     [HttpGet]
-    public async Task<IActionResult> EditCategory(int id)
+    public async Task<IActionResult> EditCategory(long id)
     {
       var c = await _context.Categories.FindAsync(id);
       var vm = new CategoryViewModel()
@@ -164,7 +164,7 @@ namespace blog.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> DeleteCategory(int id)
+    public async Task<IActionResult> DeleteCategory(long id)
     {
       var c = await _context.Categories.FindAsync(id);
       _context.Categories.Remove(c);

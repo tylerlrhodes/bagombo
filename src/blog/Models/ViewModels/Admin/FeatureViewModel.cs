@@ -9,7 +9,7 @@ namespace blog.Models.ViewModels.Admin
   public class FeatureViewModel
   {
     [Required]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     [Required]
     public string Title { get; set; }
