@@ -8,6 +8,7 @@ Simple blogging software using ASP.NET Core MVC and Entity Framework Core
 * You can run it by compiling from Visual Studio 2017 and publishing it to a server, then set it up in IIS
 * There is a CreateDb.sql file under src, you have to create the database but can run this to setup the tables
 * For the search to work you need to create a full-text index on the BlogPost table
+* You need to setup your connection string either in appsettings.json, user secrets or an environment variable depending on your environment.  Not sure the best way, but I use an environment variable on the server
 * Change appsettings.json to seed the Db with an admin user besdies my default
 * Use the user manager to make an author
 * Hopefully the rest you can figure out
