@@ -8,7 +8,6 @@ namespace blog.Models.ViewModels.Admin
 {
   public class UserViewModel
   {
-    [Required]
     public string Id { get; set; }
     [Display(Name = "User Name:")]
     [Required]

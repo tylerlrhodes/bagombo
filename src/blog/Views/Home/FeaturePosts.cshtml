@@ -1,10 +1,11 @@
-﻿
+﻿@using blog.Models.ViewModels.Home
+@model ViewFeaturePostsViewModel
+
 @{
-  ViewData["Title"] = "Posts for Feature";
+  ViewData["Title"] = $"Posts for Feature {Model.Feature.Title}";
   Layout = "_Layout";
 }
-@using blog.Models.ViewModels.Home
-@model ViewFeaturePostsViewModel
+
 
 <div class="container-fluid">
     <div class="row">

@@ -42,14 +42,13 @@
                 <ul class="nav navbar-nav">
                     <li class="@((string)(ViewContext.RouteData.Values["action"]) == "Index" ? "active" : "")"><a asp-controller="Home" asp-action="Index">Home</a></li>
                     <li class="@((string)(ViewContext.RouteData.Values["action"]) == "Features" ? "active" : "")"><a asp-controller="Home" asp-action="Features">Features</a></li>
-                    <!--li class="hidden-md hidden-sm @((string)(ViewContext.RouteData.Values["action"]) == "RecentPosts" ? "active" : "")"><a asp-controller="Home" asp-action="RecentPosts">Recent Posts</a></li>-->
                     <li class="hidden-sm @((string)(ViewContext.RouteData.Values["action"]) == "AllPosts" ? "active" : "")"><a asp-controller="Home" asp-action="AllPosts">All Posts</a></li>
                 </ul>
-                <form class="navbar-form navbar-left input-group-sm" role="search">
+                <form asp-controller="Home" asp-action="Search" method="get" class="navbar-form navbar-left input-group-sm" role="search">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input name="SearchText" type="text" class="form-control" placeholder="Search">
                     </div>
-                    <button type="submit" class="btn btn-default" asp-controller="Home" asp-action="Index"><span class="glyphicon glyphicon-search"></span></button>
+                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
                 </form>
                 @await Html.PartialAsync("_LoginPartial")
                 <ul class="nav navbar-nav navbar-right">
@@ -95,7 +94,6 @@
 
     <script type="text/javascript" asp-src-include="~/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" asp-src-include="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <!--script src="//cdn.jsdelivr.net/highlight.js/9.9.0/highlight.min.js"></script-->
     <script type="text/javascript" asp-src-include="~/lib/highlight/highlight.pack.js"></script>
     <script type="text/javascript" src="~/js/Common.js"></script>
 

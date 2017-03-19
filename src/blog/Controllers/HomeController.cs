@@ -44,6 +44,80 @@ namespace blog.Controllers
       return View();
     }
 
+    public async Task<IActionResult> Search(string searchText)
+    {
+      var search = "\"*" + searchText + "*\"";
+
+      var posts = await _context.BlogPosts
+                          .FromSql("SELECT * from [dbo].[BlogPost] WHERE Contains((Content, Description, Title), {0})", search)
+                          .Where(bp => bp.Public == true && bp.PublishOn < DateTime.Now)
+                          .OrderByDescending(bp => bp.ModifiedAt)
+                          .ThenByDescending(bp => bp.PublishOn)
+                          .Include(bp => bp.Author)
+                          .ToListAsync();
+
+      var bps = new List<ViewSearchResultBlogPostViewModel>();
+
+      foreach (var post in posts)
+      {
+        var categoryIds = await _context.BlogPostCategory
+                                  .Where(bpc => bpc.BlogPostId == post.Id)
+                                  .Select(bpc => bpc.CategoryId)
+                                  .ToListAsync();
+
+        var categories = await _context.Categories
+                                 .Where(c => categoryIds.Contains(c.Id))
+                                 .Select(c => c)
+                                 .ToListAsync();
+
+        var vsrbpvm = new ViewSearchResultBlogPostViewModel()
+        {
+          BlogPost = post,
+          Categories = categories
+        };
+
+        bps.Add(vsrbpvm);
+
+      }
+
+      var vsrvm = new ViewSearchResultsViewModel()
+      {
+        SearchTerm = searchText,
+        BlogPosts = bps
+      };
+
+      return View(vsrvm);
+    }
+
+    public async Task<IActionResult> CategoryPosts(long? id)
+    {
+      var category = await _context.Categories.FindAsync(id);
+
+      var vcpvm = new ViewCategoryPostsViewModel()
+      {
+        Category = category,
+        Posts = new List<BlogPost>()
+      };
+
+      if (category != null)
+      {
+        var bpc = await _context.BlogPostCategory
+                                .Where(bp => bp.CategoryId == category.Id && bp.BlogPost.Public == true && bp.BlogPost.PublishOn < DateTime.Now)
+                                .Select(bp => bp.BlogPost)
+                                .ToListAsync();
+
+        var posts = await _context.BlogPosts
+                                  .Include(bp => bp.Author)
+                                  .Where(bp => bpc.Contains(bp))
+                                  .ToListAsync();
+
+        vcpvm.Category = category;
+        vcpvm.Posts = posts;
+      }
+
+      return View(vcpvm);
+    }
+
     public async Task<IActionResult> AllPosts(int? sortby = 1)
     {
       var vm = new ViewAllPostsViewModel();
