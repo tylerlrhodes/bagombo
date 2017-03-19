@@ -13,7 +13,7 @@ Simple blogging software using ASP.NET Core MVC and Entity Framework Core
 * Use the user manager to make an author
 * Hopefully the rest you can figure out
 
-Features for 1.0:
+### Feature Goals for 1.0:
 * Multi-Author support
 * Features allow for different topics to easily be created and viewed
 * Full text search
@@ -28,11 +28,7 @@ Features for 1.0:
 MIT license
 
 ## Roadmap:
-### * Not finished at all
-### * Working on 0.2 for alpha release - Estimated Release is April 1st
-### * Working on getting a live instance running on AWS
-### * I'll add instructions for getting it running
-### * 0.3 - code cleanup and refactoring - June 1st
+### * 0.3 - code cleanup and refactoring, bug fixes - June 1st
 ### * 0.4 - Core Feature enhancements - July 1st
 ### * 0.5 - Data Layer Stabilization - August 1st
 ### * 0.6 - Core HTML and SEO 
