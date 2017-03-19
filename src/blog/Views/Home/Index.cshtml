@@ -3,7 +3,8 @@
   ViewData["Title"] = "Bagombo Home";
   Layout = "_Layout";
 }
-
+@using blog.Models.ViewModels.Home
+@model ViewHomeViewModel
 
 
 <div class="container-fluid">
@@ -51,14 +52,10 @@
             <h3>Recent Posts</h3>
             <hr />
             <ul class="nostyle">
-                <li><a href="#">Running ASP.NET Core locally from source</a></li>
-                <li><a href="#">A first website with ASP.NET Core and Kestrel</a></li>
-                <li><a href="#">Kestrel vs WebListener (HTTPSysServer)</a></li>
-                <li><a href="#">Starting Out with Entity Framework Core</a></li>
-                <li><a href="#">How ASP.NET handles an HTTP Request</a></li>
-                <li><a href="#">The Startup Class in ASP.NET Core</a></li>
-                <li><a href="#">Starting with ASP.NET Identity</a></li>
-                <li><a href="#">Simple Data Structures in C#</a></li>
+                @foreach (var p in Model.RecentPosts)
+                {
+                  <li><a asp-action="BlogPost" asp-route-id="@p.Id">@p.Title</a></li>
+                }
             </ul>
         </div>
         <div class="col-sm-6 col-md-3">

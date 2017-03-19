@@ -22,10 +22,21 @@ namespace blog.Controllers
       _context = context;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-      ViewData["Title"] = "Bagombo Home";
-      return View();
+      var recentPosts = await _context.BlogPosts
+                                      .Where(bp => bp.Public == true && bp.PublishOn < DateTime.Now)
+                                      .OrderByDescending(bp => bp.ModifiedAt)
+                                      .ThenByDescending(bp => bp.PublishOn)
+                                      .Take(7)
+                                      .ToListAsync();
+
+      var vhvm = new ViewHomeViewModel()
+      {
+        RecentPosts = recentPosts
+      };
+
+      return View(vhvm);
     }
 
     public IActionResult RecentPosts()
@@ -33,9 +44,62 @@ namespace blog.Controllers
       return View();
     }
 
-    public IActionResult AllPosts()
+    public async Task<IActionResult> AllPosts(int? sortby = 1)
     {
-      return View();
+      var vm = new ViewAllPostsViewModel();
+
+      // Sort by Category
+      if (sortby == 1)
+      {
+        var categories = await _context.Categories.ToListAsync();
+
+        var viewCategories = new List<ViewPostsByCategory>();
+
+        foreach (var c in categories)
+        {
+          var bpc = await _context.BlogPostCategory
+                                  .Where(bp => bp.CategoryId == c.Id && bp.BlogPost.Public == true && bp.BlogPost.PublishOn < DateTime.Now)
+                                  .Select(bp => bp.BlogPost)
+                                  .ToListAsync();
+
+          var posts = await _context.BlogPosts
+                                    .Include(bp => bp.Author)
+                                    .Where(bp => bpc.Contains(bp))
+                                    .ToListAsync();
+
+          var vpbc = new ViewPostsByCategory()
+          {
+            Category = c,
+            Posts = posts
+          };
+
+          viewCategories.Add(vpbc);
+        }
+
+        vm = new ViewAllPostsViewModel()
+        {
+          PostsByDate = new List<BlogPost>(),
+          SortBy = sortby ?? 1,
+          Categories = viewCategories ?? new List<ViewPostsByCategory>()
+        };
+
+      }
+      // return sorted by date
+      else
+      {
+        vm = new ViewAllPostsViewModel()
+        {
+          PostsByDate = await _context.BlogPosts
+                                      .Where(bp => bp.Public == true && bp.PublishOn < DateTime.Now)
+                                      .Include(bp => bp.Author)
+                                      .OrderByDescending(bp => bp.ModifiedAt)
+                                      .ThenByDescending(bp => bp.PublishOn)
+                                      .ToListAsync(),
+          SortBy = sortby ?? 2,
+          Categories = null
+        };
+      }
+      return View(vm);
     }
 
     public async Task<IActionResult> FeaturePosts(long id)

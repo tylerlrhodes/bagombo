@@ -46,7 +46,7 @@
             <div class="panel-body">
                 @foreach (var cat in Model.Categories)
                 {
-                  <a class="label label-info" asp-action="ListByCategoriy" asp-route-id="@cat.Id">@cat.Name</a><br />
+                  <a class="label label-info" asp-action="AllPosts" asp-route-sortby="1#@cat.Name">@cat.Name</a><br />
                 }
             </div>
         </div>

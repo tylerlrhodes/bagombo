@@ -17,6 +17,7 @@
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
+                            <th>Id</th>
                             <th>Title</th>
                             <th>Author</th>
                             <th>Description</th>
@@ -31,6 +32,7 @@
                         {
                             var aid = $"a{post.Id}";
                         <tr id="@post.Id">
+                            <td>@post.Id</td>
                             <td>@post.Title</td>
                             <td>@post.Author.FirstName @post.Author.LastName</td>
                             <td>@post.Description</td>
