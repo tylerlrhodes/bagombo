@@ -2,6 +2,16 @@
 
 Simple blogging software using ASP.NET Core MVC and Entity Framework Core
 
+### 0.2 Alpha is released
+* This is basically useable as a blog now
+* The home page is really the only spot where modifying code is needed, by updating /Views/Home/Index.html -- basically to update links to entries instead of taking what was left over
+* You can run it by compiling from Visual Studio 2017 and publishing it to a server, then set it up in IIS
+* There is a CreateDb.sql file under src, you have to create the database but can run this to setup the tables
+* For the search to work you need to create a full-text index on the BlogPost table
+* Change appsettings.json to seed the Db with an admin user besdies my default
+* Use the user manager to make an author
+* Hopefully the rest you can figure out
+
 Features for 1.0:
 * Multi-Author support
 * Features allow for different topics to easily be created and viewed
