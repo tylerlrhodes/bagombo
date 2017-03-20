@@ -2,7 +2,10 @@
 
 Simple blogging software using ASP.NET Core MVC and Entity Framework Core
 
+See it in action at [www.bagombo.org](http://www.bagombo.org)
+
 ### 0.2 Alpha is released
+* It's only tested on Windows Server 2016 and SQL Server 2016
 * This is basically useable as a blog now
 * The home page is really the only spot where modifying code is needed, by updating /Views/Home/Index.html -- basically to update links to entries instead of taking what was left over
 * You can run it by compiling from Visual Studio 2017 and publishing it to a server, then set it up in IIS
@@ -12,6 +15,14 @@ Simple blogging software using ASP.NET Core MVC and Entity Framework Core
 * Change appsettings.json to seed the Db with an admin user besdies my default
 * Use the user manager to make an author
 * Hopefully the rest you can figure out
+* The author profile page doesn't work yet, if you want you can setup a post and link to it that way
+
+### Feature Goals for 0.3
+* Easier to install
+* Script the database setup
+* Minor GUI fixups
+* SEO
+* Add Author Profile Page
 
 ### Feature Goals for 1.0:
 * Multi-Author support
@@ -20,7 +31,7 @@ Simple blogging software using ASP.NET Core MVC and Entity Framework Core
 * Edit posts in straight markdown/HTML
 * Export posts for portability
 * Themes
-* Supports any database with EF Core Provider
+* Support for MySQL and PostgresSQL
 * Multi-Platform
     * Initial release tested on Windows 2016 with SQL Server 2016 Express Edition
 	* 1.1 tested on additional platforms
