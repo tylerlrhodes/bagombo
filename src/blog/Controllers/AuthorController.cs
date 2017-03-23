@@ -202,9 +202,12 @@ namespace blog.Controllers
         {
           if (feature.IsSelected)
           {
+            //var f = await _context.Features.FindAsync(feature.FeatureId);
             BlogPostFeature bpf = new BlogPostFeature()
             {
+              //BlogPost = post,
               BlogPostId = post.Id,
+              //Feature = f,
               FeatureId = feature.FeatureId
             };
             _context.BlogPostFeature.Add(bpf);
@@ -229,9 +232,13 @@ namespace blog.Controllers
         {
           if (category.IsSelected)
           {
+            //var cat = await _context.Categories.FindAsync(category.CategoryId);
+
             BlogPostCategory bpc = new BlogPostCategory()
             {
+              //BlogPost = post,
               BlogPostId = post.Id,
+              //Category = cat,
               CategoryId = category.CategoryId
             };
             _context.BlogPostCategory.Add(bpc);

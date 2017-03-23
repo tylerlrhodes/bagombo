@@ -180,6 +180,11 @@ namespace blog.Controllers
     {
       var feature = await _context.Features.FindAsync(id);
 
+      if (feature == null)
+      {
+        return NotFound();
+      }
+
       var bps = await _context.BlogPostFeature
                               .Where(bpf => bpf.FeatureId == feature.Id && bpf.BlogPost.Public == true && bpf.BlogPost.PublishOn < DateTime.Now)
                               .Select(bpf => bpf.BlogPost)

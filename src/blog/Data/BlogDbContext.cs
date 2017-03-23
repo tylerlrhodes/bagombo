@@ -59,12 +59,8 @@ namespace blog.Data
                                 .HasForeignKey("AuthorId")
                                 .IsRequired(false);
                                 
-
-      builder.Entity<Author>().ToTable("Author");
       builder.Entity<Feature>().ToTable("Feature");
       builder.Entity<Category>().ToTable("Category");
-
-      builder.Entity<Author>().HasAlternateKey(e => new { e.FirstName, e.LastName });
 
       builder.Entity<BlogPostFeature>().HasKey(bpf => new { bpf.FeatureId, bpf.BlogPostId });
       builder.Entity<BlogPostFeature>().HasOne(bpf => bpf.BlogPost)

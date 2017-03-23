@@ -17,24 +17,25 @@ See it in action at [www.bagombo.org](http://www.bagombo.org)
 * Hopefully the rest you can figure out
 * The author profile page doesn't work yet, if you want you can setup a post and link to it that way
 
-### Feature Goals for 0.3
+### Goals for 0.3
+* Bug Fixes
+* Better error handling
+* A few unit tests
 * Easier to install
 * Script the database setup
+* Binary release format
 * Minor GUI fixups
 * SEO
 * Add Author Profile Page
 
-### Feature Goals for 1.0:
-* Multi-Author support
-* Features allow for different topics to easily be created and viewed
-* Full text search
-* Edit posts in straight markdown/HTML
-* Export posts for portability
-* Themes
-* Support for MySQL and PostgresSQL
-* Multi-Platform
-    * Initial release tested on Windows 2016 with SQL Server 2016 Express Edition
-	* 1.1 tested on additional platforms
+### Goals for 0.4
+* Implement Repository patter for data access (or CQRS)
+* More unit tests
+* GUI enhancements and more color!
+* Easier to install
+
+### Goals for 1.0:
+* TBD
 
 MIT license
 
