@@ -13,7 +13,7 @@
             <div class="panel-body">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div SaveUpdate id="UpdateSavedMessage"></div>
-                <form asp-action="EditPost" method="post">
+                <form id="EditPost" asp-action="EditPost" method="post">
                     <input asp-for="Id" type="hidden" />
                     <div class="form-group">
                         <label asp-for="Title">Title:</label>

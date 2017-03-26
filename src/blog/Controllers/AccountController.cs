@@ -66,6 +66,7 @@ namespace blog.Controllers
       AuthenticationProperties properties = _signInManager.ConfigureExternalAuthenticationProperties("Facebook", redirectUrl);
       return new ChallengeResult("Facebook", properties);
     }
+
     public async Task<IActionResult> FacebookResponse(string returnUrl = "/")
     {
       ExternalLoginInfo info = await _signInManager.GetExternalLoginInfoAsync();

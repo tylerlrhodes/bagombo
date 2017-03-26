@@ -69,4 +69,8 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\blog.repository\blog.repository.csproj" />
+  </ItemGroup>
+
 </Project>

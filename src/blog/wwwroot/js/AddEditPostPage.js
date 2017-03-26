@@ -1,4 +1,15 @@
 ﻿
+
+var scrollPos = sessionStorage.getItem('scrollPos');
+
+if (scrollPos !== null) {
+    document.getElementById('Content').scrollTop = scrollPos;
+}
+
+$('#EditPost').submit(function (e) {
+    sessionStorage.setItem('scrollPos', document.getElementById("Content").scrollTop)
+});
+
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     var target = $(e.target).attr("href") // activated tab
     if (target === "#PreviewTab") {
