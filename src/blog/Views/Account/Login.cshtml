@@ -1,5 +1,9 @@
 ﻿
 @using blog.Models.ViewModels.Account
+@using Microsoft.AspNetCore.Identity
+@using blog.Models
+@inject SignInManager<ApplicationUser> SignInManager
+
 @model AccountLoginViewModel
 
 @{
@@ -14,7 +18,7 @@
             <div class="panel-body">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <form method="post" asp-action="login" asp-controller="Account">
-                    <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+                    <input type="hidden" name="returnUrl" value="@ViewData["returnUrl"]" />
                     <div class="form-group">
                         <label for="Email">Email:</label>
                         <input class="form-control" asp-for="Email" />
@@ -27,7 +31,20 @@
                         <input asp-for="RememberMe" /><label asp-for="RememberMe">Remember Me</label>
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
-                    <a class="btn btn-default" asp-action="TwitterLogin" asp-route-returnUrl="@ViewBag.returnUrl"><img src="~/images/twitter-button.png" /></a>
+                    @{
+                      var loginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
+                      foreach (var p in loginProviders)
+                      {
+                          if (p.DisplayName == "Twitter")
+                          {
+                            <a class="btn btn-default" asp-action="TwitterLogin" asp-route-returnUrl="@ViewData["returnUrl"]"><img src="~/images/twitter-button.png" /></a>
+                          }
+                          else if (p.DisplayName == "Facebook")
+                          {
+                            <a class="btn btn-default" asp-action="FacebookLogin" asp-route-returnUrl="@ViewData["returnUrl"]">Login with Facebook</a>
+                          }
+                      }
+                    }
                 </form>
             </div>
         </div>

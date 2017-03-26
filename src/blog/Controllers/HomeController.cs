@@ -180,42 +180,35 @@ namespace blog.Controllers
     {
       var feature = await _context.Features.FindAsync(id);
 
+      var Categories = _context.Categories.ToListAsync();
+
       if (feature == null)
       {
         return NotFound();
       }
 
-      var bps = await _context.BlogPostFeature
+      var posts = await _context.BlogPostFeature
                               .Where(bpf => bpf.FeatureId == feature.Id && bpf.BlogPost.Public == true && bpf.BlogPost.PublishOn < DateTime.Now)
-                              .Select(bpf => bpf.BlogPost)
+                              .Include(bpf => bpf.BlogPost)
+                                .ThenInclude(bpf => bpf.Author)
+                              .Include(bpf => bpf.BlogPost)
+                                .ThenInclude(bp => bp.Categories)                                 
                               .ToListAsync();
-
-      var posts = await _context.BlogPosts
-                  .Include(bp => bp.Author)
-                  .Include(bp => bp.Categories)
-                  .Where(bp => bps.Contains(bp))
-                  .ToListAsync();
 
       List<ViewBlogPostViewModel> viewPosts = new List<ViewBlogPostViewModel>();
 
       foreach (var p in posts)
       {
-        //var categories = p.Categories.Select(c => c.Category).ToList();
-
-        var categoryIds = p.Categories.Select(c => c.CategoryId);
-
-        var categories = await (from cat in _context.Categories
-                                where categoryIds.Contains(cat.Id)
-                                select cat).ToListAsync();
+        var categories = p.BlogPost.Categories.Select(c => c.Category).ToList();
 
         var bpView = new ViewBlogPostViewModel()
         {
-          Author = $"{p.Author.FirstName} {p.Author.LastName}",
-          Title = p.Title,
-          Description = p.Description,
+          Author = $"{p.BlogPost.Author.FirstName} {p.BlogPost.Author.LastName}",
+          Title = p.BlogPost.Title,
+          Description = p.BlogPost.Description,
           Categories = categories,
-          ModifiedAt = p.ModifiedAt,
-          Id = p.Id
+          ModifiedAt = p.BlogPost.ModifiedAt,
+          Id = p.BlogPost.Id
         };
         viewPosts.Add(bpView);
       }

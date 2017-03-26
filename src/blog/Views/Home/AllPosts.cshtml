@@ -22,7 +22,7 @@
                 <br />
                 @foreach (var c in Model.Categories)
                 {
-                    <a class="label label-info" href="#@c.Category.Name">@c.Category.Name</a>
+                    <h4 style="display: inline-block"><a class="label label-info" href="#@c.Category.Name">@c.Category.Name</a></h4>
                 }
             </div>
         </div>
@@ -31,7 +31,7 @@
         {
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <h4 id="@c.Category.Name"><span class="label label-info">@c.Category.Name</span></h4>
+                    <h3 id="@c.Category.Name"><span class="label label-info">@c.Category.Name</span></h3>
                 </div>
             </div>
             <div class="row">

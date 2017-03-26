@@ -30,7 +30,7 @@ namespace blog.Controllers
     }
     public IActionResult Login(string returnUrl)
     {
-      ViewBag.returnUrl = returnUrl;
+      ViewData["returnUrl"] = returnUrl;
       return View();
     }
     [HttpPost]
@@ -58,6 +58,33 @@ namespace blog.Controllers
     {
       await _signInManager.SignOutAsync();
       return RedirectToAction("Login");
+    }
+
+    public IActionResult FacebookLogin(string returnUrl)
+    {
+      string redirectUrl = Url.Action("FacebookResponse", "Account", new { ReturnUrl = returnUrl });
+      AuthenticationProperties properties = _signInManager.ConfigureExternalAuthenticationProperties("Facebook", redirectUrl);
+      return new ChallengeResult("Facebook", properties);
+    }
+    public async Task<IActionResult> FacebookResponse(string returnUrl = "/")
+    {
+      ExternalLoginInfo info = await _signInManager.GetExternalLoginInfoAsync();
+      if (info == null)
+      {
+        return RedirectToAction(nameof(Login));
+      }
+      var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
+      if (result.Succeeded)
+      {
+        return Redirect(returnUrl);
+      }
+      else
+      {
+        ViewData["ReturnUrl"] = returnUrl;
+        ViewData["LoginProvider"] = info.LoginProvider;
+        var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+        return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+      }
     }
 
     public IActionResult TwitterLogin(string returnUrl)
@@ -93,10 +120,11 @@ namespace blog.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl = null)
     {
+      // Get the information about the user from the external login provider
+      var info = await _signInManager.GetExternalLoginInfoAsync();
+
       if (ModelState.IsValid)
       {
-        // Get the information about the user from the external login provider
-        var info = await _signInManager.GetExternalLoginInfoAsync();
         if (info == null)
         {
           return View("ExternalLoginFailure");
@@ -113,10 +141,16 @@ namespace blog.Controllers
             return RedirectToLocal(returnUrl);
           }
         }
+        else
+        {
+          ModelState.AddModelError("", result.ToString());
+        }
         //AddErrors(result);
       }
 
       ViewData["ReturnUrl"] = returnUrl;
+      ViewData["LoginProvider"] = info.LoginProvider;
+
       return View(model);
     }
 

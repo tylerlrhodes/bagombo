@@ -20,18 +20,32 @@ namespace blog
       var builder = new ConfigurationBuilder()
           .SetBasePath(env.ContentRootPath)
           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-          .AddEnvironmentVariables()
-          .AddUserSecrets<Startup>();
+          .AddEnvironmentVariables();
+
+      if (env.IsDevelopment())
+      { 
+          builder.AddUserSecrets<Startup>();
+      }
 
       Configuration = builder.Build();
     }
-    // This method gets called by the runtime. Use this method to add services to the container.
-    // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
+
     public void ConfigureServices(IServiceCollection services)
     {
-      var ConnectionString = Configuration["ConnectionString"];
+      
+      // This is for a mutli-tenant Environment, so the ConnectionString Env Var name can be set
+      // In AppSettings.json
+      var ConnectionStringConfigName = Configuration["ConnectionStringConfigName"];
+      var ConnectionString = Configuration[$"{ConnectionStringConfigName}"];
 
-      //services.AddDbContext<BlogContext>(options => options.UseSqlServer(ConnectionString));
+      if (ConnectionString == null)
+      {
+        ConnectionString = Configuration["ConnectionString"];
+        if (ConnectionString == null)
+        {
+          throw new System.Exception("Unable to determine the Connection String to the database.");
+        }
+      }
 
       services.AddMvc().AddJsonOptions(options =>
       {
@@ -39,7 +53,7 @@ namespace blog
       });
 
       services.AddDbContext<BlogDbContext>(options =>
-                  options.UseSqlServer(Configuration["ConnectionString"]));
+                  options.UseSqlServer(ConnectionString));
 
       services.AddIdentity<ApplicationUser, IdentityRole>(opts => {
         opts.User.RequireUniqueEmail = true;
@@ -65,11 +79,29 @@ namespace blog
 
       app.UseIdentity();
 
-      app.UseTwitterAuthentication(new TwitterOptions()
+      var TwitterKey = Configuration[$"{Configuration["TwitterKeyConfigName"]}"];
+      var TwitterSecret = Configuration[$"{Configuration["TwitterSecretConfigName"]}"];
+
+      if (TwitterKey != null && TwitterSecret != null)
       {
-        ConsumerKey = Configuration["TwitterKey"],
-        ConsumerSecret = Configuration["TwitterSecret"]
-      });
+        app.UseTwitterAuthentication(new TwitterOptions()
+        {
+          ConsumerKey = TwitterKey,
+          ConsumerSecret = TwitterSecret
+        });
+      }
+
+      var FacebookAppId = Configuration[$"{Configuration["FacebookAppIdConfigName"]}"];
+      var FacebookAppSecret = Configuration[$"{Configuration["FacebookAppSecretConfigName"]}"];
+
+      if (FacebookAppId != null && FacebookAppSecret != null)
+      {
+        app.UseFacebookAuthentication(new FacebookOptions()
+        {
+          AppId = FacebookAppId,
+          AppSecret = FacebookAppSecret
+        });
+      }
 
       app.UseMvcWithDefaultRoute();
 
