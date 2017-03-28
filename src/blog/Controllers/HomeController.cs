@@ -25,6 +25,7 @@ namespace blog.Controllers
     public async Task<IActionResult> Index()
     {
       var recentPosts = await _context.BlogPosts
+                                      .AsNoTracking()
                                       .Where(bp => bp.Public == true && bp.PublishOn < DateTime.Now)
                                       .OrderByDescending(bp => bp.ModifiedAt)
                                       .ThenByDescending(bp => bp.PublishOn)
@@ -49,6 +50,7 @@ namespace blog.Controllers
       var search = "\"*" + searchText + "*\"";
 
       var posts = await _context.BlogPosts
+                          .AsNoTracking()
                           .FromSql("SELECT * from [dbo].[BlogPost] WHERE Contains((Content, Description, Title), {0})", search)
                           .Where(bp => bp.Public == true && bp.PublishOn < DateTime.Now)
                           .OrderByDescending(bp => bp.ModifiedAt)
@@ -97,6 +99,7 @@ namespace blog.Controllers
       if (category != null)
       {
         var bpcs = await _context.BlogPostCategory
+                                .AsNoTracking()
                                 .Where(bp => bp.CategoryId == category.Id && bp.BlogPost.Public == true && bp.BlogPost.PublishOn < DateTime.Now)
                                 .Include(bpc => bpc.BlogPost)
                                   .ThenInclude(bp => bp.Author)
@@ -116,13 +119,14 @@ namespace blog.Controllers
       // Sort by Category
       if (sortby == 1)
       {
-        var categories = await _context.Categories.ToListAsync();
+        var categories = await _context.Categories.AsNoTracking().ToListAsync();
 
         var viewCategories = new List<ViewPostsByCategory>();
 
         foreach (var c in categories)
         {
           var bpcs = await _context.BlogPostCategory
+                                  .AsNoTracking()
                                   .Where(bp => bp.CategoryId == c.Id && bp.BlogPost.Public == true && bp.BlogPost.PublishOn < DateTime.Now)
                                   .Include(bpc => bpc.BlogPost)
                                     .ThenInclude(bp => bp.Author)
@@ -151,6 +155,7 @@ namespace blog.Controllers
         vm = new ViewAllPostsViewModel()
         {
           PostsByDate = await _context.BlogPosts
+                                      .AsNoTracking()
                                       .Where(bp => bp.Public == true && bp.PublishOn < DateTime.Now)
                                       .Include(bp => bp.Author)
                                       .OrderByDescending(bp => bp.ModifiedAt)
@@ -173,6 +178,7 @@ namespace blog.Controllers
       }
 
       var bpfs = await _context.BlogPostFeature
+                              .AsNoTracking()
                               .Where(bpf => bpf.FeatureId == feature.Id && bpf.BlogPost.Public == true && bpf.BlogPost.PublishOn < DateTime.Now)
                               .Include(bpf => bpf.BlogPost)
                                 .ThenInclude(bp => bp.Author)
@@ -216,7 +222,7 @@ namespace blog.Controllers
       // cant select new into a defined type so have to use anon type for the select new here due to EF Core bug
       // code after is a work-around
 
-      var x = from feature in _context.Features
+      var x = from feature in _context.Features.AsNoTracking()
               select new
               {
                 Title = feature.Title,
@@ -224,7 +230,7 @@ namespace blog.Controllers
                 Id = feature.Id,
                 BlogCount = (from posts in _context.BlogPostFeature
                              where posts.FeatureId == feature.Id && posts.BlogPost.Public == true && posts.BlogPost.PublishOn < DateTime.Now
-                             select posts).Count()
+                             select posts).AsNoTracking().Count()
               };
 
       List<FeatureViewModel> featureList = new List<FeatureViewModel>();
@@ -257,6 +263,7 @@ namespace blog.Controllers
         return NotFound();
 
       var post = await _context.BlogPosts
+                          .AsNoTracking()
                           .Include(bp => bp.Author)
                           .Include(bp => bp.BlogPostCategory)
                             .ThenInclude(bpc => bpc.Category)

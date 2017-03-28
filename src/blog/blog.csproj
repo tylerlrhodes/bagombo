@@ -15,7 +15,6 @@
     <Content Include="wwwroot\js\AddEditPostPage.js" />
     <Content Include="wwwroot\js\AddEditUser.js" />
     <Content Include="wwwroot\js\Common.js" />
-    <Content Include="wwwroot\js\PostPage.js" />
   </ItemGroup>
 
   <ItemGroup>

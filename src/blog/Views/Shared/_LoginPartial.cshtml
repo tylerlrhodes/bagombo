@@ -9,7 +9,7 @@
 <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
+            <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off&nbsp;&nbsp;</button>
         </li>
     </ul>
 </form>
@@ -18,6 +18,6 @@ else
 {
   Uri url = new Uri(String.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path, Context.Request.QueryString));
 <ul class="nav navbar-nav navbar-right">
-    <li><a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@url">Log in</a></li>
+    <li><a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@url">Log in&nbsp;&nbsp;</a></li>
 </ul>
 }

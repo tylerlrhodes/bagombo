@@ -95,7 +95,7 @@ namespace blog.Controllers
     public async Task<IActionResult> ManageFeatures()
     {
       AdminManageFeaturesViewModel amfvm = new AdminManageFeaturesViewModel();
-      amfvm.Features = await _context.Features.ToListAsync();
+      amfvm.Features = await _context.Features.AsNoTracking().ToListAsync();
       return View(amfvm);
     }
 
@@ -159,7 +159,7 @@ namespace blog.Controllers
     public async Task<IActionResult> ManageCategories()
     {
       AdminManageCategoriesViewModel amcvm = new AdminManageCategoriesViewModel();
-      amcvm.Categories = await _context.Categories.ToListAsync();
+      amcvm.Categories = await _context.Categories.AsNoTracking().ToListAsync();
       return View(amcvm);
     }
 
@@ -176,13 +176,13 @@ namespace blog.Controllers
     public async Task<IActionResult> ManagePosts()
     {
       AdminManagePostsViewModel mpvm = new AdminManagePostsViewModel();
-      mpvm.posts = await _context.BlogPosts.Include(a => a.Author).ToListAsync();
+      mpvm.posts = await _context.BlogPosts.AsNoTracking().Include(a => a.Author).ToListAsync();
       return View(mpvm);
     }
 
     public async Task<IActionResult> ManageUsers()
     {
-      return View(await _userManager.Users.Include(u => u.Logins).Include(u => u.Author).ToListAsync());
+      return View(await _userManager.Users.AsNoTracking().Include(u => u.Logins).Include(u => u.Author).ToListAsync());
     }
 
     public ViewResult CreateUser() => View();
@@ -270,7 +270,7 @@ namespace blog.Controllers
 
     public IActionResult EditUser(string id)
     {
-      ApplicationUser user = _userManager.Users.Where(u => u.Id == id).Include(u => u.Author).Include(u => u.Logins).FirstOrDefault();
+      ApplicationUser user = _userManager.Users.AsNoTracking().Where(u => u.Id == id).Include(u => u.Author).Include(u => u.Logins).FirstOrDefault();
 
       if (user != null)
       {
