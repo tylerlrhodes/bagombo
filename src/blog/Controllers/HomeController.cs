@@ -54,21 +54,16 @@ namespace blog.Controllers
                           .OrderByDescending(bp => bp.ModifiedAt)
                           .ThenByDescending(bp => bp.PublishOn)
                           .Include(bp => bp.Author)
+                          .Include(bp => bp.BlogPostCategory)
+                            .ThenInclude(bpc => bpc.Category)
                           .ToListAsync();
 
       var bps = new List<ViewSearchResultBlogPostViewModel>();
 
       foreach (var post in posts)
       {
-        var categoryIds = await _context.BlogPostCategory
-                                  .Where(bpc => bpc.BlogPostId == post.Id)
-                                  .Select(bpc => bpc.CategoryId)
-                                  .ToListAsync();
 
-        var categories = await _context.Categories
-                                 .Where(c => categoryIds.Contains(c.Id))
-                                 .Select(c => c)
-                                 .ToListAsync();
+        var categories = post.BlogPostCategory.Select(c => c.Category).ToList();
 
         var vsrbpvm = new ViewSearchResultBlogPostViewModel()
         {
@@ -101,18 +96,14 @@ namespace blog.Controllers
 
       if (category != null)
       {
-        var bpc = await _context.BlogPostCategory
+        var bpcs = await _context.BlogPostCategory
                                 .Where(bp => bp.CategoryId == category.Id && bp.BlogPost.Public == true && bp.BlogPost.PublishOn < DateTime.Now)
-                                .Select(bp => bp.BlogPost)
+                                .Include(bpc => bpc.BlogPost)
+                                  .ThenInclude(bp => bp.Author)
                                 .ToListAsync();
 
-        var posts = await _context.BlogPosts
-                                  .Include(bp => bp.Author)
-                                  .Where(bp => bpc.Contains(bp))
-                                  .ToListAsync();
-
         vcpvm.Category = category;
-        vcpvm.Posts = posts;
+        vcpvm.Posts = bpcs.Select(bp => bp.BlogPost).ToList();
       }
 
       return View(vcpvm);
@@ -131,20 +122,16 @@ namespace blog.Controllers
 
         foreach (var c in categories)
         {
-          var bpc = await _context.BlogPostCategory
+          var bpcs = await _context.BlogPostCategory
                                   .Where(bp => bp.CategoryId == c.Id && bp.BlogPost.Public == true && bp.BlogPost.PublishOn < DateTime.Now)
-                                  .Select(bp => bp.BlogPost)
+                                  .Include(bpc => bpc.BlogPost)
+                                    .ThenInclude(bp => bp.Author)
                                   .ToListAsync();
-
-          var posts = await _context.BlogPosts
-                                    .Include(bp => bp.Author)
-                                    .Where(bp => bpc.Contains(bp))
-                                    .ToListAsync();
 
           var vpbc = new ViewPostsByCategory()
           {
             Category = c,
-            Posts = posts
+            Posts = bpcs.Select(bp => bp.BlogPost).ToList()
           };
 
           viewCategories.Add(vpbc);
@@ -180,35 +167,32 @@ namespace blog.Controllers
     {
       var feature = await _context.Features.FindAsync(id);
 
-      var Categories = _context.Categories.ToListAsync();
-
       if (feature == null)
       {
         return NotFound();
       }
 
-      var posts = await _context.BlogPostFeature
+      var bpfs = await _context.BlogPostFeature
                               .Where(bpf => bpf.FeatureId == feature.Id && bpf.BlogPost.Public == true && bpf.BlogPost.PublishOn < DateTime.Now)
                               .Include(bpf => bpf.BlogPost)
-                                .ThenInclude(bpf => bpf.Author)
+                                .ThenInclude(bp => bp.Author)
                               .Include(bpf => bpf.BlogPost)
-                                .ThenInclude(bp => bp.Categories)                                 
+                                .ThenInclude(bp => bp.BlogPostCategory)
+                                .ThenInclude(bpc => bpc.Category)
                               .ToListAsync();
 
       List<ViewBlogPostViewModel> viewPosts = new List<ViewBlogPostViewModel>();
 
-      foreach (var p in posts)
+      foreach (var bpf in bpfs)
       {
-        var categories = p.BlogPost.Categories.Select(c => c.Category).ToList();
-
         var bpView = new ViewBlogPostViewModel()
         {
-          Author = $"{p.BlogPost.Author.FirstName} {p.BlogPost.Author.LastName}",
-          Title = p.BlogPost.Title,
-          Description = p.BlogPost.Description,
-          Categories = categories,
-          ModifiedAt = p.BlogPost.ModifiedAt,
-          Id = p.BlogPost.Id
+          Author = $"{bpf.BlogPost.Author.FirstName} {bpf.BlogPost.Author.LastName}",
+          Title = bpf.BlogPost.Title,
+          Description = bpf.BlogPost.Description,
+          Categories = bpf.BlogPost.BlogPostCategory.Select(c => c.Category).ToList(),
+          ModifiedAt = bpf.BlogPost.ModifiedAt,
+          Id = bpf.BlogPost.Id
         };
         viewPosts.Add(bpView);
       }
@@ -274,18 +258,13 @@ namespace blog.Controllers
 
       var post = await _context.BlogPosts
                           .Include(bp => bp.Author)
-                          .Include(bp => bp.Categories)
+                          .Include(bp => bp.BlogPostCategory)
+                            .ThenInclude(bpc => bpc.Category)
                           .Where(bp => bp.Id == id && bp.Public == true && bp.PublishOn < DateTime.Now)
                           .FirstOrDefaultAsync();
 
       if (post == null)
         return NotFound();
-
-      var categoryIds = post.Categories.Select(c => c.CategoryId);
-
-      var categories = await (from cat in _context.Categories
-                              where categoryIds.Contains(cat.Id)
-                              select cat).ToListAsync();
 
       var bpvm = new ViewBlogPostViewModel()
       {
@@ -294,7 +273,7 @@ namespace blog.Controllers
         Description = post.Description,
         Content = post.Content,
         ModifiedAt = post.ModifiedAt,
-        Categories = categories
+        Categories = post.BlogPostCategory.Select(c => c.Category).ToList()
       };
 
       bpvm.Content = CommonMarkConverter.Convert(bpvm.Content);

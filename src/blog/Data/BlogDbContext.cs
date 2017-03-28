@@ -64,7 +64,7 @@ namespace blog.Data
 
       builder.Entity<BlogPostFeature>().HasKey(bpf => new { bpf.FeatureId, bpf.BlogPostId });
       builder.Entity<BlogPostFeature>().HasOne(bpf => bpf.BlogPost)
-                                       .WithMany(bp => bp.Features)
+                                       .WithMany(bp => bp.BlogPostFeature)
                                        .HasForeignKey(bpf => bpf.BlogPostId);
       builder.Entity<BlogPostFeature>().HasOne(bpf => bpf.Feature)
                                        .WithMany(f => f.BlogPosts)
@@ -72,7 +72,7 @@ namespace blog.Data
 
       builder.Entity<BlogPostCategory>().HasKey(bpc => new { bpc.BlogPostId, bpc.CategoryId });
       builder.Entity<BlogPostCategory>().HasOne(bpc => bpc.BlogPost)
-                                        .WithMany(bp => bp.Categories)
+                                        .WithMany(bp => bp.BlogPostCategory)
                                         .HasForeignKey(bpc => bpc.BlogPostId);
       builder.Entity<BlogPostCategory>().HasOne(bpc => bpc.Category)
                                         .WithMany(c => c.BlogPosts)

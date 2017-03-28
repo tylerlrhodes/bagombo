@@ -17,7 +17,7 @@ namespace blog.Models
     public DateTime ModifiedAt { get; set; }
     public DateTime PublishOn { get; set; }
     public bool Public { get; set; }
-    public ICollection<BlogPostCategory> Categories { get; set; }
-    public ICollection<BlogPostFeature> Features { get; set; }
+    public ICollection<BlogPostCategory> BlogPostCategory { get; set; }
+    public ICollection<BlogPostFeature> BlogPostFeature { get; set; }
   }
 }
