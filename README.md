@@ -4,6 +4,11 @@ Simple blogging software using ASP.NET Core MVC and Entity Framework Core
 
 See it in action at [www.bagombo.org](http://www.bagombo.org)
 
+### 0.2.1
+* Actually tagged as a release
+* Fixes query issues with many-to-many queries starting from a linking table
+* Support for Facebook authentication 
+
 ### 0.2 Alpha is released
 * It's only tested on Windows Server 2016 and SQL Server 2016
 * This is basically useable as a blog now
@@ -29,7 +34,7 @@ See it in action at [www.bagombo.org](http://www.bagombo.org)
 * Add Author Profile Page
 
 ### Goals for 0.4
-* Implement Repository patter for data access (or CQRS)
+* Implement Repository pattern for data access (or CQRS)
 * More unit tests
 * GUI enhancements and more color!
 * Easier to install
