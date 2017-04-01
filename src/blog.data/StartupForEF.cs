@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using blog;
 
-namespace blog.repository
+namespace blog.data
 {
   /// <summary>
   /// The whole point of this class is to allow for EF Core code to exist in a seperate project from the web application

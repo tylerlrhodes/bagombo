@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace blog.repository
+namespace blog.data
 {
   interface IBlogRepository
   {

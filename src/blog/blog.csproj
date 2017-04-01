@@ -65,7 +65,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\blog.repository\blog.repository.csproj" />
+    <ProjectReference Include="..\blog.data\blog.data.csproj" />
   </ItemGroup>
 
 </Project>
