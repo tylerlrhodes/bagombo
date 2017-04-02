@@ -1,6 +1,6 @@
 using System;
 using Xunit;
-using blog.Data;
+using blog.EFCore;
 using blog.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

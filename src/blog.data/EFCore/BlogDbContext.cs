@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 
 using blog.Models;
 
-namespace blog.Data
+namespace blog.EFCore
 {
   public class BlogDbContext : IdentityDbContext<ApplicationUser>
   {

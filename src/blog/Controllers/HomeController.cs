@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using blog.Data;
+using blog.EFCore;
 using blog.Models.ViewModels.Home;
 using blog.Models;
+using blog.data.Query;
 using CommonMark;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,21 +17,22 @@ namespace blog.Controllers
   public class HomeController : Controller
   {
     BlogDbContext _context;
+    QueryProcessorAsync _qpa;
 
-    public HomeController(BlogDbContext context)
+    public HomeController(BlogDbContext context, QueryProcessorAsync qpa)
     {
       _context = context;
+      _qpa = qpa;
     }
 
     public async Task<IActionResult> Index()
     {
-      var recentPosts = await _context.BlogPosts
-                                      .AsNoTracking()
-                                      .Where(bp => bp.Public == true && bp.PublishOn < DateTime.Now)
-                                      .OrderByDescending(bp => bp.ModifiedAt)
-                                      .ThenByDescending(bp => bp.PublishOn)
-                                      .Take(7)
-                                      .ToListAsync();
+      GetRecentBlogPosts grbp = new GetRecentBlogPosts()
+      {
+        NumberOfPostsToGet = 7
+      };
+
+      var recentPosts = await _qpa.ProcessAsync(grbp);
 
       var vhvm = new ViewHomeViewModel()
       {

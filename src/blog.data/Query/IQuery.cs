@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace blog.data
+namespace blog.data.Query
 {
-  interface IBlogRepository
+  public interface IQuery<TResult>
   {
-    
   }
 }

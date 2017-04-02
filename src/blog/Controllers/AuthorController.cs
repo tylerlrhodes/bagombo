@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using blog.Models;
 using blog.Models.ViewModels.Author;
-using blog.Data;
+using blog.EFCore;
 using CommonMark;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860

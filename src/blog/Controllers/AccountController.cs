@@ -18,21 +18,25 @@ namespace blog.Controllers
   {
     UserManager<ApplicationUser> _userManager;
     SignInManager<ApplicationUser> _signInManager;
+
     public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
     {
       _userManager = userManager;
       _signInManager = signInManager;
     }
+
     // GET: /<controller>/
     public IActionResult Index()
     {
       return View();
     }
+
     public IActionResult Login(string returnUrl)
     {
       ViewData["returnUrl"] = returnUrl;
       return View();
     }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(AccountLoginViewModel alvm, string returnUrl)

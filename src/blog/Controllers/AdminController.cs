@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using blog.Data;
+using blog.EFCore;
 using blog.Models;
 using Microsoft.EntityFrameworkCore;
 using blog.Models.ViewModels.Admin;
