@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using blog.Models;
+using blog.Models.ViewModels;
+using blog.Models.ViewModels.Home;
 
 namespace blog.data.Query
 {
@@ -9,4 +11,5 @@ namespace blog.data.Query
   {
     public int NumberOfPostsToGet { get; set; }
   }
+
 }

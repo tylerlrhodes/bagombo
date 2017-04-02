@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using blog.Models;
 using blog.EFCore;
-using blog.data.Query;
+using blog.data.Query.EFCoreQueryHandlers;
 using Microsoft.Extensions.Configuration.UserSecrets;
 
 
@@ -56,7 +56,7 @@ namespace blog
       services.AddDbContext<BlogDbContext>(options =>
                   options.UseSqlServer(ConnectionString));
 
-      services.AddQueries();
+      services.AddEFQueries();
 
       services.AddIdentity<ApplicationUser, IdentityRole>(opts => {
         opts.User.RequireUniqueEmail = true;

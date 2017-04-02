@@ -7,7 +7,7 @@ using blog.EFCore;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace blog.data.Query
+namespace blog.data.Query.EFCoreQueryHandlers
 {
   public class GetRecentBlogPostsEFQueryHandler : IQueryHandlerAsync<GetRecentBlogPosts, IList<BlogPost>>
   {
