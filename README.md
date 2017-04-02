@@ -4,6 +4,10 @@ Simple blogging software using ASP.NET Core MVC and Entity Framework Core
 
 See it in action at [www.bagombo.org](http://www.bagombo.org)
 
+### 0.2.2 - In Progress
+* Adding in CQRS and refactoring queries
+* Adding in Some Unit Tests
+
 ### 0.2.1
 * Actually tagged as a release
 * Fixes query issues with many-to-many queries starting from a linking table
