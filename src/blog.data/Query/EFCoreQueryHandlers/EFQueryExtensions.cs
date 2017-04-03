@@ -17,6 +17,7 @@ namespace blog.data.Query.EFCoreQueryHandlers
       container.Register<IQueryHandlerAsync<GetRecentBlogPosts, IList<BlogPost>>, GetRecentBlogPostsEFQueryHandler>(Lifestyle.Scoped);
       container.Register<IQueryHandlerAsync<GetViewSearchResultBlogPostsBySearchText, IList<ViewSearchResultBlogPostViewModel>>, GetViewSearchResultBlogPostsBySearchTextEFQueryHandler>();
       container.Register<IQueryHandlerAsync<GetViewCategoryPostsByCategory, ViewCategoryPostsViewModel>, GetViewCategoryPostsByCategoryEFQueryHandler>();
+
       container.Register<QueryProcessorAsync, QueryProcessorAsync>(Lifestyle.Scoped);
     }
   }

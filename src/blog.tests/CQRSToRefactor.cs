@@ -9,6 +9,8 @@ using blog.data.Query;
 using blog.Models;
 using blog.data.Query.EFCoreQueryHandlers;
 using blog.data.Query.Queries;
+using SimpleInjector;
+using SimpleInjector.Lifestyles;
 
 namespace blog.tests
 {
@@ -17,35 +19,39 @@ namespace blog.tests
     [Fact]
     public async void GetRecentBlogPostsTest()
     {
-      ServiceCollection services = new ServiceCollection();
+      Container container = new Container();
 
-      services.AddScoped<BlogDbContext>(o => { return new BlogDbContext(new DbContextOptionsBuilder<BlogDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options); });
+      container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
-      services.AddTransient<IQueryHandlerAsync<GetRecentBlogPosts, IList<BlogPost>>, GetRecentBlogPostsEFQueryHandler>();
+      container.Register<BlogDbContext>(() => { return new BlogDbContext(new DbContextOptionsBuilder<BlogDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options); }, Lifestyle.Scoped);
 
-      var sp = services.BuildServiceProvider();
+      container.Register<IQueryHandlerAsync<GetRecentBlogPosts, IList<BlogPost>>, GetRecentBlogPostsEFQueryHandler>();
 
-      var db = sp.GetService<BlogDbContext>();
+      container.Verify();
 
-      SeedBlogDbContext.SeedData(db);
+      using (AsyncScopedLifestyle.BeginScope(container))
+      { 
+        var db = container.GetInstance<BlogDbContext>();
 
-      QueryProcessorAsync qpa = new QueryProcessorAsync(sp);
+        SeedBlogDbContext.SeedData(db);
 
-      GetRecentBlogPosts grbp = new GetRecentBlogPosts()
-      {
-        NumberOfPostsToGet = 2
-      };
+        QueryProcessorAsync qpa = new QueryProcessorAsync(container);
 
-      var x = await qpa.ProcessAsync(grbp);
+        GetRecentBlogPosts grbp = new GetRecentBlogPosts()
+        {
+          NumberOfPostsToGet = 2
+        };
 
-      Assert.Equal(x.Count, 2);
+        var x = await qpa.ProcessAsync(grbp);
 
-      grbp.NumberOfPostsToGet = 3;
+        Assert.Equal(x.Count, 2);
 
-      x = await qpa.ProcessAsync(grbp);
+        grbp.NumberOfPostsToGet = 3;
 
-      Assert.Equal(x.Count, 3);
+        x = await qpa.ProcessAsync(grbp);
 
+        Assert.Equal(x.Count, 3);
+      }
     }
   }
 }
