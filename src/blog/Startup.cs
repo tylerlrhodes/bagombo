@@ -174,7 +174,7 @@ namespace blog
       // See: https://simpleinjector.org/blog/2016/07/
     }
 
-    // From 
+    // From Simple Injector Issue ... forgot which one : (
     private Func<T> GetAspNetServiceProvider<T>(IApplicationBuilder app)
     {
       var appServices = app.ApplicationServices;

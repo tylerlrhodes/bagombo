@@ -9,7 +9,7 @@ namespace blog.data.Query
 {
   public class QueryProcessorAsync : IQueryProcessorAsync
   {
-    IServiceProvider _provider;
+    Container _provider;
 
     public QueryProcessorAsync(Container provider)
     {
@@ -20,7 +20,7 @@ namespace blog.data.Query
     {
       var handlerType = typeof(IQueryHandlerAsync<,>).MakeGenericType(query.GetType(), typeof(TResult));
 
-      dynamic handler = _provider.GetService(handlerType);
+      dynamic handler = _provider.GetInstance(handlerType);
 
       return await handler.HandleAsync((dynamic)query);
     }
