@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.DependencyInjection;
+﻿using blog.data.Query.Queries;
 using blog.Models;
 using blog.Models.ViewModels.Home;
-using blog.data.Query.Queries;
-using blog.data.Query;
 using SimpleInjector;
+using System.Collections.Generic;
 
 namespace blog.data.Query.EFCoreQueryHandlers
 {
@@ -17,6 +13,9 @@ namespace blog.data.Query.EFCoreQueryHandlers
       container.Register<IQueryHandlerAsync<GetRecentBlogPosts, IList<BlogPost>>, GetRecentBlogPostsEFQueryHandler>(Lifestyle.Scoped);
       container.Register<IQueryHandlerAsync<GetViewSearchResultBlogPostsBySearchText, IList<ViewSearchResultBlogPostViewModel>>, GetViewSearchResultBlogPostsBySearchTextEFQueryHandler>();
       container.Register<IQueryHandlerAsync<GetViewCategoryPostsByCategory, ViewCategoryPostsViewModel>, GetViewCategoryPostsByCategoryEFQueryHandler>();
+      container.Register<IQueryHandlerAsync<GetViewAllPostsByCategory, ViewAllPostsViewModel>, GetViewAllPostsByCategoryEFQueryHandler>();
+      container.Register<IQueryHandlerAsync<GetViewAllPostsByDate, ViewAllPostsViewModel>, GetViewAllPostsByDateEFQueryHandler>();
+      container.Register<IQueryHandlerAsync<GetViewFeaturePostsByFeature, ViewFeaturePostsViewModel>, GetViewFeaturePostsByFeatureEFQueryHandler>();
 
       container.Register<QueryProcessorAsync, QueryProcessorAsync>(Lifestyle.Scoped);
     }

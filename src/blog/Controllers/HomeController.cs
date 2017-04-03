@@ -82,95 +82,36 @@ namespace blog.Controllers
       // Sort by Category
       if (sortby == 1)
       {
-        var categories = await _context.Categories.AsNoTracking().ToListAsync();
 
-        var viewCategories = new List<ViewPostsByCategory>();
+        GetViewAllPostsByCategory gvapbc = new GetViewAllPostsByCategory();
 
-        foreach (var c in categories)
-        {
-          var bpcs = await _context.BlogPostCategory
-                                  .AsNoTracking()
-                                  .Where(bp => bp.CategoryId == c.Id && bp.BlogPost.Public == true && bp.BlogPost.PublishOn < DateTime.Now)
-                                  .Include(bpc => bpc.BlogPost)
-                                    .ThenInclude(bp => bp.Author)
-                                  .ToListAsync();
-
-          var vpbc = new ViewPostsByCategory()
-          {
-            Category = c,
-            Posts = bpcs.Select(bp => bp.BlogPost).ToList()
-          };
-
-          viewCategories.Add(vpbc);
-        }
-
-        vm = new ViewAllPostsViewModel()
-        {
-          PostsByDate = null,
-          SortBy = sortby ?? 1,
-          Categories = viewCategories ?? new List<ViewPostsByCategory>()
-        };
+        vm = await _qpa.ProcessAsync(gvapbc);
 
       }
       // return sorted by date
       else
       {
-        vm = new ViewAllPostsViewModel()
-        {
-          PostsByDate = await _context.BlogPosts
-                                      .AsNoTracking()
-                                      .Where(bp => bp.Public == true && bp.PublishOn < DateTime.Now)
-                                      .Include(bp => bp.Author)
-                                      .OrderByDescending(bp => bp.ModifiedAt)
-                                      .ThenByDescending(bp => bp.PublishOn)
-                                      .ToListAsync(),
-          SortBy = sortby ?? 2,
-          Categories = null
-        };
+        GetViewAllPostsByDate gvapbd = new GetViewAllPostsByDate();
+
+        vm = await _qpa.ProcessAsync(gvapbd);
       }
+
       return View(vm);
     }
 
     public async Task<IActionResult> FeaturePosts(long id)
     {
-      var feature = await _context.Features.FindAsync(id);
+      GetViewFeaturePostsByFeature gvfpbf = new GetViewFeaturePostsByFeature()
+      {
+        Id = id
+      };
 
-      if (feature == null)
+      var vfpvm = await _qpa.ProcessAsync(gvfpbf);
+
+      if (vfpvm == null)
       {
         return NotFound();
       }
-
-      var bpfs = await _context.BlogPostFeature
-                              .AsNoTracking()
-                              .Where(bpf => bpf.FeatureId == feature.Id && bpf.BlogPost.Public == true && bpf.BlogPost.PublishOn < DateTime.Now)
-                              .Include(bpf => bpf.BlogPost)
-                                .ThenInclude(bp => bp.Author)
-                              .Include(bpf => bpf.BlogPost)
-                                .ThenInclude(bp => bp.BlogPostCategory)
-                                .ThenInclude(bpc => bpc.Category)
-                              .ToListAsync();
-
-      List<ViewBlogPostViewModel> viewPosts = new List<ViewBlogPostViewModel>();
-
-      foreach (var bpf in bpfs)
-      {
-        var bpView = new ViewBlogPostViewModel()
-        {
-          Author = $"{bpf.BlogPost.Author.FirstName} {bpf.BlogPost.Author.LastName}",
-          Title = bpf.BlogPost.Title,
-          Description = bpf.BlogPost.Description,
-          Categories = bpf.BlogPost.BlogPostCategory.Select(c => c.Category).ToList(),
-          ModifiedAt = bpf.BlogPost.ModifiedAt,
-          Id = bpf.BlogPost.Id
-        };
-        viewPosts.Add(bpView);
-      }
-
-      ViewFeaturePostsViewModel vfpvm = new ViewFeaturePostsViewModel()
-      {
-        Feature = feature,
-        BlogPosts = viewPosts
-      };
 
       return View(vfpvm);
     }
