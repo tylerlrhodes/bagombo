@@ -7,19 +7,20 @@ using blog.EFCore;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using blog.data.Query.Queries;
 
 namespace blog.data.Query.EFCoreQueryHandlers
 {
-  public class GetBlogPostsBySearchTextEFQueryHandler : IQueryHandlerAsync<GetBlogPostsBySearchText, IList<ViewSearchResultBlogPostViewModel>>
+  public class GetViewSearchResultBlogPostsBySearchTextEFQueryHandler : IQueryHandlerAsync<GetViewSearchResultBlogPostsBySearchText, IList<ViewSearchResultBlogPostViewModel>>
   {
     BlogDbContext _context;
 
-    public GetBlogPostsBySearchTextEFQueryHandler(BlogDbContext context)
+    public GetViewSearchResultBlogPostsBySearchTextEFQueryHandler(BlogDbContext context)
     {
       _context = context;
     }
 
-    public async Task<IList<ViewSearchResultBlogPostViewModel>> HandleAsync(GetBlogPostsBySearchText query)
+    public async Task<IList<ViewSearchResultBlogPostViewModel>> HandleAsync(GetViewSearchResultBlogPostsBySearchText query)
     {
       var posts = await _context.BlogPosts
                           .AsNoTracking()

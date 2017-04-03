@@ -1,21 +1,29 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using blog.data.Query.EFCoreQueryHandlers;
+using blog.EFCore;
+using blog.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using blog.Models;
-using blog.EFCore;
-using blog.data.Query.EFCoreQueryHandlers;
-using Microsoft.Extensions.Configuration.UserSecrets;
-
+using SimpleInjector;
+using SimpleInjector.Integration.AspNetCore.Mvc;
+using SimpleInjector.Lifestyles;
+using System;
 
 namespace blog
 {
   public class Startup
   {
     IConfiguration Configuration;
+    private Container _container = new Container();
+
     public Startup(IHostingEnvironment env)
     {
       var builder = new ConfigurationBuilder()
@@ -56,18 +64,30 @@ namespace blog
       services.AddDbContext<BlogDbContext>(options =>
                   options.UseSqlServer(ConnectionString));
 
-      services.AddEFQueries();
-
       services.AddIdentity<ApplicationUser, IdentityRole>(opts => {
         opts.User.RequireUniqueEmail = true;
       }).AddEntityFrameworkStores<BlogDbContext>()
         .AddDefaultTokenProviders();
 
+      services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+      services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(_container) );
+      services.AddSingleton<IViewComponentActivator>( new SimpleInjectorViewComponentActivator(_container) );
+
+      services.UseSimpleInjectorAspNetRequestScoping(_container);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
     {
+
+      BlogDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
+      BlogDbContext.CreateAuthorRole(app.ApplicationServices).Wait();
+
+      InitializeContainer(app);
+
+      _container.Verify();
+
       loggerFactory.AddConsole();
       loggerFactory.AddFile("Logs/ts-{Date}.txt");
 
@@ -108,8 +128,64 @@ namespace blog
 
       app.UseMvcWithDefaultRoute();
 
-      BlogDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
-      BlogDbContext.CreateAuthorRole(app.ApplicationServices).Wait();
+    }
+
+    private void InitializeContainer(IApplicationBuilder app)
+    {
+      _container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+
+      // Add application presentation components:
+      _container.RegisterMvcControllers(app);
+      _container.RegisterMvcViewComponents(app);
+
+      // Add application services. For instance:
+      //_container.Register<IUserRepository, SqlUserRepository>(Lifestyle.Scoped);
+
+      // Cross-wire ASP.NET services (if any). For instance:
+      _container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());
+
+      _container.Register<BlogDbContext>(GetAspNetServiceProvider<BlogDbContext>(app), Lifestyle.Scoped);
+      _container.Register<UserManager<ApplicationUser>>(GetAspNetServiceProvider<UserManager<ApplicationUser>>(app), Lifestyle.Scoped);
+      _container.Register<RoleManager<IdentityRole>>(GetAspNetServiceProvider<RoleManager<IdentityRole>>(app), Lifestyle.Scoped);
+      _container.Register<SignInManager<ApplicationUser>>(GetAspNetServiceProvider<SignInManager<ApplicationUser>>(app), Lifestyle.Scoped);
+      _container.Register<IPasswordHasher<ApplicationUser>>(GetAspNetServiceProvider<IPasswordHasher<ApplicationUser>>(app), Lifestyle.Scoped);
+      _container.Register<IPasswordValidator<ApplicationUser>>(GetAspNetServiceProvider<IPasswordValidator<ApplicationUser>>(app), Lifestyle.Scoped);
+      _container.Register<IUserValidator<ApplicationUser>>(GetAspNetServiceProvider<IUserValidator<ApplicationUser>>(app), Lifestyle.Scoped);
+
+      /*_container.Register<IdentityMarkerService>(Lifestyle.Singleton);
+      _container.Register<IHttpContextAccessor, HttpContextAccessor>(Lifestyle.Singleton);
+      _container.Register<IUserValidator<ApplicationUser>, UserValidator<ApplicationUser>>(Lifestyle.Scoped);
+      _container.Register<IPasswordValidator<ApplicationUser>, PasswordValidator<ApplicationUser>>(Lifestyle.Scoped);
+      _container.Register<IPasswordHasher<ApplicationUser>, PasswordHasher<ApplicationUser>>(Lifestyle.Scoped);
+      _container.Register<ILookupNormalizer, UpperInvariantLookupNormalizer>(Lifestyle.Scoped);
+      _container.Register<IRoleValidator<IdentityRole>, RoleValidator<IdentityRole>>(Lifestyle.Scoped);
+      _container.Register<IdentityErrorDescriber>(Lifestyle.Scoped);
+      _container.Register<ISecurityStampValidator, SecurityStampValidator<ApplicationUser>>(Lifestyle.Scoped);
+      _container.Register<IUserClaimsPrincipalFactory<ApplicationUser>, UserClaimsPrincipalFactory<ApplicationUser, IdentityRole>>(Lifestyle.Scoped);
+      _container.Register<UserManager<ApplicationUser>, UserManager<ApplicationUser>>(Lifestyle.Scoped);
+      _container.Register<SignInManager<ApplicationUser>, SignInManager<ApplicationUser>>(Lifestyle.Scoped);
+      _container.Register<RoleManager<IdentityRole>, RoleManager<IdentityRole>>(Lifestyle.Scoped);*/
+
+      //_container.RegisterSingleton<Func<IViewBufferScope>>(app.GetRequestService<IViewBufferScope>);
+
+      _container.AddEFQueries();
+
+      // NOTE: Do prevent cross-wired instances as much as possible.
+      // See: https://simpleinjector.org/blog/2016/07/
+    }
+
+    // From 
+    private Func<T> GetAspNetServiceProvider<T>(IApplicationBuilder app)
+    {
+      var appServices = app.ApplicationServices;
+      var accessor = appServices.GetRequiredService<IHttpContextAccessor>();
+      return () => {
+        var services = accessor.HttpContext != null
+            ? accessor.HttpContext.RequestServices
+            : this._container.IsVerifying ? appServices : null;
+        if (services == null) throw new InvalidOperationException("No HttpContext");
+        return services.GetRequiredService<T>();
+      };
     }
   }
 }

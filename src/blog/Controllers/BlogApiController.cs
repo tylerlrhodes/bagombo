@@ -18,12 +18,12 @@ namespace blog.Controllers
   public class BlogApiController : Controller
   {
     BlogDbContext _context;
-    private readonly ILogger _logger;
-    public BlogApiController(BlogDbContext context, ILogger<BlogApiController> logger)
+
+    public BlogApiController(BlogDbContext context)
     {
       _context = context;
-      _logger = logger;
     }
+
     [HttpPost("{id}")]
     public async Task<IActionResult> DeletePost(long? id)
     {

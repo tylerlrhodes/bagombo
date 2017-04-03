@@ -1,14 +1,15 @@
-﻿using System;
+﻿using blog.data.Query;
+using blog.data.Query.Queries;
+using blog.EFCore;
+using blog.Models;
+using blog.Models.ViewModels.Home;
+using CommonMark;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using blog.EFCore;
-using blog.Models.ViewModels.Home;
-using blog.Models;
-using blog.data.Query;
-using CommonMark;
-using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -42,16 +43,11 @@ namespace blog.Controllers
       return View(vhvm);
     }
 
-    public IActionResult RecentPosts()
-    {
-      return View();
-    }
-
     public async Task<IActionResult> Search(string searchText)
     {
       var search = "\"*" + searchText + "*\"";
 
-      GetBlogPostsBySearchText gbpbst = new GetBlogPostsBySearchText()
+      GetViewSearchResultBlogPostsBySearchText gbpbst = new GetViewSearchResultBlogPostsBySearchText()
       {
         searchText = search
       };
@@ -69,26 +65,12 @@ namespace blog.Controllers
 
     public async Task<IActionResult> CategoryPosts(long? id)
     {
-      var category = await _context.Categories.FindAsync(id);
-
-      var vcpvm = new ViewCategoryPostsViewModel()
+      GetViewCategoryPostsByCategory gvcpbc = new GetViewCategoryPostsByCategory()
       {
-        Category = category,
-        Posts = new List<BlogPost>()
+        Id = (long)id
       };
 
-      if (category != null)
-      {
-        var bpcs = await _context.BlogPostCategory
-                                .AsNoTracking()
-                                .Where(bp => bp.CategoryId == category.Id && bp.BlogPost.Public == true && bp.BlogPost.PublishOn < DateTime.Now)
-                                .Include(bpc => bpc.BlogPost)
-                                  .ThenInclude(bp => bp.Author)
-                                .ToListAsync();
-
-        vcpvm.Category = category;
-        vcpvm.Posts = bpcs.Select(bp => bp.BlogPost).ToList();
-      }
+      var vcpvm = await _qpa.ProcessAsync(gvcpbc);
 
       return View(vcpvm);
     }
@@ -124,7 +106,7 @@ namespace blog.Controllers
 
         vm = new ViewAllPostsViewModel()
         {
-          PostsByDate = new List<BlogPost>(),
+          PostsByDate = null,
           SortBy = sortby ?? 1,
           Categories = viewCategories ?? new List<ViewPostsByCategory>()
         };

@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
+using SimpleInjector;
+using SimpleInjector.Lifestyles;
 
 using blog.Models;
 
@@ -58,7 +60,7 @@ namespace blog.EFCore
                                 .WithMany(a => a.BlogPosts)
                                 .HasForeignKey("AuthorId")
                                 .IsRequired(false);
-                                
+
       builder.Entity<Feature>().ToTable("Feature");
       builder.Entity<Category>().ToTable("Category");
 
@@ -79,46 +81,52 @@ namespace blog.EFCore
                                         .HasForeignKey(bpc => bpc.CategoryId);
     }
 
-    public static async Task CreateAuthorRole(IServiceProvider serviceProvider)
+    public static async Task CreateAuthorRole(IServiceProvider container)
     {
-      RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+      //using (AsyncScopedLifestyle.BeginScope(container))
+      //{
+        RoleManager<IdentityRole> roleManager = container.GetRequiredService<RoleManager<IdentityRole>>();
 
-      if (await roleManager.FindByNameAsync("Authors") == null)
-      {
-        IdentityResult result = await roleManager.CreateAsync(new IdentityRole("Authors"));
-        if (!result.Succeeded)
+        if (await roleManager.FindByNameAsync("Authors") == null)
         {
-          throw new Exception("Error creating authors role!");
+          IdentityResult result = await roleManager.CreateAsync(new IdentityRole("Authors"));
+          if (!result.Succeeded)
+          {
+            throw new Exception("Error creating authors role!");
+          }
         }
-      }
+      //}
     }
-    public static async Task CreateAdminAccount(IServiceProvider serviceProvider, IConfiguration configuration)
+    public static async Task CreateAdminAccount(IServiceProvider container, IConfiguration configuration)
     {
-      UserManager<ApplicationUser> userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-      RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+      //using (AsyncScopedLifestyle.BeginScope(container))
+      //{
+        UserManager<ApplicationUser> userManager = container.GetRequiredService<UserManager<ApplicationUser>>();
+        RoleManager<IdentityRole> roleManager = container.GetRequiredService<RoleManager<IdentityRole>>();
 
-      string userName = configuration["Data:AdminUser:Name"];
-      string email = configuration["Data:AdminUser:Email"];
-      string password = configuration["Data:Adminuser:Password"];
-      string role = configuration["Data:AdminUser:Role"];
+        string userName = configuration["Data:AdminUser:Name"];
+        string email = configuration["Data:AdminUser:Email"];
+        string password = configuration["Data:Adminuser:Password"];
+        string role = configuration["Data:AdminUser:Role"];
 
-      if (await userManager.FindByNameAsync(userName) == null)
-      {
-        if (await roleManager.FindByNameAsync(role) == null)
+        if (await userManager.FindByNameAsync(userName) == null)
         {
-          await roleManager.CreateAsync(new IdentityRole(role));
+          if (await roleManager.FindByNameAsync(role) == null)
+          {
+            await roleManager.CreateAsync(new IdentityRole(role));
+          }
+          ApplicationUser user = new ApplicationUser
+          {
+            UserName = userName,
+            Email = email
+          };
+          IdentityResult result = await userManager.CreateAsync(user, password);
+          if (result.Succeeded)
+          {
+            await userManager.AddToRoleAsync(user, role);
+          }
         }
-        ApplicationUser user = new ApplicationUser
-        {
-          UserName = userName,
-          Email = email
-        };
-        IdentityResult result = await userManager.CreateAsync(user, password);
-        if (result.Succeeded)
-        {
-          await userManager.AddToRoleAsync(user, role);
-        }
-      }
+      //}
     }
   }
 

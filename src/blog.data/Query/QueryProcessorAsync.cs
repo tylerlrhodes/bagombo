@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
+using SimpleInjector;
 
 namespace blog.data.Query
 {
@@ -10,7 +11,7 @@ namespace blog.data.Query
   {
     IServiceProvider _provider;
 
-    public QueryProcessorAsync(IServiceProvider provider)
+    public QueryProcessorAsync(Container provider)
     {
       _provider = provider;
     }

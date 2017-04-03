@@ -7,6 +7,8 @@ using Xunit;
 using Microsoft.EntityFrameworkCore;
 using blog.data.Query;
 using blog.Models;
+using blog.data.Query.EFCoreQueryHandlers;
+using blog.data.Query.Queries;
 
 namespace blog.tests
 {

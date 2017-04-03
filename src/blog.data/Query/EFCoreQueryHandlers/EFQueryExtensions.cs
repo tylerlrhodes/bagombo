@@ -4,16 +4,20 @@ using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using blog.Models;
 using blog.Models.ViewModels.Home;
+using blog.data.Query.Queries;
+using blog.data.Query;
+using SimpleInjector;
 
 namespace blog.data.Query.EFCoreQueryHandlers
 {
   public static class EFQueryExtensions
   {
-    public static void AddEFQueries(this IServiceCollection services)
+    public static void AddEFQueries(this Container container)
     {
-      services.AddTransient<IQueryHandlerAsync<GetRecentBlogPosts, IList<BlogPost>>, GetRecentBlogPostsEFQueryHandler>();
-      services.AddTransient<IQueryHandlerAsync<GetBlogPostsBySearchText, IList<ViewSearchResultBlogPostViewModel>>, GetBlogPostsBySearchTextEFQueryHandler>();
-      services.AddTransient<QueryProcessorAsync, QueryProcessorAsync>();
+      container.Register<IQueryHandlerAsync<GetRecentBlogPosts, IList<BlogPost>>, GetRecentBlogPostsEFQueryHandler>(Lifestyle.Scoped);
+      container.Register<IQueryHandlerAsync<GetViewSearchResultBlogPostsBySearchText, IList<ViewSearchResultBlogPostViewModel>>, GetViewSearchResultBlogPostsBySearchTextEFQueryHandler>();
+      container.Register<IQueryHandlerAsync<GetViewCategoryPostsByCategory, ViewCategoryPostsViewModel>, GetViewCategoryPostsByCategoryEFQueryHandler>();
+      container.Register<QueryProcessorAsync, QueryProcessorAsync>(Lifestyle.Scoped);
     }
   }
 }

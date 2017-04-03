@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using blog.EFCore;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using blog.data.Query.Queries;
 
 namespace blog.data.Query.EFCoreQueryHandlers
 {

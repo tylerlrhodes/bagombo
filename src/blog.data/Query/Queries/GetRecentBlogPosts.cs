@@ -5,7 +5,7 @@ using blog.Models;
 using blog.Models.ViewModels;
 using blog.Models.ViewModels.Home;
 
-namespace blog.data.Query
+namespace blog.data.Query.Queries
 {
   public class GetRecentBlogPosts : IQuery<IList<BlogPost>>
   {
