@@ -118,40 +118,9 @@ namespace blog.Controllers
 
     public async Task<IActionResult> Features()
     {
-      // bug in EF Core that needs a bit more code here than otherwise
-      // see: https://github.com/aspnet/EntityFramework/issues/7714
+      GetViewFeatures gvf = new GetViewFeatures();
 
-      ViewFeaturesViewModel vfvm = new ViewFeaturesViewModel();
-
-      // cant select new into a defined type so have to use anon type for the select new here due to EF Core bug
-      // code after is a work-around
-
-      var x = from feature in _context.Features.AsNoTracking()
-              select new
-              {
-                Title = feature.Title,
-                Description = feature.Description,
-                Id = feature.Id,
-                BlogCount = (from posts in _context.BlogPostFeature
-                             where posts.FeatureId == feature.Id && posts.BlogPost.Public == true && posts.BlogPost.PublishOn < DateTime.Now
-                             select posts).AsNoTracking().Count()
-              };
-
-      List<FeatureViewModel> featureList = new List<FeatureViewModel>();
-
-      foreach (var feature in await x.OrderByDescending(f => f.BlogCount).ToListAsync())
-      {
-        FeatureViewModel fvm = new FeatureViewModel()
-        {
-          BlogCount = feature.BlogCount,
-          Title = feature.Title,
-          Description = feature.Description,
-          Id = feature.Id
-        };
-        featureList.Add(fvm);
-      }
-
-      vfvm.Features = featureList;
+      var vfvm = await _qpa.ProcessAsync(gvf);
 
       return View(vfvm);
     }
@@ -166,26 +135,15 @@ namespace blog.Controllers
       if (id == null)
         return NotFound();
 
-      var post = await _context.BlogPosts
-                          .AsNoTracking()
-                          .Include(bp => bp.Author)
-                          .Include(bp => bp.BlogPostCategory)
-                            .ThenInclude(bpc => bpc.Category)
-                          .Where(bp => bp.Id == id && bp.Public == true && bp.PublishOn < DateTime.Now)
-                          .FirstOrDefaultAsync();
-
-      if (post == null)
-        return NotFound();
-
-      var bpvm = new ViewBlogPostViewModel()
+      GetViewBlogPostById gvbpbi = new GetViewBlogPostById()
       {
-        Author = $"{post.Author.FirstName} {post.Author.LastName}",
-        Title = post.Title,
-        Description = post.Description,
-        Content = post.Content,
-        ModifiedAt = post.ModifiedAt,
-        Categories = post.BlogPostCategory.Select(c => c.Category).ToList()
+        Id = (long)id
       };
+
+      var bpvm = await _qpa.ProcessAsync(gvbpbi);
+
+      if (bpvm == null)
+        return NotFound();
 
       bpvm.Content = CommonMarkConverter.Convert(bpvm.Content);
 
