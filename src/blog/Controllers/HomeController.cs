@@ -17,12 +17,10 @@ namespace blog.Controllers
 {
   public class HomeController : Controller
   {
-    BlogDbContext _context;
     QueryProcessorAsync _qpa;
 
-    public HomeController(BlogDbContext context, QueryProcessorAsync qpa)
+    public HomeController(QueryProcessorAsync qpa)
     {
-      _context = context;
       _qpa = qpa;
     }
 

@@ -75,6 +75,7 @@ namespace blog
       services.AddSingleton<IViewComponentActivator>( new SimpleInjectorViewComponentActivator(_container) );
 
       services.UseSimpleInjectorAspNetRequestScoping(_container);
+      services.AddSimpleInjectorTagHelperActivation(_container);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -138,9 +139,6 @@ namespace blog
       _container.RegisterMvcControllers(app);
       _container.RegisterMvcViewComponents(app);
 
-      // Add application services. For instance:
-      //_container.Register<IUserRepository, SqlUserRepository>(Lifestyle.Scoped);
-
       // Cross-wire ASP.NET services (if any). For instance:
       _container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());
 
@@ -151,22 +149,6 @@ namespace blog
       _container.Register<IPasswordHasher<ApplicationUser>>(GetAspNetServiceProvider<IPasswordHasher<ApplicationUser>>(app), Lifestyle.Scoped);
       _container.Register<IPasswordValidator<ApplicationUser>>(GetAspNetServiceProvider<IPasswordValidator<ApplicationUser>>(app), Lifestyle.Scoped);
       _container.Register<IUserValidator<ApplicationUser>>(GetAspNetServiceProvider<IUserValidator<ApplicationUser>>(app), Lifestyle.Scoped);
-
-      /*_container.Register<IdentityMarkerService>(Lifestyle.Singleton);
-      _container.Register<IHttpContextAccessor, HttpContextAccessor>(Lifestyle.Singleton);
-      _container.Register<IUserValidator<ApplicationUser>, UserValidator<ApplicationUser>>(Lifestyle.Scoped);
-      _container.Register<IPasswordValidator<ApplicationUser>, PasswordValidator<ApplicationUser>>(Lifestyle.Scoped);
-      _container.Register<IPasswordHasher<ApplicationUser>, PasswordHasher<ApplicationUser>>(Lifestyle.Scoped);
-      _container.Register<ILookupNormalizer, UpperInvariantLookupNormalizer>(Lifestyle.Scoped);
-      _container.Register<IRoleValidator<IdentityRole>, RoleValidator<IdentityRole>>(Lifestyle.Scoped);
-      _container.Register<IdentityErrorDescriber>(Lifestyle.Scoped);
-      _container.Register<ISecurityStampValidator, SecurityStampValidator<ApplicationUser>>(Lifestyle.Scoped);
-      _container.Register<IUserClaimsPrincipalFactory<ApplicationUser>, UserClaimsPrincipalFactory<ApplicationUser, IdentityRole>>(Lifestyle.Scoped);
-      _container.Register<UserManager<ApplicationUser>, UserManager<ApplicationUser>>(Lifestyle.Scoped);
-      _container.Register<SignInManager<ApplicationUser>, SignInManager<ApplicationUser>>(Lifestyle.Scoped);
-      _container.Register<RoleManager<IdentityRole>, RoleManager<IdentityRole>>(Lifestyle.Scoped);*/
-
-      //_container.RegisterSingleton<Func<IViewBufferScope>>(app.GetRequestService<IViewBufferScope>);
 
       _container.AddEFQueries();
 

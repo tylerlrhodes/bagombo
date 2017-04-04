@@ -83,8 +83,8 @@ namespace blog.EFCore
 
     public static async Task CreateAuthorRole(IServiceProvider container)
     {
-      //using (AsyncScopedLifestyle.BeginScope(container))
-      //{
+      using (container.CreateScope())
+      {
         RoleManager<IdentityRole> roleManager = container.GetRequiredService<RoleManager<IdentityRole>>();
 
         if (await roleManager.FindByNameAsync("Authors") == null)
@@ -95,12 +95,12 @@ namespace blog.EFCore
             throw new Exception("Error creating authors role!");
           }
         }
-      //}
+      }
     }
     public static async Task CreateAdminAccount(IServiceProvider container, IConfiguration configuration)
     {
-      //using (AsyncScopedLifestyle.BeginScope(container))
-      //{
+      using (container.CreateScope())
+      {
         UserManager<ApplicationUser> userManager = container.GetRequiredService<UserManager<ApplicationUser>>();
         RoleManager<IdentityRole> roleManager = container.GetRequiredService<RoleManager<IdentityRole>>();
 
@@ -126,7 +126,7 @@ namespace blog.EFCore
             await userManager.AddToRoleAsync(user, role);
           }
         }
-      //}
+      }
     }
   }
 
