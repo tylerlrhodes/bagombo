@@ -1,0 +1,698 @@
+2017-03-22T00:00:28.8634981-04:00  [INF] User profile is available. Using '"C:\Users\Tyler Rhodes\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2017-03-22T00:00:31.2304801-04:00  [INF] Executed DbCommand (86ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2017-03-22T00:00:31.3691990-04:00  [INF] Executed DbCommand (9ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0 (6438bdd5)
+2017-03-22T00:00:31.8952472-04:00 0HL3GQVU4GD0P [INF] Request starting HTTP/1.1 DEBUG http://localhost:50420/  0 (e5be5b71)
+2017-03-22T00:00:31.8952472-04:00 0HL3GQVU4GD0Q [INF] Request starting HTTP/1.1 GET http://localhost:50420/   (e5be5b71)
+2017-03-22T00:00:32.0637364-04:00 0HL3GQVU4GD0P [INF] Request finished in 192.8167ms 200  (15c52c40)
+2017-03-22T00:00:32.4574451-04:00 0HL3GQVU4GD0Q [INF] Executing action method "blog.Controllers.HomeController.Index (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-22T00:00:32.5334460-04:00 0HL3GQVU4GD0Q [INF] Executed DbCommand (15ms) [Parameters=[@__p_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title]
+FROM [BlogPost] AS [bp]
+WHERE ([bp].[Public] = 1) AND ([bp].[PublishOn] < GETDATE())
+ORDER BY [bp].[ModifiedAt] DESC, [bp].[PublishOn] DESC (6438bdd5)
+2017-03-22T00:00:34.7541245-04:00 0HL3GQVU4GD0Q [INF] Executing ViewResult, running view at path "/Views/Home/Index.cshtml". (9707eebe)
+2017-03-22T00:00:35.4955877-04:00 0HL3GQVU4GD0Q [INF] Executed action "blog.Controllers.HomeController.Index (blog)" in 3109.8795ms (afa2e885)
+2017-03-22T00:00:35.5638848-04:00 0HL3GQVU4GD0Q [INF] Request finished in 3684.5019ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-22T00:00:35.5965985-04:00 0HL3GQVU4GD0R [INF] Request starting HTTP/1.1 GET http://localhost:50420/css/main.css   (e5be5b71)
+2017-03-22T00:00:35.5965985-04:00 0HL3GQVU4GD0S [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap-theme.min.css   (e5be5b71)
+2017-03-22T00:00:35.6122236-04:00 0HL3GQVU4GD0R [INF] Sending file. Request path: '"/css/main.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\css\main.css"' (27b0a520)
+2017-03-22T00:00:35.6122236-04:00 0HL3GQVU4GD0S [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap-theme.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css"' (27b0a520)
+2017-03-22T00:00:35.6278475-04:00 0HL3GQVU4GD0R [INF] Request finished in 34.7802ms 200 text/css (15c52c40)
+2017-03-22T00:00:35.6278475-04:00 0HL3GQVU4GD0S [INF] Request finished in 31.4248ms 200 text/css (15c52c40)
+2017-03-22T00:00:35.6278475-04:00 0HL3GQVU4GD0T [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/js/bootstrap.js   (e5be5b71)
+2017-03-22T00:00:35.6278475-04:00 0HL3GQVU4GD0U [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap.min.css   (e5be5b71)
+2017-03-22T00:00:35.6278475-04:00 0HL3GQVU4GD0T [INF] Sending file. Request path: '"/lib/bootstrap/dist/js/bootstrap.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\js\bootstrap.js"' (27b0a520)
+2017-03-22T00:00:35.6278475-04:00 0HL3GQVU4GD0U [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"' (27b0a520)
+2017-03-22T00:00:35.6278475-04:00 0HL3GQVU4GD0V [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/styles/default.css   (e5be5b71)
+2017-03-22T00:00:35.6278475-04:00 0HL3GQVU4GD10 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/jquery/dist/jquery.js   (e5be5b71)
+2017-03-22T00:00:35.6278475-04:00 0HL3GQVU4GD0V [INF] Sending file. Request path: '"/lib/highlight/styles/default.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\styles\default.css"' (27b0a520)
+2017-03-22T00:00:35.6278475-04:00 0HL3GQVU4GD10 [INF] Sending file. Request path: '"/lib/jquery/dist/jquery.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\jquery\dist\jquery.js"' (27b0a520)
+2017-03-22T00:00:35.6445192-04:00 0HL3GQVU4GD0V [INF] Request finished in 4.6558ms 200 text/css (15c52c40)
+2017-03-22T00:00:35.6495186-04:00 0HL3GQVU4GD0T [INF] Request finished in 10.6816ms 200 application/javascript (15c52c40)
+2017-03-22T00:00:35.6555191-04:00 0HL3GQVU4GD11 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/highlight.pack.js   (e5be5b71)
+2017-03-22T00:00:35.6555191-04:00 0HL3GQVU4GD11 [INF] Sending file. Request path: '"/lib/highlight/highlight.pack.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\highlight.pack.js"' (27b0a520)
+2017-03-22T00:00:35.6575217-04:00 0HL3GQVU4GD11 [INF] Request finished in 2.64ms 200 application/javascript (15c52c40)
+2017-03-22T00:00:35.6585203-04:00 0HL3GQVU4GD12 [INF] Request starting HTTP/1.1 GET http://localhost:50420/js/Common.js   (e5be5b71)
+2017-03-22T00:00:35.6585203-04:00 0HL3GQVU4GD12 [INF] Sending file. Request path: '"/js/Common.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\js\Common.js"' (27b0a520)
+2017-03-22T00:00:35.6645195-04:00 0HL3GQVU4GD12 [INF] Request finished in 6.229ms 200 application/javascript (15c52c40)
+2017-03-22T00:00:35.6785186-04:00 0HL3GQVU4GD0U [INF] Request finished in 40.3038ms 200 text/css (15c52c40)
+2017-03-22T00:00:35.6815194-04:00 0HL3GQVU4GD10 [INF] Request finished in 41.5776ms 200 application/javascript (15c52c40)
+2017-03-22T00:00:35.7045197-04:00 0HL3GQVU4GD13 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot?   (e5be5b71)
+2017-03-22T00:00:35.7055200-04:00 0HL3GQVU4GD13 [INF] Sending file. Request path: '"/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.eot"' (27b0a520)
+2017-03-22T00:00:35.7055200-04:00 0HL3GQVU4GD13 [INF] Request finished in 1.0611ms 200 application/vnd.ms-fontobject (15c52c40)
+2017-03-22T00:00:36.0520451-04:00 0HL3GQVU4GD14 [INF] Request starting HTTP/1.1 GET http://localhost:50420/favicon.ico   (e5be5b71)
+2017-03-22T00:00:36.0676648-04:00 0HL3GQVU4GD14 [INF] Request finished in 13.6427ms 404 text/plain (15c52c40)
+2017-03-22T00:34:25.6163465-04:00  [INF] User profile is available. Using '"C:\Users\Tyler Rhodes\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2017-03-22T00:34:27.1732683-04:00  [INF] Executed DbCommand (86ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2017-03-22T00:34:27.3751882-04:00  [INF] Executed DbCommand (27ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0 (6438bdd5)
+2017-03-22T00:34:27.7643272-04:00 0HL3GRISS2B09 [INF] Request starting HTTP/1.1 DEBUG http://localhost:50420/  0 (e5be5b71)
+2017-03-22T00:34:27.7643272-04:00 0HL3GRISS2B0A [INF] Request starting HTTP/1.1 GET http://localhost:50420/   (e5be5b71)
+2017-03-22T00:34:27.9049462-04:00 0HL3GRISS2B09 [INF] Request finished in 146.0181ms 200  (15c52c40)
+2017-03-22T00:34:28.2910432-04:00 0HL3GRISS2B0A [INF] Executing action method "blog.Controllers.HomeController.Index (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-22T00:34:28.3691618-04:00 0HL3GRISS2B0A [INF] Executed DbCommand (8ms) [Parameters=[@__p_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title]
+FROM [BlogPost] AS [bp]
+WHERE ([bp].[Public] = 1) AND ([bp].[PublishOn] < GETDATE())
+ORDER BY [bp].[ModifiedAt] DESC, [bp].[PublishOn] DESC (6438bdd5)
+2017-03-22T00:34:30.5541615-04:00 0HL3GRISS2B0A [INF] Executing ViewResult, running view at path "/Views/Home/Index.cshtml". (9707eebe)
+2017-03-22T00:34:31.3451775-04:00 0HL3GRISS2B0A [INF] Executed action "blog.Controllers.HomeController.Index (blog)" in 3098.7239ms (afa2e885)
+2017-03-22T00:34:31.4091787-04:00 0HL3GRISS2B0A [INF] Request finished in 3659.3131ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-22T00:34:31.4741802-04:00 0HL3GRISS2B0B [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap.min.css   (e5be5b71)
+2017-03-22T00:34:31.4831800-04:00 0HL3GRISS2B0C [INF] Request starting HTTP/1.1 GET http://localhost:50420/css/main.css   (e5be5b71)
+2017-03-22T00:34:31.5242452-04:00 0HL3GRISS2B0B [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"' (27b0a520)
+2017-03-22T00:34:31.5252627-04:00 0HL3GRISS2B0C [INF] Sending file. Request path: '"/css/main.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\css\main.css"' (27b0a520)
+2017-03-22T00:34:31.5591818-04:00 0HL3GRISS2B0D [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/styles/default.css   (e5be5b71)
+2017-03-22T00:34:31.5591818-04:00 0HL3GRISS2B0D [INF] Sending file. Request path: '"/lib/highlight/styles/default.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\styles\default.css"' (27b0a520)
+2017-03-22T00:34:31.5601808-04:00 0HL3GRISS2B0E [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/jquery/dist/jquery.js   (e5be5b71)
+2017-03-22T00:34:31.5601808-04:00 0HL3GRISS2B0E [INF] Sending file. Request path: '"/lib/jquery/dist/jquery.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\jquery\dist\jquery.js"' (27b0a520)
+2017-03-22T00:34:31.5601808-04:00 0HL3GRISS2B0F [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/js/bootstrap.js   (e5be5b71)
+2017-03-22T00:34:31.5601808-04:00 0HL3GRISS2B0F [INF] Sending file. Request path: '"/lib/bootstrap/dist/js/bootstrap.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\js\bootstrap.js"' (27b0a520)
+2017-03-22T00:34:31.5611807-04:00 0HL3GRISS2B0G [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap-theme.min.css   (e5be5b71)
+2017-03-22T00:34:31.5611807-04:00 0HL3GRISS2B0G [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap-theme.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css"' (27b0a520)
+2017-03-22T00:34:31.5621806-04:00 0HL3GRISS2B0C [INF] Request finished in 79.1687ms 200 text/css (15c52c40)
+2017-03-22T00:34:31.5631895-04:00 0HL3GRISS2B0D [INF] Request finished in 3.8009ms 200 text/css (15c52c40)
+2017-03-22T00:34:31.5651815-04:00 0HL3GRISS2B0G [INF] Request finished in 3.596ms 200 text/css (15c52c40)
+2017-03-22T00:34:31.5791818-04:00 0HL3GRISS2B0B [INF] Request finished in 105.332ms 200 text/css (15c52c40)
+2017-03-22T00:34:31.6071825-04:00 0HL3GRISS2B0F [INF] Request finished in 46.0039ms 200 application/javascript (15c52c40)
+2017-03-22T00:34:31.6161818-04:00 0HL3GRISS2B0H [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/highlight.pack.js   (e5be5b71)
+2017-03-22T00:34:31.6161818-04:00 0HL3GRISS2B0H [INF] Sending file. Request path: '"/lib/highlight/highlight.pack.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\highlight.pack.js"' (27b0a520)
+2017-03-22T00:34:31.6171813-04:00 0HL3GRISS2B0H [INF] Request finished in 1.0549ms 200 application/javascript (15c52c40)
+2017-03-22T00:34:31.6241833-04:00 0HL3GRISS2B0I [INF] Request starting HTTP/1.1 GET http://localhost:50420/js/Common.js   (e5be5b71)
+2017-03-22T00:34:31.6251836-04:00 0HL3GRISS2B0I [INF] Sending file. Request path: '"/js/Common.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\js\Common.js"' (27b0a520)
+2017-03-22T00:34:31.6491839-04:00 0HL3GRISS2B0I [INF] Request finished in 24.9703ms 200 application/javascript (15c52c40)
+2017-03-22T00:34:31.6611837-04:00 0HL3GRISS2B0E [INF] Request finished in 101.3561ms 200 application/javascript (15c52c40)
+2017-03-22T00:34:31.6791828-04:00 0HL3GRISS2B0J [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot?   (e5be5b71)
+2017-03-22T00:34:31.6791828-04:00 0HL3GRISS2B0J [INF] Sending file. Request path: '"/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.eot"' (27b0a520)
+2017-03-22T00:34:31.6801826-04:00 0HL3GRISS2B0J [INF] Request finished in 0.8639ms 200 application/vnd.ms-fontobject (15c52c40)
+2017-03-22T00:34:32.0331901-04:00 0HL3GRISS2B0K [INF] Request starting HTTP/1.1 GET http://localhost:50420/favicon.ico   (e5be5b71)
+2017-03-22T00:34:32.0701880-04:00 0HL3GRISS2B0K [INF] Request finished in 37.3024ms 404 text/plain (15c52c40)
+2017-03-22T00:34:32.9620809-04:00 0HL3GRISS2B0L [INF] Request starting HTTP/1.1 GET http://localhost:50420/Home/Features   (e5be5b71)
+2017-03-22T00:34:32.9620809-04:00 0HL3GRISS2B0L [INF] Executing action method "blog.Controllers.HomeController.Features (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-22T00:34:33.0402812-04:00 0HL3GRISS2B0L [WRN] The LINQ expression 'orderby {from BlogPostFeature posts in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPostFeature]) join BlogPost posts.BlogPost in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPost]) on Property([posts], "BlogPostId") equals Property([posts.BlogPost], "Id") join BlogPost posts.BlogPost in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPost]) on Property([posts], "BlogPostId") equals Property([posts.BlogPost], "Id") where ((([posts].FeatureId == [feature].Id) AndAlso ([posts.BlogPost].Public == True)) AndAlso ([posts.BlogPost].PublishOn < DateTime.Now)) select [posts] => Count()} desc' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-22T00:34:33.1496769-04:00 0HL3GRISS2B0L [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [feature].[Id], [feature].[Title], [feature].[Description], (
+    SELECT COUNT(*)
+    FROM [BlogPostFeature] AS [posts1]
+    INNER JOIN [BlogPost] AS [posts.BlogPost3] ON [posts1].[BlogPostId] = [posts.BlogPost3].[Id]
+    INNER JOIN [BlogPost] AS [posts.BlogPost4] ON [posts1].[BlogPostId] = [posts.BlogPost4].[Id]
+    WHERE (([posts1].[FeatureId] = [feature].[Id]) AND ([posts.BlogPost3].[Public] = 1)) AND ([posts.BlogPost3].[PublishOn] < GETDATE())
+)
+FROM [Feature] AS [feature] (6438bdd5)
+2017-03-22T00:34:33.1808234-04:00 0HL3GRISS2B0L [INF] Executed DbCommand (2ms) [Parameters=[@_outer_Id='?'], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BlogPostFeature] AS [posts]
+INNER JOIN [BlogPost] AS [posts.BlogPost] ON [posts].[BlogPostId] = [posts.BlogPost].[Id]
+INNER JOIN [BlogPost] AS [posts.BlogPost0] ON [posts].[BlogPostId] = [posts.BlogPost0].[Id]
+WHERE (([posts].[FeatureId] = @_outer_Id) AND ([posts.BlogPost].[Public] = 1)) AND ([posts.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-22T00:34:33.1808234-04:00 0HL3GRISS2B0L [INF] Executed DbCommand (0ms) [Parameters=[@_outer_Id='?'], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BlogPostFeature] AS [posts]
+INNER JOIN [BlogPost] AS [posts.BlogPost] ON [posts].[BlogPostId] = [posts.BlogPost].[Id]
+INNER JOIN [BlogPost] AS [posts.BlogPost0] ON [posts].[BlogPostId] = [posts.BlogPost0].[Id]
+WHERE (([posts].[FeatureId] = @_outer_Id) AND ([posts.BlogPost].[Public] = 1)) AND ([posts.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-22T00:34:33.2745697-04:00 0HL3GRISS2B0L [INF] Executing ViewResult, running view at path "/Views/Home/Features.cshtml". (9707eebe)
+2017-03-22T00:34:33.3214436-04:00 0HL3GRISS2B0L [INF] Executed action "blog.Controllers.HomeController.Features (blog)" in 362.4838ms (afa2e885)
+2017-03-22T00:34:33.3214436-04:00 0HL3GRISS2B0L [INF] Request finished in 368.8873ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-22T00:34:33.5717507-04:00 0HL3GRISS2B0M [INF] Request starting HTTP/1.1 GET http://localhost:50420/favicon.ico   (e5be5b71)
+2017-03-22T00:34:33.5851991-04:00 0HL3GRISS2B0M [INF] Request finished in 7.2035ms 404 text/plain (15c52c40)
+2017-03-22T00:34:34.5306682-04:00 0HL3GRISS2B0N [INF] Request starting HTTP/1.1 GET http://localhost:50420/Home/FeaturePosts/4   (e5be5b71)
+2017-03-22T00:34:34.6244268-04:00 0HL3GRISS2B0N [INF] Executing action method "blog.Controllers.HomeController.FeaturePosts (blog)" with arguments (["4"]) - ModelState is Valid (ba7f4ac2)
+2017-03-22T00:34:34.6556661-04:00 0HL3GRISS2B0N [INF] Executed DbCommand (1ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Title]
+FROM [Feature] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-22T00:34:34.7083562-04:00 0HL3GRISS2B0N [INF] Executed DbCommand (2ms) [Parameters=[@__feature_Id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [bpf.BlogPost].[Id], [bpf.BlogPost].[AuthorId], [bpf.BlogPost].[Content], [bpf.BlogPost].[CreatedAt], [bpf.BlogPost].[Description], [bpf.BlogPost].[ModifiedAt], [bpf.BlogPost].[Public], [bpf.BlogPost].[PublishOn], [bpf.BlogPost].[Title]
+FROM [BlogPostFeature] AS [bpf]
+INNER JOIN [BlogPost] AS [bpf.BlogPost] ON [bpf].[BlogPostId] = [bpf.BlogPost].[Id]
+WHERE (([bpf].[FeatureId] = @__feature_Id_0) AND ([bpf.BlogPost].[Public] = 1)) AND ([bpf.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-22T00:34:34.7214807-04:00 0HL3GRISS2B0N [WRN] The LINQ expression '{__bps_0 => Contains([bp])}' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-22T00:34:34.7214807-04:00 0HL3GRISS2B0N [WRN] The LINQ expression 'Contains([bp])' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-22T00:34:34.7839761-04:00 0HL3GRISS2B0N [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title], [a].[Id], [a].[ApplicationUserId], [a].[Biography], [a].[FirstName], [a].[LastName]
+FROM [BlogPost] AS [bp]
+LEFT JOIN [Author] AS [a] ON [bp].[AuthorId] = [a].[Id]
+ORDER BY [bp].[Id] (6438bdd5)
+2017-03-22T00:34:34.8465414-04:00 0HL3GRISS2B0N [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [b].[BlogPostId], [b].[CategoryId]
+FROM [BlogPostCategory] AS [b]
+WHERE EXISTS (
+    SELECT 1
+    FROM [BlogPost] AS [bp]
+    WHERE [b].[BlogPostId] = [bp].[Id])
+ORDER BY [b].[BlogPostId] (6438bdd5)
+2017-03-22T00:43:12.0885662-04:00  [INF] User profile is available. Using '"C:\Users\Tyler Rhodes\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2017-03-22T00:43:13.6677420-04:00  [INF] Executed DbCommand (110ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2017-03-22T00:43:13.8266569-04:00  [INF] Executed DbCommand (11ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0 (6438bdd5)
+2017-03-22T00:43:14.0913958-04:00 0HL3GRNPNGJP7 [INF] Request starting HTTP/1.1 DEBUG http://localhost:50420/  0 (e5be5b71)
+2017-03-22T00:43:14.0913958-04:00 0HL3GRNPNGJP8 [INF] Request starting HTTP/1.1 GET http://localhost:50420/   (e5be5b71)
+2017-03-22T00:43:14.2320140-04:00 0HL3GRNPNGJP7 [INF] Request finished in 151.8156ms 200  (15c52c40)
+2017-03-22T00:43:14.6223549-04:00 0HL3GRNPNGJP8 [INF] Executing action method "blog.Controllers.HomeController.Index (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-22T00:43:14.7004254-04:00 0HL3GRNPNGJP8 [INF] Executed DbCommand (23ms) [Parameters=[@__p_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title]
+FROM [BlogPost] AS [bp]
+WHERE ([bp].[Public] = 1) AND ([bp].[PublishOn] < GETDATE())
+ORDER BY [bp].[ModifiedAt] DESC, [bp].[PublishOn] DESC (6438bdd5)
+2017-03-22T00:43:16.8620525-04:00 0HL3GRNPNGJP8 [INF] Executing ViewResult, running view at path "/Views/Home/Index.cshtml". (9707eebe)
+2017-03-22T00:43:17.6162078-04:00 0HL3GRNPNGJP8 [INF] Executed action "blog.Controllers.HomeController.Index (blog)" in 3059.7358ms (afa2e885)
+2017-03-22T00:43:17.7216015-04:00 0HL3GRNPNGJP8 [INF] Request finished in 3647.8483ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-22T00:43:17.8311614-04:00 0HL3GRNPNGJP9 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap-theme.min.css   (e5be5b71)
+2017-03-22T00:43:17.8321613-04:00 0HL3GRNPNGJPA [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap.min.css   (e5be5b71)
+2017-03-22T00:43:17.8461617-04:00 0HL3GRNPNGJP9 [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap-theme.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css"' (27b0a520)
+2017-03-22T00:43:17.8491629-04:00 0HL3GRNPNGJPA [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"' (27b0a520)
+2017-03-22T00:43:17.8671612-04:00 0HL3GRNPNGJPB [INF] Request starting HTTP/1.1 GET http://localhost:50420/css/main.css   (e5be5b71)
+2017-03-22T00:43:17.8671612-04:00 0HL3GRNPNGJPB [INF] Sending file. Request path: '"/css/main.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\css\main.css"' (27b0a520)
+2017-03-22T00:43:17.8681619-04:00 0HL3GRNPNGJPC [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/styles/default.css   (e5be5b71)
+2017-03-22T00:43:17.8681619-04:00 0HL3GRNPNGJPC [INF] Sending file. Request path: '"/lib/highlight/styles/default.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\styles\default.css"' (27b0a520)
+2017-03-22T00:43:17.8681619-04:00 0HL3GRNPNGJPD [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/jquery/dist/jquery.js   (e5be5b71)
+2017-03-22T00:43:17.8681619-04:00 0HL3GRNPNGJPD [INF] Sending file. Request path: '"/lib/jquery/dist/jquery.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\jquery\dist\jquery.js"' (27b0a520)
+2017-03-22T00:43:17.8691613-04:00 0HL3GRNPNGJP9 [INF] Request finished in 38.3388ms 200 text/css (15c52c40)
+2017-03-22T00:43:17.8691613-04:00 0HL3GRNPNGJPE [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/js/bootstrap.js   (e5be5b71)
+2017-03-22T00:43:17.8691613-04:00 0HL3GRNPNGJPE [INF] Sending file. Request path: '"/lib/bootstrap/dist/js/bootstrap.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\js\bootstrap.js"' (27b0a520)
+2017-03-22T00:43:17.8701612-04:00 0HL3GRNPNGJPB [INF] Request finished in 3.3023ms 200 text/css (15c52c40)
+2017-03-22T00:43:17.8701612-04:00 0HL3GRNPNGJPC [INF] Request finished in 2.8042ms 200 text/css (15c52c40)
+2017-03-22T00:43:17.8771616-04:00 0HL3GRNPNGJPE [INF] Request finished in 7.6527ms 200 application/javascript (15c52c40)
+2017-03-22T00:43:17.8771616-04:00 0HL3GRNPNGJPA [INF] Request finished in 45.1625ms 200 text/css (15c52c40)
+2017-03-22T00:43:17.9171612-04:00 0HL3GRNPNGJPD [INF] Request finished in 48.6332ms 200 application/javascript (15c52c40)
+2017-03-22T00:43:17.9281619-04:00 0HL3GRNPNGJPF [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/highlight.pack.js   (e5be5b71)
+2017-03-22T00:43:17.9281619-04:00 0HL3GRNPNGJPF [INF] Sending file. Request path: '"/lib/highlight/highlight.pack.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\highlight.pack.js"' (27b0a520)
+2017-03-22T00:43:17.9301678-04:00 0HL3GRNPNGJPF [INF] Request finished in 0.9572ms 200 application/javascript (15c52c40)
+2017-03-22T00:43:17.9431638-04:00 0HL3GRNPNGJPG [INF] Request starting HTTP/1.1 GET http://localhost:50420/js/Common.js   (e5be5b71)
+2017-03-22T00:43:17.9441633-04:00 0HL3GRNPNGJPG [INF] Sending file. Request path: '"/js/Common.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\js\Common.js"' (27b0a520)
+2017-03-22T00:43:17.9441633-04:00 0HL3GRNPNGJPG [INF] Request finished in 1.0598ms 200 application/javascript (15c52c40)
+2017-03-22T00:43:18.1481688-04:00 0HL3GRNPNGJPH [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot?   (e5be5b71)
+2017-03-22T00:43:18.1481688-04:00 0HL3GRNPNGJPH [INF] Sending file. Request path: '"/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.eot"' (27b0a520)
+2017-03-22T00:43:18.1561678-04:00 0HL3GRNPNGJPH [INF] Request finished in 7.7032ms 200 application/vnd.ms-fontobject (15c52c40)
+2017-03-22T00:43:18.3968382-04:00 0HL3GRNPNGJPI [INF] Request starting HTTP/1.1 GET http://localhost:50420/favicon.ico   (e5be5b71)
+2017-03-22T00:43:18.4124626-04:00 0HL3GRNPNGJPI [INF] Request finished in 11.1744ms 404 text/plain (15c52c40)
+2017-03-22T00:43:22.7948903-04:00 0HL3GRNPNGJPJ [INF] Request starting HTTP/1.1 GET http://localhost:50420/Home/Features   (e5be5b71)
+2017-03-22T00:43:22.7978903-04:00 0HL3GRNPNGJPJ [INF] Executing action method "blog.Controllers.HomeController.Features (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-22T00:43:22.8534392-04:00 0HL3GRNPNGJPJ [WRN] The LINQ expression 'orderby {from BlogPostFeature posts in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPostFeature]) join BlogPost posts.BlogPost in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPost]) on Property([posts], "BlogPostId") equals Property([posts.BlogPost], "Id") join BlogPost posts.BlogPost in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPost]) on Property([posts], "BlogPostId") equals Property([posts.BlogPost], "Id") where ((([posts].FeatureId == [feature].Id) AndAlso ([posts.BlogPost].Public == True)) AndAlso ([posts.BlogPost].PublishOn < DateTime.Now)) select [posts] => Count()} desc' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-22T00:43:22.9628119-04:00 0HL3GRNPNGJPJ [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [feature].[Id], [feature].[Title], [feature].[Description], (
+    SELECT COUNT(*)
+    FROM [BlogPostFeature] AS [posts1]
+    INNER JOIN [BlogPost] AS [posts.BlogPost3] ON [posts1].[BlogPostId] = [posts.BlogPost3].[Id]
+    INNER JOIN [BlogPost] AS [posts.BlogPost4] ON [posts1].[BlogPostId] = [posts.BlogPost4].[Id]
+    WHERE (([posts1].[FeatureId] = [feature].[Id]) AND ([posts.BlogPost3].[Public] = 1)) AND ([posts.BlogPost3].[PublishOn] < GETDATE())
+)
+FROM [Feature] AS [feature] (6438bdd5)
+2017-03-22T00:43:22.9941288-04:00 0HL3GRNPNGJPJ [INF] Executed DbCommand (3ms) [Parameters=[@_outer_Id='?'], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BlogPostFeature] AS [posts]
+INNER JOIN [BlogPost] AS [posts.BlogPost] ON [posts].[BlogPostId] = [posts.BlogPost].[Id]
+INNER JOIN [BlogPost] AS [posts.BlogPost0] ON [posts].[BlogPostId] = [posts.BlogPost0].[Id]
+WHERE (([posts].[FeatureId] = @_outer_Id) AND ([posts.BlogPost].[Public] = 1)) AND ([posts.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-22T00:43:22.9941288-04:00 0HL3GRNPNGJPJ [INF] Executed DbCommand (0ms) [Parameters=[@_outer_Id='?'], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BlogPostFeature] AS [posts]
+INNER JOIN [BlogPost] AS [posts.BlogPost] ON [posts].[BlogPostId] = [posts.BlogPost].[Id]
+INNER JOIN [BlogPost] AS [posts.BlogPost0] ON [posts].[BlogPostId] = [posts.BlogPost0].[Id]
+WHERE (([posts].[FeatureId] = @_outer_Id) AND ([posts.BlogPost].[Public] = 1)) AND ([posts.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-22T00:43:23.0780747-04:00 0HL3GRNPNGJPJ [INF] Executing ViewResult, running view at path "/Views/Home/Features.cshtml". (9707eebe)
+2017-03-22T00:43:23.0937085-04:00 0HL3GRNPNGJPJ [INF] Executed action "blog.Controllers.HomeController.Features (blog)" in 300.4007ms (afa2e885)
+2017-03-22T00:43:23.0937085-04:00 0HL3GRNPNGJPJ [INF] Request finished in 305.5013ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-22T00:43:23.3298899-04:00 0HL3GRNPNGJPK [INF] Request starting HTTP/1.1 GET http://localhost:50420/favicon.ico   (e5be5b71)
+2017-03-22T00:43:23.3792831-04:00 0HL3GRNPNGJPK [INF] Request finished in 62.5705ms 404 text/plain (15c52c40)
+2017-03-22T00:43:24.3345982-04:00 0HL3GRNPNGJPL [INF] Request starting HTTP/1.1 GET http://localhost:50420/Home/FeaturePosts/4   (e5be5b71)
+2017-03-22T00:43:24.4028732-04:00 0HL3GRNPNGJPL [INF] Executing action method "blog.Controllers.HomeController.FeaturePosts (blog)" with arguments (["4"]) - ModelState is Valid (ba7f4ac2)
+2017-03-22T00:43:24.4341228-04:00 0HL3GRNPNGJPL [INF] Executed DbCommand (1ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Title]
+FROM [Feature] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-22T00:43:24.4809972-04:00 0HL3GRNPNGJPL [INF] Executed DbCommand (17ms) [Parameters=[@__feature_Id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [bpf.BlogPost].[Id], [bpf.BlogPost].[AuthorId], [bpf.BlogPost].[Content], [bpf.BlogPost].[CreatedAt], [bpf.BlogPost].[Description], [bpf.BlogPost].[ModifiedAt], [bpf.BlogPost].[Public], [bpf.BlogPost].[PublishOn], [bpf.BlogPost].[Title]
+FROM [BlogPostFeature] AS [bpf]
+INNER JOIN [BlogPost] AS [bpf.BlogPost] ON [bpf].[BlogPostId] = [bpf.BlogPost].[Id]
+WHERE (([bpf].[FeatureId] = @__feature_Id_0) AND ([bpf.BlogPost].[Public] = 1)) AND ([bpf.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-22T00:43:24.5122472-04:00 0HL3GRNPNGJPL [WRN] The LINQ expression '{__bps_0 => Contains([bp])}' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-22T00:43:24.5278683-04:00 0HL3GRNPNGJPL [WRN] The LINQ expression 'Contains([bp])' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-22T00:43:24.5747681-04:00 0HL3GRNPNGJPL [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title], [a].[Id], [a].[ApplicationUserId], [a].[Biography], [a].[FirstName], [a].[LastName]
+FROM [BlogPost] AS [bp]
+LEFT JOIN [Author] AS [a] ON [bp].[AuthorId] = [a].[Id]
+ORDER BY [bp].[Id] (6438bdd5)
+2017-03-22T00:43:24.6529068-04:00 0HL3GRNPNGJPL [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [b].[BlogPostId], [b].[CategoryId]
+FROM [BlogPostCategory] AS [b]
+WHERE EXISTS (
+    SELECT 1
+    FROM [BlogPost] AS [bp]
+    WHERE [b].[BlogPostId] = [bp].[Id])
+ORDER BY [b].[BlogPostId] (6438bdd5)
+2017-03-22T00:46:54.2937403-04:00  [INF] User profile is available. Using '"C:\Users\Tyler Rhodes\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2017-03-22T00:46:55.9621177-04:00  [INF] Executed DbCommand (114ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2017-03-22T00:46:56.1204342-04:00  [INF] Executed DbCommand (23ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0 (6438bdd5)
+2017-03-22T00:46:56.4659413-04:00 0HL3GRPS0958M [INF] Request starting HTTP/1.1 DEBUG http://localhost:50420/  0 (e5be5b71)
+2017-03-22T00:46:56.4659413-04:00 0HL3GRPS0958N [INF] Request starting HTTP/1.1 GET http://localhost:50420/   (e5be5b71)
+2017-03-22T00:46:56.6043874-04:00 0HL3GRPS0958M [INF] Request finished in 151.4485ms 200  (15c52c40)
+2017-03-22T00:46:56.9325023-04:00 0HL3GRPS0958N [INF] Executing action method "blog.Controllers.HomeController.Index (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-22T00:46:56.9953307-04:00 0HL3GRPS0958N [INF] Executed DbCommand (8ms) [Parameters=[@__p_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title]
+FROM [BlogPost] AS [bp]
+WHERE ([bp].[Public] = 1) AND ([bp].[PublishOn] < GETDATE())
+ORDER BY [bp].[ModifiedAt] DESC, [bp].[PublishOn] DESC (6438bdd5)
+2017-03-22T00:46:59.2537104-04:00 0HL3GRPS0958N [INF] Executing ViewResult, running view at path "/Views/Home/Index.cshtml". (9707eebe)
+2017-03-22T00:47:00.0034423-04:00 0HL3GRPS0958N [INF] Executed action "blog.Controllers.HomeController.Index (blog)" in 3115.927ms (afa2e885)
+2017-03-22T00:47:00.0842839-04:00 0HL3GRPS0958N [INF] Request finished in 3635.7615ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-22T00:47:00.1108841-04:00 0HL3GRPS0958O [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap.min.css   (e5be5b71)
+2017-03-22T00:47:00.1108841-04:00 0HL3GRPS0958P [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap-theme.min.css   (e5be5b71)
+2017-03-22T00:47:00.1265070-04:00 0HL3GRPS0958Q [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/js/bootstrap.js   (e5be5b71)
+2017-03-22T00:47:00.1421327-04:00 0HL3GRPS0958Q [INF] Sending file. Request path: '"/lib/bootstrap/dist/js/bootstrap.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\js\bootstrap.js"' (27b0a520)
+2017-03-22T00:47:00.1421327-04:00 0HL3GRPS0958R [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/jquery/dist/jquery.js   (e5be5b71)
+2017-03-22T00:47:00.1421327-04:00 0HL3GRPS0958R [INF] Sending file. Request path: '"/lib/jquery/dist/jquery.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\jquery\dist\jquery.js"' (27b0a520)
+2017-03-22T00:47:00.1421327-04:00 0HL3GRPS0958S [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/styles/default.css   (e5be5b71)
+2017-03-22T00:47:00.1421327-04:00 0HL3GRPS0958O [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"' (27b0a520)
+2017-03-22T00:47:00.1421327-04:00 0HL3GRPS0958S [INF] Sending file. Request path: '"/lib/highlight/styles/default.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\styles\default.css"' (27b0a520)
+2017-03-22T00:47:00.1421327-04:00 0HL3GRPS0958T [INF] Request starting HTTP/1.1 GET http://localhost:50420/css/main.css   (e5be5b71)
+2017-03-22T00:47:00.1421327-04:00 0HL3GRPS0958T [INF] Sending file. Request path: '"/css/main.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\css\main.css"' (27b0a520)
+2017-03-22T00:47:00.1421327-04:00 0HL3GRPS0958P [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap-theme.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css"' (27b0a520)
+2017-03-22T00:47:00.1577568-04:00 0HL3GRPS0958T [INF] Request finished in 11.7435ms 200 text/css (15c52c40)
+2017-03-22T00:47:00.1577568-04:00 0HL3GRPS0958S [INF] Request finished in 20.6023ms 200 text/css (15c52c40)
+2017-03-22T00:47:00.1577568-04:00 0HL3GRPS0958P [INF] Request finished in 48.6086ms 200 text/css (15c52c40)
+2017-03-22T00:47:00.1774182-04:00 0HL3GRPS0958O [INF] Request finished in 63.2764ms 200 text/css (15c52c40)
+2017-03-22T00:47:00.1814181-04:00 0HL3GRPS0958Q [INF] Request finished in 56.9311ms 200 application/javascript (15c52c40)
+2017-03-22T00:47:00.1834207-04:00 0HL3GRPS0958U [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/highlight.pack.js   (e5be5b71)
+2017-03-22T00:47:00.1874191-04:00 0HL3GRPS0958U [INF] Sending file. Request path: '"/lib/highlight/highlight.pack.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\highlight.pack.js"' (27b0a520)
+2017-03-22T00:47:00.1884198-04:00 0HL3GRPS0958U [INF] Request finished in 4.4263ms 200 application/javascript (15c52c40)
+2017-03-22T00:47:00.1904191-04:00 0HL3GRPS0958V [INF] Request starting HTTP/1.1 GET http://localhost:50420/js/Common.js   (e5be5b71)
+2017-03-22T00:47:00.1914198-04:00 0HL3GRPS0958V [INF] Sending file. Request path: '"/js/Common.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\js\Common.js"' (27b0a520)
+2017-03-22T00:47:00.2014195-04:00 0HL3GRPS0958V [INF] Request finished in 11.1009ms 200 application/javascript (15c52c40)
+2017-03-22T00:47:00.2114208-04:00 0HL3GRPS0958R [INF] Request finished in 86.9417ms 200 application/javascript (15c52c40)
+2017-03-22T00:47:00.2604205-04:00 0HL3GRPS09590 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot?   (e5be5b71)
+2017-03-22T00:47:00.2604205-04:00 0HL3GRPS09590 [INF] Sending file. Request path: '"/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.eot"' (27b0a520)
+2017-03-22T00:47:00.2614204-04:00 0HL3GRPS09590 [INF] Request finished in 0.9609ms 200 application/vnd.ms-fontobject (15c52c40)
+2017-03-22T00:47:00.5964289-04:00 0HL3GRPS09591 [INF] Request starting HTTP/1.1 GET http://localhost:50420/favicon.ico   (e5be5b71)
+2017-03-22T00:47:00.6164303-04:00 0HL3GRPS09591 [INF] Request finished in 19.6919ms 404 text/plain (15c52c40)
+2017-03-22T00:47:01.7252399-04:00 0HL3GRPS09592 [INF] Request starting HTTP/1.1 GET http://localhost:50420/Home/Features   (e5be5b71)
+2017-03-22T00:47:01.7252399-04:00 0HL3GRPS09592 [INF] Executing action method "blog.Controllers.HomeController.Features (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-22T00:47:01.7877379-04:00 0HL3GRPS09592 [WRN] The LINQ expression 'orderby {from BlogPostFeature posts in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPostFeature]) join BlogPost posts.BlogPost in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPost]) on Property([posts], "BlogPostId") equals Property([posts.BlogPost], "Id") join BlogPost posts.BlogPost in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPost]) on Property([posts], "BlogPostId") equals Property([posts.BlogPost], "Id") where ((([posts].FeatureId == [feature].Id) AndAlso ([posts.BlogPost].Public == True)) AndAlso ([posts.BlogPost].PublishOn < DateTime.Now)) select [posts] => Count()} desc' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-22T00:47:01.9167410-04:00 0HL3GRPS09592 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [feature].[Id], [feature].[Title], [feature].[Description], (
+    SELECT COUNT(*)
+    FROM [BlogPostFeature] AS [posts1]
+    INNER JOIN [BlogPost] AS [posts.BlogPost3] ON [posts1].[BlogPostId] = [posts.BlogPost3].[Id]
+    INNER JOIN [BlogPost] AS [posts.BlogPost4] ON [posts1].[BlogPostId] = [posts.BlogPost4].[Id]
+    WHERE (([posts1].[FeatureId] = [feature].[Id]) AND ([posts.BlogPost3].[Public] = 1)) AND ([posts.BlogPost3].[PublishOn] < GETDATE())
+)
+FROM [Feature] AS [feature] (6438bdd5)
+2017-03-22T00:47:01.9634868-04:00 0HL3GRPS09592 [INF] Executed DbCommand (6ms) [Parameters=[@_outer_Id='?'], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BlogPostFeature] AS [posts]
+INNER JOIN [BlogPost] AS [posts.BlogPost] ON [posts].[BlogPostId] = [posts.BlogPost].[Id]
+INNER JOIN [BlogPost] AS [posts.BlogPost0] ON [posts].[BlogPostId] = [posts.BlogPost0].[Id]
+WHERE (([posts].[FeatureId] = @_outer_Id) AND ([posts.BlogPost].[Public] = 1)) AND ([posts.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-22T00:47:01.9791109-04:00 0HL3GRPS09592 [INF] Executed DbCommand (0ms) [Parameters=[@_outer_Id='?'], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BlogPostFeature] AS [posts]
+INNER JOIN [BlogPost] AS [posts.BlogPost] ON [posts].[BlogPostId] = [posts.BlogPost].[Id]
+INNER JOIN [BlogPost] AS [posts.BlogPost0] ON [posts].[BlogPostId] = [posts.BlogPost0].[Id]
+WHERE (([posts].[FeatureId] = @_outer_Id) AND ([posts.BlogPost].[Public] = 1)) AND ([posts.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-22T00:47:02.0510504-04:00 0HL3GRPS09592 [INF] Executing ViewResult, running view at path "/Views/Home/Features.cshtml". (9707eebe)
+2017-03-22T00:47:02.0666589-04:00 0HL3GRPS09592 [INF] Executed action "blog.Controllers.HomeController.Features (blog)" in 343.1856ms (afa2e885)
+2017-03-22T00:47:02.0666589-04:00 0HL3GRPS09592 [INF] Request finished in 350.7188ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-22T00:47:02.3063507-04:00 0HL3GRPS09593 [INF] Request starting HTTP/1.1 GET http://localhost:50420/favicon.ico   (e5be5b71)
+2017-03-22T00:47:02.3063507-04:00 0HL3GRPS09593 [INF] Request finished in 2.2129ms 404 text/plain (15c52c40)
+2017-03-22T00:47:03.1334696-04:00 0HL3GRPS09594 [INF] Request starting HTTP/1.1 GET http://localhost:50420/Home/FeaturePosts/4   (e5be5b71)
+2017-03-22T00:47:03.2243384-04:00 0HL3GRPS09594 [INF] Executing action method "blog.Controllers.HomeController.FeaturePosts (blog)" with arguments (["4"]) - ModelState is Valid (ba7f4ac2)
+2017-03-22T00:47:03.2444211-04:00 0HL3GRPS09594 [INF] Executed DbCommand (1ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Title]
+FROM [Feature] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-22T00:47:03.2912904-04:00 0HL3GRPS09594 [INF] Executed DbCommand (3ms) [Parameters=[@__feature_Id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [bpf.BlogPost].[Id], [bpf.BlogPost].[AuthorId], [bpf.BlogPost].[Content], [bpf.BlogPost].[CreatedAt], [bpf.BlogPost].[Description], [bpf.BlogPost].[ModifiedAt], [bpf.BlogPost].[Public], [bpf.BlogPost].[PublishOn], [bpf.BlogPost].[Title]
+FROM [BlogPostFeature] AS [bpf]
+INNER JOIN [BlogPost] AS [bpf.BlogPost] ON [bpf].[BlogPostId] = [bpf.BlogPost].[Id]
+WHERE (([bpf].[FeatureId] = @__feature_Id_0) AND ([bpf.BlogPost].[Public] = 1)) AND ([bpf.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-22T00:47:05.9139989-04:00 0HL3GRPS09594 [INF] Executed action "blog.Controllers.HomeController.FeaturePosts (blog)" in 2771.3986ms (afa2e885)
+2017-03-22T00:47:05.9639984-04:00 0HL3GRPS09594 [ERR] An unhandled exception has occurred while executing the request (cf926119)
+System.ArgumentNullException: Value cannot be null.
+Parameter name: source
+   at System.Linq.Enumerable.Select[TSource,TResult](IEnumerable`1 source, Func`2 selector)
+   at blog.Controllers.HomeController.<FeaturePosts>d__7.MoveNext() in C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\Controllers\HomeController.cs:line 200
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeActionMethodAsync>d__27.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeNextActionFilterAsync>d__25.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeNextResourceFilter>d__22.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeAsync>d__20.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.<Invoke>d__4.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkMiddleware.<ExecuteWithFilter>d__7.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.<Invoke>d__7.MoveNext()
+2017-03-22T00:47:06.1590039-04:00 0HL3GRPS09594 [INF] Request finished in 3018.1586ms 500 text/html; charset=utf-8 (15c52c40)
+2017-03-22T00:47:48.6739838-04:00  [INF] User profile is available. Using '"C:\Users\Tyler Rhodes\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2017-03-22T00:47:50.1363128-04:00  [INF] Executed DbCommand (89ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2017-03-22T00:47:50.3322159-04:00  [INF] Executed DbCommand (10ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0 (6438bdd5)
+2017-03-22T00:47:50.8153248-04:00 0HL3GRQC6I1T2 [INF] Request starting HTTP/1.1 DEBUG http://localhost:50420/  0 (e5be5b71)
+2017-03-22T00:47:50.8153248-04:00 0HL3GRQC6I1T1 [INF] Request starting HTTP/1.1 GET http://localhost:50420/   (e5be5b71)
+2017-03-22T00:47:51.0131689-04:00 0HL3GRQC6I1T2 [INF] Request finished in 219.9885ms 200  (15c52c40)
+2017-03-22T00:47:51.3600965-04:00 0HL3GRQC6I1T1 [INF] Executing action method "blog.Controllers.HomeController.Index (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-22T00:47:51.4410189-04:00 0HL3GRQC6I1T1 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title]
+FROM [BlogPost] AS [bp]
+WHERE ([bp].[Public] = 1) AND ([bp].[PublishOn] < GETDATE())
+ORDER BY [bp].[ModifiedAt] DESC, [bp].[PublishOn] DESC (6438bdd5)
+2017-03-22T00:47:53.5969517-04:00 0HL3GRQC6I1T1 [INF] Executing ViewResult, running view at path "/Views/Home/Index.cshtml". (9707eebe)
+2017-03-22T00:47:54.4143625-04:00 0HL3GRQC6I1T1 [INF] Executed action "blog.Controllers.HomeController.Index (blog)" in 3100.3127ms (afa2e885)
+2017-03-22T00:47:54.4903660-04:00 0HL3GRQC6I1T1 [INF] Request finished in 3692.1116ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-22T00:47:54.5253653-04:00 0HL3GRQC6I1T3 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap.min.css   (e5be5b71)
+2017-03-22T00:47:54.5263660-04:00 0HL3GRQC6I1T4 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/styles/default.css   (e5be5b71)
+2017-03-22T00:47:54.5373651-04:00 0HL3GRQC6I1T4 [INF] Sending file. Request path: '"/lib/highlight/styles/default.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\styles\default.css"' (27b0a520)
+2017-03-22T00:47:54.5383675-04:00 0HL3GRQC6I1T3 [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"' (27b0a520)
+2017-03-22T00:47:54.5603657-04:00 0HL3GRQC6I1T4 [INF] Request finished in 34.1232ms 200 text/css (15c52c40)
+2017-03-22T00:47:54.5603657-04:00 0HL3GRQC6I1T5 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/jquery/dist/jquery.js   (e5be5b71)
+2017-03-22T00:47:54.5613660-04:00 0HL3GRQC6I1T5 [INF] Sending file. Request path: '"/lib/jquery/dist/jquery.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\jquery\dist\jquery.js"' (27b0a520)
+2017-03-22T00:47:54.5613660-04:00 0HL3GRQC6I1T6 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/js/bootstrap.js   (e5be5b71)
+2017-03-22T00:47:54.5613660-04:00 0HL3GRQC6I1T7 [INF] Request starting HTTP/1.1 GET http://localhost:50420/css/main.css   (e5be5b71)
+2017-03-22T00:47:54.5613660-04:00 0HL3GRQC6I1T6 [INF] Sending file. Request path: '"/lib/bootstrap/dist/js/bootstrap.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\js\bootstrap.js"' (27b0a520)
+2017-03-22T00:47:54.5613660-04:00 0HL3GRQC6I1T7 [INF] Sending file. Request path: '"/css/main.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\css\main.css"' (27b0a520)
+2017-03-22T00:47:54.5623680-04:00 0HL3GRQC6I1T8 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap-theme.min.css   (e5be5b71)
+2017-03-22T00:47:54.5623680-04:00 0HL3GRQC6I1T8 [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap-theme.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css"' (27b0a520)
+2017-03-22T00:47:54.5643661-04:00 0HL3GRQC6I1T7 [INF] Request finished in 3.1278ms 200 text/css (15c52c40)
+2017-03-22T00:47:54.5653668-04:00 0HL3GRQC6I1T8 [INF] Request finished in 2.8876ms 200 text/css (15c52c40)
+2017-03-22T00:47:54.5703666-04:00 0HL3GRQC6I1T3 [INF] Request finished in 44.8849ms 200 text/css (15c52c40)
+2017-03-22T00:47:54.5813687-04:00 0HL3GRQC6I1T5 [INF] Request finished in 20.094ms 200 application/javascript (15c52c40)
+2017-03-22T00:47:54.5913655-04:00 0HL3GRQC6I1T6 [INF] Request finished in 29.7063ms 200 application/javascript (15c52c40)
+2017-03-22T00:47:54.5973685-04:00 0HL3GRQC6I1T9 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/highlight.pack.js   (e5be5b71)
+2017-03-22T00:47:54.5973685-04:00 0HL3GRQC6I1T9 [INF] Sending file. Request path: '"/lib/highlight/highlight.pack.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\highlight.pack.js"' (27b0a520)
+2017-03-22T00:47:54.5983675-04:00 0HL3GRQC6I1T9 [INF] Request finished in 1.2495ms 200 application/javascript (15c52c40)
+2017-03-22T00:47:54.6053671-04:00 0HL3GRQC6I1TA [INF] Request starting HTTP/1.1 GET http://localhost:50420/js/Common.js   (e5be5b71)
+2017-03-22T00:47:54.6053671-04:00 0HL3GRQC6I1TA [INF] Sending file. Request path: '"/js/Common.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\js\Common.js"' (27b0a520)
+2017-03-22T00:47:54.6443681-04:00 0HL3GRQC6I1TA [INF] Request finished in 39.6016ms 200 application/javascript (15c52c40)
+2017-03-22T00:47:54.6523672-04:00 0HL3GRQC6I1TB [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot?   (e5be5b71)
+2017-03-22T00:47:54.6533683-04:00 0HL3GRQC6I1TB [INF] Sending file. Request path: '"/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.eot"' (27b0a520)
+2017-03-22T00:47:54.6863679-04:00 0HL3GRQC6I1TB [INF] Request finished in 34.3326ms 200 application/vnd.ms-fontobject (15c52c40)
+2017-03-22T00:47:54.9733752-04:00 0HL3GRQC6I1TC [INF] Request starting HTTP/1.1 GET http://localhost:50420/favicon.ico   (e5be5b71)
+2017-03-22T00:47:54.9853750-04:00 0HL3GRQC6I1TC [INF] Request finished in 12.1427ms 404 text/plain (15c52c40)
+2017-03-22T00:47:56.0932029-04:00 0HL3GRQC6I1TD [INF] Request starting HTTP/1.1 GET http://localhost:50420/Home/Features   (e5be5b71)
+2017-03-22T00:47:56.0982064-04:00 0HL3GRQC6I1TD [INF] Executing action method "blog.Controllers.HomeController.Features (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-22T00:47:56.1834757-04:00 0HL3GRQC6I1TD [WRN] The LINQ expression 'orderby {from BlogPostFeature posts in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPostFeature]) join BlogPost posts.BlogPost in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPost]) on Property([posts], "BlogPostId") equals Property([posts.BlogPost], "Id") join BlogPost posts.BlogPost in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPost]) on Property([posts], "BlogPostId") equals Property([posts.BlogPost], "Id") where ((([posts].FeatureId == [feature].Id) AndAlso ([posts.BlogPost].Public == True)) AndAlso ([posts.BlogPost].PublishOn < DateTime.Now)) select [posts] => Count()} desc' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-22T00:47:56.3610766-04:00 0HL3GRQC6I1TD [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [feature].[Id], [feature].[Title], [feature].[Description], (
+    SELECT COUNT(*)
+    FROM [BlogPostFeature] AS [posts1]
+    INNER JOIN [BlogPost] AS [posts.BlogPost3] ON [posts1].[BlogPostId] = [posts.BlogPost3].[Id]
+    INNER JOIN [BlogPost] AS [posts.BlogPost4] ON [posts1].[BlogPostId] = [posts.BlogPost4].[Id]
+    WHERE (([posts1].[FeatureId] = [feature].[Id]) AND ([posts.BlogPost3].[Public] = 1)) AND ([posts.BlogPost3].[PublishOn] < GETDATE())
+)
+FROM [Feature] AS [feature] (6438bdd5)
+2017-03-22T00:47:56.3983903-04:00 0HL3GRQC6I1TD [INF] Executed DbCommand (7ms) [Parameters=[@_outer_Id='?'], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BlogPostFeature] AS [posts]
+INNER JOIN [BlogPost] AS [posts.BlogPost] ON [posts].[BlogPostId] = [posts.BlogPost].[Id]
+INNER JOIN [BlogPost] AS [posts.BlogPost0] ON [posts].[BlogPostId] = [posts.BlogPost0].[Id]
+WHERE (([posts].[FeatureId] = @_outer_Id) AND ([posts.BlogPost].[Public] = 1)) AND ([posts.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-22T00:47:56.4043912-04:00 0HL3GRQC6I1TD [INF] Executed DbCommand (2ms) [Parameters=[@_outer_Id='?'], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BlogPostFeature] AS [posts]
+INNER JOIN [BlogPost] AS [posts.BlogPost] ON [posts].[BlogPostId] = [posts.BlogPost].[Id]
+INNER JOIN [BlogPost] AS [posts.BlogPost0] ON [posts].[BlogPostId] = [posts.BlogPost0].[Id]
+WHERE (([posts].[FeatureId] = @_outer_Id) AND ([posts.BlogPost].[Public] = 1)) AND ([posts.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-22T00:47:56.4813925-04:00 0HL3GRQC6I1TD [INF] Executing ViewResult, running view at path "/Views/Home/Features.cshtml". (9707eebe)
+2017-03-22T00:47:56.5113913-04:00 0HL3GRQC6I1TD [INF] Executed action "blog.Controllers.HomeController.Features (blog)" in 415.258ms (afa2e885)
+2017-03-22T00:47:56.5143930-04:00 0HL3GRQC6I1TD [INF] Request finished in 421.0801ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-22T00:47:56.7272681-04:00 0HL3GRQC6I1TE [INF] Request starting HTTP/1.1 GET http://localhost:50420/favicon.ico   (e5be5b71)
+2017-03-22T00:47:56.7428847-04:00 0HL3GRQC6I1TE [INF] Request finished in 11.0438ms 404 text/plain (15c52c40)
+2017-03-22T00:47:57.7319443-04:00 0HL3GRQC6I1TF [INF] Request starting HTTP/1.1 GET http://localhost:50420/Home/FeaturePosts/4   (e5be5b71)
+2017-03-22T00:47:57.8100637-04:00 0HL3GRQC6I1TF [INF] Executing action method "blog.Controllers.HomeController.FeaturePosts (blog)" with arguments (["4"]) - ModelState is Valid (ba7f4ac2)
+2017-03-22T00:47:57.9033858-04:00 0HL3GRQC6I1TF [INF] Executed DbCommand (51ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Title]
+FROM [Feature] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-22T00:47:57.9414715-04:00 0HL3GRQC6I1TF [WRN] The Include operation for navigation: 'bpf.BlogPost.Categories' was ignored because the target navigation is not reachable in the final query results. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'CoreEventId.IncludeIgnoredWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-22T00:47:57.9414715-04:00 0HL3GRQC6I1TF [WRN] The Include operation for navigation: 'bpf.BlogPost.Author' was ignored because the target navigation is not reachable in the final query results. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'CoreEventId.IncludeIgnoredWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-22T00:47:57.9570939-04:00 0HL3GRQC6I1TF [INF] Executed DbCommand (3ms) [Parameters=[@__feature_Id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [bpf.BlogPost].[Id], [bpf.BlogPost].[AuthorId], [bpf.BlogPost].[Content], [bpf.BlogPost].[CreatedAt], [bpf.BlogPost].[Description], [bpf.BlogPost].[ModifiedAt], [bpf.BlogPost].[Public], [bpf.BlogPost].[PublishOn], [bpf.BlogPost].[Title]
+FROM [BlogPostFeature] AS [bpf]
+INNER JOIN [BlogPost] AS [bpf.BlogPost] ON [bpf].[BlogPostId] = [bpf.BlogPost].[Id]
+WHERE (([bpf].[FeatureId] = @__feature_Id_0) AND ([bpf.BlogPost].[Public] = 1)) AND ([bpf.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-22T00:48:01.9360800-04:00 0HL3GRQC6I1TF [INF] Executed action "blog.Controllers.HomeController.FeaturePosts (blog)" in 4200.2571ms (afa2e885)
+2017-03-22T00:48:02.0190818-04:00 0HL3GRQC6I1TF [ERR] An unhandled exception has occurred while executing the request (cf926119)
+System.ArgumentNullException: Value cannot be null.
+Parameter name: source
+   at System.Linq.Enumerable.Select[TSource,TResult](IEnumerable`1 source, Func`2 selector)
+   at blog.Controllers.HomeController.<FeaturePosts>d__7.MoveNext() in C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\Controllers\HomeController.cs:line 202
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeActionMethodAsync>d__27.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeNextActionFilterAsync>d__25.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeNextResourceFilter>d__22.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeAsync>d__20.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.<Invoke>d__4.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkMiddleware.<ExecuteWithFilter>d__7.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.<Invoke>d__7.MoveNext()
+2017-03-22T00:48:02.1635414-04:00 0HL3GRQC6I1TF [INF] Request finished in 4439.9536ms 500 text/html; charset=utf-8 (15c52c40)
+2017-03-22T00:50:03.4051107-04:00  [INF] User profile is available. Using '"C:\Users\Tyler Rhodes\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2017-03-22T00:50:04.9516596-04:00  [INF] Executed DbCommand (104ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2017-03-22T00:50:05.1484422-04:00  [INF] Executed DbCommand (8ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0 (6438bdd5)
+2017-03-22T00:50:05.6808479-04:00 0HL3GRRKCOLA8 [INF] Request starting HTTP/1.1 GET http://localhost:50420/   (e5be5b71)
+2017-03-22T00:50:05.6808479-04:00 0HL3GRRKCOLA9 [INF] Request starting HTTP/1.1 DEBUG http://localhost:50420/  0 (e5be5b71)
+2017-03-22T00:50:05.8031204-04:00 0HL3GRRKCOLA9 [INF] Request finished in 142.478ms 200  (15c52c40)
+2017-03-22T00:50:06.1624815-04:00 0HL3GRRKCOLA8 [INF] Executing action method "blog.Controllers.HomeController.Index (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-22T00:50:06.2436560-04:00 0HL3GRRKCOLA8 [INF] Executed DbCommand (14ms) [Parameters=[@__p_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title]
+FROM [BlogPost] AS [bp]
+WHERE ([bp].[Public] = 1) AND ([bp].[PublishOn] < GETDATE())
+ORDER BY [bp].[ModifiedAt] DESC, [bp].[PublishOn] DESC (6438bdd5)
+2017-03-22T00:50:08.5276284-04:00 0HL3GRRKCOLA8 [INF] Executing ViewResult, running view at path "/Views/Home/Index.cshtml". (9707eebe)
+2017-03-22T00:50:09.3988794-04:00 0HL3GRRKCOLA8 [INF] Executed action "blog.Controllers.HomeController.Index (blog)" in 3275.2249ms (afa2e885)
+2017-03-22T00:50:09.4698950-04:00 0HL3GRRKCOLA8 [INF] Request finished in 3807.3693ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-22T00:50:09.5068810-04:00 0HL3GRRKCOLAA [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap.min.css   (e5be5b71)
+2017-03-22T00:50:09.5078813-04:00 0HL3GRRKCOLAB [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/styles/default.css   (e5be5b71)
+2017-03-22T00:50:09.5208814-04:00 0HL3GRRKCOLAB [INF] Sending file. Request path: '"/lib/highlight/styles/default.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\styles\default.css"' (27b0a520)
+2017-03-22T00:50:09.5218816-04:00 0HL3GRRKCOLAA [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"' (27b0a520)
+2017-03-22T00:50:09.5398819-04:00 0HL3GRRKCOLAC [INF] Request starting HTTP/1.1 GET http://localhost:50420/css/main.css   (e5be5b71)
+2017-03-22T00:50:09.5398819-04:00 0HL3GRRKCOLAC [INF] Sending file. Request path: '"/css/main.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\css\main.css"' (27b0a520)
+2017-03-22T00:50:09.5418821-04:00 0HL3GRRKCOLAD [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/jquery/dist/jquery.js   (e5be5b71)
+2017-03-22T00:50:09.5418821-04:00 0HL3GRRKCOLAE [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap-theme.min.css   (e5be5b71)
+2017-03-22T00:50:09.5418821-04:00 0HL3GRRKCOLAE [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap-theme.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css"' (27b0a520)
+2017-03-22T00:50:09.5418821-04:00 0HL3GRRKCOLAD [INF] Sending file. Request path: '"/lib/jquery/dist/jquery.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\jquery\dist\jquery.js"' (27b0a520)
+2017-03-22T00:50:09.5448821-04:00 0HL3GRRKCOLAF [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/js/bootstrap.js   (e5be5b71)
+2017-03-22T00:50:09.5448821-04:00 0HL3GRRKCOLAF [INF] Sending file. Request path: '"/lib/bootstrap/dist/js/bootstrap.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\js\bootstrap.js"' (27b0a520)
+2017-03-22T00:50:09.5448821-04:00 0HL3GRRKCOLAC [INF] Request finished in 5.1207ms 200 text/css (15c52c40)
+2017-03-22T00:50:09.5458828-04:00 0HL3GRRKCOLAB [INF] Request finished in 38.2805ms 200 text/css (15c52c40)
+2017-03-22T00:50:09.5458828-04:00 0HL3GRRKCOLAE [INF] Request finished in 4.0144ms 200 text/css (15c52c40)
+2017-03-22T00:50:09.5688821-04:00 0HL3GRRKCOLAA [INF] Request finished in 58.184ms 200 text/css (15c52c40)
+2017-03-22T00:50:09.5878822-04:00 0HL3GRRKCOLAF [INF] Request finished in 43.4747ms 200 application/javascript (15c52c40)
+2017-03-22T00:50:09.5888821-04:00 0HL3GRRKCOLAG [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/highlight.pack.js   (e5be5b71)
+2017-03-22T00:50:09.5898828-04:00 0HL3GRRKCOLAG [INF] Sending file. Request path: '"/lib/highlight/highlight.pack.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\highlight.pack.js"' (27b0a520)
+2017-03-22T00:50:09.5898828-04:00 0HL3GRRKCOLAG [INF] Request finished in 0.9145ms 200 application/javascript (15c52c40)
+2017-03-22T00:50:09.5918830-04:00 0HL3GRRKCOLAH [INF] Request starting HTTP/1.1 GET http://localhost:50420/js/Common.js   (e5be5b71)
+2017-03-22T00:50:09.5928845-04:00 0HL3GRRKCOLAH [INF] Sending file. Request path: '"/js/Common.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\js\Common.js"' (27b0a520)
+2017-03-22T00:50:09.5928845-04:00 0HL3GRRKCOLAH [INF] Request finished in 1.0401ms 200 application/javascript (15c52c40)
+2017-03-22T00:50:09.5958821-04:00 0HL3GRRKCOLAI [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot?   (e5be5b71)
+2017-03-22T00:50:09.5958821-04:00 0HL3GRRKCOLAI [INF] Sending file. Request path: '"/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.eot"' (27b0a520)
+2017-03-22T00:50:09.6238836-04:00 0HL3GRRKCOLAI [INF] Request finished in 27.543ms 200 application/vnd.ms-fontobject (15c52c40)
+2017-03-22T00:50:09.6238836-04:00 0HL3GRRKCOLAD [INF] Request finished in 82.5926ms 200 application/javascript (15c52c40)
+2017-03-22T00:50:10.0248909-04:00 0HL3GRRKCOLAJ [INF] Request starting HTTP/1.1 GET http://localhost:50420/favicon.ico   (e5be5b71)
+2017-03-22T00:50:10.0378914-04:00 0HL3GRRKCOLAJ [INF] Request finished in 13.0588ms 404 text/plain (15c52c40)
+2017-03-22T00:50:10.9182670-04:00 0HL3GRRKCOLAK [INF] Request starting HTTP/1.1 GET http://localhost:50420/Home/Features   (e5be5b71)
+2017-03-22T00:50:10.9262693-04:00 0HL3GRRKCOLAK [INF] Executing action method "blog.Controllers.HomeController.Features (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-22T00:50:11.0027910-04:00 0HL3GRRKCOLAK [WRN] The LINQ expression 'orderby {from BlogPostFeature posts in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPostFeature]) join BlogPost posts.BlogPost in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPost]) on Property([posts], "BlogPostId") equals Property([posts.BlogPost], "Id") join BlogPost posts.BlogPost in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPost]) on Property([posts], "BlogPostId") equals Property([posts.BlogPost], "Id") where ((([posts].FeatureId == [feature].Id) AndAlso ([posts.BlogPost].Public == True)) AndAlso ([posts.BlogPost].PublishOn < DateTime.Now)) select [posts] => Count()} desc' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-22T00:50:11.1438415-04:00 0HL3GRRKCOLAK [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [feature].[Id], [feature].[Title], [feature].[Description], (
+    SELECT COUNT(*)
+    FROM [BlogPostFeature] AS [posts1]
+    INNER JOIN [BlogPost] AS [posts.BlogPost3] ON [posts1].[BlogPostId] = [posts.BlogPost3].[Id]
+    INNER JOIN [BlogPost] AS [posts.BlogPost4] ON [posts1].[BlogPostId] = [posts.BlogPost4].[Id]
+    WHERE (([posts1].[FeatureId] = [feature].[Id]) AND ([posts.BlogPost3].[Public] = 1)) AND ([posts.BlogPost3].[PublishOn] < GETDATE())
+)
+FROM [Feature] AS [feature] (6438bdd5)
+2017-03-22T00:50:11.1635126-04:00 0HL3GRRKCOLAK [INF] Executed DbCommand (3ms) [Parameters=[@_outer_Id='?'], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BlogPostFeature] AS [posts]
+INNER JOIN [BlogPost] AS [posts.BlogPost] ON [posts].[BlogPostId] = [posts.BlogPost].[Id]
+INNER JOIN [BlogPost] AS [posts.BlogPost0] ON [posts].[BlogPostId] = [posts.BlogPost0].[Id]
+WHERE (([posts].[FeatureId] = @_outer_Id) AND ([posts.BlogPost].[Public] = 1)) AND ([posts.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-22T00:50:11.1635126-04:00 0HL3GRRKCOLAK [INF] Executed DbCommand (1ms) [Parameters=[@_outer_Id='?'], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BlogPostFeature] AS [posts]
+INNER JOIN [BlogPost] AS [posts.BlogPost] ON [posts].[BlogPostId] = [posts.BlogPost].[Id]
+INNER JOIN [BlogPost] AS [posts.BlogPost0] ON [posts].[BlogPostId] = [posts.BlogPost0].[Id]
+WHERE (([posts].[FeatureId] = @_outer_Id) AND ([posts.BlogPost].[Public] = 1)) AND ([posts.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-22T00:50:11.2827346-04:00 0HL3GRRKCOLAK [INF] Executing ViewResult, running view at path "/Views/Home/Features.cshtml". (9707eebe)
+2017-03-22T00:50:11.2983570-04:00 0HL3GRRKCOLAK [INF] Executed action "blog.Controllers.HomeController.Features (blog)" in 385.6354ms (afa2e885)
+2017-03-22T00:50:11.3139937-04:00 0HL3GRRKCOLAK [INF] Request finished in 402.7136ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-22T00:50:11.5600827-04:00 0HL3GRRKCOLAL [INF] Request starting HTTP/1.1 GET http://localhost:50420/favicon.ico   (e5be5b71)
+2017-03-22T00:50:11.5610818-04:00 0HL3GRRKCOLAL [INF] Request finished in 1.0319ms 404 text/plain (15c52c40)
+2017-03-22T00:50:12.3643284-04:00 0HL3GRRKCOLAM [INF] Request starting HTTP/1.1 GET http://localhost:50420/Home/FeaturePosts/4   (e5be5b71)
+2017-03-22T00:50:12.4502604-04:00 0HL3GRRKCOLAM [INF] Executing action method "blog.Controllers.HomeController.FeaturePosts (blog)" with arguments (["4"]) - ModelState is Valid (ba7f4ac2)
+2017-03-22T00:50:12.4772641-04:00 0HL3GRRKCOLAM [INF] Executed DbCommand (3ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Title]
+FROM [Feature] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-22T00:50:12.5215675-04:00 0HL3GRRKCOLAM [INF] Executed DbCommand (13ms) [Parameters=[@__feature_Id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [bpf.BlogPost].[Id], [bpf.BlogPost].[AuthorId], [bpf.BlogPost].[Content], [bpf.BlogPost].[CreatedAt], [bpf.BlogPost].[Description], [bpf.BlogPost].[ModifiedAt], [bpf.BlogPost].[Public], [bpf.BlogPost].[PublishOn], [bpf.BlogPost].[Title]
+FROM [BlogPostFeature] AS [bpf]
+INNER JOIN [BlogPost] AS [bpf.BlogPost] ON [bpf].[BlogPostId] = [bpf.BlogPost].[Id]
+WHERE (([bpf].[FeatureId] = @__feature_Id_0) AND ([bpf.BlogPost].[Public] = 1)) AND ([bpf.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-22T00:50:12.5528154-04:00 0HL3GRRKCOLAM [WRN] The LINQ expression '{__bps_0 => Contains([bp])}' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-22T00:50:12.5609036-04:00 0HL3GRRKCOLAM [WRN] The LINQ expression 'Contains([bp])' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-22T00:50:12.6155565-04:00 0HL3GRRKCOLAM [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title], [a].[Id], [a].[ApplicationUserId], [a].[Biography], [a].[FirstName], [a].[LastName]
+FROM [BlogPost] AS [bp]
+LEFT JOIN [Author] AS [a] ON [bp].[AuthorId] = [a].[Id]
+ORDER BY [bp].[Id] (6438bdd5)
+2017-03-22T00:50:12.7319242-04:00 0HL3GRRKCOLAM [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [b].[BlogPostId], [b].[CategoryId]
+FROM [BlogPostCategory] AS [b]
+WHERE EXISTS (
+    SELECT 1
+    FROM [BlogPost] AS [bp]
+    WHERE [b].[BlogPostId] = [bp].[Id])
+ORDER BY [b].[BlogPostId] (6438bdd5)
+2017-03-22T00:50:15.1178907-04:00 0HL3GRRKCOLAM [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [cat].[Id], [cat].[Description], [cat].[Name]
+FROM [Category] AS [cat]
+WHERE [cat].[Id] IN (10, 11) (6438bdd5)
+2017-03-22T00:50:15.2176830-04:00 0HL3GRRKCOLAM [INF] Executing ViewResult, running view at path "/Views/Home/FeaturePosts.cshtml". (9707eebe)
+2017-03-22T00:50:15.2333099-04:00 0HL3GRRKCOLAM [INF] Executed action "blog.Controllers.HomeController.FeaturePosts (blog)" in 2864.4343ms (afa2e885)
+2017-03-22T00:50:15.2333099-04:00 0HL3GRRKCOLAM [INF] Request finished in 2868.094ms 200 text/html; charset=utf-8 (15c52c40)

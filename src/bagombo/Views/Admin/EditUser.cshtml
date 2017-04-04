@@ -1,0 +1,69 @@
+﻿
+@using Bagombo.Models.ViewModels.Admin;
+@model UserViewModel
+@{
+  ViewData["Title"] = "Edit User";
+  Layout = "_Layout";
+  var authorDisplay = Model.IsAuthor == true ? "block" : "none";
+}
+
+<div class="container">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">Edit User</div>
+            <div class="panel-body">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <form asp-action="EditUser" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="UserName"></label>
+                        <input asp-for="UserName" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" />
+                    </div>
+                    @if (Model.ExternalLogins == false)
+                    {
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label asp-for="ChangePassword">
+                                    <input asp-for="ChangePassword" id="ChangePassword" /> Change Password?
+                                </label>
+                            </div>
+                        </div>
+                        <div id="passwordfield" style="display:none">
+                            <div class="form-group">
+                                <label asp-for="Password"></label>
+                                <input asp-for="Password" class="form-control" type="password" />
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label asp-for="IsAuthor">
+                                <input asp-for="IsAuthor" id="IsAuthor" /> Is an author?
+                            </label>
+                        </div>
+                    </div>
+                    <div id="authorfields" style="display:@authorDisplay">
+                        <div class="form-group">
+                            <label asp-for="FirstName"></label>
+                            <input asp-for="FirstName" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LastName"></label>
+                            <input asp-for="LastName" class="form-control" />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <a asp-action="ManageUsers" class="btn btn-default">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/AddEditUser.js"></script>
+}

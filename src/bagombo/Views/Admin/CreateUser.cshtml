@@ -1,0 +1,65 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Bagombo.Models.ViewModels;
+@model UserViewModel
+@{
+  ViewData["Title"] = "Create Uesr";
+  Layout = "_Layout";
+  var authorFieldsDisplay = "none";
+  if (Model != null)
+  {
+      if (Model.IsAuthor != false)
+      {
+          authorFieldsDisplay = "block";
+      }
+  }
+}
+
+<div class="container">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">Create User:</div>
+            <div class="panel-body">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <form asp-action="CreateUser" method="post">
+                    <div class="form-group">
+                        <label asp-for="UserName"></label>
+                        <input asp-for="UserName" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" class="form-control" type="password" />
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label asp-for="IsAuthor">
+                                <input asp-for="IsAuthor" id="IsAuthor" /> Is an author?
+                            </label>
+                        </div>
+                    </div>
+                    <div id="authorfields" style="display:@authorFieldsDisplay">
+                        <div class="form-group">
+                            <label asp-for="FirstName"></label>
+                            <input asp-for="FirstName" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LastName"></label>
+                            <input asp-for="LastName" class="form-control" />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <a asp-action="ManageUsers" class="btn btn-default">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/AddEditUser.js"></script>
+}

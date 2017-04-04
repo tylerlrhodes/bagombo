@@ -1,0 +1,39 @@
+﻿
+@using Bagombo.Models.ViewModels.Home
+@model ViewSearchResultsViewModel
+
+@{
+  ViewData["Title"] = $"Posts for Search: {Model.SearchTerm}";
+  Layout = "_Layout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h3>Posts for Search: <span class="label label-info">@Model.SearchTerm</span></h3>
+            <hr />
+        </div>
+    </div>
+    @foreach (var post in Model.BlogPosts)
+    {
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>
+                        <a asp-action="BlogPost" asp-route-id="@post.BlogPost.Id">@post.BlogPost.Title</a>
+                    </h3>
+                    <h5>
+                        Author: @post.BlogPost.Author.FirstName @post.BlogPost.Author.LastName
+                    </h5>
+                    <hr />
+                    <h5>
+                        @post.BlogPost.Description
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    }
+</div>

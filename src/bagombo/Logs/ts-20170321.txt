@@ -1,0 +1,982 @@
+2017-03-21T23:35:07.5879782-04:00  [INF] User profile is available. Using '"C:\Users\Tyler Rhodes\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2017-03-21T23:35:16.2374423-04:00  [INF] Executed DbCommand (187ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2017-03-21T23:35:16.4551968-04:00  [INF] Executed DbCommand (10ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0 (6438bdd5)
+2017-03-21T23:35:17.7009606-04:00 0HL3GQHQS0VE7 [INF] Request starting HTTP/1.1 DEBUG http://localhost:50420/  0 (e5be5b71)
+2017-03-21T23:35:17.7009606-04:00 0HL3GQHQS0VE8 [INF] Request starting HTTP/1.1 GET http://localhost:50420/   (e5be5b71)
+2017-03-21T23:35:18.0500529-04:00 0HL3GQHQS0VE7 [INF] Request finished in 349.2799ms 200  (15c52c40)
+2017-03-21T23:35:18.5466868-04:00 0HL3GQHQS0VE8 [INF] Executing action method "blog.Controllers.HomeController.Index (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:35:19.1725500-04:00 0HL3GQHQS0VE8 [INF] Executed DbCommand (346ms) [Parameters=[@__p_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title]
+FROM [BlogPost] AS [bp]
+WHERE ([bp].[Public] = 1) AND ([bp].[PublishOn] < GETDATE())
+ORDER BY [bp].[ModifiedAt] DESC, [bp].[PublishOn] DESC (6438bdd5)
+2017-03-21T23:35:29.1853772-04:00 0HL3GQHQS0VE8 [INF] Executing ViewResult, running view at path "/Views/Home/Index.cshtml". (9707eebe)
+2017-03-21T23:35:52.2461548-04:00 0HL3GQHQS0VE8 [INF] Executed action "blog.Controllers.HomeController.Index (blog)" in 33788.4698ms (afa2e885)
+2017-03-21T23:35:52.4621428-04:00 0HL3GQHQS0VE8 [INF] Request finished in 34783.1951ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:35:54.1600551-04:00 0HL3GQHQS0VE9 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap-theme.min.css   (e5be5b71)
+2017-03-21T23:35:54.1640556-04:00 0HL3GQHQS0VEA [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap.min.css   (e5be5b71)
+2017-03-21T23:35:54.1740582-04:00 0HL3GQHQS0VEB [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/styles/default.css   (e5be5b71)
+2017-03-21T23:35:54.2175127-04:00 0HL3GQHQS0VEC [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/js/bootstrap.js   (e5be5b71)
+2017-03-21T23:35:54.2175127-04:00 0HL3GQHQS0VED [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/highlight.pack.js   (e5be5b71)
+2017-03-21T23:35:55.7740990-04:00 0HL3GQHQS0VEB [INF] Sending file. Request path: '"/lib/highlight/styles/default.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\styles\default.css"' (27b0a520)
+2017-03-21T23:35:55.8361004-04:00 0HL3GQHQS0VEE [INF] Request starting HTTP/1.1 GET http://localhost:50420/css/main.css   (e5be5b71)
+2017-03-21T23:35:55.8371011-04:00 0HL3GQHQS0VEE [INF] Sending file. Request path: '"/css/main.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\css\main.css"' (27b0a520)
+2017-03-21T23:35:55.8371011-04:00 0HL3GQHQS0VEF [INF] Request starting HTTP/1.1 GET http://localhost:50420/js/Common.js   (e5be5b71)
+2017-03-21T23:35:55.8371011-04:00 0HL3GQHQS0VEF [INF] Sending file. Request path: '"/js/Common.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\js\Common.js"' (27b0a520)
+2017-03-21T23:35:55.8371011-04:00 0HL3GQHQS0VED [INF] Sending file. Request path: '"/lib/highlight/highlight.pack.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\highlight.pack.js"' (27b0a520)
+2017-03-21T23:35:55.8831027-04:00 0HL3GQHQS0VEC [INF] Sending file. Request path: '"/lib/bootstrap/dist/js/bootstrap.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\js\bootstrap.js"' (27b0a520)
+2017-03-21T23:35:55.8841043-04:00 0HL3GQHQS0VEB [INF] Request finished in 1681.4964ms 200 text/css (15c52c40)
+2017-03-21T23:35:55.8841043-04:00 0HL3GQHQS0VEE [INF] Request finished in 75.4417ms 200 text/css (15c52c40)
+2017-03-21T23:35:55.8841043-04:00 0HL3GQHQS0VEF [INF] Request finished in 37.1734ms 200 application/javascript (15c52c40)
+2017-03-21T23:35:55.8851030-04:00 0HL3GQHQS0VEG [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/jquery/dist/jquery.js   (e5be5b71)
+2017-03-21T23:35:55.8851030-04:00 0HL3GQHQS0VEG [INF] Sending file. Request path: '"/lib/jquery/dist/jquery.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\jquery\dist\jquery.js"' (27b0a520)
+2017-03-21T23:35:55.9391108-04:00 0HL3GQHQS0VEA [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"' (27b0a520)
+2017-03-21T23:35:55.9411086-04:00 0HL3GQHQS0VED [INF] Request finished in 1709.3282ms 200 application/javascript (15c52c40)
+2017-03-21T23:35:55.9741085-04:00 0HL3GQHQS0VEC [INF] Request finished in 1766.1382ms 200 application/javascript (15c52c40)
+2017-03-21T23:35:56.0031108-04:00 0HL3GQHQS0VEG [INF] Request finished in 192.3576ms 200 application/javascript (15c52c40)
+2017-03-21T23:35:56.0041103-04:00 0HL3GQHQS0VEA [INF] Request finished in 1840.1994ms 200 text/css (15c52c40)
+2017-03-21T23:35:56.0071232-04:00 0HL3GQHQS0VE9 [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap-theme.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css"' (27b0a520)
+2017-03-21T23:35:56.0261125-04:00 0HL3GQHQS0VE9 [INF] Request finished in 1868.3095ms 200 text/css (15c52c40)
+2017-03-21T23:36:06.4086411-04:00 0HL3GQHQS0VEH [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot?   (e5be5b71)
+2017-03-21T23:36:06.4086411-04:00 0HL3GQHQS0VEH [INF] Sending file. Request path: '"/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.eot"' (27b0a520)
+2017-03-21T23:36:06.4526441-04:00 0HL3GQHQS0VEH [INF] Request finished in 44.54ms 200 application/vnd.ms-fontobject (15c52c40)
+2017-03-21T23:36:09.6218055-04:00 0HL3GQHQS0VEI [INF] Request starting HTTP/1.1 GET http://localhost:50420/favicon.ico   (e5be5b71)
+2017-03-21T23:36:09.7758147-04:00 0HL3GQHQS0VEI [INF] Request finished in 154.4051ms 404 text/plain (15c52c40)
+2017-03-21T23:49:20.6963034-04:00  [INF] User profile is available. Using '"C:\Users\Tyler Rhodes\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2017-03-21T23:49:22.2073121-04:00  [INF] Executed DbCommand (110ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2017-03-21T23:49:22.3854386-04:00  [INF] Executed DbCommand (7ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0 (6438bdd5)
+2017-03-21T23:49:22.8205342-04:00 0HL3GQPMNROF2 [INF] Request starting HTTP/1.1 GET http://localhost:50420/   (e5be5b71)
+2017-03-21T23:49:22.8205342-04:00 0HL3GQPMNROF1 [INF] Request starting HTTP/1.1 DEBUG http://localhost:50420/  0 (e5be5b71)
+2017-03-21T23:49:22.9454870-04:00 0HL3GQPMNROF1 [INF] Request finished in 137.4858ms 200  (15c52c40)
+2017-03-21T23:49:23.3394582-04:00 0HL3GQPMNROF2 [INF] Executing action method "blog.Controllers.HomeController.Index (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:49:23.4184588-04:00 0HL3GQPMNROF2 [INF] Executed DbCommand (7ms) [Parameters=[@__p_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title]
+FROM [BlogPost] AS [bp]
+WHERE ([bp].[Public] = 1) AND ([bp].[PublishOn] < GETDATE())
+ORDER BY [bp].[ModifiedAt] DESC, [bp].[PublishOn] DESC (6438bdd5)
+2017-03-21T23:49:25.5856467-04:00 0HL3GQPMNROF2 [INF] Executing ViewResult, running view at path "/Views/Home/Index.cshtml". (9707eebe)
+2017-03-21T23:49:26.3315019-04:00 0HL3GQPMNROF2 [INF] Executed action "blog.Controllers.HomeController.Index (blog)" in 3092.0916ms (afa2e885)
+2017-03-21T23:49:26.4311879-04:00 0HL3GQPMNROF2 [INF] Request finished in 3616.4551ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:49:26.5291924-04:00 0HL3GQPMNROF3 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap-theme.min.css   (e5be5b71)
+2017-03-21T23:49:26.5432095-04:00 0HL3GQPMNROF3 [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap-theme.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css"' (27b0a520)
+2017-03-21T23:49:26.5559895-04:00 0HL3GQPMNROF4 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/styles/default.css   (e5be5b71)
+2017-03-21T23:49:26.5559895-04:00 0HL3GQPMNROF4 [INF] Sending file. Request path: '"/lib/highlight/styles/default.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\styles\default.css"' (27b0a520)
+2017-03-21T23:49:26.5559895-04:00 0HL3GQPMNROF4 [INF] Request finished in 0ms 200 text/css (15c52c40)
+2017-03-21T23:49:26.5561891-04:00 0HL3GQPMNROF3 [INF] Request finished in 26.856ms 200 text/css (15c52c40)
+2017-03-21T23:49:26.5561891-04:00 0HL3GQPMNROF5 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap.min.css   (e5be5b71)
+2017-03-21T23:49:26.5561891-04:00 0HL3GQPMNROF5 [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"' (27b0a520)
+2017-03-21T23:49:26.6791921-04:00 0HL3GQPMNROF6 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/js/bootstrap.js   (e5be5b71)
+2017-03-21T23:49:26.6791921-04:00 0HL3GQPMNROF6 [INF] Sending file. Request path: '"/lib/bootstrap/dist/js/bootstrap.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\js\bootstrap.js"' (27b0a520)
+2017-03-21T23:49:26.7101945-04:00 0HL3GQPMNROF7 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/jquery/dist/jquery.js   (e5be5b71)
+2017-03-21T23:49:26.7101945-04:00 0HL3GQPMNROF7 [INF] Sending file. Request path: '"/lib/jquery/dist/jquery.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\jquery\dist\jquery.js"' (27b0a520)
+2017-03-21T23:49:26.7131933-04:00 0HL3GQPMNROF8 [INF] Request starting HTTP/1.1 GET http://localhost:50420/css/main.css   (e5be5b71)
+2017-03-21T23:49:26.7131933-04:00 0HL3GQPMNROF8 [INF] Sending file. Request path: '"/css/main.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\css\main.css"' (27b0a520)
+2017-03-21T23:49:26.7131933-04:00 0HL3GQPMNROF8 [INF] Request finished in 0.6796ms 200 text/css (15c52c40)
+2017-03-21T23:49:26.7151943-04:00 0HL3GQPMNROF5 [INF] Request finished in 157.9949ms 200 text/css (15c52c40)
+2017-03-21T23:49:26.7151943-04:00 0HL3GQPMNROF9 [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/highlight.pack.js   (e5be5b71)
+2017-03-21T23:49:26.7151943-04:00 0HL3GQPMNROF9 [INF] Sending file. Request path: '"/lib/highlight/highlight.pack.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\highlight.pack.js"' (27b0a520)
+2017-03-21T23:49:26.7161938-04:00 0HL3GQPMNROF9 [INF] Request finished in 0.6241ms 200 application/javascript (15c52c40)
+2017-03-21T23:49:26.7161938-04:00 0HL3GQPMNROFA [INF] Request starting HTTP/1.1 GET http://localhost:50420/js/Common.js   (e5be5b71)
+2017-03-21T23:49:26.7161938-04:00 0HL3GQPMNROFA [INF] Sending file. Request path: '"/js/Common.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\js\Common.js"' (27b0a520)
+2017-03-21T23:49:26.7171953-04:00 0HL3GQPMNROFA [INF] Request finished in 0.5379ms 200 application/javascript (15c52c40)
+2017-03-21T23:49:26.7171953-04:00 0HL3GQPMNROF6 [INF] Request finished in 39.0993ms 200 application/javascript (15c52c40)
+2017-03-21T23:49:26.7491939-04:00 0HL3GQPMNROF7 [INF] Request finished in 39.3897ms 200 application/javascript (15c52c40)
+2017-03-21T23:49:26.8721982-04:00 0HL3GQPMNROFB [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot?   (e5be5b71)
+2017-03-21T23:49:26.8721982-04:00 0HL3GQPMNROFB [INF] Sending file. Request path: '"/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.eot"' (27b0a520)
+2017-03-21T23:49:26.8811975-04:00 0HL3GQPMNROFB [INF] Request finished in 11.1325ms 200 application/vnd.ms-fontobject (15c52c40)
+2017-03-21T23:49:27.1654618-04:00 0HL3GQPMNROFC [INF] Request starting HTTP/1.1 GET http://localhost:50420/favicon.ico   (e5be5b71)
+2017-03-21T23:49:27.1754622-04:00 0HL3GQPMNROFC [INF] Request finished in 9.253ms 404 text/plain (15c52c40)
+2017-03-21T23:49:28.7667708-04:00 0HL3GQPMNROFD [INF] Request starting HTTP/1.1 GET http://localhost:50420/Account/Login?returnUrl=http%3A%2F%2Flocalhost%3A50420%2F   (e5be5b71)
+2017-03-21T23:49:28.8911035-04:00 0HL3GQPMNROFD [INF] Executing action method "blog.Controllers.AccountController.Login (blog)" with arguments (["http://localhost:50420/"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:49:29.1344516-04:00 0HL3GQPMNROFD [INF] Executing ViewResult, running view at path "/Views/Account/Login.cshtml". (9707eebe)
+2017-03-21T23:49:29.4525105-04:00 0HL3GQPMNROFD [INF] Executed action "blog.Controllers.AccountController.Login (blog)" in 673.231ms (afa2e885)
+2017-03-21T23:49:29.4837585-04:00 0HL3GQPMNROFD [INF] Request finished in 722.7045ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:49:29.7121130-04:00 0HL3GQPMNROFE [INF] Request starting HTTP/1.1 GET http://localhost:50420/images/twitter-button.png   (e5be5b71)
+2017-03-21T23:49:29.7121130-04:00 0HL3GQPMNROFE [INF] Sending file. Request path: '"/images/twitter-button.png"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\images\twitter-button.png"' (27b0a520)
+2017-03-21T23:49:29.7331125-04:00 0HL3GQPMNROFE [INF] Request finished in 19.4985ms 200 image/png (15c52c40)
+2017-03-21T23:49:29.9341426-04:00 0HL3GQPMNROFF [INF] Request starting HTTP/1.1 GET http://localhost:50420/favicon.ico   (e5be5b71)
+2017-03-21T23:49:29.9584690-04:00 0HL3GQPMNROFF [INF] Request finished in 25.2804ms 404 text/plain (15c52c40)
+2017-03-21T23:49:36.7618814-04:00 0HL3GQPMNROFG [INF] Request starting HTTP/1.1 POST http://localhost:50420/Account/login application/x-www-form-urlencoded 293 (e5be5b71)
+2017-03-21T23:49:36.8375954-04:00 0HL3GQPMNROFG [INF] Executing action method "blog.Controllers.AccountController.Login (blog)" with arguments (["blog.Models.ViewModels.Account.AccountLoginViewModel", "http://localhost:50420/"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:49:36.8530991-04:00 0HL3GQPMNROFG [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedEmail] = @__normalizedEmail_0 (6438bdd5)
+2017-03-21T23:49:36.8843499-04:00 0HL3GQPMNROFG [INF] AuthenticationScheme: "Identity.Application" signed out. (d3f50c8d)
+2017-03-21T23:49:36.8843499-04:00 0HL3GQPMNROFG [INF] AuthenticationScheme: "Identity.External" signed out. (d3f50c8d)
+2017-03-21T23:49:36.8843499-04:00 0HL3GQPMNROFG [INF] AuthenticationScheme: "Identity.TwoFactorUserId" signed out. (d3f50c8d)
+2017-03-21T23:49:37.0982445-04:00 0HL3GQPMNROFG [INF] Executed DbCommand (2ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT [role].[Name]
+FROM [AspNetUserRoles] AS [userRole]
+INNER JOIN [AspNetRoles] AS [role] ON [userRole].[RoleId] = [role].[Id]
+WHERE [userRole].[UserId] = @__userId_0 (6438bdd5)
+2017-03-21T23:49:37.1138722-04:00 0HL3GQPMNROFG [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0 (6438bdd5)
+2017-03-21T23:49:37.1500386-04:00 0HL3GQPMNROFG [INF] Executed DbCommand (1ms) [Parameters=[@__role_Id_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT [rc].[ClaimType], [rc].[ClaimValue]
+FROM [AspNetRoleClaims] AS [rc]
+WHERE [rc].[RoleId] = @__role_Id_0 (6438bdd5)
+2017-03-21T23:49:37.1540369-04:00 0HL3GQPMNROFG [INF] Executed DbCommand (0ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0 (6438bdd5)
+2017-03-21T23:49:37.1560371-04:00 0HL3GQPMNROFG [INF] Executed DbCommand (0ms) [Parameters=[@__role_Id_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT [rc].[ClaimType], [rc].[ClaimValue]
+FROM [AspNetRoleClaims] AS [rc]
+WHERE [rc].[RoleId] = @__role_Id_0 (6438bdd5)
+2017-03-21T23:49:37.1732920-04:00 0HL3GQPMNROFG [INF] Executed DbCommand (2ms) [Parameters=[@__user_Id_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT [uc].[Id], [uc].[ClaimType], [uc].[ClaimValue], [uc].[UserId]
+FROM [AspNetUserClaims] AS [uc]
+WHERE [uc].[UserId] = @__user_Id_0 (6438bdd5)
+2017-03-21T23:49:37.1889743-04:00 0HL3GQPMNROFG [INF] AuthenticationScheme: "Identity.Application" signed in. (c66dd7e7)
+2017-03-21T23:49:37.1889743-04:00 0HL3GQPMNROFG [INF] Executing RedirectResult, redirecting to "http://localhost:50420/". (d98d540e)
+2017-03-21T23:49:37.1889743-04:00 0HL3GQPMNROFG [INF] Executed action "blog.Controllers.AccountController.Login (blog)" in 437.1448ms (afa2e885)
+2017-03-21T23:49:37.1889743-04:00 0HL3GQPMNROFG [INF] Request finished in 441.0451ms 302  (15c52c40)
+2017-03-21T23:49:37.2045375-04:00 0HL3GQPMNROFH [INF] Request starting HTTP/1.1 GET http://localhost:50420/   (e5be5b71)
+2017-03-21T23:49:37.2201615-04:00 0HL3GQPMNROFH [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:49:37.2201615-04:00 0HL3GQPMNROFH [INF] Executing action method "blog.Controllers.HomeController.Index (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:49:37.2201615-04:00 0HL3GQPMNROFH [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title]
+FROM [BlogPost] AS [bp]
+WHERE ([bp].[Public] = 1) AND ([bp].[PublishOn] < GETDATE())
+ORDER BY [bp].[ModifiedAt] DESC, [bp].[PublishOn] DESC (6438bdd5)
+2017-03-21T23:49:37.2201615-04:00 0HL3GQPMNROFH [INF] Executing ViewResult, running view at path "/Views/Home/Index.cshtml". (9707eebe)
+2017-03-21T23:49:37.2357863-04:00 0HL3GQPMNROFH [INF] Executed action "blog.Controllers.HomeController.Index (blog)" in 26.8182ms (afa2e885)
+2017-03-21T23:49:37.2357863-04:00 0HL3GQPMNROFH [INF] Request finished in 40.9095ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:49:39.7097157-04:00 0HL3GQPMNROFI [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManagePosts   (e5be5b71)
+2017-03-21T23:49:39.7097157-04:00 0HL3GQPMNROFI [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:49:39.7409649-04:00 0HL3GQPMNROFI [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:49:39.7619266-04:00 0HL3GQPMNROFI [INF] Executing action method "blog.Controllers.AdminController.ManagePosts (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:49:39.8044894-04:00 0HL3GQPMNROFI [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[AuthorId], [a].[Content], [a].[CreatedAt], [a].[Description], [a].[ModifiedAt], [a].[Public], [a].[PublishOn], [a].[Title], [a0].[Id], [a0].[ApplicationUserId], [a0].[Biography], [a0].[FirstName], [a0].[LastName]
+FROM [BlogPost] AS [a]
+LEFT JOIN [Author] AS [a0] ON [a].[AuthorId] = [a0].[Id] (6438bdd5)
+2017-03-21T23:49:40.0044929-04:00 0HL3GQPMNROFI [INF] Executing ViewResult, running view at path "/Views/Admin/ManagePosts.cshtml". (9707eebe)
+2017-03-21T23:49:40.0513656-04:00 0HL3GQPMNROFI [INF] Executed action "blog.Controllers.AdminController.ManagePosts (blog)" in 336.6112ms (afa2e885)
+2017-03-21T23:49:40.0513656-04:00 0HL3GQPMNROFI [INF] Request finished in 344.0028ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:49:40.0826152-04:00 0HL3GQPMNROFJ [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/jquery/dist/jquery.min.js   (e5be5b71)
+2017-03-21T23:49:40.0826152-04:00 0HL3GQPMNROFJ [INF] Sending file. Request path: '"/lib/jquery/dist/jquery.min.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\jquery\dist\jquery.min.js"' (27b0a520)
+2017-03-21T23:49:40.0982416-04:00 0HL3GQPMNROFJ [INF] Request finished in 20.2036ms 200 application/javascript (15c52c40)
+2017-03-21T23:49:47.4975235-04:00 0HL3GQPMNROFK [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageFeatures   (e5be5b71)
+2017-03-21T23:49:47.5131290-04:00 0HL3GQPMNROFK [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:49:47.5131290-04:00 0HL3GQPMNROFK [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:49:47.5131290-04:00 0HL3GQPMNROFK [INF] Executing action method "blog.Controllers.AdminController.ManageFeatures (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:49:47.5287571-04:00 0HL3GQPMNROFK [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [f].[Id], [f].[Description], [f].[Title]
+FROM [Feature] AS [f] (6438bdd5)
+2017-03-21T23:49:47.5884324-04:00 0HL3GQPMNROFK [INF] Executing ViewResult, running view at path "/Views/Admin/ManageFeatures.cshtml". (9707eebe)
+2017-03-21T23:49:47.6040379-04:00 0HL3GQPMNROFK [INF] Executed action "blog.Controllers.AdminController.ManageFeatures (blog)" in 100.3776ms (afa2e885)
+2017-03-21T23:49:47.6196602-04:00 0HL3GQPMNROFK [INF] Request finished in 109.1001ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:49:49.6718801-04:00 0HL3GQPMNROFL [INF] Request starting HTTP/1.1 POST http://localhost:50420/Admin/DeleteFeature/1 application/x-www-form-urlencoded 225 (e5be5b71)
+2017-03-21T23:49:49.6728779-04:00 0HL3GQPMNROFL [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:49:49.6738790-04:00 0HL3GQPMNROFL [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:49:49.7668804-04:00 0HL3GQPMNROFL [INF] Executing action method "blog.Controllers.AdminController.DeleteFeature (blog)" with arguments (["1"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:49:49.8068809-04:00 0HL3GQPMNROFL [INF] Executed DbCommand (6ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Title]
+FROM [Feature] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:49:50.0118838-04:00 0HL3GQPMNROFL [INF] Executed DbCommand (59ms) [Parameters=[@p0='?'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Feature]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT; (6438bdd5)
+2017-03-21T23:49:50.0338864-04:00 0HL3GQPMNROFL [INF] Executing RedirectResult, redirecting to "/Admin/ManageFeatures". (d98d540e)
+2017-03-21T23:49:50.0338864-04:00 0HL3GQPMNROFL [INF] Executed action "blog.Controllers.AdminController.DeleteFeature (blog)" in 360.2675ms (afa2e885)
+2017-03-21T23:49:50.0348851-04:00 0HL3GQPMNROFL [INF] Request finished in 363.3252ms 302  (15c52c40)
+2017-03-21T23:49:50.0408852-04:00 0HL3GQPMNROFM [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageFeatures   (e5be5b71)
+2017-03-21T23:49:50.0428837-04:00 0HL3GQPMNROFM [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:49:50.0428837-04:00 0HL3GQPMNROFM [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:49:50.0428837-04:00 0HL3GQPMNROFM [INF] Executing action method "blog.Controllers.AdminController.ManageFeatures (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:49:50.0448843-04:00 0HL3GQPMNROFM [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [f].[Id], [f].[Description], [f].[Title]
+FROM [Feature] AS [f] (6438bdd5)
+2017-03-21T23:49:50.0478852-04:00 0HL3GQPMNROFM [INF] Executing ViewResult, running view at path "/Views/Admin/ManageFeatures.cshtml". (9707eebe)
+2017-03-21T23:49:50.0548847-04:00 0HL3GQPMNROFM [INF] Executed action "blog.Controllers.AdminController.ManageFeatures (blog)" in 11.7538ms (afa2e885)
+2017-03-21T23:49:50.0648864-04:00 0HL3GQPMNROFM [INF] Request finished in 24.9383ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:49:51.2070288-04:00 0HL3GQPMNROFN [INF] Request starting HTTP/1.1 POST http://localhost:50420/Admin/DeleteFeature/2 application/x-www-form-urlencoded 225 (e5be5b71)
+2017-03-21T23:49:51.2070288-04:00 0HL3GQPMNROFN [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:49:51.2070288-04:00 0HL3GQPMNROFN [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:49:51.2197948-04:00 0HL3GQPMNROFN [INF] Executing action method "blog.Controllers.AdminController.DeleteFeature (blog)" with arguments (["2"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:49:51.2197948-04:00 0HL3GQPMNROFN [INF] Executed DbCommand (0ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Title]
+FROM [Feature] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:49:51.2197948-04:00 0HL3GQPMNROFN [INF] Executed DbCommand (0ms) [Parameters=[@p0='?'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Feature]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT; (6438bdd5)
+2017-03-21T23:49:51.2197948-04:00 0HL3GQPMNROFN [INF] Executing RedirectResult, redirecting to "/Admin/ManageFeatures". (d98d540e)
+2017-03-21T23:49:51.2197948-04:00 0HL3GQPMNROFN [INF] Executed action "blog.Controllers.AdminController.DeleteFeature (blog)" in 14.3544ms (afa2e885)
+2017-03-21T23:49:51.2197948-04:00 0HL3GQPMNROFN [INF] Request finished in 15.8077ms 302  (15c52c40)
+2017-03-21T23:49:51.2353514-04:00 0HL3GQPMNROFO [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageFeatures   (e5be5b71)
+2017-03-21T23:49:51.2353514-04:00 0HL3GQPMNROFO [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:49:51.2353514-04:00 0HL3GQPMNROFO [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:49:51.2353514-04:00 0HL3GQPMNROFO [INF] Executing action method "blog.Controllers.AdminController.ManageFeatures (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:49:51.2353514-04:00 0HL3GQPMNROFO [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [f].[Id], [f].[Description], [f].[Title]
+FROM [Feature] AS [f] (6438bdd5)
+2017-03-21T23:49:51.2353514-04:00 0HL3GQPMNROFO [INF] Executing ViewResult, running view at path "/Views/Admin/ManageFeatures.cshtml". (9707eebe)
+2017-03-21T23:49:51.2353514-04:00 0HL3GQPMNROFO [INF] Executed action "blog.Controllers.AdminController.ManageFeatures (blog)" in 12.0979ms (afa2e885)
+2017-03-21T23:49:51.2509980-04:00 0HL3GQPMNROFO [INF] Request finished in 16.8827ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:49:52.2937168-04:00 0HL3GQPMNROFP [INF] Request starting HTTP/1.1 POST http://localhost:50420/Admin/DeleteFeature/3 application/x-www-form-urlencoded 225 (e5be5b71)
+2017-03-21T23:49:52.2937168-04:00 0HL3GQPMNROFP [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:49:52.2937168-04:00 0HL3GQPMNROFP [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:49:52.2937168-04:00 0HL3GQPMNROFP [INF] Executing action method "blog.Controllers.AdminController.DeleteFeature (blog)" with arguments (["3"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:49:52.2937168-04:00 0HL3GQPMNROFP [INF] Executed DbCommand (2ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Title]
+FROM [Feature] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:49:52.2937168-04:00 0HL3GQPMNROFP [INF] Executed DbCommand (1ms) [Parameters=[@p0='?'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Feature]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT; (6438bdd5)
+2017-03-21T23:49:52.2937168-04:00 0HL3GQPMNROFP [INF] Executing RedirectResult, redirecting to "/Admin/ManageFeatures". (d98d540e)
+2017-03-21T23:49:52.2937168-04:00 0HL3GQPMNROFP [INF] Executed action "blog.Controllers.AdminController.DeleteFeature (blog)" in 7.6268ms (afa2e885)
+2017-03-21T23:49:52.2937168-04:00 0HL3GQPMNROFP [INF] Request finished in 9.7831ms 302  (15c52c40)
+2017-03-21T23:49:52.3093420-04:00 0HL3GQPMNROFQ [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageFeatures   (e5be5b71)
+2017-03-21T23:49:52.3093420-04:00 0HL3GQPMNROFQ [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:49:52.3093420-04:00 0HL3GQPMNROFQ [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:49:52.3093420-04:00 0HL3GQPMNROFQ [INF] Executing action method "blog.Controllers.AdminController.ManageFeatures (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:49:52.3093420-04:00 0HL3GQPMNROFQ [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [f].[Id], [f].[Description], [f].[Title]
+FROM [Feature] AS [f] (6438bdd5)
+2017-03-21T23:49:52.3093420-04:00 0HL3GQPMNROFQ [INF] Executing ViewResult, running view at path "/Views/Admin/ManageFeatures.cshtml". (9707eebe)
+2017-03-21T23:49:52.3093420-04:00 0HL3GQPMNROFQ [INF] Executed action "blog.Controllers.AdminController.ManageFeatures (blog)" in 12.1924ms (afa2e885)
+2017-03-21T23:49:52.3784264-04:00 0HL3GQPMNROFQ [INF] Request finished in 67.66ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:49:53.6748941-04:00 0HL3GQPMNROFR [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/AddFeature   (e5be5b71)
+2017-03-21T23:49:53.6905148-04:00 0HL3GQPMNROFR [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:49:53.6905148-04:00 0HL3GQPMNROFR [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:49:53.6905148-04:00 0HL3GQPMNROFR [INF] Executing action method "blog.Controllers.AdminController.AddFeature (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:49:53.7686338-04:00 0HL3GQPMNROFR [INF] Executing ViewResult, running view at path "/Views/Admin/AddFeature.cshtml". (9707eebe)
+2017-03-21T23:49:53.7998842-04:00 0HL3GQPMNROFR [INF] Executed action "blog.Controllers.AdminController.AddFeature (blog)" in 111.885ms (afa2e885)
+2017-03-21T23:49:53.7998842-04:00 0HL3GQPMNROFR [INF] Request finished in 121.4428ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:49:56.8202805-04:00 0HL3GQPMNROFS [INF] Request starting HTTP/1.1 POST http://localhost:50420/Admin/AddFeature application/x-www-form-urlencoded 253 (e5be5b71)
+2017-03-21T23:49:56.8202805-04:00 0HL3GQPMNROFS [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:49:56.8202805-04:00 0HL3GQPMNROFS [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:49:56.8202805-04:00 0HL3GQPMNROFS [INF] Executing action method "blog.Controllers.AdminController.AddFeature (blog)" with arguments (["blog.Models.ViewModels.Admin.FeatureViewModel"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:49:56.9300658-04:00 0HL3GQPMNROFS [INF] Executed DbCommand (44ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Feature] ([Description], [Title])
+VALUES (@p0, @p1);
+SELECT [Id]
+FROM [Feature]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity(); (6438bdd5)
+2017-03-21T23:49:56.9546953-04:00 0HL3GQPMNROFS [INF] Executing RedirectResult, redirecting to "/Admin/ManageFeatures". (d98d540e)
+2017-03-21T23:49:56.9546953-04:00 0HL3GQPMNROFS [INF] Executed action "blog.Controllers.AdminController.AddFeature (blog)" in 124.4125ms (afa2e885)
+2017-03-21T23:49:56.9546953-04:00 0HL3GQPMNROFS [INF] Request finished in 127.1971ms 302  (15c52c40)
+2017-03-21T23:49:56.9596951-04:00 0HL3GQPMNROFT [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageFeatures   (e5be5b71)
+2017-03-21T23:49:56.9596951-04:00 0HL3GQPMNROFT [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:49:56.9616961-04:00 0HL3GQPMNROFT [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:49:56.9616961-04:00 0HL3GQPMNROFT [INF] Executing action method "blog.Controllers.AdminController.ManageFeatures (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:49:56.9686956-04:00 0HL3GQPMNROFT [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [f].[Id], [f].[Description], [f].[Title]
+FROM [Feature] AS [f] (6438bdd5)
+2017-03-21T23:49:56.9686956-04:00 0HL3GQPMNROFT [INF] Executing ViewResult, running view at path "/Views/Admin/ManageFeatures.cshtml". (9707eebe)
+2017-03-21T23:49:56.9734289-04:00 0HL3GQPMNROFT [INF] Executed action "blog.Controllers.AdminController.ManageFeatures (blog)" in 15.3362ms (afa2e885)
+2017-03-21T23:49:56.9734289-04:00 0HL3GQPMNROFT [INF] Request finished in 22.6079ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:49:59.7879403-04:00 0HL3GQPMNROFU [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageCategories   (e5be5b71)
+2017-03-21T23:49:59.7879403-04:00 0HL3GQPMNROFU [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:49:59.7879403-04:00 0HL3GQPMNROFU [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:49:59.7879403-04:00 0HL3GQPMNROFU [INF] Executing action method "blog.Controllers.AdminController.ManageCategories (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:49:59.8035655-04:00 0HL3GQPMNROFU [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Category] AS [c] (6438bdd5)
+2017-03-21T23:49:59.8660626-04:00 0HL3GQPMNROFU [INF] Executing ViewResult, running view at path "/Views/Admin/ManageCategories.cshtml". (9707eebe)
+2017-03-21T23:49:59.8973113-04:00 0HL3GQPMNROFU [INF] Executed action "blog.Controllers.AdminController.ManageCategories (blog)" in 101.4346ms (afa2e885)
+2017-03-21T23:49:59.8973113-04:00 0HL3GQPMNROFU [INF] Request finished in 113.8118ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:01.2820747-04:00 0HL3GQPMNROFV [INF] Request starting HTTP/1.1 POST http://localhost:50420/Admin/DeleteCategory/1 application/x-www-form-urlencoded 225 (e5be5b71)
+2017-03-21T23:50:01.2820747-04:00 0HL3GQPMNROFV [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:01.2820747-04:00 0HL3GQPMNROFV [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:01.2820747-04:00 0HL3GQPMNROFV [INF] Executing action method "blog.Controllers.AdminController.DeleteCategory (blog)" with arguments (["1"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:01.2976982-04:00 0HL3GQPMNROFV [INF] Executed DbCommand (1ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Name]
+FROM [Category] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:01.2976982-04:00 0HL3GQPMNROFV [INF] Executed DbCommand (3ms) [Parameters=[@p0='?'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Category]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT; (6438bdd5)
+2017-03-21T23:50:01.2976982-04:00 0HL3GQPMNROFV [INF] Executing RedirectResult, redirecting to "/Admin/ManageCategories". (d98d540e)
+2017-03-21T23:50:01.2976982-04:00 0HL3GQPMNROFV [INF] Executed action "blog.Controllers.AdminController.DeleteCategory (blog)" in 17.5184ms (afa2e885)
+2017-03-21T23:50:01.2976982-04:00 0HL3GQPMNROFV [INF] Request finished in 22.5291ms 302  (15c52c40)
+2017-03-21T23:50:01.2976982-04:00 0HL3GQPMNROG0 [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageCategories   (e5be5b71)
+2017-03-21T23:50:01.2976982-04:00 0HL3GQPMNROG0 [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:01.2976982-04:00 0HL3GQPMNROG0 [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:01.3133402-04:00 0HL3GQPMNROG0 [INF] Executing action method "blog.Controllers.AdminController.ManageCategories (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:01.3133402-04:00 0HL3GQPMNROG0 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Category] AS [c] (6438bdd5)
+2017-03-21T23:50:01.3133402-04:00 0HL3GQPMNROG0 [INF] Executing ViewResult, running view at path "/Views/Admin/ManageCategories.cshtml". (9707eebe)
+2017-03-21T23:50:01.3133402-04:00 0HL3GQPMNROG0 [INF] Executed action "blog.Controllers.AdminController.ManageCategories (blog)" in 10.174ms (afa2e885)
+2017-03-21T23:50:01.3133402-04:00 0HL3GQPMNROG0 [INF] Request finished in 14.5511ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:02.0192086-04:00 0HL3GQPMNROG1 [INF] Request starting HTTP/1.1 POST http://localhost:50420/Admin/DeleteCategory/2 application/x-www-form-urlencoded 225 (e5be5b71)
+2017-03-21T23:50:02.0192086-04:00 0HL3GQPMNROG1 [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:02.0192086-04:00 0HL3GQPMNROG1 [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:02.0192086-04:00 0HL3GQPMNROG1 [INF] Executing action method "blog.Controllers.AdminController.DeleteCategory (blog)" with arguments (["2"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:02.0192086-04:00 0HL3GQPMNROG1 [INF] Executed DbCommand (2ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Name]
+FROM [Category] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:02.0192086-04:00 0HL3GQPMNROG1 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Category]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT; (6438bdd5)
+2017-03-21T23:50:02.0348309-04:00 0HL3GQPMNROG1 [INF] Executing RedirectResult, redirecting to "/Admin/ManageCategories". (d98d540e)
+2017-03-21T23:50:02.0348309-04:00 0HL3GQPMNROG1 [INF] Executed action "blog.Controllers.AdminController.DeleteCategory (blog)" in 6.2068ms (afa2e885)
+2017-03-21T23:50:02.0348309-04:00 0HL3GQPMNROG1 [INF] Request finished in 8.5873ms 302  (15c52c40)
+2017-03-21T23:50:02.0348309-04:00 0HL3GQPMNROG2 [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageCategories   (e5be5b71)
+2017-03-21T23:50:02.0348309-04:00 0HL3GQPMNROG2 [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:02.0348309-04:00 0HL3GQPMNROG2 [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:02.0348309-04:00 0HL3GQPMNROG2 [INF] Executing action method "blog.Controllers.AdminController.ManageCategories (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:02.0348309-04:00 0HL3GQPMNROG2 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Category] AS [c] (6438bdd5)
+2017-03-21T23:50:02.0348309-04:00 0HL3GQPMNROG2 [INF] Executing ViewResult, running view at path "/Views/Admin/ManageCategories.cshtml". (9707eebe)
+2017-03-21T23:50:02.0348309-04:00 0HL3GQPMNROG2 [INF] Executed action "blog.Controllers.AdminController.ManageCategories (blog)" in 9.8755ms (afa2e885)
+2017-03-21T23:50:02.0504565-04:00 0HL3GQPMNROG2 [INF] Request finished in 13.5594ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:02.5733944-04:00 0HL3GQPMNROG3 [INF] Request starting HTTP/1.1 POST http://localhost:50420/Admin/DeleteCategory/3 application/x-www-form-urlencoded 225 (e5be5b71)
+2017-03-21T23:50:02.5733944-04:00 0HL3GQPMNROG3 [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:02.5733944-04:00 0HL3GQPMNROG3 [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:02.5890159-04:00 0HL3GQPMNROG3 [INF] Executing action method "blog.Controllers.AdminController.DeleteCategory (blog)" with arguments (["3"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:02.5890159-04:00 0HL3GQPMNROG3 [INF] Executed DbCommand (2ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Name]
+FROM [Category] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:02.5890159-04:00 0HL3GQPMNROG3 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Category]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT; (6438bdd5)
+2017-03-21T23:50:02.5890159-04:00 0HL3GQPMNROG3 [INF] Executing RedirectResult, redirecting to "/Admin/ManageCategories". (d98d540e)
+2017-03-21T23:50:02.5890159-04:00 0HL3GQPMNROG3 [INF] Executed action "blog.Controllers.AdminController.DeleteCategory (blog)" in 10.5588ms (afa2e885)
+2017-03-21T23:50:02.5890159-04:00 0HL3GQPMNROG3 [INF] Request finished in 12.2404ms 302  (15c52c40)
+2017-03-21T23:50:02.5890159-04:00 0HL3GQPMNROG4 [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageCategories   (e5be5b71)
+2017-03-21T23:50:02.5890159-04:00 0HL3GQPMNROG4 [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:02.5890159-04:00 0HL3GQPMNROG4 [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:02.5890159-04:00 0HL3GQPMNROG4 [INF] Executing action method "blog.Controllers.AdminController.ManageCategories (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:02.5890159-04:00 0HL3GQPMNROG4 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Category] AS [c] (6438bdd5)
+2017-03-21T23:50:02.5890159-04:00 0HL3GQPMNROG4 [INF] Executing ViewResult, running view at path "/Views/Admin/ManageCategories.cshtml". (9707eebe)
+2017-03-21T23:50:02.6046378-04:00 0HL3GQPMNROG4 [INF] Executed action "blog.Controllers.AdminController.ManageCategories (blog)" in 7.3537ms (afa2e885)
+2017-03-21T23:50:02.6046378-04:00 0HL3GQPMNROG4 [INF] Request finished in 12.5295ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:03.1721591-04:00 0HL3GQPMNROG5 [INF] Request starting HTTP/1.1 POST http://localhost:50420/Admin/DeleteCategory/4 application/x-www-form-urlencoded 225 (e5be5b71)
+2017-03-21T23:50:03.1721591-04:00 0HL3GQPMNROG5 [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:03.1721591-04:00 0HL3GQPMNROG5 [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:03.1721591-04:00 0HL3GQPMNROG5 [INF] Executing action method "blog.Controllers.AdminController.DeleteCategory (blog)" with arguments (["4"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:03.1721591-04:00 0HL3GQPMNROG5 [INF] Executed DbCommand (0ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Name]
+FROM [Category] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:03.1721591-04:00 0HL3GQPMNROG5 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Category]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT; (6438bdd5)
+2017-03-21T23:50:03.1721591-04:00 0HL3GQPMNROG5 [INF] Executing RedirectResult, redirecting to "/Admin/ManageCategories". (d98d540e)
+2017-03-21T23:50:03.1721591-04:00 0HL3GQPMNROG5 [INF] Executed action "blog.Controllers.AdminController.DeleteCategory (blog)" in 6.907ms (afa2e885)
+2017-03-21T23:50:03.1721591-04:00 0HL3GQPMNROG5 [INF] Request finished in 9.5934ms 302  (15c52c40)
+2017-03-21T23:50:03.1721591-04:00 0HL3GQPMNROG6 [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageCategories   (e5be5b71)
+2017-03-21T23:50:03.1721591-04:00 0HL3GQPMNROG6 [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:03.1721591-04:00 0HL3GQPMNROG6 [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:03.1721591-04:00 0HL3GQPMNROG6 [INF] Executing action method "blog.Controllers.AdminController.ManageCategories (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:03.1877769-04:00 0HL3GQPMNROG6 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Category] AS [c] (6438bdd5)
+2017-03-21T23:50:03.1877769-04:00 0HL3GQPMNROG6 [INF] Executing ViewResult, running view at path "/Views/Admin/ManageCategories.cshtml". (9707eebe)
+2017-03-21T23:50:03.1877769-04:00 0HL3GQPMNROG6 [INF] Executed action "blog.Controllers.AdminController.ManageCategories (blog)" in 7.7159ms (afa2e885)
+2017-03-21T23:50:03.1877769-04:00 0HL3GQPMNROG6 [INF] Request finished in 10.5383ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:03.7331568-04:00 0HL3GQPMNROG7 [INF] Request starting HTTP/1.1 POST http://localhost:50420/Admin/DeleteCategory/5 application/x-www-form-urlencoded 225 (e5be5b71)
+2017-03-21T23:50:03.7486141-04:00 0HL3GQPMNROG7 [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:03.7486141-04:00 0HL3GQPMNROG7 [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:03.7528103-04:00 0HL3GQPMNROG7 [INF] Executing action method "blog.Controllers.AdminController.DeleteCategory (blog)" with arguments (["5"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:03.7568090-04:00 0HL3GQPMNROG7 [INF] Executed DbCommand (2ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Name]
+FROM [Category] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:03.7578088-04:00 0HL3GQPMNROG7 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Category]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT; (6438bdd5)
+2017-03-21T23:50:03.7588481-04:00 0HL3GQPMNROG7 [INF] Executing RedirectResult, redirecting to "/Admin/ManageCategories". (d98d540e)
+2017-03-21T23:50:03.7588481-04:00 0HL3GQPMNROG7 [INF] Executed action "blog.Controllers.AdminController.DeleteCategory (blog)" in 8.731ms (afa2e885)
+2017-03-21T23:50:03.7588481-04:00 0HL3GQPMNROG7 [INF] Request finished in 13.1434ms 302  (15c52c40)
+2017-03-21T23:50:03.7618116-04:00 0HL3GQPMNROG8 [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageCategories   (e5be5b71)
+2017-03-21T23:50:03.7628123-04:00 0HL3GQPMNROG8 [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:03.7628123-04:00 0HL3GQPMNROG8 [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:03.7638101-04:00 0HL3GQPMNROG8 [INF] Executing action method "blog.Controllers.AdminController.ManageCategories (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:03.7668122-04:00 0HL3GQPMNROG8 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Category] AS [c] (6438bdd5)
+2017-03-21T23:50:03.7678113-04:00 0HL3GQPMNROG8 [INF] Executing ViewResult, running view at path "/Views/Admin/ManageCategories.cshtml". (9707eebe)
+2017-03-21T23:50:03.7720202-04:00 0HL3GQPMNROG8 [INF] Executed action "blog.Controllers.AdminController.ManageCategories (blog)" in 11.5448ms (afa2e885)
+2017-03-21T23:50:03.7720202-04:00 0HL3GQPMNROG8 [INF] Request finished in 18.7253ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:04.2395480-04:00 0HL3GQPMNROG9 [INF] Request starting HTTP/1.1 POST http://localhost:50420/Admin/DeleteCategory/6 application/x-www-form-urlencoded 225 (e5be5b71)
+2017-03-21T23:50:04.2395480-04:00 0HL3GQPMNROG9 [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:04.2395480-04:00 0HL3GQPMNROG9 [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:04.2395480-04:00 0HL3GQPMNROG9 [INF] Executing action method "blog.Controllers.AdminController.DeleteCategory (blog)" with arguments (["6"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:04.2395480-04:00 0HL3GQPMNROG9 [INF] Executed DbCommand (0ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Name]
+FROM [Category] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:04.2395480-04:00 0HL3GQPMNROG9 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Category]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT; (6438bdd5)
+2017-03-21T23:50:04.2551802-04:00 0HL3GQPMNROG9 [INF] Executing RedirectResult, redirecting to "/Admin/ManageCategories". (d98d540e)
+2017-03-21T23:50:04.2551802-04:00 0HL3GQPMNROG9 [INF] Executed action "blog.Controllers.AdminController.DeleteCategory (blog)" in 6.5132ms (afa2e885)
+2017-03-21T23:50:04.2551802-04:00 0HL3GQPMNROG9 [INF] Request finished in 9.2912ms 302  (15c52c40)
+2017-03-21T23:50:04.2551802-04:00 0HL3GQPMNROGA [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageCategories   (e5be5b71)
+2017-03-21T23:50:04.2551802-04:00 0HL3GQPMNROGA [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:04.2551802-04:00 0HL3GQPMNROGA [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:04.2551802-04:00 0HL3GQPMNROGA [INF] Executing action method "blog.Controllers.AdminController.ManageCategories (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:04.2551802-04:00 0HL3GQPMNROGA [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Category] AS [c] (6438bdd5)
+2017-03-21T23:50:04.2551802-04:00 0HL3GQPMNROGA [INF] Executing ViewResult, running view at path "/Views/Admin/ManageCategories.cshtml". (9707eebe)
+2017-03-21T23:50:04.2551802-04:00 0HL3GQPMNROGA [INF] Executed action "blog.Controllers.AdminController.ManageCategories (blog)" in 10.1761ms (afa2e885)
+2017-03-21T23:50:04.2707943-04:00 0HL3GQPMNROGA [INF] Request finished in 14.7453ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:05.0203698-04:00 0HL3GQPMNROGB [INF] Request starting HTTP/1.1 POST http://localhost:50420/Admin/DeleteCategory/7 application/x-www-form-urlencoded 225 (e5be5b71)
+2017-03-21T23:50:05.0203698-04:00 0HL3GQPMNROGB [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:05.0203698-04:00 0HL3GQPMNROGB [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:05.0203698-04:00 0HL3GQPMNROGB [INF] Executing action method "blog.Controllers.AdminController.DeleteCategory (blog)" with arguments (["7"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:05.0203698-04:00 0HL3GQPMNROGB [INF] Executed DbCommand (1ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Name]
+FROM [Category] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:05.0203698-04:00 0HL3GQPMNROGB [INF] Executed DbCommand (0ms) [Parameters=[@p0='?'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Category]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT; (6438bdd5)
+2017-03-21T23:50:05.0203698-04:00 0HL3GQPMNROGB [INF] Executing RedirectResult, redirecting to "/Admin/ManageCategories". (d98d540e)
+2017-03-21T23:50:05.0203698-04:00 0HL3GQPMNROGB [INF] Executed action "blog.Controllers.AdminController.DeleteCategory (blog)" in 6.5292ms (afa2e885)
+2017-03-21T23:50:05.0203698-04:00 0HL3GQPMNROGB [INF] Request finished in 7.8087ms 302  (15c52c40)
+2017-03-21T23:50:05.0203698-04:00 0HL3GQPMNROGC [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageCategories   (e5be5b71)
+2017-03-21T23:50:05.0203698-04:00 0HL3GQPMNROGC [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:05.0359942-04:00 0HL3GQPMNROGC [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:05.0359942-04:00 0HL3GQPMNROGC [INF] Executing action method "blog.Controllers.AdminController.ManageCategories (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:05.0359942-04:00 0HL3GQPMNROGC [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Category] AS [c] (6438bdd5)
+2017-03-21T23:50:05.0359942-04:00 0HL3GQPMNROGC [INF] Executing ViewResult, running view at path "/Views/Admin/ManageCategories.cshtml". (9707eebe)
+2017-03-21T23:50:05.0516178-04:00 0HL3GQPMNROGC [INF] Executed action "blog.Controllers.AdminController.ManageCategories (blog)" in 17.2613ms (afa2e885)
+2017-03-21T23:50:05.0516178-04:00 0HL3GQPMNROGC [INF] Request finished in 21.1452ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:05.7641218-04:00 0HL3GQPMNROGD [INF] Request starting HTTP/1.1 POST http://localhost:50420/Admin/DeleteCategory/8 application/x-www-form-urlencoded 225 (e5be5b71)
+2017-03-21T23:50:05.7661286-04:00 0HL3GQPMNROGD [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:05.7661286-04:00 0HL3GQPMNROGD [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:05.7671210-04:00 0HL3GQPMNROGD [INF] Executing action method "blog.Controllers.AdminController.DeleteCategory (blog)" with arguments (["8"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:05.7721213-04:00 0HL3GQPMNROGD [INF] Executed DbCommand (2ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Name]
+FROM [Category] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:05.7736262-04:00 0HL3GQPMNROGD [INF] Executed DbCommand (0ms) [Parameters=[@p0='?'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Category]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT; (6438bdd5)
+2017-03-21T23:50:05.7736262-04:00 0HL3GQPMNROGD [INF] Executing RedirectResult, redirecting to "/Admin/ManageCategories". (d98d540e)
+2017-03-21T23:50:05.7736262-04:00 0HL3GQPMNROGD [INF] Executed action "blog.Controllers.AdminController.DeleteCategory (blog)" in 9.177ms (afa2e885)
+2017-03-21T23:50:05.7736262-04:00 0HL3GQPMNROGD [INF] Request finished in 11.6729ms 302  (15c52c40)
+2017-03-21T23:50:05.7736262-04:00 0HL3GQPMNROGE [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageCategories   (e5be5b71)
+2017-03-21T23:50:05.7736262-04:00 0HL3GQPMNROGE [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:05.7736262-04:00 0HL3GQPMNROGE [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:05.7736262-04:00 0HL3GQPMNROGE [INF] Executing action method "blog.Controllers.AdminController.ManageCategories (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:05.7736262-04:00 0HL3GQPMNROGE [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Category] AS [c] (6438bdd5)
+2017-03-21T23:50:05.7736262-04:00 0HL3GQPMNROGE [INF] Executing ViewResult, running view at path "/Views/Admin/ManageCategories.cshtml". (9707eebe)
+2017-03-21T23:50:05.7892571-04:00 0HL3GQPMNROGE [INF] Executed action "blog.Controllers.AdminController.ManageCategories (blog)" in 10.4672ms (afa2e885)
+2017-03-21T23:50:05.7892571-04:00 0HL3GQPMNROGE [INF] Request finished in 14.7047ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:06.7299703-04:00 0HL3GQPMNROGF [INF] Request starting HTTP/1.1 POST http://localhost:50420/Admin/DeleteCategory/9 application/x-www-form-urlencoded 225 (e5be5b71)
+2017-03-21T23:50:06.7299703-04:00 0HL3GQPMNROGF [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:06.7299703-04:00 0HL3GQPMNROGF [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:06.7299703-04:00 0HL3GQPMNROGF [INF] Executing action method "blog.Controllers.AdminController.DeleteCategory (blog)" with arguments (["9"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:06.7299703-04:00 0HL3GQPMNROGF [INF] Executed DbCommand (2ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Name]
+FROM [Category] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:06.7299703-04:00 0HL3GQPMNROGF [INF] Executed DbCommand (0ms) [Parameters=[@p0='?'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Category]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT; (6438bdd5)
+2017-03-21T23:50:06.7299703-04:00 0HL3GQPMNROGF [INF] Executing RedirectResult, redirecting to "/Admin/ManageCategories". (d98d540e)
+2017-03-21T23:50:06.7299703-04:00 0HL3GQPMNROGF [INF] Executed action "blog.Controllers.AdminController.DeleteCategory (blog)" in 6.3436ms (afa2e885)
+2017-03-21T23:50:06.7299703-04:00 0HL3GQPMNROGF [INF] Request finished in 8.297ms 302  (15c52c40)
+2017-03-21T23:50:06.7299703-04:00 0HL3GQPMNROGG [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageCategories   (e5be5b71)
+2017-03-21T23:50:06.7299703-04:00 0HL3GQPMNROGG [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:06.7456029-04:00 0HL3GQPMNROGG [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:06.7456029-04:00 0HL3GQPMNROGG [INF] Executing action method "blog.Controllers.AdminController.ManageCategories (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:06.7530254-04:00 0HL3GQPMNROGG [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Category] AS [c] (6438bdd5)
+2017-03-21T23:50:06.7530254-04:00 0HL3GQPMNROGG [INF] Executing ViewResult, running view at path "/Views/Admin/ManageCategories.cshtml". (9707eebe)
+2017-03-21T23:50:06.7610257-04:00 0HL3GQPMNROGG [INF] Executed action "blog.Controllers.AdminController.ManageCategories (blog)" in 14.3774ms (afa2e885)
+2017-03-21T23:50:08.5724027-04:00 0HL3GQPMNROGG [INF] Request finished in 1833.427ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:10.7354148-04:00 0HL3GQPMNROGH [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/AddCategory   (e5be5b71)
+2017-03-21T23:50:10.7354148-04:00 0HL3GQPMNROGH [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:10.7354148-04:00 0HL3GQPMNROGH [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:10.7354148-04:00 0HL3GQPMNROGH [INF] Executing action method "blog.Controllers.AdminController.AddCategory (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:10.8193426-04:00 0HL3GQPMNROGH [INF] Executing ViewResult, running view at path "/Views/Admin/AddCategory.cshtml". (9707eebe)
+2017-03-21T23:50:10.8349378-04:00 0HL3GQPMNROGH [INF] Executed action "blog.Controllers.AdminController.AddCategory (blog)" in 97.5499ms (afa2e885)
+2017-03-21T23:50:10.8349378-04:00 0HL3GQPMNROGH [INF] Request finished in 104.0988ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:14.3781787-04:00 0HL3GQPMNROGI [INF] Request starting HTTP/1.1 POST http://localhost:50420/Admin/AddCategory application/x-www-form-urlencoded 252 (e5be5b71)
+2017-03-21T23:50:14.3781787-04:00 0HL3GQPMNROGI [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:14.3781787-04:00 0HL3GQPMNROGI [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:14.3781787-04:00 0HL3GQPMNROGI [INF] Executing action method "blog.Controllers.AdminController.AddCategory (blog)" with arguments (["blog.Models.ViewModels.Admin.CategoryViewModel"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:14.3781787-04:00 0HL3GQPMNROGI [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Category] ([Description], [Name])
+VALUES (@p0, @p1);
+SELECT [Id]
+FROM [Category]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity(); (6438bdd5)
+2017-03-21T23:50:14.3937978-04:00 0HL3GQPMNROGI [INF] Executing RedirectResult, redirecting to "/Admin/ManageCategories". (d98d540e)
+2017-03-21T23:50:14.3937978-04:00 0HL3GQPMNROGI [INF] Executed action "blog.Controllers.AdminController.AddCategory (blog)" in 8.5023ms (afa2e885)
+2017-03-21T23:50:14.3937978-04:00 0HL3GQPMNROGI [INF] Request finished in 10.3707ms 302  (15c52c40)
+2017-03-21T23:50:14.3937978-04:00 0HL3GQPMNROGJ [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageCategories   (e5be5b71)
+2017-03-21T23:50:14.3937978-04:00 0HL3GQPMNROGJ [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:14.3937978-04:00 0HL3GQPMNROGJ [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:14.3937978-04:00 0HL3GQPMNROGJ [INF] Executing action method "blog.Controllers.AdminController.ManageCategories (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:14.3937978-04:00 0HL3GQPMNROGJ [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Category] AS [c] (6438bdd5)
+2017-03-21T23:50:14.3937978-04:00 0HL3GQPMNROGJ [INF] Executing ViewResult, running view at path "/Views/Admin/ManageCategories.cshtml". (9707eebe)
+2017-03-21T23:50:14.3937978-04:00 0HL3GQPMNROGJ [INF] Executed action "blog.Controllers.AdminController.ManageCategories (blog)" in 9.7104ms (afa2e885)
+2017-03-21T23:50:14.4094254-04:00 0HL3GQPMNROGJ [INF] Request finished in 14.03ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:15.8662646-04:00 0HL3GQPMNROGK [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/AddCategory   (e5be5b71)
+2017-03-21T23:50:15.8662646-04:00 0HL3GQPMNROGK [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:15.8662646-04:00 0HL3GQPMNROGK [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:15.8662646-04:00 0HL3GQPMNROGK [INF] Executing action method "blog.Controllers.AdminController.AddCategory (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:15.8662646-04:00 0HL3GQPMNROGK [INF] Executing ViewResult, running view at path "/Views/Admin/AddCategory.cshtml". (9707eebe)
+2017-03-21T23:50:15.8818853-04:00 0HL3GQPMNROGK [INF] Executed action "blog.Controllers.AdminController.AddCategory (blog)" in 8.4535ms (afa2e885)
+2017-03-21T23:50:15.8818853-04:00 0HL3GQPMNROGK [INF] Request finished in 11.7213ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:18.3810720-04:00 0HL3GQPMNROGL [INF] Request starting HTTP/1.1 POST http://localhost:50420/Admin/AddCategory application/x-www-form-urlencoded 252 (e5be5b71)
+2017-03-21T23:50:18.3810720-04:00 0HL3GQPMNROGL [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:18.3810720-04:00 0HL3GQPMNROGL [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:18.3810720-04:00 0HL3GQPMNROGL [INF] Executing action method "blog.Controllers.AdminController.AddCategory (blog)" with arguments (["blog.Models.ViewModels.Admin.CategoryViewModel"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:18.3810720-04:00 0HL3GQPMNROGL [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Category] ([Description], [Name])
+VALUES (@p0, @p1);
+SELECT [Id]
+FROM [Category]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity(); (6438bdd5)
+2017-03-21T23:50:18.3810720-04:00 0HL3GQPMNROGL [INF] Executing RedirectResult, redirecting to "/Admin/ManageCategories". (d98d540e)
+2017-03-21T23:50:18.3810720-04:00 0HL3GQPMNROGL [INF] Executed action "blog.Controllers.AdminController.AddCategory (blog)" in 6.4852ms (afa2e885)
+2017-03-21T23:50:18.3810720-04:00 0HL3GQPMNROGL [INF] Request finished in 9.6657ms 302  (15c52c40)
+2017-03-21T23:50:18.3966919-04:00 0HL3GQPMNROGM [INF] Request starting HTTP/1.1 GET http://localhost:50420/Admin/ManageCategories   (e5be5b71)
+2017-03-21T23:50:18.3966919-04:00 0HL3GQPMNROGM [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:18.3966919-04:00 0HL3GQPMNROGM [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:18.3966919-04:00 0HL3GQPMNROGM [INF] Executing action method "blog.Controllers.AdminController.ManageCategories (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:18.3966919-04:00 0HL3GQPMNROGM [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Category] AS [c] (6438bdd5)
+2017-03-21T23:50:18.3966919-04:00 0HL3GQPMNROGM [INF] Executing ViewResult, running view at path "/Views/Admin/ManageCategories.cshtml". (9707eebe)
+2017-03-21T23:50:18.4123163-04:00 0HL3GQPMNROGM [INF] Executed action "blog.Controllers.AdminController.ManageCategories (blog)" in 10.8689ms (afa2e885)
+2017-03-21T23:50:18.4123163-04:00 0HL3GQPMNROGM [INF] Request finished in 14.418ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:20.7300065-04:00 0HL3GQPMNROGN [INF] Request starting HTTP/1.1 GET http://localhost:50420/Author/ManagePosts   (e5be5b71)
+2017-03-21T23:50:20.7300065-04:00 0HL3GQPMNROGN [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:20.7300065-04:00 0HL3GQPMNROGN [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:20.7300065-04:00 0HL3GQPMNROGN [INF] Executing action method "blog.Controllers.AuthorController.ManagePosts (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:20.7519993-04:00 0HL3GQPMNROGN [INF] Executed DbCommand (1ms) [Parameters=[@__get_Item_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[AccessFailedCount], [e].[ConcurrencyStamp], [e].[Email], [e].[EmailConfirmed], [e].[LockoutEnabled], [e].[LockoutEnd], [e].[NormalizedEmail], [e].[NormalizedUserName], [e].[PasswordHash], [e].[PhoneNumber], [e].[PhoneNumberConfirmed], [e].[SecurityStamp], [e].[TwoFactorEnabled], [e].[UserName]
+FROM [AspNetUsers] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:20.7732143-04:00 0HL3GQPMNROGN [INF] Executed DbCommand (2ms) [Parameters=[@__curUser_Id_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ApplicationUserId], [a].[Biography], [a].[FirstName], [a].[LastName]
+FROM [AspNetUsers] AS [u]
+INNER JOIN [Author] AS [a] ON [u].[Id] = [a].[ApplicationUserId]
+WHERE [u].[Id] = @__curUser_Id_0 (6438bdd5)
+2017-03-21T23:50:20.7888342-04:00 0HL3GQPMNROGN [INF] Executed DbCommand (3ms) [Parameters=[@__author_Id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title]
+FROM [BlogPost] AS [bp]
+WHERE [bp].[AuthorId] = @__author_Id_0 (6438bdd5)
+2017-03-21T23:50:20.9294552-04:00 0HL3GQPMNROGN [INF] Executing ViewResult, running view at path "/Views/Author/ManagePosts.cshtml". (9707eebe)
+2017-03-21T23:50:20.9605508-04:00 0HL3GQPMNROGN [INF] Executed action "blog.Controllers.AuthorController.ManagePosts (blog)" in 224.0276ms (afa2e885)
+2017-03-21T23:50:20.9625502-04:00 0HL3GQPMNROGN [INF] Request finished in 229.1693ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:23.2692959-04:00 0HL3GQPMNROGO [INF] Request starting HTTP/1.1 GET http://localhost:50420/Author/editpost/1   (e5be5b71)
+2017-03-21T23:50:23.2692959-04:00 0HL3GQPMNROGO [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:23.2692959-04:00 0HL3GQPMNROGO [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:23.2692959-04:00 0HL3GQPMNROGO [INF] Executing action method "blog.Controllers.AuthorController.EditPost (blog)" with arguments (["1"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:23.2849454-04:00 0HL3GQPMNROGO [INF] Executed DbCommand (1ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[AuthorId], [e].[Content], [e].[CreatedAt], [e].[Description], [e].[ModifiedAt], [e].[Public], [e].[PublishOn], [e].[Title]
+FROM [BlogPost] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:23.3007032-04:00 0HL3GQPMNROGO [INF] Executed DbCommand (2ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [BlogPostCategory] AS [bpc]
+INNER JOIN [Category] AS [c] ON [bpc].[CategoryId] = [c].[Id]
+WHERE [bpc].[BlogPostId] = @__id_0 (6438bdd5)
+2017-03-21T23:50:23.3318817-04:00 0HL3GQPMNROGO [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [c].[Id], [c].[Description], [c].[Name]
+FROM [Category] AS [c] (6438bdd5)
+2017-03-21T23:50:23.3473694-04:00 0HL3GQPMNROGO [INF] Executed DbCommand (2ms) [Parameters=[@__id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [f].[Id], [f].[Description], [f].[Title]
+FROM [BlogPostFeature] AS [bpf]
+INNER JOIN [Feature] AS [f] ON [bpf].[FeatureId] = [f].[Id]
+WHERE [bpf].[BlogPostId] = @__id_0 (6438bdd5)
+2017-03-21T23:50:23.3540523-04:00 0HL3GQPMNROGO [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [f].[Id], [f].[Description], [f].[Title]
+FROM [Feature] AS [f] (6438bdd5)
+2017-03-21T23:50:23.5876111-04:00 0HL3GQPMNROGO [INF] Executing ViewResult, running view at path "/Views/Author/EditPost.cshtml". (9707eebe)
+2017-03-21T23:50:23.7282165-04:00 0HL3GQPMNROGO [INF] Executed action "blog.Controllers.AuthorController.EditPost (blog)" in 451.1527ms (afa2e885)
+2017-03-21T23:50:23.7282165-04:00 0HL3GQPMNROGO [INF] Request finished in 456.9103ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:23.7648429-04:00 0HL3GQPMNROGP [INF] Request starting HTTP/1.1 GET http://localhost:50420/js/AddEditPostPage.js   (e5be5b71)
+2017-03-21T23:50:23.7648429-04:00 0HL3GQPMNROGP [INF] Sending file. Request path: '"/js/AddEditPostPage.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\js\AddEditPostPage.js"' (27b0a520)
+2017-03-21T23:50:23.7747710-04:00 0HL3GQPMNROGP [INF] Request finished in 22.4018ms 200 application/javascript (15c52c40)
+2017-03-21T23:50:28.7726974-04:00 0HL3GQPMNROGQ [INF] Request starting HTTP/1.1 POST http://localhost:50420/Author/EditPost/1 application/x-www-form-urlencoded 2207 (e5be5b71)
+2017-03-21T23:50:28.7726974-04:00 0HL3GQPMNROGQ [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:28.7726974-04:00 0HL3GQPMNROGQ [INF] Authorization was successful for user: "Admin". (d7eb274a)
+2017-03-21T23:50:28.8039457-04:00 0HL3GQPMNROGQ [INF] Executing action method "blog.Controllers.AuthorController.EditPost (blog)" with arguments (["blog.Models.ViewModels.Author.EditBlogPostViewModel"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:28.8351904-04:00 0HL3GQPMNROGQ [INF] Executed DbCommand (7ms) [Parameters=[@__model_Id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title], [a].[Id], [a].[ApplicationUserId], [a].[Biography], [a].[FirstName], [a].[LastName]
+FROM [BlogPost] AS [bp]
+LEFT JOIN [Author] AS [a] ON [bp].[AuthorId] = [a].[Id]
+WHERE [bp].[Id] = @__model_Id_0 (6438bdd5)
+2017-03-21T23:50:28.8508131-04:00 0HL3GQPMNROGQ [INF] Executed DbCommand (3ms) [Parameters=[@__get_Item_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[AccessFailedCount], [e].[ConcurrencyStamp], [e].[Email], [e].[EmailConfirmed], [e].[LockoutEnabled], [e].[LockoutEnd], [e].[NormalizedEmail], [e].[NormalizedUserName], [e].[PasswordHash], [e].[PhoneNumber], [e].[PhoneNumberConfirmed], [e].[SecurityStamp], [e].[TwoFactorEnabled], [e].[UserName]
+FROM [AspNetUsers] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:28.8664387-04:00 0HL3GQPMNROGQ [INF] Executed DbCommand (2ms) [Parameters=[@__curUser_Id_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ApplicationUserId], [a].[Biography], [a].[FirstName], [a].[LastName]
+FROM [AspNetUsers] AS [u]
+INNER JOIN [Author] AS [a] ON [u].[Id] = [a].[ApplicationUserId]
+WHERE [u].[Id] = @__curUser_Id_0 (6438bdd5)
+2017-03-21T23:50:28.8820627-04:00 0HL3GQPMNROGQ [INF] Executed DbCommand (6ms) [Parameters=[@__post_Id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [bpf].[FeatureId], [bpf].[BlogPostId]
+FROM [BlogPostFeature] AS [bpf]
+WHERE [bpf].[BlogPostId] = @__post_Id_0 (6438bdd5)
+2017-03-21T23:50:28.9289354-04:00 0HL3GQPMNROGQ [INF] Executed DbCommand (19ms) [Parameters=[@p1='?', @p0='?'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [BlogPost] SET [ModifiedAt] = @p0
+WHERE [Id] = @p1;
+SELECT @@ROWCOUNT; (6438bdd5)
+2017-03-21T23:50:28.9289354-04:00 0HL3GQPMNROGQ [INF] Executed DbCommand (2ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Title]
+FROM [Feature] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:28.9648333-04:00 0HL3GQPMNROGQ [INF] Executed DbCommand (1ms) [Parameters=[@__post_Id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [bpc].[BlogPostId], [bpc].[CategoryId]
+FROM [BlogPostCategory] AS [bpc]
+WHERE [bpc].[BlogPostId] = @__post_Id_0 (6438bdd5)
+2017-03-21T23:50:28.9968339-04:00 0HL3GQPMNROGQ [INF] Executed DbCommand (20ms) [Parameters=[@p0='?', @p1='?'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [BlogPostFeature] ([FeatureId], [BlogPostId])
+VALUES (@p0, @p1); (6438bdd5)
+2017-03-21T23:50:29.0178342-04:00 0HL3GQPMNROGQ [INF] Executed DbCommand (5ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Name]
+FROM [Category] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:29.0328352-04:00 0HL3GQPMNROGQ [INF] Executed DbCommand (1ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Name]
+FROM [Category] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:29.0548966-04:00 0HL3GQPMNROGQ [INF] Executed DbCommand (4ms) [Parameters=[@p0='?', @p1='?', @p2='?', @p3='?'], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [BlogPostCategory] ([BlogPostId], [CategoryId])
+VALUES (@p0, @p1),
+(@p2, @p3); (6438bdd5)
+2017-03-21T23:50:29.0558349-04:00 0HL3GQPMNROGQ [INF] Executing ViewResult, running view at path "/Views/Author/EditPost.cshtml". (9707eebe)
+2017-03-21T23:50:29.0865852-04:00 0HL3GQPMNROGQ [INF] Executed action "blog.Controllers.AuthorController.EditPost (blog)" in 308.2591ms (afa2e885)
+2017-03-21T23:50:29.0865852-04:00 0HL3GQPMNROGQ [INF] Request finished in 313.1392ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:30.5133582-04:00 0HL3GQPMNROGR [INF] Request starting HTTP/1.1 GET http://localhost:50420/Home/Features   (e5be5b71)
+2017-03-21T23:50:30.5133582-04:00 0HL3GQPMNROGR [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:30.5133582-04:00 0HL3GQPMNROGR [INF] Executing action method "blog.Controllers.HomeController.Features (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:30.5723107-04:00 0HL3GQPMNROGR [WRN] The LINQ expression 'orderby {from BlogPostFeature posts in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPostFeature]) join BlogPost posts.BlogPost in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPost]) on Property([posts], "BlogPostId") equals Property([posts.BlogPost], "Id") join BlogPost posts.BlogPost in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPost]) on Property([posts], "BlogPostId") equals Property([posts.BlogPost], "Id") where ((([posts].FeatureId == [feature].Id) AndAlso ([posts.BlogPost].Public == True)) AndAlso ([posts.BlogPost].PublishOn < DateTime.Now)) select [posts] => Count()} desc' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-21T23:50:30.6348033-04:00 0HL3GQPMNROGR [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [feature].[Id], [feature].[Title], [feature].[Description], (
+    SELECT COUNT(*)
+    FROM [BlogPostFeature] AS [posts1]
+    INNER JOIN [BlogPost] AS [posts.BlogPost3] ON [posts1].[BlogPostId] = [posts.BlogPost3].[Id]
+    INNER JOIN [BlogPost] AS [posts.BlogPost4] ON [posts1].[BlogPostId] = [posts.BlogPost4].[Id]
+    WHERE (([posts1].[FeatureId] = [feature].[Id]) AND ([posts.BlogPost3].[Public] = 1)) AND ([posts.BlogPost3].[PublishOn] < GETDATE())
+)
+FROM [Feature] AS [feature] (6438bdd5)
+2017-03-21T23:50:30.6660529-04:00 0HL3GQPMNROGR [INF] Executed DbCommand (2ms) [Parameters=[@_outer_Id='?'], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BlogPostFeature] AS [posts]
+INNER JOIN [BlogPost] AS [posts.BlogPost] ON [posts].[BlogPostId] = [posts.BlogPost].[Id]
+INNER JOIN [BlogPost] AS [posts.BlogPost0] ON [posts].[BlogPostId] = [posts.BlogPost0].[Id]
+WHERE (([posts].[FeatureId] = @_outer_Id) AND ([posts.BlogPost].[Public] = 1)) AND ([posts.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-21T23:50:30.6660529-04:00 0HL3GQPMNROGR [INF] Executed DbCommand (0ms) [Parameters=[@_outer_Id='?'], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BlogPostFeature] AS [posts]
+INNER JOIN [BlogPost] AS [posts.BlogPost] ON [posts].[BlogPostId] = [posts.BlogPost].[Id]
+INNER JOIN [BlogPost] AS [posts.BlogPost0] ON [posts].[BlogPostId] = [posts.BlogPost0].[Id]
+WHERE (([posts].[FeatureId] = @_outer_Id) AND ([posts.BlogPost].[Public] = 1)) AND ([posts.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-21T23:50:30.7468894-04:00 0HL3GQPMNROGR [INF] Executing ViewResult, running view at path "/Views/Home/Features.cshtml". (9707eebe)
+2017-03-21T23:50:30.7678897-04:00 0HL3GQPMNROGR [INF] Executed action "blog.Controllers.HomeController.Features (blog)" in 248.4284ms (afa2e885)
+2017-03-21T23:50:30.7752309-04:00 0HL3GQPMNROGR [INF] Request finished in 263.0387ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:32.3280600-04:00 0HL3GQPMNROGS [INF] Request starting HTTP/1.1 GET http://localhost:50420/Home/FeaturePosts/4   (e5be5b71)
+2017-03-21T23:50:32.3280600-04:00 0HL3GQPMNROGS [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:32.3280600-04:00 0HL3GQPMNROGS [INF] Executing action method "blog.Controllers.HomeController.FeaturePosts (blog)" with arguments (["4"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:32.3280600-04:00 0HL3GQPMNROGS [INF] Executed DbCommand (2ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Title]
+FROM [Feature] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:32.3604261-04:00 0HL3GQPMNROGS [INF] Executed DbCommand (2ms) [Parameters=[@__feature_Id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [bpf.BlogPost].[Id], [bpf.BlogPost].[AuthorId], [bpf.BlogPost].[Content], [bpf.BlogPost].[CreatedAt], [bpf.BlogPost].[Description], [bpf.BlogPost].[ModifiedAt], [bpf.BlogPost].[Public], [bpf.BlogPost].[PublishOn], [bpf.BlogPost].[Title]
+FROM [BlogPostFeature] AS [bpf]
+INNER JOIN [BlogPost] AS [bpf.BlogPost] ON [bpf].[BlogPostId] = [bpf.BlogPost].[Id]
+WHERE (([bpf].[FeatureId] = @__feature_Id_0) AND ([bpf.BlogPost].[Public] = 1)) AND ([bpf.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-21T23:50:32.3727872-04:00 0HL3GQPMNROGS [WRN] The LINQ expression '{__bps_0 => Contains([bp])}' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-21T23:50:32.3727872-04:00 0HL3GQPMNROGS [WRN] The LINQ expression 'Contains([bp])' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-21T23:50:32.4040306-04:00 0HL3GQPMNROGS [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title], [a].[Id], [a].[ApplicationUserId], [a].[Biography], [a].[FirstName], [a].[LastName]
+FROM [BlogPost] AS [bp]
+LEFT JOIN [Author] AS [a] ON [bp].[AuthorId] = [a].[Id]
+ORDER BY [bp].[Id] (6438bdd5)
+2017-03-21T23:50:32.4509017-04:00 0HL3GQPMNROGS [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [b].[BlogPostId], [b].[CategoryId]
+FROM [BlogPostCategory] AS [b]
+WHERE EXISTS (
+    SELECT 1
+    FROM [BlogPost] AS [bp]
+    WHERE [b].[BlogPostId] = [bp].[Id])
+ORDER BY [b].[BlogPostId] (6438bdd5)
+2017-03-21T23:50:32.5133980-04:00 0HL3GQPMNROGS [INF] Executing ViewResult, running view at path "/Views/Home/FeaturePosts.cshtml". (9707eebe)
+2017-03-21T23:50:32.6656344-04:00 0HL3GQPMNROGS [INF] Executed action "blog.Controllers.HomeController.FeaturePosts (blog)" in 336.0675ms (afa2e885)
+2017-03-21T23:50:32.7285804-04:00 0HL3GQPMNROGS [ERR] An unhandled exception has occurred while executing the request (cf926119)
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at AspNetCore._Views_Home_FeaturePosts_cshtml.<ExecuteAsync>d__27.MoveNext() in /Views/Home/FeaturePosts.cshtml:line 36
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.<RenderPageAsync>d__14.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.<RenderAsync>d__13.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.<ExecuteAsync>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.ViewResult.<ExecuteResultAsync>d__26.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeResultAsync>d__30.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeNextResultFilterAsync>d__28.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ResultExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeNextResourceFilter>d__22.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeAsync>d__20.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.<Invoke>d__4.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware`1.<Invoke>d__18.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.VisualStudio.Web.BrowserLink.BrowserLinkMiddleware.<ExecuteWithFilter>d__7.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.<Invoke>d__7.MoveNext()
+2017-03-21T23:50:33.4521406-04:00 0HL3GQPMNROGS [INF] Request finished in 1121.5397ms 500 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:50:51.5272181-04:00 0HL3GQPMNROGT [INF] Request starting HTTP/1.1 GET http://localhost:50420/Home/FeaturePosts/4   (e5be5b71)
+2017-03-21T23:50:51.5272181-04:00 0HL3GQPMNROGT [INF] HttpContext.User merged via AutomaticAuthentication from authenticationScheme: "Identity.Application". (bdba1d38)
+2017-03-21T23:50:51.5272181-04:00 0HL3GQPMNROGT [INF] Executing action method "blog.Controllers.HomeController.FeaturePosts (blog)" with arguments (["4"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:50:51.5272181-04:00 0HL3GQPMNROGT [INF] Executed DbCommand (0ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Title]
+FROM [Feature] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:50:51.5503208-04:00 0HL3GQPMNROGT [INF] Executed DbCommand (3ms) [Parameters=[@__feature_Id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [bpf.BlogPost].[Id], [bpf.BlogPost].[AuthorId], [bpf.BlogPost].[Content], [bpf.BlogPost].[CreatedAt], [bpf.BlogPost].[Description], [bpf.BlogPost].[ModifiedAt], [bpf.BlogPost].[Public], [bpf.BlogPost].[PublishOn], [bpf.BlogPost].[Title]
+FROM [BlogPostFeature] AS [bpf]
+INNER JOIN [BlogPost] AS [bpf.BlogPost] ON [bpf].[BlogPostId] = [bpf.BlogPost].[Id]
+WHERE (([bpf].[FeatureId] = @__feature_Id_0) AND ([bpf.BlogPost].[Public] = 1)) AND ([bpf.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-21T23:50:51.5523201-04:00 0HL3GQPMNROGT [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title], [a].[Id], [a].[ApplicationUserId], [a].[Biography], [a].[FirstName], [a].[LastName]
+FROM [BlogPost] AS [bp]
+LEFT JOIN [Author] AS [a] ON [bp].[AuthorId] = [a].[Id]
+ORDER BY [bp].[Id] (6438bdd5)
+2017-03-21T23:50:51.5533196-04:00 0HL3GQPMNROGT [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [b].[BlogPostId], [b].[CategoryId]
+FROM [BlogPostCategory] AS [b]
+WHERE EXISTS (
+    SELECT 1
+    FROM [BlogPost] AS [bp]
+    WHERE [b].[BlogPostId] = [bp].[Id])
+ORDER BY [b].[BlogPostId] (6438bdd5)
+2017-03-21T23:52:08.4125688-04:00  [INF] User profile is available. Using '"C:\Users\Tyler Rhodes\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2017-03-21T23:52:10.0582913-04:00  [INF] Executed DbCommand (107ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0 (6438bdd5)
+2017-03-21T23:52:10.2004284-04:00  [INF] Executed DbCommand (11ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [r].[Id], [r].[ConcurrencyStamp], [r].[Name], [r].[NormalizedName]
+FROM [AspNetRoles] AS [r]
+WHERE [r].[NormalizedName] = @__normalizedName_0 (6438bdd5)
+2017-03-21T23:52:10.5263820-04:00 0HL3GQR8N2OME [INF] Request starting HTTP/1.1 DEBUG http://localhost:50420/  0 (e5be5b71)
+2017-03-21T23:52:10.5263820-04:00 0HL3GQR8N2OMD [INF] Request starting HTTP/1.1 GET http://localhost:50420/   (e5be5b71)
+2017-03-21T23:52:10.6821610-04:00 0HL3GQR8N2OME [INF] Request finished in 168.192ms 200  (15c52c40)
+2017-03-21T23:52:11.0544741-04:00 0HL3GQR8N2OMD [INF] Executing action method "blog.Controllers.HomeController.Index (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:52:11.1414729-04:00 0HL3GQR8N2OMD [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_0) [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title]
+FROM [BlogPost] AS [bp]
+WHERE ([bp].[Public] = 1) AND ([bp].[PublishOn] < GETDATE())
+ORDER BY [bp].[ModifiedAt] DESC, [bp].[PublishOn] DESC (6438bdd5)
+2017-03-21T23:52:13.2939475-04:00 0HL3GQR8N2OMD [INF] Executing ViewResult, running view at path "/Views/Home/Index.cshtml". (9707eebe)
+2017-03-21T23:52:14.1099663-04:00 0HL3GQR8N2OMD [INF] Executed action "blog.Controllers.HomeController.Index (blog)" in 3142.1724ms (afa2e885)
+2017-03-21T23:52:14.1701097-04:00 0HL3GQR8N2OMD [INF] Request finished in 3674.3044ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:52:14.2169779-04:00 0HL3GQR8N2OMF [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap-theme.min.css   (e5be5b71)
+2017-03-21T23:52:14.2169779-04:00 0HL3GQR8N2OMG [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/css/bootstrap.min.css   (e5be5b71)
+2017-03-21T23:52:14.2326059-04:00 0HL3GQR8N2OMF [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap-theme.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css"' (27b0a520)
+2017-03-21T23:52:14.2326059-04:00 0HL3GQR8N2OMG [INF] Sending file. Request path: '"/lib/bootstrap/dist/css/bootstrap.min.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css"' (27b0a520)
+2017-03-21T23:52:14.2482275-04:00 0HL3GQR8N2OMH [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/js/bootstrap.js   (e5be5b71)
+2017-03-21T23:52:14.2482275-04:00 0HL3GQR8N2OMH [INF] Sending file. Request path: '"/lib/bootstrap/dist/js/bootstrap.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\js\bootstrap.js"' (27b0a520)
+2017-03-21T23:52:14.2638518-04:00 0HL3GQR8N2OMI [INF] Request starting HTTP/1.1 GET http://localhost:50420/css/main.css   (e5be5b71)
+2017-03-21T23:52:14.2638518-04:00 0HL3GQR8N2OMI [INF] Sending file. Request path: '"/css/main.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\css\main.css"' (27b0a520)
+2017-03-21T23:52:14.2638518-04:00 0HL3GQR8N2OMI [INF] Request finished in 0.5921ms 200 text/css (15c52c40)
+2017-03-21T23:52:14.2638518-04:00 0HL3GQR8N2OMJ [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/jquery/dist/jquery.js   (e5be5b71)
+2017-03-21T23:52:14.2638518-04:00 0HL3GQR8N2OMJ [INF] Sending file. Request path: '"/lib/jquery/dist/jquery.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\jquery\dist\jquery.js"' (27b0a520)
+2017-03-21T23:52:14.2638518-04:00 0HL3GQR8N2OMF [INF] Request finished in 52.8875ms 200 text/css (15c52c40)
+2017-03-21T23:52:14.2638518-04:00 0HL3GQR8N2OMK [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/styles/default.css   (e5be5b71)
+2017-03-21T23:52:14.2638518-04:00 0HL3GQR8N2OMK [INF] Sending file. Request path: '"/lib/highlight/styles/default.css"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\styles\default.css"' (27b0a520)
+2017-03-21T23:52:14.2638518-04:00 0HL3GQR8N2OMK [INF] Request finished in 0.5096ms 200 text/css (15c52c40)
+2017-03-21T23:52:14.2794791-04:00 0HL3GQR8N2OMJ [INF] Request finished in 20.1432ms 200 application/javascript (15c52c40)
+2017-03-21T23:52:14.2794791-04:00 0HL3GQR8N2OMH [INF] Request finished in 35.9772ms 200 application/javascript (15c52c40)
+2017-03-21T23:52:14.2794791-04:00 0HL3GQR8N2OMG [INF] Request finished in 72.0075ms 200 text/css (15c52c40)
+2017-03-21T23:52:14.2951026-04:00 0HL3GQR8N2OML [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/highlight/highlight.pack.js   (e5be5b71)
+2017-03-21T23:52:14.3107254-04:00 0HL3GQR8N2OML [INF] Sending file. Request path: '"/lib/highlight/highlight.pack.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\highlight\highlight.pack.js"' (27b0a520)
+2017-03-21T23:52:14.4036873-04:00 0HL3GQR8N2OML [INF] Request finished in 94.0023ms 200 application/javascript (15c52c40)
+2017-03-21T23:52:14.4226883-04:00 0HL3GQR8N2OMM [INF] Request starting HTTP/1.1 GET http://localhost:50420/js/Common.js   (e5be5b71)
+2017-03-21T23:52:14.4226883-04:00 0HL3GQR8N2OMM [INF] Sending file. Request path: '"/js/Common.js"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\js\Common.js"' (27b0a520)
+2017-03-21T23:52:14.4236886-04:00 0HL3GQR8N2OMM [INF] Request finished in 0.875ms 200 application/javascript (15c52c40)
+2017-03-21T23:52:14.5136891-04:00 0HL3GQR8N2OMN [INF] Request starting HTTP/1.1 GET http://localhost:50420/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot?   (e5be5b71)
+2017-03-21T23:52:14.5136891-04:00 0HL3GQR8N2OMN [INF] Sending file. Request path: '"/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot"'. Physical path: '"C:\Users\Tyler Rhodes\Source\Repos\bagombo\src\blog\wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.eot"' (27b0a520)
+2017-03-21T23:52:14.5906908-04:00 0HL3GQR8N2OMN [INF] Request finished in 76.7561ms 200 application/vnd.ms-fontobject (15c52c40)
+2017-03-21T23:52:14.8938193-04:00 0HL3GQR8N2OMO [INF] Request starting HTTP/1.1 GET http://localhost:50420/favicon.ico   (e5be5b71)
+2017-03-21T23:52:14.9094445-04:00 0HL3GQR8N2OMO [INF] Request finished in 14.5429ms 404 text/plain (15c52c40)
+2017-03-21T23:52:15.6009520-04:00 0HL3GQR8N2OMP [INF] Request starting HTTP/1.1 GET http://localhost:50420/Home/Features   (e5be5b71)
+2017-03-21T23:52:15.6009520-04:00 0HL3GQR8N2OMP [INF] Executing action method "blog.Controllers.HomeController.Features (blog)" with arguments (null) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:52:15.6790735-04:00 0HL3GQR8N2OMP [WRN] The LINQ expression 'orderby {from BlogPostFeature posts in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPostFeature]) join BlogPost posts.BlogPost in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPost]) on Property([posts], "BlogPostId") equals Property([posts.BlogPost], "Id") join BlogPost posts.BlogPost in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[blog.Models.BlogPost]) on Property([posts], "BlogPostId") equals Property([posts.BlogPost], "Id") where ((([posts].FeatureId == [feature].Id) AndAlso ([posts.BlogPost].Public == True)) AndAlso ([posts.BlogPost].PublishOn < DateTime.Now)) select [posts] => Count()} desc' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-21T23:52:15.8083329-04:00 0HL3GQR8N2OMP [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [feature].[Id], [feature].[Title], [feature].[Description], (
+    SELECT COUNT(*)
+    FROM [BlogPostFeature] AS [posts1]
+    INNER JOIN [BlogPost] AS [posts.BlogPost3] ON [posts1].[BlogPostId] = [posts.BlogPost3].[Id]
+    INNER JOIN [BlogPost] AS [posts.BlogPost4] ON [posts1].[BlogPostId] = [posts.BlogPost4].[Id]
+    WHERE (([posts1].[FeatureId] = [feature].[Id]) AND ([posts.BlogPost3].[Public] = 1)) AND ([posts.BlogPost3].[PublishOn] < GETDATE())
+)
+FROM [Feature] AS [feature] (6438bdd5)
+2017-03-21T23:52:15.8239548-04:00 0HL3GQR8N2OMP [INF] Executed DbCommand (4ms) [Parameters=[@_outer_Id='?'], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BlogPostFeature] AS [posts]
+INNER JOIN [BlogPost] AS [posts.BlogPost] ON [posts].[BlogPostId] = [posts.BlogPost].[Id]
+INNER JOIN [BlogPost] AS [posts.BlogPost0] ON [posts].[BlogPostId] = [posts.BlogPost0].[Id]
+WHERE (([posts].[FeatureId] = @_outer_Id) AND ([posts.BlogPost].[Public] = 1)) AND ([posts.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-21T23:52:15.8395775-04:00 0HL3GQR8N2OMP [INF] Executed DbCommand (0ms) [Parameters=[@_outer_Id='?'], CommandType='Text', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BlogPostFeature] AS [posts]
+INNER JOIN [BlogPost] AS [posts.BlogPost] ON [posts].[BlogPostId] = [posts.BlogPost].[Id]
+INNER JOIN [BlogPost] AS [posts.BlogPost0] ON [posts].[BlogPostId] = [posts.BlogPost0].[Id]
+WHERE (([posts].[FeatureId] = @_outer_Id) AND ([posts.BlogPost].[Public] = 1)) AND ([posts.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-21T23:52:15.9176986-04:00 0HL3GQR8N2OMP [INF] Executing ViewResult, running view at path "/Views/Home/Features.cshtml". (9707eebe)
+2017-03-21T23:52:15.9524409-04:00 0HL3GQR8N2OMP [INF] Executed action "blog.Controllers.HomeController.Features (blog)" in 338.7313ms (afa2e885)
+2017-03-21T23:52:15.9554430-04:00 0HL3GQR8N2OMP [INF] Request finished in 343.5272ms 200 text/html; charset=utf-8 (15c52c40)
+2017-03-21T23:52:16.1945822-04:00 0HL3GQR8N2OMQ [INF] Request starting HTTP/1.1 GET http://localhost:50420/favicon.ico   (e5be5b71)
+2017-03-21T23:52:16.1945822-04:00 0HL3GQR8N2OMQ [INF] Request finished in 1.5448ms 404 text/plain (15c52c40)
+2017-03-21T23:52:17.1493184-04:00 0HL3GQR8N2OMR [INF] Request starting HTTP/1.1 GET http://localhost:50420/Home/FeaturePosts/4   (e5be5b71)
+2017-03-21T23:52:17.2334736-04:00 0HL3GQR8N2OMR [INF] Executing action method "blog.Controllers.HomeController.FeaturePosts (blog)" with arguments (["4"]) - ModelState is Valid (ba7f4ac2)
+2017-03-21T23:52:17.2490996-04:00 0HL3GQR8N2OMR [INF] Executed DbCommand (1ms) [Parameters=[@__get_Item_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Description], [e].[Title]
+FROM [Feature] AS [e]
+WHERE [e].[Id] = @__get_Item_0 (6438bdd5)
+2017-03-21T23:52:17.2959744-04:00 0HL3GQR8N2OMR [INF] Executed DbCommand (4ms) [Parameters=[@__feature_Id_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT [bpf.BlogPost].[Id], [bpf.BlogPost].[AuthorId], [bpf.BlogPost].[Content], [bpf.BlogPost].[CreatedAt], [bpf.BlogPost].[Description], [bpf.BlogPost].[ModifiedAt], [bpf.BlogPost].[Public], [bpf.BlogPost].[PublishOn], [bpf.BlogPost].[Title]
+FROM [BlogPostFeature] AS [bpf]
+INNER JOIN [BlogPost] AS [bpf.BlogPost] ON [bpf].[BlogPostId] = [bpf.BlogPost].[Id]
+WHERE (([bpf].[FeatureId] = @__feature_Id_0) AND ([bpf.BlogPost].[Public] = 1)) AND ([bpf.BlogPost].[PublishOn] < GETDATE()) (6438bdd5)
+2017-03-21T23:52:17.3115996-04:00 0HL3GQR8N2OMR [WRN] The LINQ expression '{__bps_0 => Contains([bp])}' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-21T23:52:17.3272227-04:00 0HL3GQR8N2OMR [WRN] The LINQ expression 'Contains([bp])' could not be translated and will be evaluated locally. To configure this warning use the DbContextOptionsBuilder.ConfigureWarnings API (event id 'RelationalEventId.QueryClientEvaluationWarning'). ConfigureWarnings can be used when overriding the DbContext.OnConfiguring method or using AddDbContext on the application service provider. (3b5ca34b)
+2017-03-21T23:52:17.4036032-04:00 0HL3GQR8N2OMR [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [bp].[Id], [bp].[AuthorId], [bp].[Content], [bp].[CreatedAt], [bp].[Description], [bp].[ModifiedAt], [bp].[Public], [bp].[PublishOn], [bp].[Title], [a].[Id], [a].[ApplicationUserId], [a].[Biography], [a].[FirstName], [a].[LastName]
+FROM [BlogPost] AS [bp]
+LEFT JOIN [Author] AS [a] ON [bp].[AuthorId] = [a].[Id]
+ORDER BY [bp].[Id] (6438bdd5)
+2017-03-21T23:52:17.4751998-04:00 0HL3GQR8N2OMR [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [b].[BlogPostId], [b].[CategoryId]
+FROM [BlogPostCategory] AS [b]
+WHERE EXISTS (
+    SELECT 1
+    FROM [BlogPost] AS [bp]
+    WHERE [b].[BlogPostId] = [bp].[Id])
+ORDER BY [b].[BlogPostId] (6438bdd5)
+2017-03-21T23:52:20.0318900-04:00 0HL3GQR8N2OMR [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [cat].[Id], [cat].[Description], [cat].[Name]
+FROM [Category] AS [cat]
+WHERE [cat].[Id] IN (10, 11) (6438bdd5)
+2017-03-21T23:52:20.1256354-04:00 0HL3GQR8N2OMR [INF] Executing ViewResult, running view at path "/Views/Home/FeaturePosts.cshtml". (9707eebe)
+2017-03-21T23:52:20.1527315-04:00 0HL3GQR8N2OMR [INF] Executed action "blog.Controllers.HomeController.FeaturePosts (blog)" in 3000.4554ms (afa2e885)
+2017-03-21T23:52:20.1547313-04:00 0HL3GQR8N2OMR [INF] Request finished in 3005.4241ms 200 text/html; charset=utf-8 (15c52c40)

@@ -1,0 +1,123 @@
+﻿@using Bagombo.Models.ViewModels.Author
+@model EditBlogPostViewModel
+
+@{
+  ViewData["Title"] = "Edit Post";
+  Layout = "_Layout";
+}
+
+<div class="container-fluid">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3>Edit Post</h3></div>
+            <div class="panel-body">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div SaveUpdate id="UpdateSavedMessage"></div>
+                <form id="EditPost" asp-action="EditPost" method="post">
+                    <input asp-for="Id" type="hidden" />
+                    <div class="form-group">
+                        <label asp-for="Title">Title:</label>
+                        <input class="form-control" asp-for="Title" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description">Description:</label>
+                        <input class="form-control" asp-for="Description" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PublishOn">Publish On:</label>
+                        <input class="form-control" asp-for="PublishOn" />
+                    </div>
+                    <label class="checkbox-inline">
+                        <input asp-for="Public"> Public?
+                    </label>
+                    <br />
+                    <br />
+                    <div>
+
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#ContentEditorTab" aria-controls="home" role="tab" data-toggle="tab">Markdown</a></li>
+                            <li role="presentation"><a href="#PreviewTab" aria-controls="profile" role="tab" data-toggle="tab">Preview</a></li>
+                            <li role="presentation"><a href="#PostSettings" aria-controls="profile" role="tab" data-toggle="tab">Post Settings</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="ContentEditorTab">
+                                <div class="form-group">
+                                    <textarea class="form-control" style="height:600px" asp-for="Content"></textarea>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="PreviewTab">
+                                <div id="PreviewTabInner">
+
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="PostSettings">
+                                <br />
+                                <label>Associate with Feature:</label>
+                                <div class="container-fluid">
+                                    @{
+                                      for (int i = 0; i < Model.FeaturesList.Count(); i++)
+                                      {
+                                        <label asp-for="@Model.FeaturesList[i].Title" class="checkbox-inline">
+                                            <input asp-for="@Model.FeaturesList[i].IsSelected" />@Model.FeaturesList[i].Title
+                                        </label>
+                                        <input asp-for="@Model.FeaturesList[i].FeatureId" type="hidden" />
+                                        <input asp-for="@Model.FeaturesList[i].Title" type="hidden" />
+                                        <br />
+                                      }
+                                    }
+                                </div>
+                                <br />
+                                <label>Associate with Categories:</label>
+                                <br />
+                                <div class="container-fluid">
+                                    @{
+                                      for (int i = 0; i < Model.CategoriesList.Count(); i++)
+                                      {
+                                        <label asp-for="@Model.CategoriesList[i].Name" class="checkbox-inline">
+                                            <input asp-for="@Model.CategoriesList[i].IsSelected" />@Model.CategoriesList[i].Name
+                                        </label>
+                                        <input asp-for="@Model.CategoriesList[i].CategoryId" type="hidden" />
+                                        <input asp-for="@Model.CategoriesList[i].Name" type="hidden" />
+                                        <br />
+                                      }
+                                    }
+                                </div>
+                                <br />
+                                <br />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a asp-action="ManagePosts" class="btn btn-danger">Cancel</a>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/AddEditPostPage.js"></script>
+
+    <script type="text/javascript">
+       // var simplemde = new SimpleMDE();
+
+        $(function () {
+            setTimeout(function () {
+                $("#UpdateSavedMessage").fadeOut("slow");
+            }, 10000);
+        });
+
+    </script>
+
+}

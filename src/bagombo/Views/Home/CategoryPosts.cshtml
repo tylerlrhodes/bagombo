@@ -1,0 +1,39 @@
+﻿
+@using Bagombo.Models.ViewModels.Home
+@model ViewCategoryPostsViewModel
+
+@{
+  ViewData["Title"] = $"Posts for Category {Model.Category.Name}";
+  Layout = "_Layout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h3>Posts for <span class="label label-info">@Model.Category.Name</span></h3>
+            <hr />
+        </div>
+    </div>
+    @foreach (var post in Model.Posts)
+    {
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>
+                        <a asp-action="BlogPost" asp-route-id="@post.Id">@post.Title</a>
+                    </h3>
+                    <h5>
+                        Author: @post.Author.FirstName @post.Author.LastName
+                    </h5>
+                    <hr />
+                    <h5>
+                        @post.Description
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    }
+</div>
