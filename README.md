@@ -8,6 +8,7 @@ See it in action at [www.bagombo.org](http://www.bagombo.org)
 * Integrate Simple Injector for DI Container
 * Adding in CQRS and refactoring queries
 * Adding in Some Unit Tests
+* Edit Post screen now rememberes where you were scrolled to in markdown, so when you submit you don't lose your spot
 
 ### 0.2.1
 * Actually tagged as a release
