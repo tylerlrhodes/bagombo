@@ -1,4 +1,4 @@
-﻿using Bagombo.data.Query.Queries;
+﻿using Bagombo.Data.Query.Queries;
 using Bagombo.EFCore;
 using Bagombo.Models;
 using Bagombo.Models.ViewModels.Home;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Bagombo.data.Query.EFCoreQueryHandlers
+namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
   public class GetViewCategoryPostsByCategoryEFQueryHandler : IQueryHandlerAsync<GetViewCategoryPostsByCategory, ViewCategoryPostsViewModel>
   {

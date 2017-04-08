@@ -1,4 +1,4 @@
-﻿using Bagombo.data.Query.Queries;
+﻿using Bagombo.Data.Query.Queries;
 using Bagombo.Models.ViewModels.Home;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Bagombo.EFCore;
 
-namespace Bagombo.data.Query.EFCoreQueryHandlers
+namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
   public class GetViewBlogPostByIdEFQueryHandler : IQueryHandlerAsync<GetViewBlogPostById, ViewBlogPostViewModel>
   {

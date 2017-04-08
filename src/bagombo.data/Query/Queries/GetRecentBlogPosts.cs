@@ -5,7 +5,7 @@ using Bagombo.Models;
 using Bagombo.Models.ViewModels;
 using Bagombo.Models.ViewModels.Home;
 
-namespace Bagombo.data.Query.Queries
+namespace Bagombo.Data.Query.Queries
 {
   public class GetRecentBlogPosts : IQuery<IList<BlogPost>>
   {

@@ -1,5 +1,5 @@
-﻿using Bagombo.data.Query;
-using Bagombo.data.Query.Queries;
+﻿using Bagombo.Data.Query;
+using Bagombo.Data.Query.Queries;
 using Bagombo.EFCore;
 using Bagombo.Models;
 using Bagombo.Models.ViewModels.Home;
@@ -17,9 +17,9 @@ namespace Bagombo.Controllers
 {
   public class HomeController : Controller
   {
-    QueryProcessorAsync _qpa;
+    private IQueryProcessorAsync _qpa;
 
-    public HomeController(QueryProcessorAsync qpa)
+    public HomeController(IQueryProcessorAsync qpa)
     {
       _qpa = qpa;
     }

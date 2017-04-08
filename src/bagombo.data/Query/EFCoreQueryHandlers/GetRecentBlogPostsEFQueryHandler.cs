@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Bagombo.EFCore;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using Bagombo.data.Query.Queries;
+using Bagombo.Data.Query.Queries;
 
-namespace Bagombo.data.Query.EFCoreQueryHandlers
+namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
   public class GetRecentBlogPostsEFQueryHandler : IQueryHandlerAsync<GetRecentBlogPosts, IList<BlogPost>>
   {

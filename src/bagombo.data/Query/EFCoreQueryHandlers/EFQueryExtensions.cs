@@ -1,11 +1,11 @@
-﻿using Bagombo.data.Query.Queries;
+﻿using Bagombo.Data.Query.Queries;
 using Bagombo.Models;
 using Bagombo.Models.ViewModels.Home;
 using SimpleInjector;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Bagombo.data.Query.EFCoreQueryHandlers
+namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
   public static class EFQueryExtensions
   {
@@ -22,7 +22,7 @@ namespace Bagombo.data.Query.EFCoreQueryHandlers
 
       container.Register(typeof(IQueryHandlerAsync<,>), new[] { typeof(IQueryHandlerAsync<,>).GetTypeInfo().Assembly });
 
-      container.Register<QueryProcessorAsync, QueryProcessorAsync>(Lifestyle.Scoped);
+      container.Register<IQueryProcessorAsync, QueryProcessorAsync>(Lifestyle.Scoped);
     }
   }
 }

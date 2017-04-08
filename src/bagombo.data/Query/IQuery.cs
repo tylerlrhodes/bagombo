@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Bagombo.data.Query
+namespace Bagombo.Data.Query
 {
   public interface IQuery<TResult>
   {

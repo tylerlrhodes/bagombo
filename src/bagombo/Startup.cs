@@ -1,4 +1,5 @@
-﻿using Bagombo.data.Query.EFCoreQueryHandlers;
+﻿using Bagombo.Data.Command.EFCoreCommandHandlers;
+using Bagombo.Data.Query.EFCoreQueryHandlers;
 using Bagombo.EFCore;
 using Bagombo.Models;
 using Microsoft.AspNetCore.Builder;
@@ -151,7 +152,7 @@ namespace Bagombo
       _container.Register<IUserValidator<ApplicationUser>>(GetAspNetServiceProvider<IUserValidator<ApplicationUser>>(app), Lifestyle.Scoped);
 
       _container.AddEFQueries();
-
+      _container.AddEFCommands();
       // NOTE: Do prevent cross-wired instances as much as possible.
       // See: https://simpleinjector.org/blog/2016/07/
     }

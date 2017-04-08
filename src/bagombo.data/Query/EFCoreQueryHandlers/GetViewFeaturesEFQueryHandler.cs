@@ -1,4 +1,4 @@
-﻿using Bagombo.data.Query.Queries;
+﻿using Bagombo.Data.Query.Queries;
 using Bagombo.EFCore;
 using Bagombo.Models.ViewModels.Home;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace Bagombo.data.Query.EFCoreQueryHandlers
+namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
   public class GetViewFeaturesEFQueryHandler : IQueryHandlerAsync<GetViewFeatures, ViewFeaturesViewModel>
   {

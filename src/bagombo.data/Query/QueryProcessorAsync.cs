@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 using SimpleInjector;
 
-namespace Bagombo.data.Query
+namespace Bagombo.Data.Query
 {
   public class QueryProcessorAsync : IQueryProcessorAsync
   {

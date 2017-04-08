@@ -4,6 +4,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Bagombo.EFCore;
 using Bagombo.Models;
+using Bagombo.Data.Query;
+using Bagombo.Data.Query.Queries;
+using Bagombo.Data.Command.Commands;
+using Bagombo.Data.Command;
 using Microsoft.EntityFrameworkCore;
 using Bagombo.Models.ViewModels.Admin;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +20,7 @@ namespace Bagombo.Controllers
   [Authorize(Roles = "Admins")]
   public class AdminController : Controller
   {
+    private ICommandProcessor _cp;
     BlogDbContext _context;
     UserManager<ApplicationUser> _userManager;
     SignInManager<ApplicationUser> _signInManager;
@@ -23,13 +28,15 @@ namespace Bagombo.Controllers
     IUserValidator<ApplicationUser> _userValidator;
     IPasswordValidator<ApplicationUser> _passwordValidator;
 
-    public AdminController(BlogDbContext context,
+    public AdminController(ICommandProcessor cp,
+                           BlogDbContext context,
                            UserManager<ApplicationUser> userManager,
                            SignInManager<ApplicationUser> signInManager,
                            IPasswordHasher<ApplicationUser> passwordHasher,
                            IPasswordValidator<ApplicationUser> passwordValidator,
                            IUserValidator<ApplicationUser> userValidator)
     {
+      _cp = cp;
       _context = context;
       _userManager = userManager;
       _signInManager = signInManager;
@@ -51,14 +58,26 @@ namespace Bagombo.Controllers
     {
       if (ModelState.IsValid)
       {
-        var f = new Feature()
+        var afc = new AddFeatureCommand()
         {
-          Title = model.Title,
-          Description = model.Description
+          Feature = new Feature()
+          {
+            Title = model.Title,
+            Description = model.Description
+          }
         };
-        _context.Features.Add(f);
-        await _context.SaveChangesAsync();
-        return RedirectToAction("ManageFeatures");
+
+        var result = await _cp.ProcessAsync(afc);
+
+        if (result.Succeeded)
+        {
+          return RedirectToAction("ManageFeatures"); 
+        }
+        else
+        {
+          // To do, better exeception handling
+          return NotFound();
+        }
       }
       return View(model);
     }

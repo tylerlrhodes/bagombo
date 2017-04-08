@@ -243,6 +243,8 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+
 /src/blog/Migrations
 /src/blog/Logs
 /src/bagombo/Logs

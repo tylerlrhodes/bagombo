@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Bagombo;
 
-namespace Bagombo.data
+namespace Bagombo.Data
 {
   /// <summary>
   /// The whole point of this class is to allow for EF Core code to exist in a seperate project from the web application

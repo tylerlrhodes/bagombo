@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Bagombo.data.Query.Queries
+namespace Bagombo.Data.Query.Queries
 {
   public class GetViewAllPostsByDate : IQuery<ViewAllPostsViewModel>
   {

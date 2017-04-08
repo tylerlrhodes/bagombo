@@ -5,10 +5,10 @@ using Bagombo.EFCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Microsoft.EntityFrameworkCore;
-using Bagombo.data.Query;
+using Bagombo.Data.Query;
 using Bagombo.Models;
-using Bagombo.data.Query.EFCoreQueryHandlers;
-using Bagombo.data.Query.Queries;
+using Bagombo.Data.Query.EFCoreQueryHandlers;
+using Bagombo.Data.Query.Queries;
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
 
