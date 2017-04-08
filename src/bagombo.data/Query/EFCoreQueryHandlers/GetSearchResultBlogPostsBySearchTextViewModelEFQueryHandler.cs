@@ -11,16 +11,16 @@ using Bagombo.Data.Query.Queries;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetViewSearchResultBlogPostsBySearchTextEFQueryHandler : IQueryHandlerAsync<GetViewSearchResultBlogPostsBySearchText, IList<ViewSearchResultBlogPostViewModel>>
+  public class GetSearchResultBlogPostsBySearchTextViewModelEFQueryHandler : IQueryHandlerAsync<GetSearchResultBlogPostsBySearchTextViewModel, IList<SearchResultBlogPostViewModel>>
   {
     BlogDbContext _context;
 
-    public GetViewSearchResultBlogPostsBySearchTextEFQueryHandler(BlogDbContext context)
+    public GetSearchResultBlogPostsBySearchTextViewModelEFQueryHandler(BlogDbContext context)
     {
       _context = context;
     }
 
-    public async Task<IList<ViewSearchResultBlogPostViewModel>> HandleAsync(GetViewSearchResultBlogPostsBySearchText query)
+    public async Task<IList<SearchResultBlogPostViewModel>> HandleAsync(GetSearchResultBlogPostsBySearchTextViewModel query)
     {
       var posts = await _context.BlogPosts
                           .AsNoTracking()
@@ -33,14 +33,14 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
                             .ThenInclude(bpc => bpc.Category)
                           .ToListAsync();
 
-      var bps = new List<ViewSearchResultBlogPostViewModel>();
+      var bps = new List<SearchResultBlogPostViewModel>();
 
       foreach (var post in posts)
       {
 
         var categories = post.BlogPostCategory.Select(c => c.Category).ToList();
 
-        var vsrbpvm = new ViewSearchResultBlogPostViewModel()
+        var vsrbpvm = new SearchResultBlogPostViewModel()
         {
           BlogPost = post,
           Categories = categories

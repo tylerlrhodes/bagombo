@@ -5,7 +5,7 @@ using Bagombo.Models.ViewModels.Home;
 
 namespace Bagombo.Data.Query.Queries
 {
-  public class GetViewCategoryPostsByCategory : IQuery<ViewCategoryPostsViewModel>
+  public class GetCategoryPostsByCategoryViewModel : IQuery<CategoryPostsViewModel>
   {
     public long Id { get; set; }
   }

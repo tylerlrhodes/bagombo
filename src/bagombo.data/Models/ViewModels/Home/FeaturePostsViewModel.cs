@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Models.ViewModels.Home
 {
-  public class ViewCategoryPostsViewModel
+  public class FeaturePostsViewModel
   {
-    public Category Category { get; set; }
-    public IEnumerable<BlogPost> Posts { get; set; }
+    public Feature Feature { get; set; }
+    public IEnumerable<BlogPostViewModel> BlogPosts { get; set; }
   }
 }

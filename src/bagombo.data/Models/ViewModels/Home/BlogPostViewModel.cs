@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Models.ViewModels.Home
 {
-  public class ViewBlogPostViewModel
+  public class BlogPostViewModel
   {
     public long Id { get; set; }
     public string Title { get; set; }

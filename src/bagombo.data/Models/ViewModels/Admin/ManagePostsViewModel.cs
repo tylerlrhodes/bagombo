@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Models.ViewModels.Admin
 {
-  public class AdminManagePostsViewModel
+  public class ManagePostsViewModel
   {
     public IEnumerable<BlogPost> posts;
   }

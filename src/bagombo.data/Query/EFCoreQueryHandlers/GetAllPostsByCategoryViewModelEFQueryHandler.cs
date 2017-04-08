@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetViewAllPostsByCategoryEFQueryHandler : IQueryHandlerAsync<GetViewAllPostsByCategory, ViewAllPostsViewModel>
+  public class GetAllPostsByCategoryViewModelEFQueryHandler : IQueryHandlerAsync<GetAllPostsByCategoryViewModel, AllPostsViewModel>
   {
     private BlogDbContext _context;
 
-    public GetViewAllPostsByCategoryEFQueryHandler(BlogDbContext context)
+    public GetAllPostsByCategoryViewModelEFQueryHandler(BlogDbContext context)
     {
       _context = context;
     }
 
-    public async Task<ViewAllPostsViewModel> HandleAsync(GetViewAllPostsByCategory query)
+    public async Task<AllPostsViewModel> HandleAsync(GetAllPostsByCategoryViewModel query)
     {
       var categories = await _context.Categories.AsNoTracking().ToListAsync();
 
-      var viewCategories = new List<ViewPostsByCategory>();
+      var viewCategories = new List<PostsByCategoryViewModel>();
 
       foreach (var c in categories)
       {
@@ -34,7 +34,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
                                   .ThenInclude(bp => bp.Author)
                                 .ToListAsync();
 
-        var vpbc = new ViewPostsByCategory()
+        var vpbc = new PostsByCategoryViewModel()
         {
           Category = c,
           Posts = bpcs.Select(bp => bp.BlogPost).ToList()
@@ -43,11 +43,11 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
         viewCategories.Add(vpbc);
       }
 
-      return new ViewAllPostsViewModel()
+      return new AllPostsViewModel()
       {
         PostsByDate = null,
         SortBy = 1,
-        Categories = viewCategories ?? new List<ViewPostsByCategory>()
+        Categories = viewCategories ?? new List<PostsByCategoryViewModel>()
       };
     }
   }

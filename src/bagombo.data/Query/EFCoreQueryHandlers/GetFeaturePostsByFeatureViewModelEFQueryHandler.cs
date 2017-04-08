@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  class GetViewFeaturePostsByFeatureEFQueryHandler : IQueryHandlerAsync<GetViewFeaturePostsByFeature, ViewFeaturePostsViewModel>
+  class GetFeaturePostsByFeatureViewModelEFQueryHandler : IQueryHandlerAsync<GetFeaturePostsByFeatureViewModel, FeaturePostsViewModel>
   {
     BlogDbContext _context;
     
-    public GetViewFeaturePostsByFeatureEFQueryHandler(BlogDbContext context)
+    public GetFeaturePostsByFeatureViewModelEFQueryHandler(BlogDbContext context)
     {
       _context = context;
     }
 
-    public async Task<ViewFeaturePostsViewModel> HandleAsync(GetViewFeaturePostsByFeature query)
+    public async Task<FeaturePostsViewModel> HandleAsync(GetFeaturePostsByFeatureViewModel query)
     {
 
       var feature = await _context.Features.FindAsync(query.Id);
@@ -39,11 +39,11 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
                                 .ThenInclude(bpc => bpc.Category)
                               .ToListAsync();
 
-      List<ViewBlogPostViewModel> viewPosts = new List<ViewBlogPostViewModel>();
+      List<BlogPostViewModel> viewPosts = new List<BlogPostViewModel>();
 
       foreach (var bpf in bpfs)
       {
-        var bpView = new ViewBlogPostViewModel()
+        var bpView = new BlogPostViewModel()
         {
           Author = $"{bpf.BlogPost.Author.FirstName} {bpf.BlogPost.Author.LastName}",
           Title = bpf.BlogPost.Title,
@@ -55,7 +55,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
         viewPosts.Add(bpView);
       }
 
-      return new ViewFeaturePostsViewModel()
+      return new FeaturePostsViewModel()
       {
         Feature = feature,
         BlogPosts = viewPosts

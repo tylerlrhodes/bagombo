@@ -33,7 +33,7 @@ namespace Bagombo.Controllers
 
       var recentPosts = await _qpa.ProcessAsync(grbp);
 
-      var vhvm = new ViewHomeViewModel()
+      var vhvm = new HomeViewModel()
       {
         RecentPosts = recentPosts
       };
@@ -45,14 +45,14 @@ namespace Bagombo.Controllers
     {
       var search = "\"*" + searchText + "*\"";
 
-      GetViewSearchResultBlogPostsBySearchText gbpbst = new GetViewSearchResultBlogPostsBySearchText()
+      GetSearchResultBlogPostsBySearchTextViewModel gbpbst = new GetSearchResultBlogPostsBySearchTextViewModel()
       {
         searchText = search
       };
 
       var bps = await _qpa.ProcessAsync(gbpbst);
 
-      var vsrvm = new ViewSearchResultsViewModel()
+      var vsrvm = new SearchResultsViewModel()
       {
         SearchTerm = searchText,
         BlogPosts = bps
@@ -63,7 +63,7 @@ namespace Bagombo.Controllers
 
     public async Task<IActionResult> CategoryPosts(long? id)
     {
-      GetViewCategoryPostsByCategory gvcpbc = new GetViewCategoryPostsByCategory()
+      GetCategoryPostsByCategoryViewModel gvcpbc = new GetCategoryPostsByCategoryViewModel()
       {
         Id = (long)id
       };
@@ -75,13 +75,13 @@ namespace Bagombo.Controllers
 
     public async Task<IActionResult> AllPosts(int? sortby = 1)
     {
-      var vm = new ViewAllPostsViewModel();
+      var vm = new AllPostsViewModel();
 
       // Sort by Category
       if (sortby == 1)
       {
 
-        GetViewAllPostsByCategory gvapbc = new GetViewAllPostsByCategory();
+        GetAllPostsByCategoryViewModel gvapbc = new GetAllPostsByCategoryViewModel();
 
         vm = await _qpa.ProcessAsync(gvapbc);
 
@@ -89,7 +89,7 @@ namespace Bagombo.Controllers
       // return sorted by date
       else
       {
-        GetViewAllPostsByDate gvapbd = new GetViewAllPostsByDate();
+        GetAllPostsByDateViewModel gvapbd = new GetAllPostsByDateViewModel();
 
         vm = await _qpa.ProcessAsync(gvapbd);
       }
@@ -99,7 +99,7 @@ namespace Bagombo.Controllers
 
     public async Task<IActionResult> FeaturePosts(long id)
     {
-      GetViewFeaturePostsByFeature gvfpbf = new GetViewFeaturePostsByFeature()
+      GetFeaturePostsByFeatureViewModel gvfpbf = new GetFeaturePostsByFeatureViewModel()
       {
         Id = id
       };
@@ -116,7 +116,7 @@ namespace Bagombo.Controllers
 
     public async Task<IActionResult> Features()
     {
-      GetViewFeatures gvf = new GetViewFeatures();
+      GetFeaturesViewModel gvf = new GetFeaturesViewModel();
 
       var vfvm = await _qpa.ProcessAsync(gvf);
 
@@ -133,7 +133,7 @@ namespace Bagombo.Controllers
       if (id == null)
         return NotFound();
 
-      GetViewBlogPostById gvbpbi = new GetViewBlogPostById()
+      GetBlogPostByIdViewModel gvbpbi = new GetBlogPostByIdViewModel()
       {
         Id = (long)id
       };

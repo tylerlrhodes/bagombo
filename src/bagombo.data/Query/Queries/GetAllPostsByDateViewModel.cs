@@ -5,8 +5,7 @@ using System.Text;
 
 namespace Bagombo.Data.Query.Queries
 {
-  public class GetViewFeaturePostsByFeature : IQuery<ViewFeaturePostsViewModel>
+  public class GetAllPostsByDateViewModel : IQuery<AllPostsViewModel>
   {
-    public long Id { get; set; }
   }
 }

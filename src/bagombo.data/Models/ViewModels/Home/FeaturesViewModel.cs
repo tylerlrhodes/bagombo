@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Models.ViewModels.Home
 {
-  public class ViewFeaturesViewModel
+  public class FeaturesViewModel
   {
-    public IEnumerable<FeatureViewModel> Features { get; set; }
+    public IEnumerable<FeatureWithBlogCountViewModel> Features { get; set; }
   }
-  public class FeatureViewModel
+  public class FeatureWithBlogCountViewModel
   {
     public long Id { get; set; }
     public string Title { get; set; }

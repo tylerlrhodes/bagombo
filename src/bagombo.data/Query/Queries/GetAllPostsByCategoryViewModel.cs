@@ -5,10 +5,7 @@ using System.Text;
 
 namespace Bagombo.Data.Query.Queries
 {
-
-  public class GetViewSearchResultBlogPostsBySearchText : IQuery<IList<ViewSearchResultBlogPostViewModel>>
+  public class GetAllPostsByCategoryViewModel : IQuery<AllPostsViewModel>
   {
-    public string searchText { get; set; }
   }
-
 }

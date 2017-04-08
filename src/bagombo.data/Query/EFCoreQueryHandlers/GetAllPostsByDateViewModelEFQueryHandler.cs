@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetViewAllPostsByDateEFQueryHandler : IQueryHandlerAsync<GetViewAllPostsByDate, ViewAllPostsViewModel>
+  public class GetAllPostsByDateViewModelEFQueryHandler : IQueryHandlerAsync<GetAllPostsByDateViewModel, AllPostsViewModel>
   {
     BlogDbContext _context;
 
-    public GetViewAllPostsByDateEFQueryHandler(BlogDbContext context)
+    public GetAllPostsByDateViewModelEFQueryHandler(BlogDbContext context)
     {
       _context = context;
     }
 
-    public async Task<ViewAllPostsViewModel> HandleAsync(GetViewAllPostsByDate query)
+    public async Task<AllPostsViewModel> HandleAsync(GetAllPostsByDateViewModel query)
     {
-      return new ViewAllPostsViewModel()
+      return new AllPostsViewModel()
       {
         PostsByDate = await _context.BlogPosts
                                       .AsNoTracking()

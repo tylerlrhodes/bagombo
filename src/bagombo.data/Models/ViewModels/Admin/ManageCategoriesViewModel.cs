@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Models.ViewModels.Admin
 {
-  public class AdminManageCategoriesViewModel
+  public class ManageCategoriesViewModel
   {
     public IEnumerable<Category> Categories { get; set; }
   }

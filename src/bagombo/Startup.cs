@@ -99,7 +99,6 @@ namespace Bagombo
       {
         app.UseStatusCodePages();
         app.UseDeveloperExceptionPage();
-        app.UseBrowserLink();
       }
 
       app.UseIdentity();

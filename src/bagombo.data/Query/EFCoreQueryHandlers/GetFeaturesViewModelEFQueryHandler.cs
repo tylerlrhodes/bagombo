@@ -10,21 +10,21 @@ using System.Linq;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetViewFeaturesEFQueryHandler : IQueryHandlerAsync<GetViewFeatures, ViewFeaturesViewModel>
+  public class GetFeaturesViewModelEFQueryHandler : IQueryHandlerAsync<GetFeaturesViewModel, FeaturesViewModel>
   {
     BlogDbContext _context;
 
-    public GetViewFeaturesEFQueryHandler(BlogDbContext context)
+    public GetFeaturesViewModelEFQueryHandler(BlogDbContext context)
     {
       _context = context;
     }
 
-    public async Task<ViewFeaturesViewModel> HandleAsync(GetViewFeatures query)
+    public async Task<FeaturesViewModel> HandleAsync(GetFeaturesViewModel query)
     {
       // bug in EF Core that needs a bit more code here than otherwise
       // see: https://github.com/aspnet/EntityFramework/issues/7714
 
-      ViewFeaturesViewModel vfvm = new ViewFeaturesViewModel();
+      FeaturesViewModel vfvm = new FeaturesViewModel();
 
       // cant select new into a defined type so have to use anon type for the select new here due to EF Core bug
       // code after is a work-around
@@ -40,11 +40,11 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
                              select posts).AsNoTracking().Count()
               };
 
-      List<FeatureViewModel> featureList = new List<FeatureViewModel>();
+      List<FeatureWithBlogCountViewModel> featureList = new List<FeatureWithBlogCountViewModel>();
 
       foreach (var feature in await x.OrderByDescending(f => f.BlogCount).ToListAsync())
       {
-        FeatureViewModel fvm = new FeatureViewModel()
+        FeatureWithBlogCountViewModel fvm = new FeatureWithBlogCountViewModel()
         {
           BlogCount = feature.BlogCount,
           Title = feature.Title,

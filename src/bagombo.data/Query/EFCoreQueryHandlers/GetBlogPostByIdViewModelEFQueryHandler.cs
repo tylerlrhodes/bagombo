@@ -10,16 +10,16 @@ using Bagombo.EFCore;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetViewBlogPostByIdEFQueryHandler : IQueryHandlerAsync<GetViewBlogPostById, ViewBlogPostViewModel>
+  public class GetBlogPostByIdViewModelEFQueryHandler : IQueryHandlerAsync<GetBlogPostByIdViewModel, BlogPostViewModel>
   {
     BlogDbContext _context;
 
-    public GetViewBlogPostByIdEFQueryHandler(BlogDbContext context)
+    public GetBlogPostByIdViewModelEFQueryHandler(BlogDbContext context)
     {
       _context = context;
     }
 
-    public async Task<ViewBlogPostViewModel> HandleAsync(GetViewBlogPostById query)
+    public async Task<BlogPostViewModel> HandleAsync(GetBlogPostByIdViewModel query)
     {
       var post = await _context.BlogPosts
                           .AsNoTracking()
@@ -32,7 +32,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
       if (post == null)
         return null;
 
-      var bpvm = new ViewBlogPostViewModel()
+      var bpvm = new BlogPostViewModel()
       {
         Author = $"{post.Author.FirstName} {post.Author.LastName}",
         Title = post.Title,

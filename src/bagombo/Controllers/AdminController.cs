@@ -112,7 +112,7 @@ namespace Bagombo.Controllers
     [HttpGet]
     public async Task<IActionResult> ManageFeatures()
     {
-      AdminManageFeaturesViewModel amfvm = new AdminManageFeaturesViewModel();
+      ManageFeaturesViewModel amfvm = new ManageFeaturesViewModel();
       amfvm.Features = await _context.Features.AsNoTracking().ToListAsync();
       return View(amfvm);
     }
@@ -176,7 +176,7 @@ namespace Bagombo.Controllers
     [HttpGet]
     public async Task<IActionResult> ManageCategories()
     {
-      AdminManageCategoriesViewModel amcvm = new AdminManageCategoriesViewModel();
+      ManageCategoriesViewModel amcvm = new ManageCategoriesViewModel();
       amcvm.Categories = await _context.Categories.AsNoTracking().ToListAsync();
       return View(amcvm);
     }
@@ -193,7 +193,7 @@ namespace Bagombo.Controllers
     [HttpGet]
     public async Task<IActionResult> ManagePosts()
     {
-      AdminManagePostsViewModel mpvm = new AdminManagePostsViewModel();
+      ManagePostsViewModel mpvm = new ManagePostsViewModel();
       mpvm.posts = await _context.BlogPosts.AsNoTracking().Include(a => a.Author).ToListAsync();
       return View(mpvm);
     }
@@ -345,6 +345,8 @@ namespace Bagombo.Controllers
               return View(user);
             }
           }
+          // Add in code so you can fix the author's name
+          // To Do
         }
         // It's not an author
         else

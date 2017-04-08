@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetViewCategoryPostsByCategoryEFQueryHandler : IQueryHandlerAsync<GetViewCategoryPostsByCategory, ViewCategoryPostsViewModel>
+  public class GetCategoryPostsByCategoryViewModelEFQueryHandler : IQueryHandlerAsync<GetCategoryPostsByCategoryViewModel, CategoryPostsViewModel>
   {
     private BlogDbContext _context;
 
-    public GetViewCategoryPostsByCategoryEFQueryHandler(BlogDbContext context)
+    public GetCategoryPostsByCategoryViewModelEFQueryHandler(BlogDbContext context)
     {
       _context = context;
     }
 
-    public async Task<ViewCategoryPostsViewModel> HandleAsync(GetViewCategoryPostsByCategory query)
+    public async Task<CategoryPostsViewModel> HandleAsync(GetCategoryPostsByCategoryViewModel query)
     {
       var category = await _context.Categories.FindAsync(query.Id);
 
-      var vcpvm = new ViewCategoryPostsViewModel()
+      var vcpvm = new CategoryPostsViewModel()
       {
         Category = category,
         Posts = new List<BlogPost>()

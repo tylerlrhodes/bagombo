@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Models.ViewModels.Admin
 {
-  public class AdminManageFeaturesViewModel
+  public class ManageFeaturesViewModel
   {
     public IEnumerable<Feature> Features { get; set; }
   }

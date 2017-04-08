@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Models.ViewModels.Home
 {
-  public class ViewSearchResultsViewModel
+  public class SearchResultsViewModel
   {
     public string SearchTerm { get; set; }
-    public IEnumerable<ViewSearchResultBlogPostViewModel> BlogPosts { get; set; }
+    public IEnumerable<SearchResultBlogPostViewModel> BlogPosts { get; set; }
   }
-  public class ViewSearchResultBlogPostViewModel
+  public class SearchResultBlogPostViewModel
   {
     public BlogPost BlogPost { get; set; }
     public IEnumerable<Category> Categories { get; set; }
