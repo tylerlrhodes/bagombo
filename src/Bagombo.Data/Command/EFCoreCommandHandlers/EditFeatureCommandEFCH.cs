@@ -13,15 +13,15 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
 
     public async Task<CommandResult<EditFeatureCommand>> ExecuteAsync(EditFeatureCommand command)
     {
-      var f = await _context.Features.FindAsync(command.Id);
-
-      f.Title = command.NewTitle;
-      f.Description = command.NewDescription;
-
-      await _context.SaveChangesAsync();
-
       try
       {
+        var f = await _context.Features.FindAsync(command.Id);
+
+        f.Title = command.NewTitle;
+        f.Description = command.NewDescription;
+
+        await _context.SaveChangesAsync();
+
         return new CommandResult<EditFeatureCommand>(command, true);
       }
       catch (Exception)

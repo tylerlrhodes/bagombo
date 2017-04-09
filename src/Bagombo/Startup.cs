@@ -82,6 +82,9 @@ namespace Bagombo
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
     {
+      // This has to be called before Verify to avoid accessing a disposed object
+      // Due to it's lifestyle beings scoped when it is cross-wired
+      // Verify will dispose of scoped registrations after running
       BlogDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
       BlogDbContext.CreateAuthorRole(app.ApplicationServices).Wait();
 

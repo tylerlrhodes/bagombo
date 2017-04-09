@@ -10,6 +10,8 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
   {
     public static void AddEFCommands(this Container provider)
     {
+      provider.Register<ICommandHandlerAsync<AddCategoryCommand>, AddCategoryCommandEFCH>();
+      provider.Register<ICommandHandlerAsync<DeleteFeatureCommand>, DeleteFeatureCommandEFCH>();
       provider.Register<ICommandHandlerAsync<EditFeatureCommand>, EditFeatureCommandEFCH>();
       provider.Register<ICommandHandlerAsync<AddFeatureCommand>, AddFeatureCommandEFCommandHandler>();
 

@@ -88,15 +88,17 @@ namespace Bagombo.Controllers
     [HttpGet]
     public async Task<IActionResult> EditFeature(long id)
     {
-      var gfbivm = new GetFeatureByIdViewModelQuery()
+      var gfbivm = new GetFeatureByIdQuery()
       {
         Id = id
       };
 
-      var vm = await _qpa.ProcessAsync(gfbivm);
+      var f = await _qpa.ProcessAsync(gfbivm);
 
-      if (vm != null)
-        return View(vm);
+      if (f != null)
+      {
+        return View(new FeatureViewModel() { Id = f.Id, Title = f.Title, Description = f.Description } );
+      }
       else
         // need better exception and error handling
         return NotFound();
@@ -142,10 +144,21 @@ namespace Bagombo.Controllers
     [HttpPost]
     public async Task<IActionResult> DeleteFeature(long id)
     {
-      var feature = await _context.Features.FindAsync(id);
-      _context.Features.Remove(feature);
-      await _context.SaveChangesAsync();
-      return RedirectToAction("ManageFeatures");
+      var dfc = new DeleteFeatureCommand()
+      {
+        Id = id
+      };
+
+      var result = await _cp.ProcessAsync(dfc);
+
+      if (result.Succeeded)
+      {
+        return RedirectToAction("ManageFeatures"); 
+      }
+      else
+      {
+        return NotFound();
+      }
     }
     
     [HttpGet]
@@ -156,14 +169,22 @@ namespace Bagombo.Controllers
     {
       if (ModelState.IsValid)
       {
-        var c = new Category()
+        var acc = new AddCategoryCommand()
         {
           Name = model.Name,
           Description = model.Description
         };
-        _context.Categories.Add(c);
-        await _context.SaveChangesAsync();
-        return RedirectToAction("ManageCategories");
+
+        var result = await _cp.ProcessAsync(acc);
+
+        if (result.Succeeded)
+        {
+          return RedirectToAction("ManageCategories"); 
+        }
+        else
+        {
+          return NotFound();
+        }
       }
       return View(model);
     }
@@ -171,14 +192,21 @@ namespace Bagombo.Controllers
     [HttpGet]
     public async Task<IActionResult> EditCategory(long id)
     {
-      var c = await _context.Categories.FindAsync(id);
-      var vm = new CategoryViewModel()
+      var gcbiq = new GetCategoryByIdQuery()
       {
-        Name = c.Name,
-        Description = c.Description,
-        Id = c.Id
+        Id = id
       };
-      return View(vm);
+
+      var c = await _qpa.ProcessAsync(gcbiq);
+
+      if (c != null)
+      {
+        return View(new CategoryViewModel() { Id = c.Id, Name = c.Name, Description = c.Description }); 
+      }
+      else
+      {
+        return NotFound();
+      }
     }
 
     [HttpPost]
@@ -186,11 +214,23 @@ namespace Bagombo.Controllers
     {
       if (ModelState.IsValid)
       {
-        var c = await _context.Categories.FindAsync(model.Id);
-        c.Name = model.Name;
-        c.Description = model.Description;
-        await _context.SaveChangesAsync();
-        return RedirectToAction("ManageCategories");
+        var ecc = new EditCategoryCommand()
+        {
+          Id = model.Id,
+          NewName = model.Name,
+          NewDescription = model.Description
+        };
+
+        var result = await _cp.ProcessAsync(ecc);
+
+        if (result.Succeeded)
+        {
+          return RedirectToAction("ManageCategories"); 
+        }
+        else
+        {
+          return NotFound();
+        }
       }
       return View(model);
     }
