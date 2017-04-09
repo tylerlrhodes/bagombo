@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetFeaturesViewModelEFQH : IQueryHandlerAsync<GetFeaturesViewModel, FeaturesViewModel>
+  public class GetFeaturesViewModelEFQH : IQueryHandlerAsync<GetFeaturesViewModelQuery, FeaturesViewModel>
   {
     BlogDbContext _context;
 
@@ -19,7 +19,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
       _context = context;
     }
 
-    public async Task<FeaturesViewModel> HandleAsync(GetFeaturesViewModel query)
+    public async Task<FeaturesViewModel> HandleAsync(GetFeaturesViewModelQuery query)
     {
       // bug in EF Core that needs a bit more code here than otherwise
       // see: https://github.com/aspnet/EntityFramework/issues/7714

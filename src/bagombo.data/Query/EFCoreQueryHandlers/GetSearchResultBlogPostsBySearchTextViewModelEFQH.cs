@@ -11,7 +11,7 @@ using Bagombo.Data.Query.Queries;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetSearchResultBlogPostsBySearchTextViewModelEFQH : IQueryHandlerAsync<GetSearchResultBlogPostsBySearchTextViewModel, IList<SearchResultBlogPostViewModel>>
+  public class GetSearchResultBlogPostsBySearchTextViewModelEFQH : IQueryHandlerAsync<GetSearchResultBlogPostsBySearchTextViewModelQuery, IList<SearchResultBlogPostViewModel>>
   {
     BlogDbContext _context;
 
@@ -20,7 +20,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
       _context = context;
     }
 
-    public async Task<IList<SearchResultBlogPostViewModel>> HandleAsync(GetSearchResultBlogPostsBySearchTextViewModel query)
+    public async Task<IList<SearchResultBlogPostViewModel>> HandleAsync(GetSearchResultBlogPostsBySearchTextViewModelQuery query)
     {
       var posts = await _context.BlogPosts
                           .AsNoTracking()

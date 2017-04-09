@@ -7,7 +7,7 @@ using Bagombo.Models.ViewModels.Home;
 
 namespace Bagombo.Data.Query.Queries
 {
-  public class GetRecentBlogPosts : IQuery<IList<BlogPost>>
+  public class GetRecentBlogPostsQuery : IQuery<IList<BlogPost>>
   {
     public int NumberOfPostsToGet { get; set; }
   }

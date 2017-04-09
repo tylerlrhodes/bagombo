@@ -88,7 +88,7 @@ namespace Bagombo.Controllers
     [HttpGet]
     public async Task<IActionResult> EditFeature(long id)
     {
-      var gfbivm = new GetFeatureByIdViewModel()
+      var gfbivm = new GetFeatureByIdViewModelQuery()
       {
         Id = id
       };

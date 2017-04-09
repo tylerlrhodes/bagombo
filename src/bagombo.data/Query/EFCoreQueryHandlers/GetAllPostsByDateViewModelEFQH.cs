@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetAllPostsByDateViewModelEFQH : IQueryHandlerAsync<GetAllPostsByDateViewModel, AllPostsViewModel>
+  public class GetAllPostsByDateViewModelEFQH : IQueryHandlerAsync<GetAllPostsByDateViewModelQuery, AllPostsViewModel>
   {
     BlogDbContext _context;
 
@@ -19,7 +19,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
       _context = context;
     }
 
-    public async Task<AllPostsViewModel> HandleAsync(GetAllPostsByDateViewModel query)
+    public async Task<AllPostsViewModel> HandleAsync(GetAllPostsByDateViewModelQuery query)
     {
       return new AllPostsViewModel()
       {

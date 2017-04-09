@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  class GetFeaturePostsByFeatureViewModelEFQH : IQueryHandlerAsync<GetFeaturePostsByFeatureViewModel, FeaturePostsViewModel>
+  class GetFeaturePostsByFeatureViewModelEFQH : IQueryHandlerAsync<GetFeaturePostsByFeatureViewModelQuery, FeaturePostsViewModel>
   {
     BlogDbContext _context;
     
@@ -19,7 +19,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
       _context = context;
     }
 
-    public async Task<FeaturePostsViewModel> HandleAsync(GetFeaturePostsByFeatureViewModel query)
+    public async Task<FeaturePostsViewModel> HandleAsync(GetFeaturePostsByFeatureViewModelQuery query)
     {
 
       var feature = await _context.Features.FindAsync(query.Id);

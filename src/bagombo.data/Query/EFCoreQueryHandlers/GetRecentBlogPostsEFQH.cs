@@ -10,7 +10,7 @@ using Bagombo.Data.Query.Queries;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetRecentBlogPostsEFQH : IQueryHandlerAsync<GetRecentBlogPosts, IList<BlogPost>>
+  public class GetRecentBlogPostsEFQH : IQueryHandlerAsync<GetRecentBlogPostsQuery, IList<BlogPost>>
   {
     private BlogDbContext _context;
 
@@ -19,7 +19,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
       _context = context;
     }
 
-    public async Task<IList<BlogPost>> HandleAsync(GetRecentBlogPosts query)
+    public async Task<IList<BlogPost>> HandleAsync(GetRecentBlogPostsQuery query)
     {
       var recentPosts = await _context.BlogPosts
                                 .AsNoTracking()

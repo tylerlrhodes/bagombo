@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Bagombo.Data.Query.Queries
 {
-  public class GetAllPostsByCategoryViewModel : IQuery<AllPostsViewModel>
+  public class GetFeaturesViewModelQuery : IQuery<FeaturesViewModel>
   {
   }
 }

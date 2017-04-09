@@ -10,7 +10,7 @@ using Bagombo.EFCore;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetBlogPostByIdViewModelEFQH : IQueryHandlerAsync<GetBlogPostByIdViewModel, BlogPostViewModel>
+  public class GetBlogPostByIdViewModelEFQH : IQueryHandlerAsync<GetBlogPostByIdViewModelQuery, BlogPostViewModel>
   {
     BlogDbContext _context;
 
@@ -19,7 +19,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
       _context = context;
     }
 
-    public async Task<BlogPostViewModel> HandleAsync(GetBlogPostByIdViewModel query)
+    public async Task<BlogPostViewModel> HandleAsync(GetBlogPostByIdViewModelQuery query)
     {
       var post = await _context.BlogPosts
                           .AsNoTracking()

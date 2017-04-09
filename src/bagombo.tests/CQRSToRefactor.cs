@@ -25,7 +25,7 @@ namespace Bagombo.tests
 
       container.Register<BlogDbContext>(() => { return new BlogDbContext(new DbContextOptionsBuilder<BlogDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options); }, Lifestyle.Scoped);
 
-      container.Register<IQueryHandlerAsync<GetRecentBlogPosts, IList<BlogPost>>, GetRecentBlogPostsEFQH>();
+      container.Register<IQueryHandlerAsync<GetRecentBlogPostsQuery, IList<BlogPost>>, GetRecentBlogPostsEFQH>();
 
       container.Verify();
 
@@ -37,7 +37,7 @@ namespace Bagombo.tests
 
         QueryProcessorAsync qpa = new QueryProcessorAsync(container);
 
-        GetRecentBlogPosts grbp = new GetRecentBlogPosts()
+        GetRecentBlogPostsQuery grbp = new GetRecentBlogPostsQuery()
         {
           NumberOfPostsToGet = 2
         };
