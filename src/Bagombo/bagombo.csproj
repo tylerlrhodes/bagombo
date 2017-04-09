@@ -5,10 +5,15 @@
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <AssemblyName>Bagombo</AssemblyName>
     <OutputType>Exe</OutputType>
-    <PackageId>blog</PackageId>
+    <PackageId>Bagombo</PackageId>
     <UserSecretsId>blog-secrets-1</UserSecretsId>
     <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
+    <Version>0.2.2</Version>
+    <Authors>Tyler Rhodes</Authors>
+    <Company>Linterop Systems Inc.</Company>
+    <Product>Bagombo Blogging Engine</Product>
+    <Description>A Simple blog engine</Description>
   </PropertyGroup>
 
   <ItemGroup>
