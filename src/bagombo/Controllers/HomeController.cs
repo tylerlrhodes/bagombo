@@ -47,7 +47,7 @@ namespace Bagombo.Controllers
 
       GetSearchResultBlogPostsBySearchTextViewModel gbpbst = new GetSearchResultBlogPostsBySearchTextViewModel()
       {
-        searchText = search
+        SearchText = search
       };
 
       var bps = await _qpa.ProcessAsync(gbpbst);

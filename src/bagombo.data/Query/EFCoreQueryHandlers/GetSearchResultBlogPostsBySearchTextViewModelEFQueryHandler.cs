@@ -24,7 +24,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
     {
       var posts = await _context.BlogPosts
                           .AsNoTracking()
-                          .FromSql("SELECT * from [dbo].[BlogPost] WHERE Contains((Content, Description, Title), {0})", query.searchText)
+                          .FromSql("SELECT * from [dbo].[BlogPost] WHERE Contains((Content, Description, Title), {0})", query.SearchText)
                           .Where(bp => bp.Public == true && bp.PublishOn < DateTime.Now)
                           .OrderByDescending(bp => bp.ModifiedAt)
                           .ThenByDescending(bp => bp.PublishOn)

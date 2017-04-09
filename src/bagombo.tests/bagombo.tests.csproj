@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\bagombo.data\bagombo.data.csproj" />
-    <ProjectReference Include="..\bagombo\bagombo.csproj" />
+    <ProjectReference Include="..\bagombo.data\Bagombo.Data.csproj" />
+    <ProjectReference Include="..\bagombo\Bagombo.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,7 +8,7 @@ namespace Bagombo.Data.Query.Queries
 
   public class GetSearchResultBlogPostsBySearchTextViewModel : IQuery<IList<SearchResultBlogPostViewModel>>
   {
-    public string searchText { get; set; }
+    public string SearchText { get; set; }
   }
 
 }

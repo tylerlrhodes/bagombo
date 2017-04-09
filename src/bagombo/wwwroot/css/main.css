@@ -33,7 +33,3 @@ ul.nostyle, ul.nostyle > li {
 .label {
     margin: 2px;
 }
-
-pre {
-  tab-size: 4;
-}

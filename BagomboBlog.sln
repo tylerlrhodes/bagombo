@@ -12,11 +12,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{0059
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bagombo.tests", "src\bagombo.tests\bagombo.tests.csproj", "{6D8EC146-AEFA-4B70-9EDE-32D0AC651D77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bagombo.Tests", "src\bagombo.tests\Bagombo.Tests.csproj", "{6D8EC146-AEFA-4B70-9EDE-32D0AC651D77}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bagombo.data", "src\bagombo.data\bagombo.data.csproj", "{1CCDF61E-2873-4BAD-ABB0-E38E3180F318}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bagombo.Data", "src\bagombo.data\Bagombo.Data.csproj", "{1CCDF61E-2873-4BAD-ABB0-E38E3180F318}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bagombo", "src\bagombo\bagombo.csproj", "{BD6F01B2-AE79-45A6-8484-29A979D7D492}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bagombo", "src\bagombo\Bagombo.csproj", "{BD6F01B2-AE79-45A6-8484-29A979D7D492}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

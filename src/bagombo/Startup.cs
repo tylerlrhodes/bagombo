@@ -82,7 +82,6 @@ namespace Bagombo
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
     {
-
       BlogDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
       BlogDbContext.CreateAuthorRole(app.ApplicationServices).Wait();
 
@@ -133,7 +132,11 @@ namespace Bagombo
 
     private void InitializeContainer(IApplicationBuilder app)
     {
+
+
       _container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+
+
 
       // Add application presentation components:
       _container.RegisterMvcControllers(app);
@@ -141,6 +144,7 @@ namespace Bagombo
 
       // Cross-wire ASP.NET services (if any). For instance:
       _container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());
+
 
       _container.Register<BlogDbContext>(GetAspNetServiceProvider<BlogDbContext>(app), Lifestyle.Scoped);
       _container.Register<UserManager<ApplicationUser>>(GetAspNetServiceProvider<UserManager<ApplicationUser>>(app), Lifestyle.Scoped);
@@ -152,6 +156,7 @@ namespace Bagombo
 
       _container.AddEFQueries();
       _container.AddEFCommands();
+
       // NOTE: Do prevent cross-wired instances as much as possible.
       // See: https://simpleinjector.org/blog/2016/07/
     }

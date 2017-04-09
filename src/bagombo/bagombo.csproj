@@ -67,7 +67,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\bagombo.data\bagombo.data.csproj" />
+    <ProjectReference Include="..\bagombo.data\Bagombo.Data.csproj" />
   </ItemGroup>
 
 </Project>
