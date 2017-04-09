@@ -132,9 +132,11 @@ namespace Bagombo.Controllers
     [HttpGet]
     public async Task<IActionResult> ManageFeatures()
     {
-      ManageFeaturesViewModel amfvm = new ManageFeaturesViewModel();
-      amfvm.Features = await _context.Features.AsNoTracking().ToListAsync();
-      return View(amfvm);
+      var gmfvmq = new GetManageFeaturesViewModelQuery();
+
+      var mfvm = await _qpa.ProcessAsync(gmfvmq);
+
+      return View(mfvm);
     }
 
     [HttpPost]
