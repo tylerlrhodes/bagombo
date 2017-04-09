@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Bagombo.Data.Query.Queries
 {
-  public class GetFeatureViewModel : IQuery<FeatureViewModel>
+  public class GetFeatureByIdViewModel : IQuery<FeatureViewModel>
   {
+    public long Id { get; set; }
   }
 }

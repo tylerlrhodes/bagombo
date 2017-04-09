@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PreserveCompilationContext>true</PreserveCompilationContext>
-    <AssemblyName>blog</AssemblyName>
+    <AssemblyName>Bagombo</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>blog</PackageId>
     <UserSecretsId>blog-secrets-1</UserSecretsId>

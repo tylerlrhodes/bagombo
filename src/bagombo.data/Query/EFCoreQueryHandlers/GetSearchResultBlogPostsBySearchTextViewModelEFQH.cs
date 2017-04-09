@@ -11,11 +11,11 @@ using Bagombo.Data.Query.Queries;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetSearchResultBlogPostsBySearchTextViewModelEFQueryHandler : IQueryHandlerAsync<GetSearchResultBlogPostsBySearchTextViewModel, IList<SearchResultBlogPostViewModel>>
+  public class GetSearchResultBlogPostsBySearchTextViewModelEFQH : IQueryHandlerAsync<GetSearchResultBlogPostsBySearchTextViewModel, IList<SearchResultBlogPostViewModel>>
   {
     BlogDbContext _context;
 
-    public GetSearchResultBlogPostsBySearchTextViewModelEFQueryHandler(BlogDbContext context)
+    public GetSearchResultBlogPostsBySearchTextViewModelEFQH(BlogDbContext context)
     {
       _context = context;
     }

@@ -21,6 +21,7 @@ namespace Bagombo.Controllers
   public class AdminController : Controller
   {
     private ICommandProcessor _cp;
+    private IQueryProcessorAsync _qpa;
     BlogDbContext _context;
     UserManager<ApplicationUser> _userManager;
     SignInManager<ApplicationUser> _signInManager;
@@ -29,6 +30,7 @@ namespace Bagombo.Controllers
     IPasswordValidator<ApplicationUser> _passwordValidator;
 
     public AdminController(ICommandProcessor cp,
+                           IQueryProcessorAsync qpa,
                            BlogDbContext context,
                            UserManager<ApplicationUser> userManager,
                            SignInManager<ApplicationUser> signInManager,
@@ -37,6 +39,7 @@ namespace Bagombo.Controllers
                            IUserValidator<ApplicationUser> userValidator)
     {
       _cp = cp;
+      _qpa = qpa;
       _context = context;
       _userManager = userManager;
       _signInManager = signInManager;
@@ -85,14 +88,18 @@ namespace Bagombo.Controllers
     [HttpGet]
     public async Task<IActionResult> EditFeature(long id)
     {
-      var f = await _context.Features.FindAsync(id);
-      var vm = new FeatureViewModel()
+      var gfbivm = new GetFeatureByIdViewModel()
       {
-        Id = f.Id,
-        Title = f.Title,
-        Description = f.Description
+        Id = id
       };
-      return View(vm);
+
+      var vm = await _qpa.ProcessAsync(gfbivm);
+
+      if (vm != null)
+        return View(vm);
+      else
+        // need better exception and error handling
+        return NotFound();
     }
 
     [HttpPost]
@@ -100,11 +107,24 @@ namespace Bagombo.Controllers
     {
       if (ModelState.IsValid)
       {
-        var f = await _context.Features.FindAsync(model.Id);
-        f.Title = model.Title;
-        f.Description = model.Description;
-        await _context.SaveChangesAsync();
-        return RedirectToAction("ManageFeatures");
+        var efc = new EditFeatureCommand()
+        {
+          Id = model.Id,
+          NewTitle = model.Title,
+          NewDescription = model.Description
+        };
+
+        var result = await _cp.ProcessAsync(efc);
+
+        if (result.Succeeded)
+        {
+          return RedirectToAction("ManageFeatures");
+        }
+        else
+        {
+          // To Do - Better Error handling
+          return NotFound();
+        }
       }
       return View(model);
     }

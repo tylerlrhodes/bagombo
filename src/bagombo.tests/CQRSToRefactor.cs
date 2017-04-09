@@ -25,7 +25,7 @@ namespace Bagombo.tests
 
       container.Register<BlogDbContext>(() => { return new BlogDbContext(new DbContextOptionsBuilder<BlogDbContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options); }, Lifestyle.Scoped);
 
-      container.Register<IQueryHandlerAsync<GetRecentBlogPosts, IList<BlogPost>>, GetRecentBlogPostsEFQueryHandler>();
+      container.Register<IQueryHandlerAsync<GetRecentBlogPosts, IList<BlogPost>>, GetRecentBlogPostsEFQH>();
 
       container.Verify();
 

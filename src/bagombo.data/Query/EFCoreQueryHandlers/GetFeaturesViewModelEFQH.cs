@@ -10,11 +10,11 @@ using System.Linq;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetFeaturesViewModelEFQueryHandler : IQueryHandlerAsync<GetFeaturesViewModel, FeaturesViewModel>
+  public class GetFeaturesViewModelEFQH : IQueryHandlerAsync<GetFeaturesViewModel, FeaturesViewModel>
   {
     BlogDbContext _context;
 
-    public GetFeaturesViewModelEFQueryHandler(BlogDbContext context)
+    public GetFeaturesViewModelEFQH(BlogDbContext context)
     {
       _context = context;
     }
