@@ -238,18 +238,31 @@ namespace Bagombo.Controllers
     [HttpGet]
     public async Task<IActionResult> ManageCategories()
     {
-      ManageCategoriesViewModel amcvm = new ManageCategoriesViewModel();
-      amcvm.Categories = await _context.Categories.AsNoTracking().ToListAsync();
+      var gmcvmq = new GetManageCategoriesViewModelQuery();
+
+      var amcvm = await _qpa.ProcessAsync(gmcvmq);
+
       return View(amcvm);
     }
 
     [HttpPost]
     public async Task<IActionResult> DeleteCategory(long id)
     {
-      var c = await _context.Categories.FindAsync(id);
-      _context.Categories.Remove(c);
-      await _context.SaveChangesAsync();
-      return RedirectToAction("ManageCategories");
+      var dcc = new DeleteCategoryCommand()
+      {
+        Id = id
+      };
+
+      var result = await _cp.ProcessAsync(dcc);
+
+      if (result.Succeeded)
+      {
+        return RedirectToAction("ManageCategories"); 
+      }
+      else
+      {
+        return NotFound();
+      }
     }
 
     [HttpGet]
