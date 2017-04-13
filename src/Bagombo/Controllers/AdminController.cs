@@ -268,14 +268,31 @@ namespace Bagombo.Controllers
     [HttpGet]
     public async Task<IActionResult> ManagePosts()
     {
-      ManagePostsViewModel mpvm = new ManagePostsViewModel();
-      mpvm.posts = await _context.BlogPosts.AsNoTracking().Include(a => a.Author).ToListAsync();
+      var gmpvmq = new GetManagePostsViewModelQuery();
+
+      var mpvm = await _qpa.ProcessAsync(gmpvmq);
+
       return View(mpvm);
     }
 
     public async Task<IActionResult> ManageUsers()
     {
-      return View(await _userManager.Users.AsNoTracking().Include(u => u.Logins).Include(u => u.Author).ToListAsync());
+      // This was previously done all through EF Core, just including the author in the below query
+      // However, in an effort to decouple the application classes from Framework classes
+      // it has been seperated into two queries
+      var users = await _userManager.Users.AsNoTracking().Include(u => u.Logins).ToListAsync();
+
+      var authors = await _qpa.ProcessAsync(new GetAuthorsDictionaryKeyAppUserIdQuery());
+
+      foreach(var user in users)
+      {
+        if (authors.ContainsKey(user.Id))
+        {
+          user.Author = authors[user.Id];
+        }
+      }
+
+      return View(users);
     }
 
     public ViewResult CreateUser() => View();
@@ -303,23 +320,29 @@ namespace Bagombo.Controllers
             ModelState.AddModelError("", "First and last name required for authors.");
             return View(model);
           }
-          Author newAuthor = new Author
+          // create command to create author, don't use EF for Author related stuff in Controllers
+          // In an effort to decouple application from Framework
+          // user.Author = newAuthor;
+          var aac = new AddAuthorCommand()
           {
+            ApplicatoinUserId = user.Id,
             FirstName = model.FirstName,
             LastName = model.LastName
           };
-          user.Author = newAuthor;
+
+          var aacResult = await _cp.ProcessAsync(aac);
+
+          if (aacResult.Succeeded)
+          {
+            user.Author = aacResult.Command.Author;
+          }
         }
         IdentityResult result = await _userManager.CreateAsync(user, model.Password);
         if (user.Author != null)
         {
           await _userManager.AddToRoleAsync(user, "Authors");
         }
-        if (result.Succeeded && model.IsAuthor == false)
-        {
-          return RedirectToAction("ManageUsers");
-        }
-        if (result.Succeeded && model.IsAuthor == true)
+        if (result.Succeeded)
         {
           return RedirectToAction("ManageUsers");
         }
@@ -341,6 +364,21 @@ namespace Bagombo.Controllers
       ApplicationUser user = await _userManager.FindByIdAsync(id);
       if (user != null)
       {
+        // This set's the corresponding author to null if there is one
+        // need to remove the EF Core mapping and handle the relationship manually
+
+        // check if the user is an author
+
+        if (await _qpa.ProcessAsync(new GetIsUserAnAuthorQuery { Id = user.Id }))
+        {
+          var commandResult = await _cp.ProcessAsync(new SetAppUserIdNullForAuthorCommand { Id = user.Id });
+
+          if (!commandResult.Succeeded)
+          {
+            // need better error handling ....
+            return NotFound();
+          }
+        }
         IdentityResult result = await _userManager.DeleteAsync(user);
         if (result.Succeeded)
         {
@@ -387,26 +425,26 @@ namespace Bagombo.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> EditUser(UserViewModel user)
+    public async Task<IActionResult> EditUser(UserViewModel model)
     {
       if (ModelState.IsValid)
       {
         //Get some info on the user
-        ApplicationUser au = _userManager.Users.Where(u => u.Id == user.Id).Include(u => u.Author).FirstOrDefault();
+        ApplicationUser au = _userManager.Users.Where(u => u.Id == model.Id).Include(u => u.Author).FirstOrDefault();
         // Make the user an author if it's not already, no author fields can be "updated right now"
-        if (user.IsAuthor == true)
+        if (model.IsAuthor == true)
         {
-          if (String.IsNullOrEmpty(user.FirstName) || String.IsNullOrEmpty(user.LastName))
+          if (String.IsNullOrEmpty(model.FirstName) || String.IsNullOrEmpty(model.LastName))
           {
             ModelState.AddModelError("", "Author requires both first and last name to be set.");
-            return View(user);
+            return View(model);
           }
           if (au.Author == null)
           {
             Author author = new Author
             {
-              FirstName = user.FirstName,
-              LastName = user.LastName
+              FirstName = model.FirstName,
+              LastName = model.LastName
             };
             au.Author = author;
             try
@@ -417,7 +455,7 @@ namespace Bagombo.Controllers
             {
               // how to handle non unique entry to Author ....
               ModelState.AddModelError("", "Error making the user an author, perhaps first and last name are not unique in database");
-              return View(user);
+              return View(model);
             }
           }
           // Add in code so you can fix the author's name
@@ -439,15 +477,15 @@ namespace Bagombo.Controllers
           // Logic goes like this:
           // Validate user with new email and username
           // If it has an external login, just change the stuff and update the user assuming it passes validation
-          au.Email = user.Email;
-          au.UserName = user.UserName;
+          au.Email = model.Email;
+          au.UserName = model.UserName;
           IdentityResult validUser = await _userValidator.ValidateAsync(_userManager, au);
           if (!validUser.Succeeded)
           {
             foreach (var error in validUser.Errors)
             {
               ModelState.AddModelError("", error.Description);
-              return View(user);
+              return View(model);
             }
           }
           var logins = await _userManager.GetLoginsAsync(au);
@@ -471,12 +509,12 @@ namespace Bagombo.Controllers
           else
           {
             // If the password string isn't empty and they want to change the password
-            if (!string.IsNullOrEmpty(user.Password) && user.ChangePassword == true)
+            if (!string.IsNullOrEmpty(model.Password) && model.ChangePassword == true)
             {
-              IdentityResult validPassword = await _passwordValidator.ValidateAsync(_userManager, au, user.Password);
+              IdentityResult validPassword = await _passwordValidator.ValidateAsync(_userManager, au, model.Password);
               if (validPassword.Succeeded)
               {
-                au.PasswordHash = _passwordHasher.HashPassword(au, user.Password);
+                au.PasswordHash = _passwordHasher.HashPassword(au, model.Password);
                 IdentityResult securityStampUpdate = await _userManager.UpdateSecurityStampAsync(au);
                 if (securityStampUpdate.Succeeded)
                 {
@@ -514,7 +552,7 @@ namespace Bagombo.Controllers
               }
             }
             // Can't change the password and have no password there!
-            else if (string.IsNullOrEmpty(user.Password) && user.ChangePassword == true)
+            else if (string.IsNullOrEmpty(model.Password) && model.ChangePassword == true)
             {
               ModelState.AddModelError("", "Password can't be empty");
             }
@@ -542,7 +580,7 @@ namespace Bagombo.Controllers
           // end if au == null
         }
       }
-      return View(user);
+      return View(model);
     }
 
   }
