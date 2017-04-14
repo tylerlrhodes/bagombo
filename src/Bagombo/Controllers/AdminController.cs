@@ -400,12 +400,18 @@ namespace Bagombo.Controllers
       return View("ManageUsers", _userManager.Users);
     }
 
-    public IActionResult EditUser(string id)
+    public async Task<IActionResult> EditUser(string id)
     {
-      ApplicationUser user = _userManager.Users.AsNoTracking().Where(u => u.Id == id).Include(u => u.Author).Include(u => u.Logins).FirstOrDefault();
+      ApplicationUser user = _userManager.Users.AsNoTracking().Where(u => u.Id == id).Include(u => u.Logins).FirstOrDefault();
 
       if (user != null)
       {
+        var author = await _qpa.ProcessAsync(new GetAuthorByAppUserIdQuery { Id = user.Id });
+
+        if (author != null)
+        {
+          user.Author = author;
+        }
 
         return View(new UserViewModel
         {
