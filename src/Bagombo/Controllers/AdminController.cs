@@ -371,6 +371,7 @@ namespace Bagombo.Controllers
 
         if (await _qpa.ProcessAsync(new GetIsUserAnAuthorQuery { Id = user.Id }))
         {
+          // set its App User Id field to null
           var commandResult = await _cp.ProcessAsync(new SetAppUserIdNullForAuthorCommand { Id = user.Id });
 
           if (!commandResult.Succeeded)
@@ -405,6 +406,7 @@ namespace Bagombo.Controllers
 
       if (user != null)
       {
+
         return View(new UserViewModel
         {
           Id = user.Id,
