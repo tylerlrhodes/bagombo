@@ -34,7 +34,7 @@ namespace Bagombo.EFCore
       // For example, you can rename the ASP.NET Identity table names and more.
       // Add your customizations after calling base.OnModelCreating(builder);
       builder.Entity<Author>().ToTable("Author");
-      builder.Entity<Author>().HasAlternateKey(e => new { e.FirstName, e.LastName });
+      //builder.Entity<Author>().HasAlternateKey(e => new { e.FirstName, e.LastName });
       builder.Entity<Author>().HasOne(e => e.ApplicationUser)
                               .WithOne(au => au.Author)
                               .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.SetNull);
@@ -46,7 +46,7 @@ namespace Bagombo.EFCore
 
 
       builder.Entity<Author>().HasIndex(a => a.ApplicationUserId)
-                              .IsUnique(false);
+                              .IsUnique(false); 
 
       builder.Entity<Author>().HasMany(a => a.BlogPosts)
                               .WithOne(bp => bp.Author)

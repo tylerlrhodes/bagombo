@@ -15,8 +15,10 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
 
     public async Task<ManageFeaturesViewModel> HandleAsync(GetManageFeaturesViewModelQuery query)
     {
-      ManageFeaturesViewModel mfvm = new ManageFeaturesViewModel();
-      mfvm.Features = await _context.Features.AsNoTracking().ToListAsync();
+      ManageFeaturesViewModel mfvm = new ManageFeaturesViewModel()
+      {
+        Features = await _context.Features.AsNoTracking().ToListAsync()
+      };
       return mfvm;
     }
   }

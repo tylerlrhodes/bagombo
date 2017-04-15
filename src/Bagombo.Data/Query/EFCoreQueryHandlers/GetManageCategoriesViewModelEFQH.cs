@@ -17,10 +17,10 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
 
     public async Task<ManageCategoriesViewModel> HandleAsync(GetManageCategoriesViewModelQuery query)
     {
-      ManageCategoriesViewModel amcvm = new ManageCategoriesViewModel();
-
-      amcvm.Categories = await _context.Categories.AsNoTracking().ToListAsync();
-
+      ManageCategoriesViewModel amcvm = new ManageCategoriesViewModel()
+      {
+        Categories = await _context.Categories.AsNoTracking().ToListAsync()
+      };
       return amcvm;
     }
   }

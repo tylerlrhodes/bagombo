@@ -12,7 +12,9 @@ namespace Bagombo.Models
     public long Id { get; set; }
     public string ApplicationUserId { get; set; }
     public ApplicationUser ApplicationUser { get; set; }
+    [Required]
     public string FirstName { get; set; }
+    [Required]
     public string LastName { get; set; }
     public string Biography { get; set; }
     public virtual ICollection<BlogPost> BlogPosts { get; set; }

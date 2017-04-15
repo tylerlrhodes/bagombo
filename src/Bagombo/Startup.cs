@@ -157,6 +157,14 @@ namespace Bagombo
       _container.Register<IPasswordValidator<ApplicationUser>>(GetAspNetServiceProvider<IPasswordValidator<ApplicationUser>>(app), Lifestyle.Scoped);
       _container.Register<IUserValidator<ApplicationUser>>(GetAspNetServiceProvider<IUserValidator<ApplicationUser>>(app), Lifestyle.Scoped);
 
+      //_container.Register<BlogDbContext>(app.GetRequestService<BlogDbContext>, Lifestyle.Scoped);
+      //_container.Register<UserManager<ApplicationUser>>(app.GetRequestService<UserManager<ApplicationUser>>, Lifestyle.Scoped);
+      //_container.Register<RoleManager<IdentityRole>>(app.GetRequestService<RoleManager<IdentityRole>>, Lifestyle.Scoped);
+      //_container.Register<SignInManager<ApplicationUser>>(app.GetRequestService<SignInManager<ApplicationUser>>, Lifestyle.Scoped);
+      //_container.Register<IPasswordHasher<ApplicationUser>>(app.GetRequestService<IPasswordHasher<ApplicationUser>>, Lifestyle.Scoped);
+      //_container.Register<IPasswordValidator<ApplicationUser>>(app.GetRequestService<IPasswordValidator<ApplicationUser>>, Lifestyle.Scoped);
+      //_container.Register<IUserValidator<ApplicationUser>>(app.GetRequestService<IUserValidator<ApplicationUser>>, Lifestyle.Scoped);
+
       _container.AddEFQueries();
       _container.AddEFCommands();
 

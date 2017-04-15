@@ -22,7 +22,6 @@ namespace Bagombo.Controllers
   {
     private ICommandProcessor _cp;
     private IQueryProcessorAsync _qpa;
-    BlogDbContext _context;
     UserManager<ApplicationUser> _userManager;
     SignInManager<ApplicationUser> _signInManager;
     IPasswordHasher<ApplicationUser> _passwordHasher;
@@ -31,7 +30,6 @@ namespace Bagombo.Controllers
 
     public AdminController(ICommandProcessor cp,
                            IQueryProcessorAsync qpa,
-                           BlogDbContext context,
                            UserManager<ApplicationUser> userManager,
                            SignInManager<ApplicationUser> signInManager,
                            IPasswordHasher<ApplicationUser> passwordHasher,
@@ -40,7 +38,6 @@ namespace Bagombo.Controllers
     {
       _cp = cp;
       _qpa = qpa;
-      _context = context;
       _userManager = userManager;
       _signInManager = signInManager;
       _passwordHasher = passwordHasher;
@@ -438,7 +435,15 @@ namespace Bagombo.Controllers
       if (ModelState.IsValid)
       {
         //Get some info on the user
-        ApplicationUser au = _userManager.Users.Where(u => u.Id == model.Id).Include(u => u.Author).FirstOrDefault();
+        ApplicationUser au = await _userManager.Users.Where(u => u.Id == model.Id).FirstOrDefaultAsync();
+
+        var author = await _qpa.ProcessAsync(new GetAuthorByAppUserIdQuery { Id = au.Id });
+
+        if (author != null)
+        {
+          au.Author = author;
+        }
+
         // Make the user an author if it's not already, no author fields can be "updated right now"
         if (model.IsAuthor == true)
         {
@@ -449,25 +454,54 @@ namespace Bagombo.Controllers
           }
           if (au.Author == null)
           {
-            Author author = new Author
+            //Author author = new Author
+            //{
+            //  FirstName = model.FirstName,
+            //  LastName = model.LastName
+            //};
+            //au.Author = author;
+
+            var aac = new AddAuthorCommand
             {
+              ApplicatoinUserId = model.Id,
               FirstName = model.FirstName,
               LastName = model.LastName
             };
-            au.Author = author;
-            try
+
+            var aacResult = await _cp.ProcessAsync(aac);
+
+            if (aacResult.Succeeded)
             {
               await _userManager.AddToRoleAsync(au, "Authors");
+              au.Author = aacResult.Command.Author;
             }
-            catch (Exception)
+            else
             {
-              // how to handle non unique entry to Author ....
               ModelState.AddModelError("", "Error making the user an author, perhaps first and last name are not unique in database");
               return View(model);
             }
           }
-          // Add in code so you can fix the author's name
-          // To Do
+          else
+          {
+            var uac = new UpdateAuthorCommand
+            {
+              Id = au.Author.Id,
+              NewFirstName = model.FirstName,
+              NewLastName = model.LastName
+            };
+
+            var uacResult = await _cp.ProcessAsync(uac);
+
+            if (uacResult.Succeeded)
+            {
+              // do nothing
+            }
+            else
+            {
+              ModelState.AddModelError("", "Error updating the author, perhaps the first and last name are not unique in the database");
+              return View(model); 
+            }
+          }
         }
         // It's not an author
         else
@@ -475,8 +509,25 @@ namespace Bagombo.Controllers
           if (au.Author != null)
           {
             // Remove it from authors if it was and remove the role
-            _context.Authors.Remove(au.Author);
-            await _userManager.RemoveFromRoleAsync(au, "Authors");
+            //_context.Authors.Remove(au.Author);
+
+            var sauidnfa = new SetAppUserIdNullForAuthorCommand
+            {
+              Id = au.Id
+            };
+
+            var sauidnfaResult = await _cp.ProcessAsync(sauidnfa);
+
+            if (sauidnfaResult.Succeeded)
+            {
+              await _userManager.RemoveFromRoleAsync(au, "Authors");
+            }
+            else
+            {
+              // Error
+              ModelState.AddModelError("", "Error removing author from user!");
+              return View(model);
+            }
           }
         }
         // The user should not be null!
