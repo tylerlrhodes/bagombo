@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Data.Command
 {
-  public class CommandProcessor : ICommandProcessor
+  public class CommandProcessor : ICommandProcessorAsync
   {
     private Container _provider;
 

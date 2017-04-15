@@ -18,7 +18,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
 
     public async Task<Author> HandleAsync(GetAuthorByAppUserIdQuery query)
     {
-      return await _context.Authors.AsNoTracking().Where(a => a.ApplicationUserId == query.Id).FirstOrDefaultAsync();
+      return await _context.Authors.Where(a => a.ApplicationUserId == query.Id).FirstOrDefaultAsync();
     }
   }
 }

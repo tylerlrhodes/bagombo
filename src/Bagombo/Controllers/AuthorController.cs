@@ -11,6 +11,10 @@ using Bagombo.Models;
 using Bagombo.Models.ViewModels.Author;
 using Bagombo.EFCore;
 using CommonMark;
+using Bagombo.Data.Query;
+using Bagombo.Data.Command;
+using Bagombo.Data.Query.Queries;
+using Bagombo.Data.Command.Commands;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,11 +23,18 @@ namespace Bagombo.Controllers
   [Authorize(Roles = "Authors")]
   public class AuthorController : Controller
   {
+    IQueryProcessorAsync _qpa;
+    ICommandProcessorAsync _cp;
     BlogDbContext _context;
     UserManager<ApplicationUser> _userManager;
 
-    public AuthorController(BlogDbContext context, UserManager<ApplicationUser> userManager)
+    public AuthorController(IQueryProcessorAsync qpa,
+                            ICommandProcessorAsync cp,
+                            BlogDbContext context, 
+                            UserManager<ApplicationUser> userManager)
     {
+      _qpa = qpa;
+      _cp = cp;
       _context = context;
       _userManager = userManager;
     }
@@ -40,18 +51,12 @@ namespace Bagombo.Controllers
 
       var curUser = await _userManager.GetUserAsync(User);
 
-      //var author = await (from u in _context.Users
-      //                    where u.Id == curUser.Id
-      //                    join a in _context.Authors on u.Id equals a.ApplicationUserId
-      //                    select a).FirstOrDefaultAsync();
+      var gbpbauid = new GetBlogPostsByAppUserIdQuery
+      {
+        AppUserId = curUser.Id
+      };
 
-      var author = await (from a in _context.Authors
-                          where a.ApplicationUserId == curUser.Id
-                          select a).FirstOrDefaultAsync();
-
-      var posts = await (from bp in _context.BlogPosts
-                         where bp.AuthorId == author.Id
-                         select bp).ToListAsync();
+      var posts = await _qpa.ProcessAsync(gbpbauid);
 
       ampvm.posts = posts;
 
@@ -71,16 +76,10 @@ namespace Bagombo.Controllers
       if (ModelState.IsValid)
       {
         var curUser = await _userManager.GetUserAsync(User);
-        //var author = await (from u in _userManager.Users
-        //                    where u.Id == curUser.Id
-        //                    join a in _context.Authors on u.Id equals a.ApplicationUserId
-        //                    select a).FirstOrDefaultAsync();
 
-        var author = await (from a in _context.Authors
-                            where a.ApplicationUserId == curUser.Id
-                            select a).FirstOrDefaultAsync();
+        var author = await _qpa.ProcessAsync(new GetAuthorByAppUserIdQuery { Id = curUser.Id });
 
-        BlogPost bp = new BlogPost
+        var abpc = new AddBlogPostCommand
         {
           Author = author,
           Title = model.Title,
@@ -91,17 +90,18 @@ namespace Bagombo.Controllers
           Public = false,
           PublishOn = DateTime.Now.AddDays(7)
         };
-        try
+
+        var result = await _cp.ProcessAsync(abpc);
+
+        if (result.Succeeded)
         {
-          _context.BlogPosts.Add(bp);
-          await _context.SaveChangesAsync();
+          return RedirectToAction("EditPost", new { id = result.Command.Id });
         }
-        catch (Exception)
+        else
         {
           ModelState.AddModelError("", "Error saving to database!");
           return View(model);
         }
-        return RedirectToAction("EditPost", new { id = bp.Id });
       }
       return View(model);
     }

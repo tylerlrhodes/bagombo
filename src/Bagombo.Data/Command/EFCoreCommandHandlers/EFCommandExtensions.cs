@@ -10,6 +10,7 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
   {
     public static void AddEFCommands(this Container provider)
     {
+      provider.Register<ICommandHandlerAsync<AddBlogPostCommand>, AddBlogPostCommandEFCH>();
       provider.Register<ICommandHandlerAsync<UpdateAuthorCommand>, UpdateAuthorCommandEFCH>();
       provider.Register<ICommandHandlerAsync<SetAppUserIdNullForAuthorCommand>, SetAppUserIdNullForAuthorEFCH>();
       provider.Register<ICommandHandlerAsync<AddAuthorCommand>, AddAuthorCommandEFCH>();
@@ -20,7 +21,7 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
       provider.Register<ICommandHandlerAsync<EditFeatureCommand>, EditFeatureCommandEFCH>();
       provider.Register<ICommandHandlerAsync<AddFeatureCommand>, AddFeatureCommandEFCommandHandler>();
 
-      provider.Register<ICommandProcessor, CommandProcessor>(Lifestyle.Scoped);
+      provider.Register<ICommandProcessorAsync, CommandProcessor>(Lifestyle.Scoped);
     }
   }
 }

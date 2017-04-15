@@ -20,7 +20,7 @@ namespace Bagombo.Controllers
   [Authorize(Roles = "Admins")]
   public class AdminController : Controller
   {
-    private ICommandProcessor _cp;
+    private ICommandProcessorAsync _cp;
     private IQueryProcessorAsync _qpa;
     UserManager<ApplicationUser> _userManager;
     SignInManager<ApplicationUser> _signInManager;
@@ -28,7 +28,7 @@ namespace Bagombo.Controllers
     IUserValidator<ApplicationUser> _userValidator;
     IPasswordValidator<ApplicationUser> _passwordValidator;
 
-    public AdminController(ICommandProcessor cp,
+    public AdminController(ICommandProcessorAsync cp,
                            IQueryProcessorAsync qpa,
                            UserManager<ApplicationUser> userManager,
                            SignInManager<ApplicationUser> signInManager,

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Data.Command
 {
-  public interface ICommandProcessor
+  public interface ICommandProcessorAsync
   {
     Task<CommandResult<TCommand>> ProcessAsync<TCommand>(TCommand command);
   }
