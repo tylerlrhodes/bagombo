@@ -125,7 +125,7 @@ namespace Bagombo.Controllers
 
       var postHasCategories = await _qpa.ProcessAsync(new GetCategoriesForBlogPostByIdQuery { Id = id });
 
-      foreach (var category in _context.Categories)
+      foreach (var category in await _qpa.ProcessAsync(new GetCategoriesQuery()))
       {
         var categoryCheckBox = new CategoriesCheckBox()
         {
@@ -144,7 +144,7 @@ namespace Bagombo.Controllers
 
       var postHasFeatures = await _qpa.ProcessAsync(new GetFeaturesForBlogPostByIdQuery { Id = id });
 
-      foreach (var feature in _context.Features)
+      foreach (var feature in await _qpa.ProcessAsync(new GetFeaturesQuery()))
       {
         var featureCheckBox = new FeaturesCheckBox()
         {
