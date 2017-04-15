@@ -109,7 +109,7 @@ namespace Bagombo.Controllers
     [HttpGet]
     public async Task<IActionResult> EditPost(long id)
     {
-      var post = await _context.BlogPosts.FindAsync(id);
+      var post = await _qpa.ProcessAsync(new GetBlogPostByIdQuery { Id = id });
 
       EditBlogPostViewModel ebpvm = new EditBlogPostViewModel
       {
@@ -123,10 +123,7 @@ namespace Bagombo.Controllers
         CategoriesList = new List<CategoriesCheckBox>()
       };
 
-      var postHasCategories = await (from bpc in _context.BlogPostCategory
-                                     where bpc.BlogPostId == id
-                                     join c in _context.Categories on bpc.CategoryId equals c.Id
-                                     select c).ToListAsync();
+      var postHasCategories = await _qpa.ProcessAsync(new GetCategoriesForBlogPostByIdQuery { Id = id });
 
       foreach (var category in _context.Categories)
       {
@@ -145,10 +142,7 @@ namespace Bagombo.Controllers
         ebpvm.CategoriesList.Add(categoryCheckBox);
       }
 
-      var postHasFeatures = await (from bpf in _context.BlogPostFeature
-                                   where bpf.BlogPostId == id
-                                   join f in _context.Features on bpf.FeatureId equals f.Id
-                                   select f).ToListAsync();
+      var postHasFeatures = await _qpa.ProcessAsync(new GetFeaturesForBlogPostByIdQuery { Id = id });
 
       foreach (var feature in _context.Features)
       {
