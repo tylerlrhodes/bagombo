@@ -65,9 +65,12 @@ namespace Bagombo
       services.AddDbContext<BlogDbContext>(options =>
                   options.UseSqlServer(ConnectionString));
 
+      services.AddDbContext<ApplicationDbContext>(options =>
+                 options.UseSqlServer(ConnectionString));
+
       services.AddIdentity<ApplicationUser, IdentityRole>(opts => {
         opts.User.RequireUniqueEmail = true;
-      }).AddEntityFrameworkStores<BlogDbContext>()
+      }).AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
 
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -150,6 +153,7 @@ namespace Bagombo
 
 
       _container.Register<BlogDbContext>(GetAspNetServiceProvider<BlogDbContext>(app), Lifestyle.Scoped);
+      _container.Register<ApplicationDbContext>(GetAspNetServiceProvider<ApplicationDbContext>(app), Lifestyle.Scoped);
       _container.Register<UserManager<ApplicationUser>>(GetAspNetServiceProvider<UserManager<ApplicationUser>>(app), Lifestyle.Scoped);
       _container.Register<RoleManager<IdentityRole>>(GetAspNetServiceProvider<RoleManager<IdentityRole>>(app), Lifestyle.Scoped);
       _container.Register<SignInManager<ApplicationUser>>(GetAspNetServiceProvider<SignInManager<ApplicationUser>>(app), Lifestyle.Scoped);

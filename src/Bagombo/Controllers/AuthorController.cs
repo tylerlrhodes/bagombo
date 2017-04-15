@@ -40,9 +40,13 @@ namespace Bagombo.Controllers
 
       var curUser = await _userManager.GetUserAsync(User);
 
-      var author = await (from u in _context.Users
-                          where u.Id == curUser.Id
-                          join a in _context.Authors on u.Id equals a.ApplicationUserId
+      //var author = await (from u in _context.Users
+      //                    where u.Id == curUser.Id
+      //                    join a in _context.Authors on u.Id equals a.ApplicationUserId
+      //                    select a).FirstOrDefaultAsync();
+
+      var author = await (from a in _context.Authors
+                          where a.ApplicationUserId == curUser.Id
                           select a).FirstOrDefaultAsync();
 
       var posts = await (from bp in _context.BlogPosts
@@ -67,9 +71,13 @@ namespace Bagombo.Controllers
       if (ModelState.IsValid)
       {
         var curUser = await _userManager.GetUserAsync(User);
-        var author = await (from u in _userManager.Users
-                            where u.Id == curUser.Id
-                            join a in _context.Authors on u.Id equals a.ApplicationUserId
+        //var author = await (from u in _userManager.Users
+        //                    where u.Id == curUser.Id
+        //                    join a in _context.Authors on u.Id equals a.ApplicationUserId
+        //                    select a).FirstOrDefaultAsync();
+
+        var author = await (from a in _context.Authors
+                            where a.ApplicationUserId == curUser.Id
                             select a).FirstOrDefaultAsync();
 
         BlogPost bp = new BlogPost
@@ -172,9 +180,13 @@ namespace Bagombo.Controllers
 
       var post = _context.BlogPosts.Where(bp => bp.Id == model.Id).Include(bp => bp.Author).FirstOrDefault();
       var curUser = await _userManager.GetUserAsync(User);
-      var author = await (from u in _userManager.Users
-                          where u.Id == curUser.Id
-                          join a in _context.Authors on u.Id equals a.ApplicationUserId
+      //var author = await (from u in _userManager.Users
+      //                    where u.Id == curUser.Id
+      //                    join a in _context.Authors on u.Id equals a.ApplicationUserId
+      //                    select a).FirstOrDefaultAsync();
+
+      var author = await (from a in _context.Authors
+                          where a.ApplicationUserId == curUser.Id
                           select a).FirstOrDefaultAsync();
 
       // An admin is taking ownership

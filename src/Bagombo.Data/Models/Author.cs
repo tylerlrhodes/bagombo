@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bagombo.Models
 {
@@ -11,6 +12,7 @@ namespace Bagombo.Models
   {
     public long Id { get; set; }
     public string ApplicationUserId { get; set; }
+    [NotMapped]
     public ApplicationUser ApplicationUser { get; set; }
     [Required]
     public string FirstName { get; set; }

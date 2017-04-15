@@ -3,21 +3,20 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Bagombo.EFCore;
+using Bagombo;
 
-namespace Bagombo.Migrations
+namespace bagombo.Migrations
 {
-    [DbContext(typeof(BlogDbContext))]
-    [Migration("20170401185120_test1")]
-    partial class test1
+    [DbContext(typeof(ApplicationDbContext))]
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("blog.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Bagombo.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -65,112 +64,6 @@ namespace Bagombo.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("blog.Models.Author", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ApplicationUserId");
-
-                    b.Property<string>("Biography");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired();
-
-                    b.Property<string>("LastName")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasAlternateKey("FirstName", "LastName");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("Author");
-                });
-
-            modelBuilder.Entity("blog.Models.BlogPost", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<long?>("AuthorId");
-
-                    b.Property<string>("Content");
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<string>("Description");
-
-                    b.Property<DateTime>("ModifiedAt");
-
-                    b.Property<bool>("Public");
-
-                    b.Property<DateTime>("PublishOn");
-
-                    b.Property<string>("Title");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.ToTable("BlogPost");
-                });
-
-            modelBuilder.Entity("blog.Models.BlogPostCategory", b =>
-                {
-                    b.Property<long>("BlogPostId");
-
-                    b.Property<long>("CategoryId");
-
-                    b.HasKey("BlogPostId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("BlogPostCategory");
-                });
-
-            modelBuilder.Entity("blog.Models.BlogPostFeature", b =>
-                {
-                    b.Property<long>("FeatureId");
-
-                    b.Property<long>("BlogPostId");
-
-                    b.HasKey("FeatureId", "BlogPostId");
-
-                    b.HasIndex("BlogPostId");
-
-                    b.ToTable("BlogPostFeature");
-                });
-
-            modelBuilder.Entity("blog.Models.Category", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("blog.Models.Feature", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Title");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Feature");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -280,48 +173,6 @@ namespace Bagombo.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("blog.Models.Author", b =>
-                {
-                    b.HasOne("blog.Models.ApplicationUser", "ApplicationUser")
-                        .WithOne("Author")
-                        .HasForeignKey("blog.Models.Author", "ApplicationUserId")
-                        .OnDelete(DeleteBehavior.SetNull);
-                });
-
-            modelBuilder.Entity("blog.Models.BlogPost", b =>
-                {
-                    b.HasOne("blog.Models.Author", "Author")
-                        .WithMany("BlogPosts")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.SetNull);
-                });
-
-            modelBuilder.Entity("blog.Models.BlogPostCategory", b =>
-                {
-                    b.HasOne("blog.Models.BlogPost", "BlogPost")
-                        .WithMany("BlogPostCategory")
-                        .HasForeignKey("BlogPostId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("blog.Models.Category", "Category")
-                        .WithMany("BlogPosts")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("blog.Models.BlogPostFeature", b =>
-                {
-                    b.HasOne("blog.Models.BlogPost", "BlogPost")
-                        .WithMany("BlogPostFeature")
-                        .HasForeignKey("BlogPostId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("blog.Models.Feature", "Feature")
-                        .WithMany("BlogPosts")
-                        .HasForeignKey("FeatureId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
@@ -332,7 +183,7 @@ namespace Bagombo.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("blog.Models.ApplicationUser")
+                    b.HasOne("Bagombo.Models.ApplicationUser")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -340,7 +191,7 @@ namespace Bagombo.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("blog.Models.ApplicationUser")
+                    b.HasOne("Bagombo.Models.ApplicationUser")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -353,7 +204,7 @@ namespace Bagombo.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("blog.Models.ApplicationUser")
+                    b.HasOne("Bagombo.Models.ApplicationUser")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

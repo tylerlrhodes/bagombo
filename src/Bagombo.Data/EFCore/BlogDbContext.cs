@@ -14,7 +14,7 @@ using Bagombo.Models;
 
 namespace Bagombo.EFCore
 {
-  public class BlogDbContext : IdentityDbContext<ApplicationUser>
+  public class BlogDbContext : DbContext
   {
     public DbSet<BlogPost> BlogPosts { get; set; }
     public DbSet<Author> Authors { get; set; }
@@ -35,18 +35,18 @@ namespace Bagombo.EFCore
       // Add your customizations after calling base.OnModelCreating(builder);
       builder.Entity<Author>().ToTable("Author");
       //builder.Entity<Author>().HasAlternateKey(e => new { e.FirstName, e.LastName });
-      builder.Entity<Author>().HasOne(e => e.ApplicationUser)
-                              .WithOne(au => au.Author)
-                              .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.SetNull);
-      //.OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.);
+      //builder.Entity<Author>().HasOne(e => e.ApplicationUser)
+      //                        .WithOne(au => au.Author)
+      //                        .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.SetNull);
+      ////.OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.);
 
-      builder.Entity<ApplicationUser>().HasOne(e => e.Author)
-                                       .WithOne(a => a.ApplicationUser)
-                                       .HasForeignKey<Author>(a => a.ApplicationUserId);
+      //builder.Entity<ApplicationUser>().HasOne(e => e.Author)
+      //                                 .WithOne(a => a.ApplicationUser)
+      //                                 .HasForeignKey<Author>(a => a.ApplicationUserId);
 
 
-      builder.Entity<Author>().HasIndex(a => a.ApplicationUserId)
-                              .IsUnique(false); 
+      //builder.Entity<Author>().HasIndex(a => a.ApplicationUserId)
+      //                        .IsUnique(false); 
 
       builder.Entity<Author>().HasMany(a => a.BlogPosts)
                               .WithOne(bp => bp.Author)
