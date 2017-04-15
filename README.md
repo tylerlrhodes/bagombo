@@ -5,6 +5,7 @@ Simple blogging software using ASP.NET Core MVC and Entity Framework Core
 See it in action at [www.bagombo.org](http://www.bagombo.org)
 
 ### 0.2.2 - In Progress
+* Seperate Identity from Data layer
 * Integrate Simple Injector for DI Container
 * Adding in CQRS and refactoring queries
 * Adding in Some Unit Tests
