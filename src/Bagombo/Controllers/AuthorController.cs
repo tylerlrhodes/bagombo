@@ -168,31 +168,46 @@ namespace Bagombo.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditPost(EditBlogPostViewModel model)
     {
-      //var post = await _context.BlogPosts.FindAsync(model.Id);
-
       // fix these queries, the query for author can select from the author table without the join
 
-      var post = _context.BlogPosts.Where(bp => bp.Id == model.Id).Include(bp => bp.Author).FirstOrDefault();
-      var curUser = await _userManager.GetUserAsync(User);
-      //var author = await (from u in _userManager.Users
-      //                    where u.Id == curUser.Id
-      //                    join a in _context.Authors on u.Id equals a.ApplicationUserId
-      //                    select a).FirstOrDefaultAsync();
+      var post = await _qpa.ProcessAsync(new GetBlogPostByIdQuery { Id = model.Id });
 
-      var author = await (from a in _context.Authors
-                          where a.ApplicationUserId == curUser.Id
-                          select a).FirstOrDefaultAsync();
+      var ubpc = new UpdateBlogPostCommand();
 
-      // An admin is taking ownership
       if (post.Author == null)
-        post.Author = author;
+      {
+        var curUser = await _userManager.GetUserAsync(User);
 
-      post.Title = model.Title;
-      post.Description = model.Description;
-      post.Content = model.Content;
-      post.ModifiedAt = DateTime.Now;
-      post.PublishOn = model.PublishOn;
-      post.Public = model.Public;
+        var author = await _qpa.ProcessAsync(new GetAuthorByAppUserIdQuery { Id = curUser.Id });
+
+        ubpc.NewAuthor = author;
+      }
+      else
+      { 
+        ubpc.NewAuthor = post.Author; // keep the same author
+      }
+
+      ubpc.Id = model.Id;
+      ubpc.NewTitle = model.Title;
+      ubpc.NewDescription = model.Description;
+      ubpc.NewContent = model.Content;
+      ubpc.LastModifiedAt = DateTime.Now;
+      ubpc.NewPublishOn = model.PublishOn;
+      ubpc.NewPublic = model.Public;
+
+      // update the post
+
+      var ubpcResult = await _cp.ProcessAsync(ubpc);
+
+      if (ubpcResult.Succeeded)
+      {
+        // do nothing
+      }
+      else
+      {
+        // an error
+        return NotFound();
+      }
 
       var bpfts = from bpf in _context.BlogPostFeature
                   where bpf.BlogPostId == post.Id

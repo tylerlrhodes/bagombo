@@ -83,9 +83,9 @@ namespace Bagombo.EFCore
 
     public static async Task CreateAuthorRole(IServiceProvider container)
     {
-      using (container.CreateScope())
+      using (var serviceScope = container.GetRequiredService<IServiceScopeFactory>().CreateScope())
       {
-        RoleManager<IdentityRole> roleManager = container.GetRequiredService<RoleManager<IdentityRole>>();
+        RoleManager<IdentityRole> roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
 
         if (await roleManager.FindByNameAsync("Authors") == null)
         {
@@ -99,10 +99,10 @@ namespace Bagombo.EFCore
     }
     public static async Task CreateAdminAccount(IServiceProvider container, IConfiguration configuration)
     {
-      using (container.CreateScope())
+      using (var serviceScope = container.GetRequiredService<IServiceScopeFactory>().CreateScope())
       {
-        UserManager<ApplicationUser> userManager = container.GetRequiredService<UserManager<ApplicationUser>>();
-        RoleManager<IdentityRole> roleManager = container.GetRequiredService<RoleManager<IdentityRole>>();
+        UserManager<ApplicationUser> userManager = serviceScope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
+        RoleManager<IdentityRole> roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
 
         string userName = configuration["Data:AdminUser:Name"];
         string email = configuration["Data:AdminUser:Email"];

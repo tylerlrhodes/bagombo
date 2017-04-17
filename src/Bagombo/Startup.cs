@@ -89,11 +89,12 @@ namespace Bagombo
       // Due to it's lifestyle beings scoped when it is cross-wired
       // Verify will dispose of scoped registrations after running
       BlogDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
-      BlogDbContext.CreateAuthorRole(app.ApplicationServices).Wait();
 
       InitializeContainer(app);
 
       _container.Verify();
+
+      BlogDbContext.CreateAuthorRole(app.ApplicationServices).Wait();
 
       loggerFactory.AddConsole();
       loggerFactory.AddFile("Logs/ts-{Date}.txt");
