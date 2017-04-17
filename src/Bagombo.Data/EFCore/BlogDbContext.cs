@@ -30,29 +30,12 @@ namespace Bagombo.EFCore
     protected override void OnModelCreating(ModelBuilder builder)
     {
       base.OnModelCreating(builder);
-      // Customize the ASP.NET Identity model and override the defaults if needed.
-      // For example, you can rename the ASP.NET Identity table names and more.
-      // Add your customizations after calling base.OnModelCreating(builder);
+
       builder.Entity<Author>().ToTable("Author");
-      //builder.Entity<Author>().HasAlternateKey(e => new { e.FirstName, e.LastName });
-      //builder.Entity<Author>().HasOne(e => e.ApplicationUser)
-      //                        .WithOne(au => au.Author)
-      //                        .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.SetNull);
-      ////.OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.);
-
-      //builder.Entity<ApplicationUser>().HasOne(e => e.Author)
-      //                                 .WithOne(a => a.ApplicationUser)
-      //                                 .HasForeignKey<Author>(a => a.ApplicationUserId);
-
-
-      //builder.Entity<Author>().HasIndex(a => a.ApplicationUserId)
-      //                        .IsUnique(false); 
-
       builder.Entity<Author>().HasMany(a => a.BlogPosts)
                               .WithOne(bp => bp.Author)
                               .IsRequired(false)
                               .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.SetNull);
-
 
       builder.Entity<BlogPost>().ToTable("BlogPost");
 
