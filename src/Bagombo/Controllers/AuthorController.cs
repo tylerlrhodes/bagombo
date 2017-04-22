@@ -25,17 +25,14 @@ namespace Bagombo.Controllers
   {
     IQueryProcessorAsync _qpa;
     ICommandProcessorAsync _cp;
-    BlogDbContext _context;
     UserManager<ApplicationUser> _userManager;
 
     public AuthorController(IQueryProcessorAsync qpa,
                             ICommandProcessorAsync cp,
-                            BlogDbContext context, 
                             UserManager<ApplicationUser> userManager)
     {
       _qpa = qpa;
       _cp = cp;
-      _context = context;
       _userManager = userManager;
     }
 
@@ -209,43 +206,41 @@ namespace Bagombo.Controllers
         return NotFound();
       }
 
-      var bpfts = from bpf in _context.BlogPostFeature
-                  where bpf.BlogPostId == post.Id
-                  select bpf;
-
-      _context.BlogPostFeature.RemoveRange(bpfts);
-
-      await _context.SaveChangesAsync();
+      List<long> featureIds = new List<long>();
 
       if (model.FeaturesList != null)
-      { 
+      {
         foreach (var feature in model.FeaturesList)
         {
           if (feature.IsSelected)
           {
-            //var f = await _context.Features.FindAsync(feature.FeatureId);
-            BlogPostFeature bpf = new BlogPostFeature()
-            {
-              //BlogPost = post,
-              BlogPostId = post.Id,
-              //Feature = f,
-              FeatureId = feature.FeatureId
-            };
-            _context.BlogPostFeature.Add(bpf);
+            featureIds.Add(feature.FeatureId);
           }
+        }
+
+        var addFeaturesResult = 
+          await _cp.ProcessAsync(new SetBlogPostFeaturesCommand
+          {
+            BlogPostId = post.Id,
+            FeatureIds = featureIds
+          });
+
+        if (addFeaturesResult.Succeeded)
+        {
+          // do nothing
+        }
+        else
+        {
+          // log the error
+          return NotFound();
         }
       }
       else
       {
         model.FeaturesList = new List<FeaturesCheckBox>();
       }
-      var bpcts = from bpc in _context.BlogPostCategory
-                  where bpc.BlogPostId == post.Id
-                  select bpc;
 
-      _context.BlogPostCategory.RemoveRange(bpcts);
-
-      await _context.SaveChangesAsync();
+      List<long> categoryIds = new List<long>();
 
       if (model.CategoriesList != null)
       {
@@ -253,17 +248,25 @@ namespace Bagombo.Controllers
         {
           if (category.IsSelected)
           {
-            //var cat = await _context.Categories.FindAsync(category.CategoryId);
-
-            BlogPostCategory bpc = new BlogPostCategory()
-            {
-              //BlogPost = post,
-              BlogPostId = post.Id,
-              //Category = cat,
-              CategoryId = category.CategoryId
-            };
-            _context.BlogPostCategory.Add(bpc);
+            categoryIds.Add(category.CategoryId);
           }
+        }
+
+        var addCategoriesResult =
+          await _cp.ProcessAsync(new SetBlogPostCategoriesCommand
+          {
+            BlogPostId = post.Id,
+            CategoryIds = categoryIds
+          });
+
+        if (addCategoriesResult.Succeeded)
+        {
+          // do nothing
+        }
+        else
+        {
+          // log the error
+          return NotFound();
         }
       }
       else
@@ -271,10 +274,6 @@ namespace Bagombo.Controllers
         model.CategoriesList = new List<CategoriesCheckBox>();
       }
 
-      await _context.SaveChangesAsync();
-
-      //return RedirectToAction("ManagePosts");
-      //return Redirect(Request.Headers["Referer"]);
       ViewData["SavedMessage"] = "Post saved.";
 
       return View(model);
