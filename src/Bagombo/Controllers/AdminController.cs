@@ -272,6 +272,26 @@ namespace Bagombo.Controllers
       return View(mpvm);
     }
 
+    [HttpPost("{id}")]
+    public async Task<IActionResult> DeletePost(long id)
+    {
+      var deletePostResult =
+        await _cp.ProcessAsync(new DeleteBlogPostCommand
+        {
+          Id = id
+        });
+
+      if (deletePostResult.Succeeded)
+      {
+        return RedirectToAction("ManagePosts");
+      }
+      else
+      {
+        // log error
+        return NotFound();
+      }
+    }
+
     public async Task<IActionResult> ManageUsers()
     {
       // This was previously done all through EF Core, just including the author in the below query

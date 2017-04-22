@@ -10,13 +10,7 @@ namespace Bagombo.Data.Command
     public TCommand Command { get; set; }
     public Exception Ex { get; set; }
 
-    public CommandResult(TCommand command, bool succeeded)
-    {
-      Succeeded = succeeded;
-      Command = command;
-    }
-
-    public CommandResult(TCommand command, bool succeeded, Exception ex)
+    public CommandResult(TCommand command, bool succeeded, Exception ex = null)
     {
       Succeeded = succeeded;
       Command = command;
