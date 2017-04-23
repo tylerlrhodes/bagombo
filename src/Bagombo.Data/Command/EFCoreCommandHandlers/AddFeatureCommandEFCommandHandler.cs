@@ -8,13 +8,10 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Data.Command.EFCoreCommandHandlers
 {
-  public class AddFeatureCommandEFCommandHandler : ICommandHandlerAsync<AddFeatureCommand>
+  public class AddFeatureCommandEFCommandHandler : EFCHBase, ICommandHandlerAsync<AddFeatureCommand>
   {
-    private BlogDbContext _context;
-
-    public AddFeatureCommandEFCommandHandler(BlogDbContext context)
+    public AddFeatureCommandEFCommandHandler(BlogDbContext context) : base(context)
     {
-      _context = context;
     }
 
     public async Task<CommandResult<AddFeatureCommand>> ExecuteAsync(AddFeatureCommand command)

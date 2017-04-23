@@ -22,11 +22,11 @@ namespace Bagombo.Controllers
   {
     private ICommandProcessorAsync _cp;
     private IQueryProcessorAsync _qpa;
-    UserManager<ApplicationUser> _userManager;
-    SignInManager<ApplicationUser> _signInManager;
-    IPasswordHasher<ApplicationUser> _passwordHasher;
-    IUserValidator<ApplicationUser> _userValidator;
-    IPasswordValidator<ApplicationUser> _passwordValidator;
+    private UserManager<ApplicationUser> _userManager;
+    private SignInManager<ApplicationUser> _signInManager;
+    private IPasswordHasher<ApplicationUser> _passwordHasher;
+    private IUserValidator<ApplicationUser> _userValidator;
+    private IPasswordValidator<ApplicationUser> _passwordValidator;
 
     public AdminController(ICommandProcessorAsync cp,
                            IQueryProcessorAsync qpa,

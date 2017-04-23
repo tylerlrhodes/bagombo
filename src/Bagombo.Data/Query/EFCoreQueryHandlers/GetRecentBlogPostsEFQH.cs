@@ -10,13 +10,10 @@ using Bagombo.Data.Query.Queries;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetRecentBlogPostsEFQH : IQueryHandlerAsync<GetRecentBlogPostsQuery, IList<BlogPost>>
+  public class GetRecentBlogPostsEFQH : EFQHBase, IQueryHandlerAsync<GetRecentBlogPostsQuery, IList<BlogPost>>
   {
-    private BlogDbContext _context;
-
-    public GetRecentBlogPostsEFQH(BlogDbContext context)
+    public GetRecentBlogPostsEFQH(BlogDbContext context) : base(context)
     {
-      _context = context;
     }
 
     public async Task<IList<BlogPost>> HandleAsync(GetRecentBlogPostsQuery query)

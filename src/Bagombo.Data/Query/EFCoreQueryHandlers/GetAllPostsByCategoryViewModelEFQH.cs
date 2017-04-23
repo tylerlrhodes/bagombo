@@ -10,13 +10,10 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetAllPostsByCategoryViewModelEFQH : IQueryHandlerAsync<GetAllPostsByCategoryViewModelQuery, AllPostsViewModel>
+  public class GetAllPostsByCategoryViewModelEFQH : EFQHBase, IQueryHandlerAsync<GetAllPostsByCategoryViewModelQuery, AllPostsViewModel>
   {
-    private BlogDbContext _context;
-
-    public GetAllPostsByCategoryViewModelEFQH(BlogDbContext context)
+    public GetAllPostsByCategoryViewModelEFQH(BlogDbContext context) : base(context)
     {
-      _context = context;
     }
 
     public async Task<AllPostsViewModel> HandleAsync(GetAllPostsByCategoryViewModelQuery query)

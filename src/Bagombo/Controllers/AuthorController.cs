@@ -23,9 +23,9 @@ namespace Bagombo.Controllers
   [Authorize(Roles = "Authors")]
   public class AuthorController : Controller
   {
-    IQueryProcessorAsync _qpa;
-    ICommandProcessorAsync _cp;
-    UserManager<ApplicationUser> _userManager;
+    private IQueryProcessorAsync _qpa;
+    private ICommandProcessorAsync _cp;
+    private UserManager<ApplicationUser> _userManager;
 
     public AuthorController(IQueryProcessorAsync qpa,
                             ICommandProcessorAsync cp,

@@ -10,13 +10,10 @@ using Bagombo.EFCore;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetBlogPostByIdViewModelEFQH : IQueryHandlerAsync<GetBlogPostByIdViewModelQuery, BlogPostViewModel>
+  public class GetBlogPostByIdViewModelEFQH : EFQHBase, IQueryHandlerAsync<GetBlogPostByIdViewModelQuery, BlogPostViewModel>
   {
-    BlogDbContext _context;
-
-    public GetBlogPostByIdViewModelEFQH(BlogDbContext context)
+    public GetBlogPostByIdViewModelEFQH(BlogDbContext context) : base(context)
     {
-      _context = context;
     }
 
     public async Task<BlogPostViewModel> HandleAsync(GetBlogPostByIdViewModelQuery query)
