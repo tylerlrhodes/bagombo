@@ -23,7 +23,7 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
       provider.Register<ICommandHandlerAsync<AddCategoryCommand>, AddCategoryCommandEFCH>();
       provider.Register<ICommandHandlerAsync<DeleteFeatureCommand>, DeleteFeatureCommandEFCH>();
       provider.Register<ICommandHandlerAsync<EditFeatureCommand>, EditFeatureCommandEFCH>();
-      provider.Register<ICommandHandlerAsync<AddFeatureCommand>, AddFeatureCommandEFCommandHandler>();
+      provider.Register<ICommandHandlerAsync<AddFeatureCommand>, AddFeatureCommandEFCH>();
 
       provider.Register<ICommandProcessorAsync, CommandProcessor>(Lifestyle.Scoped);
     }

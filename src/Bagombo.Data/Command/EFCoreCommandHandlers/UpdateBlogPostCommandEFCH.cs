@@ -41,9 +41,9 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
           return new CommandResult<UpdateBlogPostCommand>(command, false);
         }
       }
-      catch (Exception)
+      catch (Exception ex)
       {
-        return new CommandResult<UpdateBlogPostCommand>(command, false);
+        return new CommandResult<UpdateBlogPostCommand>(command, false, ex);
       }
     }
   }

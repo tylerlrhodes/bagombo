@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Data.Command.EFCoreCommandHandlers
 {
-  public class AddFeatureCommandEFCommandHandler : EFCHBase, ICommandHandlerAsync<AddFeatureCommand>
+  public class AddFeatureCommandEFCH : EFCHBase, ICommandHandlerAsync<AddFeatureCommand>
   {
-    public AddFeatureCommandEFCommandHandler(BlogDbContext context) : base(context)
+    public AddFeatureCommandEFCH(BlogDbContext context) : base(context)
     {
     }
 
@@ -22,9 +22,9 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
         await _context.SaveChangesAsync();
         return new CommandResult<AddFeatureCommand>(command, true);
       }
-      catch (Exception)
+      catch (Exception ex)
       {
-        return new CommandResult<AddFeatureCommand>(command, false);
+        return new CommandResult<AddFeatureCommand>(command, false, ex);
       }
     }
   }

@@ -32,9 +32,9 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
 
         return new CommandResult<AddCategoryCommand>(command, true);
       }
-      catch (Exception)
+      catch (Exception ex)
       {
-        return new CommandResult<AddCategoryCommand>(command, false);
+        return new CommandResult<AddCategoryCommand>(command, false, ex);
       }
     }
   }

@@ -26,9 +26,9 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
         return new CommandResult<DeleteCategoryCommand>(command, true);
 
       }
-      catch (Exception)
+      catch (Exception ex)
       {
-        return new CommandResult<DeleteCategoryCommand>(command, false);
+        return new CommandResult<DeleteCategoryCommand>(command, false, ex);
       }
     }
   }

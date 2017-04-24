@@ -24,9 +24,9 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
 
         return new CommandResult<EditFeatureCommand>(command, true);
       }
-      catch (Exception)
+      catch (Exception ex)
       {
-        return new CommandResult<EditFeatureCommand>(command, false);
+        return new CommandResult<EditFeatureCommand>(command, false, ex);
       }
     }
   }

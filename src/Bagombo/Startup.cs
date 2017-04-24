@@ -91,7 +91,8 @@ namespace Bagombo
       _container.Verify();
 
       // Able to move this after verify after discovering how to create the scoped instances correctly
-      // See - https://github.com/aspnet/EntityFramework/issues/5096  and https://github.com/simpleinjector/SimpleInjector/issues/398
+      // See - https://github.com/aspnet/EntityFramework/issues/5096  and
+      // https://github.com/simpleinjector/SimpleInjector/issues/398
       BlogDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
 
       BlogDbContext.CreateAuthorRole(app.ApplicationServices).Wait();

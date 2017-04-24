@@ -28,9 +28,9 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
 
         return new CommandResult<SetAppUserIdNullForAuthorCommand>(command, true);
       }
-      catch (Exception)
+      catch (Exception ex)
       {
-        return new CommandResult<SetAppUserIdNullForAuthorCommand>(command, false);
+        return new CommandResult<SetAppUserIdNullForAuthorCommand>(command, false, ex);
       }
     }
   }

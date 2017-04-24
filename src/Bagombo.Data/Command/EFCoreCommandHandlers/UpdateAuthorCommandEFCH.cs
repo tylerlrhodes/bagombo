@@ -28,9 +28,9 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
 
         return new CommandResult<UpdateAuthorCommand>(command, true);
       }
-      catch (Exception)
+      catch (Exception ex)
       {
-        return new CommandResult<UpdateAuthorCommand>(command, false);
+        return new CommandResult<UpdateAuthorCommand>(command, false, ex);
       }
     }
   }
