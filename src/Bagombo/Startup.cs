@@ -57,6 +57,10 @@ namespace Bagombo
         }
       }
 
+      services.Configure<BagomboSettings>(Configuration);
+
+      services.AddSession();
+
       services.AddMvc().AddJsonOptions(options =>
       {
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
@@ -70,6 +74,7 @@ namespace Bagombo
 
       services.AddIdentity<ApplicationUser, IdentityRole>(opts => {
         opts.User.RequireUniqueEmail = true;
+        opts.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(1);
       }).AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
 
@@ -102,6 +107,8 @@ namespace Bagombo
 
       app.UseStaticFiles();
 
+      app.UseSession();
+
       if (env.IsDevelopment())
       {
         app.UseStatusCodePages();
@@ -133,6 +140,8 @@ namespace Bagombo
           AppSecret = FacebookAppSecret
         });
       }
+
+      app.UseMiddleware<BagomboSettingsMiddleware>();
 
       app.UseMvcWithDefaultRoute();
 
