@@ -141,8 +141,6 @@ namespace Bagombo
         });
       }
 
-      app.UseMiddleware<BagomboSettingsMiddleware>();
-
       app.UseMvcWithDefaultRoute();
 
     }

@@ -43,7 +43,7 @@ namespace Bagombo.Controllers
         if (au != null)
         {
           await _signInManager.SignOutAsync();
-          Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(au, alvm.Password, false, false);
+          Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(au, alvm.Password, alvm.RememberMe, false);
           if (result.Succeeded)
           {
             return Redirect(returnUrl ?? "/");
@@ -77,7 +77,7 @@ namespace Bagombo.Controllers
         return RedirectToAction(nameof(Login));
       }
 
-      var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
+      var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, true);
       if (result.Succeeded)
       {
         return Redirect(returnUrl);
@@ -106,7 +106,7 @@ namespace Bagombo.Controllers
         return RedirectToAction(nameof(Login));
       }
 
-      var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
+      var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, true);
       if (result.Succeeded)
       {
         return Redirect(returnUrl);
