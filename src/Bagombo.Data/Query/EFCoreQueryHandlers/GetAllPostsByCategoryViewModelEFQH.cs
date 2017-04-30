@@ -48,17 +48,20 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
 
       var ncbps = await _context.BlogPosts.AsNoTracking()
                                 .Include(bpc => bpc.BlogPostCategory)
-                                .Where(bpc => bpc.BlogPostCategory.Count == 0)
+                                .Where(bpc => bpc.BlogPostCategory.Count == 0 && bpc.Public == true && bpc.PublishOn < DateTime.Now)
                                 .Include(bp => bp.Author)
                                 .ToListAsync();
 
-      var ncvpbc = new PostsByCategoryViewModel()
+      if (ncbps.Count > 0)
       {
-        Category = NoCategory,
-        Posts = ncbps
-      };
+        var ncvpbc = new PostsByCategoryViewModel()
+        {
+          Category = NoCategory,
+          Posts = ncbps
+        };
 
-      viewCategories.Add(ncvpbc);
+        viewCategories.Add(ncvpbc); 
+      }
 
       return new AllPostsViewModel()
       {
