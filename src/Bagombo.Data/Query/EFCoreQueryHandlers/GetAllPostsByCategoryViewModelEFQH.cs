@@ -1,5 +1,6 @@
 ﻿using Bagombo.Data.Query.Queries;
 using Bagombo.EFCore;
+using Bagombo.Models;
 using Bagombo.Models.ViewModels.Home;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -39,6 +40,25 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
 
         viewCategories.Add(vpbc);
       }
+
+      var NoCategory = new Category()
+      {
+        Name = "No Category"
+      };
+
+      var ncbps = await _context.BlogPosts.AsNoTracking()
+                                .Include(bpc => bpc.BlogPostCategory)
+                                .Where(bpc => bpc.BlogPostCategory.Count == 0)
+                                .Include(bp => bp.Author)
+                                .ToListAsync();
+
+      var ncvpbc = new PostsByCategoryViewModel()
+      {
+        Category = NoCategory,
+        Posts = ncbps
+      };
+
+      viewCategories.Add(ncvpbc);
 
       return new AllPostsViewModel()
       {
