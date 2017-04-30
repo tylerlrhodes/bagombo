@@ -34,11 +34,11 @@
                         <tr id="@post.Id">
                             <td>@post.Id</td>
                             <td>@post.Title</td>
-                            <td>@post.Author.FirstName @post.Author.LastName</td>
+                            <td>@post.Author?.FirstName @post.Author?.LastName</td>
                             <td>@post.Description</td>
                             <td>@post.PublishOn</td>
                             <td>@post.Public</td>
-                            <td>@if (@post.Author.ApplicationUserId == null)
+                            <td>@if (@post.Author?.ApplicationUserId == null)
                                 {
                                     <span>Yes</span>
                                 }
