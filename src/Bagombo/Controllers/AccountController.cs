@@ -62,14 +62,15 @@ namespace Bagombo.Controllers
       return RedirectToAction("Login");
     }
 
-    public IActionResult FacebookLogin(string returnUrl)
+    [HttpPost]
+    public IActionResult FacebookLogin(AccountLoginViewModel alvm, string returnUrl)
     {
-      string redirectUrl = Url.Action("FacebookResponse", "Account", new { ReturnUrl = returnUrl });
+      string redirectUrl = Url.Action("FacebookResponse", "Account", new { ReturnUrl = returnUrl, RememberMe = alvm.RememberMe });
       AuthenticationProperties properties = _signInManager.ConfigureExternalAuthenticationProperties("Facebook", redirectUrl);
       return new ChallengeResult("Facebook", properties);
     }
 
-    public async Task<IActionResult> FacebookResponse(string returnUrl = "/")
+    public async Task<IActionResult> FacebookResponse(bool RememberMe, string returnUrl = "/")
     {
       ExternalLoginInfo info = await _signInManager.GetExternalLoginInfoAsync();
       if (info == null)
@@ -77,7 +78,7 @@ namespace Bagombo.Controllers
         return RedirectToAction(nameof(Login));
       }
 
-      var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, true);
+      var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, RememberMe);
       if (result.Succeeded)
       {
         return Redirect(returnUrl);
@@ -91,14 +92,15 @@ namespace Bagombo.Controllers
       }
     }
 
-    public IActionResult TwitterLogin(string returnUrl)
+    [HttpPost]
+    public IActionResult TwitterLogin(AccountLoginViewModel alvm, string returnUrl)
     {
-      string redirectUrl = Url.Action("TwitterResponse", "Account", new { ReturnUrl = returnUrl });
+      string redirectUrl = Url.Action("TwitterResponse", "Account", new { ReturnUrl = returnUrl, RememberMe = alvm.RememberMe });
       AuthenticationProperties properties = _signInManager.ConfigureExternalAuthenticationProperties("Twitter", redirectUrl);
       return new ChallengeResult("Twitter", properties);
     }
 
-    public async Task<IActionResult> TwitterResponse(string returnUrl = "/")
+    public async Task<IActionResult> TwitterResponse(bool RememberMe, string returnUrl = "/")
     {
       ExternalLoginInfo info = await _signInManager.GetExternalLoginInfoAsync();
       if (info == null)
@@ -106,7 +108,7 @@ namespace Bagombo.Controllers
         return RedirectToAction(nameof(Login));
       }
 
-      var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, true);
+      var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, RememberMe);
       if (result.Succeeded)
       {
         return Redirect(returnUrl);
