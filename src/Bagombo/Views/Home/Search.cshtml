@@ -30,6 +30,13 @@
                     <h5>
                         @post.BlogPost.Description
                     </h5>
+                  <h5>
+                    @foreach (var c in post.Categories)
+                    {
+                      <span class="label label-info"> @c.Name </span>
+
+                    }
+                  </h5>
                 </div>
             </div>
         </div>
