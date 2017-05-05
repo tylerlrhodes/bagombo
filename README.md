@@ -1,33 +1,31 @@
-# bagombo
+# Bagombo
 
 Simple blogging software using ASP.NET Core MVC and Entity Framework Core
 
 See it in action at [www.bagombo.org](http://www.bagombo.org)
 
-### 0.2.2 - In Progress
-* Seperate Identity from Data layer
-* Integrate Simple Injector for DI Container
-* Adding in CQRS and refactoring queries
-* Adding in Some Unit Tests
-* Edit Post screen now rememberes where you were scrolled to in markdown, so when you submit you don't lose your spot
+Contributors welcome : )
 
-### 0.2.1
-* Actually tagged as a release
-* Fixes query issues with many-to-many queries starting from a linking table
-* Support for Facebook authentication 
+### General Notes on Bagombo:
+* It's still being developed, "Alpha" releases may not provide an easy database upgrade path from one to another
+* Features so far include:
+    * Multi-Author Support
+    * Categorize posts by "Feature" (being renamed to Topic) or Category
+    * Twitter, Facebook and Local Authentication
+    * Full text search of posts
+    * Author posts in markdown
+    * MIT License 
+* Features planned include:
+    * MetaWebLog API Support
+    * SQL Server or SQLite backend support (currently just SQL Server)
+    * Support for themes and customization
 
-### 0.2 Alpha is released
-* It's only tested on Windows Server 2016 and SQL Server 2016
-* This is basically useable as a blog now
-* The home page is really the only spot where modifying code is needed, by updating /Views/Home/Index.html -- basically to update links to entries instead of taking what was left over
-* You can run it by compiling from Visual Studio 2017 and publishing it to a server, then set it up in IIS
-* There is a CreateDb.sql file under src, you have to create the database but can run this to setup the tables
-* For the search to work you need to create a full-text index on the BlogPost table
-* You need to setup your connection string either in appsettings.json, user secrets or an environment variable depending on your environment.  Not sure the best way, but I use an environment variable on the server
-* Change appsettings.json to seed the Db with an admin user besdies my default
-* Use the user manager to make an author
-* Hopefully the rest you can figure out
-* The author profile page doesn't work yet, if you want you can setup a post and link to it that way
+### 0.2.2 Alpha - Released
+* [Releases](http://github.com/tylerlrhodes/bagombo/releases)
+* Breaking changes from 0.2.1 in Data Layer, would require a manual update to 0.2.2, some more changes coming in 0.2.3 (Data layer stability and better upgrades being worked on)
+* Mostly some bug fixes and minor tweaks
+* No functionality added
+* Don't update to this from 0.2.1 as its probably not worth the manual post export / copy paste procedure required for the update.
 
 ### Goals for 0.3
 * Bug Fixes
@@ -46,20 +44,14 @@ See it in action at [www.bagombo.org](http://www.bagombo.org)
 * GUI enhancements and more color!
 * Easier to install
 
+### Goals for 0.5
+* First Beta Release and Data Layer Stability
+
 ### Goals for 1.0:
 * TBD
 
 MIT license
 
-## Roadmap:
-### * 0.3 - code cleanup and refactoring, bug fixes - June 1st
-### * 0.4 - Core Feature enhancements - July 1st
-### * 0.5 - Data Layer Stabilization - August 1st
-### * 0.6 - Core HTML and SEO 
-### * 0.7 - Front End Enhancement and Themes - Nov 1st
-### * 0.8 - code cleanup and refactoring - Jan 1st
-### * 0.9 - Blog data portability - Feb 1st
-### * 1.0 - Bug fixes
 
 
 
