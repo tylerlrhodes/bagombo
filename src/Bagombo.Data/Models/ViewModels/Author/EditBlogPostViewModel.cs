@@ -22,7 +22,7 @@ namespace Bagombo.Models.ViewModels.Author
     [Required]
     public bool Public { get; set; }
     //[Required]
-    public List<FeaturesCheckBox> FeaturesList { get; set; }
+    public List<TopicsCheckBox> TopicsList { get; set; }
     //[Required]
     public List<CategoriesCheckBox> CategoriesList { get; set; }
   }
@@ -34,9 +34,9 @@ namespace Bagombo.Models.ViewModels.Author
     public bool IsSelected { get; set; }
   }
 
-  public class FeaturesCheckBox
+  public class TopicsCheckBox
   {
-    public long FeatureId { get; set; }
+    public long TopicId { get; set; }
     public string Title { get; set; }
     public bool IsSelected { get; set; }
   }

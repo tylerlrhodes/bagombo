@@ -19,16 +19,16 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
     public async Task<TopicPostsViewModel> HandleAsync(GetTopicPostsByTopicViewModelQuery query)
     {
 
-      var feature = await _context.Topic.FindAsync(query.Id);
+      var topic = await _context.Topic.FindAsync(query.Id);
 
-      if (feature == null)
+      if (topic == null)
       {
         return null;
       }
 
       var bpfs = await _context.BlogPostTopic
                               .AsNoTracking()
-                              .Where(bpf => bpf.TopicId == feature.Id && bpf.BlogPost.Public == true && bpf.BlogPost.PublishOn < DateTime.Now)
+                              .Where(bpf => bpf.TopicId == topic.Id && bpf.BlogPost.Public == true && bpf.BlogPost.PublishOn < DateTime.Now)
                               .Include(bpf => bpf.BlogPost)
                                 .ThenInclude(bp => bp.Author)
                               .Include(bpf => bpf.BlogPost)
@@ -54,7 +54,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
 
       return new TopicPostsViewModel()
       {
-        Topic = feature,
+        Topic = topic,
         BlogPosts = viewPosts
       };
 

@@ -116,7 +116,7 @@ namespace Bagombo.Controllers
         Description = post.Description,
         PublishOn = post.PublishOn,
         Public = post.Public,
-        FeaturesList = new List<FeaturesCheckBox>(),
+        TopicsList = new List<TopicsCheckBox>(),
         CategoriesList = new List<CategoriesCheckBox>()
       };
 
@@ -143,9 +143,9 @@ namespace Bagombo.Controllers
 
       foreach (var feature in await _qpa.ProcessAsync(new GetTopicsQuery()))
       {
-        var featureCheckBox = new FeaturesCheckBox()
+        var featureCheckBox = new TopicsCheckBox()
         {
-          FeatureId = feature.Id,
+          TopicId = feature.Id,
           Title = feature.Title,
           IsSelected = false
         };
@@ -155,7 +155,7 @@ namespace Bagombo.Controllers
           featureCheckBox.IsSelected = true;
         }
 
-        ebpvm.FeaturesList.Add(featureCheckBox);
+        ebpvm.TopicsList.Add(featureCheckBox);
       }
 
       return View(ebpvm);
@@ -208,13 +208,13 @@ namespace Bagombo.Controllers
 
       List<long> featureIds = new List<long>();
 
-      if (model.FeaturesList != null)
+      if (model.TopicsList != null)
       {
-        foreach (var feature in model.FeaturesList)
+        foreach (var feature in model.TopicsList)
         {
           if (feature.IsSelected)
           {
-            featureIds.Add(feature.FeatureId);
+            featureIds.Add(feature.TopicId);
           }
         }
 
@@ -237,7 +237,7 @@ namespace Bagombo.Controllers
       }
       else
       {
-        model.FeaturesList = new List<FeaturesCheckBox>();
+        model.TopicsList = new List<TopicsCheckBox>();
       }
 
       List<long> categoryIds = new List<long>();
