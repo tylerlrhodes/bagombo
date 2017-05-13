@@ -12,7 +12,7 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
     {
       provider.Register<ICommandHandlerAsync<DeleteBlogPostCommand>, DeleteBlogPostCommandEFCH>();
       provider.Register<ICommandHandlerAsync<SetBlogPostCategoriesCommand>, SetBlogPostCategoriesCommandEFCH>();
-      provider.Register<ICommandHandlerAsync<SetBlogPostFeaturesCommand>, SetBlogPostFeaturesCommandEFCH>();
+      provider.Register<ICommandHandlerAsync<SetBlogPostTopicsCommand>, SetBlogPostTopicsCommandEFCH>();
       provider.Register<ICommandHandlerAsync<UpdateBlogPostCommand>, UpdateBlogPostCommandEFCH>();
       provider.Register<ICommandHandlerAsync<AddBlogPostCommand>, AddBlogPostCommandEFCH>();
       provider.Register<ICommandHandlerAsync<UpdateAuthorCommand>, UpdateAuthorCommandEFCH>();
@@ -21,9 +21,9 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
       provider.Register<ICommandHandlerAsync<DeleteCategoryCommand>, DeleteCategoryCommandEFCH>();
       provider.Register<ICommandHandlerAsync<EditCategoryCommand>, EditCategoryCommandEFCH>();
       provider.Register<ICommandHandlerAsync<AddCategoryCommand>, AddCategoryCommandEFCH>();
-      provider.Register<ICommandHandlerAsync<DeleteFeatureCommand>, DeleteFeatureCommandEFCH>();
-      provider.Register<ICommandHandlerAsync<EditFeatureCommand>, EditFeatureCommandEFCH>();
-      provider.Register<ICommandHandlerAsync<AddFeatureCommand>, AddFeatureCommandEFCH>();
+      provider.Register<ICommandHandlerAsync<DeleteTopicCommand>, DeleteTopicCommandEFCH>();
+      provider.Register<ICommandHandlerAsync<EditTopicCommand>, EditTopicCommandEFCH>();
+      provider.Register<ICommandHandlerAsync<AddTopicCommand>, AddTopicCommandEFCH>();
 
       provider.Register<ICommandProcessorAsync, CommandProcessor>(Lifestyle.Scoped);
     }

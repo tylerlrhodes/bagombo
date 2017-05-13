@@ -18,6 +18,6 @@ namespace Bagombo.Models
     public DateTime PublishOn { get; set; }
     public bool Public { get; set; }
     public ICollection<BlogPostCategory> BlogPostCategory { get; set; }
-    public ICollection<BlogPostFeature> BlogPostFeature { get; set; }
+    public ICollection<BlogPostTopic> BlogPostTopic { get; set; }
   }
 }

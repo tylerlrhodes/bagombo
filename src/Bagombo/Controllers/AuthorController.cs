@@ -139,9 +139,9 @@ namespace Bagombo.Controllers
         ebpvm.CategoriesList.Add(categoryCheckBox);
       }
 
-      var postHasFeatures = await _qpa.ProcessAsync(new GetFeaturesForBlogPostByIdQuery { Id = id });
+      var postHasFeatures = await _qpa.ProcessAsync(new GetTopicsForBlogPostByIdQuery { Id = id });
 
-      foreach (var feature in await _qpa.ProcessAsync(new GetFeaturesQuery()))
+      foreach (var feature in await _qpa.ProcessAsync(new GetTopicsQuery()))
       {
         var featureCheckBox = new FeaturesCheckBox()
         {
@@ -219,10 +219,10 @@ namespace Bagombo.Controllers
         }
 
         var addFeaturesResult = 
-          await _cp.ProcessAsync(new SetBlogPostFeaturesCommand
+          await _cp.ProcessAsync(new SetBlogPostTopicsCommand
           {
             BlogPostId = post.Id,
-            FeatureIds = featureIds
+            TopicIds = featureIds
           });
 
         if (addFeaturesResult.Succeeded)

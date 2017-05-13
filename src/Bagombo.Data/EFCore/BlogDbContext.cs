@@ -18,8 +18,8 @@ namespace Bagombo.EFCore
   {
     public DbSet<BlogPost> BlogPosts { get; set; }
     public DbSet<Author> Authors { get; set; }
-    public DbSet<Feature> Features { get; set; }
-    public DbSet<BlogPostFeature> BlogPostFeature { get; set; }
+    public DbSet<Topic> Topic { get; set; }
+    public DbSet<BlogPostTopic> BlogPostTopic { get; set; }
     public DbSet<BlogPostCategory> BlogPostCategory { get; set; }
     public DbSet<Category> Categories { get; set; }
 
@@ -44,16 +44,16 @@ namespace Bagombo.EFCore
                                 .HasForeignKey("AuthorId")
                                 .IsRequired(false);
 
-      builder.Entity<Feature>().ToTable("Feature");
+      builder.Entity<Topic>().ToTable("Topic");
       builder.Entity<Category>().ToTable("Category");
 
-      builder.Entity<BlogPostFeature>().HasKey(bpf => new { bpf.FeatureId, bpf.BlogPostId });
-      builder.Entity<BlogPostFeature>().HasOne(bpf => bpf.BlogPost)
-                                       .WithMany(bp => bp.BlogPostFeature)
+      builder.Entity<BlogPostTopic>().HasKey(bpf => new { bpf.TopicId, bpf.BlogPostId });
+      builder.Entity<BlogPostTopic>().HasOne(bpf => bpf.BlogPost)
+                                       .WithMany(bp => bp.BlogPostTopic)
                                        .HasForeignKey(bpf => bpf.BlogPostId);
-      builder.Entity<BlogPostFeature>().HasOne(bpf => bpf.Feature)
+      builder.Entity<BlogPostTopic>().HasOne(bpf => bpf.Topic)
                                        .WithMany(f => f.BlogPosts)
-                                       .HasForeignKey(bpf => bpf.FeatureId);
+                                       .HasForeignKey(bpf => bpf.TopicId);
 
       builder.Entity<BlogPostCategory>().HasKey(bpc => new { bpc.BlogPostId, bpc.CategoryId });
       builder.Entity<BlogPostCategory>().HasOne(bpc => bpc.BlogPost)
