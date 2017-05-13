@@ -206,26 +206,26 @@ namespace Bagombo.Controllers
         return NotFound();
       }
 
-      List<long> featureIds = new List<long>();
+      List<long> topicIds = new List<long>();
 
       if (model.TopicsList != null)
       {
-        foreach (var feature in model.TopicsList)
+        foreach (var topic in model.TopicsList)
         {
-          if (feature.IsSelected)
+          if (topic.IsSelected)
           {
-            featureIds.Add(feature.TopicId);
+            topicIds.Add(topic.TopicId);
           }
         }
 
-        var addFeaturesResult = 
+        var addTopicsResult = 
           await _cp.ProcessAsync(new SetBlogPostTopicsCommand
           {
             BlogPostId = post.Id,
-            TopicIds = featureIds
+            TopicIds = topicIds
           });
 
-        if (addFeaturesResult.Succeeded)
+        if (addTopicsResult.Succeeded)
         {
           // do nothing
         }
