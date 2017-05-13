@@ -15,9 +15,9 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
     {
       try
       {
-        var topic = await _context.Topic.FindAsync(command.Id);
+        var topic = await _context.Topics.FindAsync(command.Id);
 
-        _context.Topic.Remove(topic);
+        _context.Topics.Remove(topic);
 
         await _context.SaveChangesAsync();
 

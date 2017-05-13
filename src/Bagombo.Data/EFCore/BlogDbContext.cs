@@ -18,7 +18,7 @@ namespace Bagombo.EFCore
   {
     public DbSet<BlogPost> BlogPosts { get; set; }
     public DbSet<Author> Authors { get; set; }
-    public DbSet<Topic> Topic { get; set; }
+    public DbSet<Topic> Topics { get; set; }
     public DbSet<BlogPostTopic> BlogPostTopic { get; set; }
     public DbSet<BlogPostCategory> BlogPostCategory { get; set; }
     public DbSet<Category> Categories { get; set; }

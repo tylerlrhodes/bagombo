@@ -17,7 +17,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
     {
       ManageTopicsViewModel mfvm = new ManageTopicsViewModel()
       {
-        Topics = await _context.Topic.AsNoTracking().ToListAsync()
+        Topics = await _context.Topics.AsNoTracking().ToListAsync()
       };
       return mfvm;
     }

@@ -26,7 +26,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
       // cant select new into a defined type so have to use anon type for the select new here due to EF Core bug
       // code after is a work-around
 
-      var x = from topic in _context.Topic.AsNoTracking()
+      var x = from topic in _context.Topics.AsNoTracking()
               select new
               {
                 Title = topic.Title,

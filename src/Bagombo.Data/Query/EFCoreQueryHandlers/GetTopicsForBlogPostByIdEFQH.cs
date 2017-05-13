@@ -20,7 +20,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
     {
       return await (from bpf in _context.BlogPostTopic
                     where bpf.BlogPostId == query.Id
-                    join f in _context.Topic on bpf.TopicId equals f.Id
+                    join f in _context.Topics on bpf.TopicId equals f.Id
                     select f).ToListAsync();
     }
   }
