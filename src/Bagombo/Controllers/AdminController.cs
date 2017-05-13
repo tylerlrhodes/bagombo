@@ -51,16 +51,16 @@ namespace Bagombo.Controllers
     }
 
     [HttpGet]
-    public IActionResult AddFeature() => View();
+    public IActionResult AddTopic() => View();
 
     [HttpPost]
-    public async Task<IActionResult> AddFeature(FeatureViewModel model)
+    public async Task<IActionResult> AddTopic(TopicViewModel model)
     {
       if (ModelState.IsValid)
       {
-        var afc = new AddFeatureCommand()
+        var afc = new AddTopicCommand()
         {
-          Feature = new Feature()
+          Topic = new Topic()
           {
             Title = model.Title,
             Description = model.Description
@@ -71,7 +71,7 @@ namespace Bagombo.Controllers
 
         if (result.Succeeded)
         {
-          return RedirectToAction("ManageFeatures"); 
+          return RedirectToAction("ManageTopics"); 
         }
         else
         {
@@ -83,9 +83,9 @@ namespace Bagombo.Controllers
     }
 
     [HttpGet]
-    public async Task<IActionResult> EditFeature(long id)
+    public async Task<IActionResult> EditTopic(long id)
     {
-      var gfbivm = new GetFeatureByIdQuery()
+      var gfbivm = new GetTopicByIdQuery()
       {
         Id = id
       };
@@ -94,7 +94,7 @@ namespace Bagombo.Controllers
 
       if (f != null)
       {
-        return View(new FeatureViewModel() { Id = f.Id, Title = f.Title, Description = f.Description } );
+        return View(new TopicViewModel() { Id = f.Id, Title = f.Title, Description = f.Description } );
       }
       else
         // need better exception and error handling
@@ -102,11 +102,11 @@ namespace Bagombo.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> EditFeature(FeatureViewModel model)
+    public async Task<IActionResult> EditTopic(TopicViewModel model)
     {
       if (ModelState.IsValid)
       {
-        var efc = new EditFeatureCommand()
+        var efc = new EditTopicCommand()
         {
           Id = model.Id,
           NewTitle = model.Title,
@@ -117,7 +117,7 @@ namespace Bagombo.Controllers
 
         if (result.Succeeded)
         {
-          return RedirectToAction("ManageFeatures");
+          return RedirectToAction("ManageTopics");
         }
         else
         {
@@ -129,9 +129,9 @@ namespace Bagombo.Controllers
     }
 
     [HttpGet]
-    public async Task<IActionResult> ManageFeatures()
+    public async Task<IActionResult> ManageTopics()
     {
-      var gmfvmq = new GetManageFeaturesViewModelQuery();
+      var gmfvmq = new GetManageTopicsViewModelQuery();
 
       var mfvm = await _qpa.ProcessAsync(gmfvmq);
 
@@ -139,9 +139,9 @@ namespace Bagombo.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> DeleteFeature(long id)
+    public async Task<IActionResult> DeleteTopic(long id)
     {
-      var dfc = new DeleteFeatureCommand()
+      var dfc = new DeleteTopicCommand()
       {
         Id = id
       };
@@ -150,7 +150,7 @@ namespace Bagombo.Controllers
 
       if (result.Succeeded)
       {
-        return RedirectToAction("ManageFeatures"); 
+        return RedirectToAction("ManageTopics"); 
       }
       else
       {

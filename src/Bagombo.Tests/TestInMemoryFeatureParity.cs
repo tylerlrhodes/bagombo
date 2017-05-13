@@ -92,50 +92,50 @@ namespace Bagombo.tests
 
       db.SaveChanges();
 
-      var featureList = new List<Feature>()
+      var featureList = new List<Topic>()
       {
-        new Feature()
+        new Topic()
         {
           Title = "Feature 1"
         },
-        new Feature()
+        new Topic()
         {
           Title = "Feature 2"
         }
       };
 
-      db.Features.AddRange(featureList);
+      db.Topic.AddRange(featureList);
 
       db.SaveChanges();
 
-      var bpfList = new List<BlogPostFeature>()
+      var bpfList = new List<BlogPostTopic>()
       {
-        new BlogPostFeature()
+        new BlogPostTopic()
         {
           BlogPost = bp,
-          Feature = featureList[0]
+          Topic = featureList[0]
         },
-        new BlogPostFeature()
+        new BlogPostTopic()
         {
           BlogPost = bp,
-          Feature =featureList[1]
+          Topic =featureList[1]
         }
       };
 
-      db.BlogPostFeature.AddRange(bpfList);
+      db.BlogPostTopic.AddRange(bpfList);
 
       db.SaveChanges();
 
       var bpTest = db.BlogPosts
         .Include(b => b.Author)
-        .Include(b => b.BlogPostFeature)
-          .ThenInclude(bbpf => bbpf.Feature)
+        .Include(b => b.BlogPostTopic)
+          .ThenInclude(bbpf => bbpf.Topic)
         .Include(b => b.BlogPostCategory)
           .ThenInclude(bbpc => bbpc.Category)
         .Select(b => b)
         .FirstOrDefault();
 
-      Assert.Equal(bpTest.BlogPostFeature.Select(bpf => bpf.Feature).Count(), 2);
+      Assert.Equal(bpTest.BlogPostTopic.Select(bpf => bpf.Topic).Count(), 2);
       Assert.Equal(bpTest.BlogPostCategory.Select(bpc => bpc.Category).Count(), 2);
       Assert.Equal(bpTest.Author.FirstName, authorTest.FirstName);
 

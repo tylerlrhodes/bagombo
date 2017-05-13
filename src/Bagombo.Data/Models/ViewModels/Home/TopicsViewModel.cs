@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 
 namespace Bagombo.Models.ViewModels.Home
 {
-  public class BlogPostViewModel
+  public class TopicsViewModel
+  {
+    public IEnumerable<TopicWithBlogCountViewModel> Topics { get; set; }
+  }
+  public class TopicWithBlogCountViewModel
   {
     public long Id { get; set; }
     public string Title { get; set; }
-    public string Author { get; set; }
     public string Description { get; set; }
-    public string Content { get; set; }
-    public DateTime ModifiedAt { get; set; }
-    public IEnumerable<Category> Categories { get; set; }
-    public IEnumerable<Topic> Features { get; set; }
+    public int BlogCount { get; set; }
   }
 }

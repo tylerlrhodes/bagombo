@@ -71,46 +71,46 @@ namespace Bagombo.tests
       _context.BlogPosts.Add(bp2);
       _context.BlogPosts.Add(bp3);
 
-      Feature f1 = new Feature()
+      Topic f1 = new Topic()
       {
         Title = "Feature 1",
         Description = "Feature 1 Description"
       };
 
-      Feature f2 = new Feature()
+      Topic f2 = new Topic()
       {
         Title = "Feature 2",
         Description = "Feature 2 Description"
       };
 
-      _context.Features.Add(f1);
-      _context.Features.Add(f2);
+      _context.Topic.Add(f1);
+      _context.Topic.Add(f2);
 
-      var bpfList = new List<BlogPostFeature>()
+      var bpfList = new List<BlogPostTopic>()
       {
-        new BlogPostFeature()
+        new BlogPostTopic()
         {
           BlogPost = bp1,
-          Feature = f1
+          Topic = f1
         },
-        new BlogPostFeature()
+        new BlogPostTopic()
         {
           BlogPost = bp1,
-          Feature = f2
+          Topic = f2
         },
-        new BlogPostFeature()
+        new BlogPostTopic()
         {
           BlogPost = bp2,
-          Feature = f1
+          Topic = f1
         },
-        new BlogPostFeature()
+        new BlogPostTopic()
         {
           BlogPost = bp3,
-          Feature = f1
+          Topic = f1
         }
       };
 
-      _context.BlogPostFeature.AddRange(bpfList);
+      _context.BlogPostTopic.AddRange(bpfList);
 
       Category c1 = new Category()
       {
