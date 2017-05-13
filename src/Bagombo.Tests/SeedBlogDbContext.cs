@@ -83,8 +83,8 @@ namespace Bagombo.tests
         Description = "Feature 2 Description"
       };
 
-      _context.Topic.Add(f1);
-      _context.Topic.Add(f2);
+      _context.Topics.Add(f1);
+      _context.Topics.Add(f2);
 
       var bpfList = new List<BlogPostTopic>()
       {

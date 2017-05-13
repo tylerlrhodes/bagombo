@@ -104,7 +104,7 @@ namespace Bagombo.tests
         }
       };
 
-      db.Topic.AddRange(featureList);
+      db.Topics.AddRange(featureList);
 
       db.SaveChanges();
 

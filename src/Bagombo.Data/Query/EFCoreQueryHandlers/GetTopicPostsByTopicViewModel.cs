@@ -19,7 +19,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
     public async Task<TopicPostsViewModel> HandleAsync(GetTopicPostsByTopicViewModelQuery query)
     {
 
-      var topic = await _context.Topic.FindAsync(query.Id);
+      var topic = await _context.Topics.FindAsync(query.Id);
 
       if (topic == null)
       {

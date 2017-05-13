@@ -17,7 +17,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
 
     public async Task<Topic> HandleAsync(GetTopicByIdQuery query)
     {
-      var f = await _context.Topic.FindAsync(query.Id);
+      var f = await _context.Topics.FindAsync(query.Id);
 
       if (f != null)
       {

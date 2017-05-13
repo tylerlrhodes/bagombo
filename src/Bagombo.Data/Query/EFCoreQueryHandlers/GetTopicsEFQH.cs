@@ -18,7 +18,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
 
     public async Task<IEnumerable<Topic>> HandleAsync(GetTopicsQuery query)
     {
-      return await Task.FromResult(_context.Topic);
+      return await Task.FromResult(_context.Topics);
     }
   }
 }

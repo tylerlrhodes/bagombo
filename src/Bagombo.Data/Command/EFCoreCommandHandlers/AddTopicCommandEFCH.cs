@@ -18,7 +18,7 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
     {
       try
       {
-        _context.Topic.Add(command.Topic);
+        _context.Topics.Add(command.Topic);
         await _context.SaveChangesAsync();
         return new CommandResult<AddTopicCommand>(command, true);
       }

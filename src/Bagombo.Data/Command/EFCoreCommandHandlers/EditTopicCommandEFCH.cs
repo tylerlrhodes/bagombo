@@ -15,7 +15,7 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
     {
       try
       {
-        var f = await _context.Topic.FindAsync(command.Id);
+        var f = await _context.Topics.FindAsync(command.Id);
 
         f.Title = command.NewTitle;
         f.Description = command.NewDescription;
