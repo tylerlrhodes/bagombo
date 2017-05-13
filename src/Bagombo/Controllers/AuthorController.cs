@@ -139,23 +139,23 @@ namespace Bagombo.Controllers
         ebpvm.CategoriesList.Add(categoryCheckBox);
       }
 
-      var postHasFeatures = await _qpa.ProcessAsync(new GetTopicsForBlogPostByIdQuery { Id = id });
+      var postHasTopics = await _qpa.ProcessAsync(new GetTopicsForBlogPostByIdQuery { Id = id });
 
-      foreach (var feature in await _qpa.ProcessAsync(new GetTopicsQuery()))
+      foreach (var topic in await _qpa.ProcessAsync(new GetTopicsQuery()))
       {
-        var featureCheckBox = new TopicsCheckBox()
+        var topicCheckBox = new TopicsCheckBox()
         {
-          TopicId = feature.Id,
-          Title = feature.Title,
+          TopicId = topic.Id,
+          Title = topic.Title,
           IsSelected = false
         };
 
-        if (postHasFeatures.Contains(feature))
+        if (postHasTopics.Contains(topic))
         {
-          featureCheckBox.IsSelected = true;
+          topicCheckBox.IsSelected = true;
         }
 
-        ebpvm.TopicsList.Add(featureCheckBox);
+        ebpvm.TopicsList.Add(topicCheckBox);
       }
 
       return View(ebpvm);
@@ -206,26 +206,26 @@ namespace Bagombo.Controllers
         return NotFound();
       }
 
-      List<long> featureIds = new List<long>();
+      List<long> topicIds = new List<long>();
 
       if (model.TopicsList != null)
       {
-        foreach (var feature in model.TopicsList)
+        foreach (var topic in model.TopicsList)
         {
-          if (feature.IsSelected)
+          if (topic.IsSelected)
           {
-            featureIds.Add(feature.TopicId);
+            topicIds.Add(topic.TopicId);
           }
         }
 
-        var addFeaturesResult = 
+        var addTopicsResult = 
           await _cp.ProcessAsync(new SetBlogPostTopicsCommand
           {
             BlogPostId = post.Id,
-            TopicIds = featureIds
+            TopicIds = topicIds
           });
 
-        if (addFeaturesResult.Succeeded)
+        if (addTopicsResult.Succeeded)
         {
           // do nothing
         }

@@ -58,13 +58,13 @@
                                 <label>Associate with Feature:</label>
                                 <div class="container-fluid">
                                     @{
-                                      for (int i = 0; i < Model.FeaturesList.Count(); i++)
+                                      for (int i = 0; i < Model.TopicsList.Count(); i++)
                                       {
-                                        <label asp-for="@Model.FeaturesList[i].Title" class="checkbox-inline">
-                                            <input asp-for="@Model.FeaturesList[i].IsSelected" />@Model.FeaturesList[i].Title
+                                        <label asp-for="@Model.TopicsList[i].Title" class="checkbox-inline">
+                                            <input asp-for="@Model.TopicsList[i].IsSelected" />@Model.TopicsList[i].Title
                                         </label>
-                                        <input asp-for="@Model.FeaturesList[i].FeatureId" type="hidden" />
-                                        <input asp-for="@Model.FeaturesList[i].Title" type="hidden" />
+                                        <input asp-for="@Model.TopicsList[i].TopicId" type="hidden" />
+                                        <input asp-for="@Model.TopicsList[i].Title" type="hidden" />
                                         <br />
                                       }
                                     }
