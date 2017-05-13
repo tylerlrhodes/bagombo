@@ -14,6 +14,6 @@ namespace Bagombo.Models.ViewModels.Home
     public string Content { get; set; }
     public DateTime ModifiedAt { get; set; }
     public IEnumerable<Category> Categories { get; set; }
-    public IEnumerable<Topic> Features { get; set; }
+    public IEnumerable<Topic> Topics { get; set; }
   }
 }

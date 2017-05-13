@@ -26,32 +26,32 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
       // cant select new into a defined type so have to use anon type for the select new here due to EF Core bug
       // code after is a work-around
 
-      var x = from feature in _context.Topic.AsNoTracking()
+      var x = from topic in _context.Topic.AsNoTracking()
               select new
               {
-                Title = feature.Title,
-                Description = feature.Description,
-                Id = feature.Id,
+                Title = topic.Title,
+                Description = topic.Description,
+                Id = topic.Id,
                 BlogCount = (from posts in _context.BlogPostTopic
-                             where posts.TopicId == feature.Id && posts.BlogPost.Public == true && posts.BlogPost.PublishOn < DateTime.Now
+                             where posts.TopicId == topic.Id && posts.BlogPost.Public == true && posts.BlogPost.PublishOn < DateTime.Now
                              select posts).AsNoTracking().Count()
               };
 
-      List<TopicWithBlogCountViewModel> featureList = new List<TopicWithBlogCountViewModel>();
+      List<TopicWithBlogCountViewModel> topicList = new List<TopicWithBlogCountViewModel>();
 
-      foreach (var feature in await x.OrderByDescending(f => f.BlogCount).ToListAsync())
+      foreach (var topic in await x.OrderByDescending(f => f.BlogCount).ToListAsync())
       {
         TopicWithBlogCountViewModel fvm = new TopicWithBlogCountViewModel()
         {
-          BlogCount = feature.BlogCount,
-          Title = feature.Title,
-          Description = feature.Description,
-          Id = feature.Id
+          BlogCount = topic.BlogCount,
+          Title = topic.Title,
+          Description = topic.Description,
+          Id = topic.Id
         };
-        featureList.Add(fvm);
+        topicList.Add(fvm);
       }
 
-      vfvm.Topics = featureList;
+      vfvm.Topics = topicList;
 
       return vfvm;
 
