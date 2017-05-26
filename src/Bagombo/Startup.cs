@@ -1,4 +1,5 @@
-﻿using Bagombo.Data.Command.EFCoreCommandHandlers;
+﻿using Bagombo.Controllers;
+using Bagombo.Data.Command.EFCoreCommandHandlers;
 using Bagombo.Data.Query.EFCoreQueryHandlers;
 using Bagombo.EFCore;
 using Bagombo.Models;
@@ -170,6 +171,7 @@ namespace Bagombo
       _container.Register<IPasswordHasher<ApplicationUser>>(GetAspNetServiceProvider<IPasswordHasher<ApplicationUser>>(app), Lifestyle.Scoped);
       _container.Register<IPasswordValidator<ApplicationUser>>(GetAspNetServiceProvider<IPasswordValidator<ApplicationUser>>(app), Lifestyle.Scoped);
       _container.Register<IUserValidator<ApplicationUser>>(GetAspNetServiceProvider<IUserValidator<ApplicationUser>>(app), Lifestyle.Scoped);
+      _container.Register<ILogger<HomeController>>(GetAspNetServiceProvider<ILogger<HomeController>>(app), Lifestyle.Transient);
 
       //_container.Register<BlogDbContext>(app.GetRequestService<BlogDbContext>, Lifestyle.Scoped);
       //_container.Register<UserManager<ApplicationUser>>(app.GetRequestService<UserManager<ApplicationUser>>, Lifestyle.Scoped);

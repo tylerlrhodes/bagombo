@@ -39,7 +39,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
 
       List<TopicWithBlogCountViewModel> topicList = new List<TopicWithBlogCountViewModel>();
 
-      foreach (var topic in await x.OrderByDescending(f => f.BlogCount).ToListAsync())
+      foreach (var topic in await x.OrderByDescending(t => t.BlogCount).ToListAsync())
       {
         TopicWithBlogCountViewModel fvm = new TopicWithBlogCountViewModel()
         {
