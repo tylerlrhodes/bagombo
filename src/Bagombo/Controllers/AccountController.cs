@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Bagombo.Controllers
 {
@@ -14,11 +15,13 @@ namespace Bagombo.Controllers
   {
     private UserManager<ApplicationUser> _userManager;
     private SignInManager<ApplicationUser> _signInManager;
+    private ILogger _logger;
 
-    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger)
     {
       _userManager = userManager;
       _signInManager = signInManager;
+      _logger = logger;
     }
 
     // GET: /<controller>/
@@ -40,15 +43,20 @@ namespace Bagombo.Controllers
       if (ModelState.IsValid)
       {
         ApplicationUser au = await _userManager.FindByEmailAsync(alvm.Email);
+
         if (au != null)
         {
           await _signInManager.SignOutAsync();
           Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(au, alvm.Password, alvm.RememberMe, false);
           if (result.Succeeded)
           {
+            _logger.LogInformation("Info - Successful login for {0}", au.Email);
+
             return Redirect(returnUrl ?? "/");
           }
         }
+
+        _logger.LogWarning("Warning - unsuccessful login attempt for {0}", au.Email);
 
         ModelState.AddModelError(nameof(AccountLoginViewModel.Email), "Invalid user or passsword");
       }
@@ -58,7 +66,12 @@ namespace Bagombo.Controllers
 
     public async Task<IActionResult> Logoff()
     {
+      var curUser = await _userManager.GetUserAsync(HttpContext.User);
+
+      _logger.LogInformation("Info - Logout for {0}", curUser.Email);
+
       await _signInManager.SignOutAsync();
+
       return RedirectToAction("Login");
     }
 
@@ -81,10 +94,14 @@ namespace Bagombo.Controllers
       var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, RememberMe);
       if (result.Succeeded)
       {
+        _logger.LogInformation("Info - Facebook Login succeeded for {0}", info.Principal.FindFirstValue(ClaimTypes.Email));
+
         return Redirect(returnUrl);
       }
       else
       {
+        _logger.LogInformation("Info - New registration started via Facebook for {0}", info.Principal.FindFirstValue(ClaimTypes.Email));
+
         ViewData["ReturnUrl"] = returnUrl;
         ViewData["LoginProvider"] = info.LoginProvider;
         var email = info.Principal.FindFirstValue(ClaimTypes.Email);
@@ -111,10 +128,14 @@ namespace Bagombo.Controllers
       var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, RememberMe);
       if (result.Succeeded)
       {
+        _logger.LogInformation("Info - Twitter Login succeeded for {0}", info.Principal.FindFirstValue(ClaimTypes.Name));
+
         return Redirect(returnUrl);
       }
       else
       {
+        _logger.LogInformation("Info - New registration started via Twitter for {0}", info.Principal.FindFirstValue(ClaimTypes.Name));
+
         ViewData["ReturnUrl"] = returnUrl;
         ViewData["LoginProvider"] = info.LoginProvider;
         var email = info.Principal.FindFirstValue(ClaimTypes.Email);

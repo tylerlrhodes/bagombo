@@ -127,7 +127,8 @@ namespace Bagombo
         app.UseTwitterAuthentication(new TwitterOptions()
         {
           ConsumerKey = TwitterKey,
-          ConsumerSecret = TwitterSecret
+          ConsumerSecret = TwitterSecret,
+          RetrieveUserDetails = true
         });
       }
 
@@ -172,6 +173,7 @@ namespace Bagombo
       _container.Register<IPasswordValidator<ApplicationUser>>(GetAspNetServiceProvider<IPasswordValidator<ApplicationUser>>(app), Lifestyle.Scoped);
       _container.Register<IUserValidator<ApplicationUser>>(GetAspNetServiceProvider<IUserValidator<ApplicationUser>>(app), Lifestyle.Scoped);
       _container.Register<ILogger<HomeController>>(GetAspNetServiceProvider<ILogger<HomeController>>(app), Lifestyle.Transient);
+      _container.Register<ILogger<AccountController>>(GetAspNetServiceProvider<ILogger<AccountController>>(app), Lifestyle.Transient);
 
       //_container.Register<BlogDbContext>(app.GetRequestService<BlogDbContext>, Lifestyle.Scoped);
       //_container.Register<UserManager<ApplicationUser>>(app.GetRequestService<UserManager<ApplicationUser>>, Lifestyle.Scoped);
