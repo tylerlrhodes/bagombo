@@ -37,9 +37,13 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
 
         vcpvm.Category = category;
         vcpvm.Posts = bpcs.Select(bp => bp.BlogPost).ToList();
-      }
 
-      return vcpvm;
+        return vcpvm;
+      }
+      else
+      {
+        return null;
+      }
     }
   }
 }

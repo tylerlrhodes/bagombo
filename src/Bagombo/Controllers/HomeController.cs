@@ -6,6 +6,7 @@ using Bagombo.Models.ViewModels.Home;
 using CommonMark;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,11 @@ namespace Bagombo.Controllers
   public class HomeController : Controller
   {
     private IQueryProcessorAsync _qpa;
+    private ILogger _logger;
 
-    public HomeController(IQueryProcessorAsync qpa)
+    public HomeController(IQueryProcessorAsync qpa, ILogger<HomeController> logger)
     {
+      _logger = logger;
       _qpa = qpa;
     }
 
@@ -50,7 +53,18 @@ namespace Bagombo.Controllers
         SearchText = search
       };
 
-      var bps = await _qpa.ProcessAsync(gbpbst);
+      IEnumerable<SearchResultBlogPostViewModel> bps = null;
+
+      try
+      {
+        bps = await _qpa.ProcessAsync(gbpbst);
+      }
+      catch (Exception e)
+      {
+        _logger.LogError(0, e, "Exception during search!");
+
+        bps = new List<SearchResultBlogPostViewModel>();
+      }
 
       var vsrvm = new SearchResultsViewModel()
       {
@@ -61,7 +75,7 @@ namespace Bagombo.Controllers
       return View(vsrvm);
     }
 
-    public async Task<IActionResult> CategoryPosts(long? id)
+    public async Task<IActionResult> CategoryPosts(long id)
     {
       var gvcpbc = new GetCategoryPostsByCategoryViewModelQuery()
       {
@@ -70,7 +84,16 @@ namespace Bagombo.Controllers
 
       var vcpvm = await _qpa.ProcessAsync(gvcpbc);
 
-      return View(vcpvm);
+      if (vcpvm != null)
+      {
+        return View(vcpvm);
+      }
+      else
+      {
+        _logger.LogWarning("Warning - CategoryPosts called with invalid Category Id {0}", id);
+
+        return NotFound();
+      }
     }
 
     public async Task<IActionResult> AllPosts(int? sortby = 1)
@@ -108,6 +131,8 @@ namespace Bagombo.Controllers
 
       if (vfpvm == null)
       {
+        _logger.LogWarning("Warning - TopicPosts called with a Topic Id that returned null from query. Topic Id = {0}", id);
+
         return NotFound();
       }
 
@@ -131,7 +156,11 @@ namespace Bagombo.Controllers
     public async Task<IActionResult> BlogPost(long? id)
     {
       if (id == null)
+      {
+        _logger.LogWarning("Warning - BlogPost with null Id called.");
+
         return NotFound();
+      }
 
       var gvbpbi = new GetBlogPostByIdViewModelQuery()
       {
@@ -141,7 +170,11 @@ namespace Bagombo.Controllers
       var bpvm = await _qpa.ProcessAsync(gvbpbi);
 
       if (bpvm == null)
+      {
+        _logger.LogWarning("Warning - BlogPost with Id {0} was not found.", id);
+
         return NotFound();
+      }
 
       bpvm.Content = CommonMarkConverter.Convert(bpvm.Content);
 
