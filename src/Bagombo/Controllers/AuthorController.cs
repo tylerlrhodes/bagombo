@@ -96,10 +96,14 @@ namespace Bagombo.Controllers
 
         if (result.Succeeded)
         {
+          _logger.LogInformation("Added BlogPost {0} by {1} {2}", model.Title, author.FirstName, author.LastName);
+
           return RedirectToAction("EditPost", new { id = result.Command.Id });
         }
         else
         {
+          _logger.LogWarning("Unable to add BlogPost {0} by {1} {2}", model.Title, author.FirstName, author.LastName);
+
           ModelState.AddModelError("", "Error saving to database!");
           return View(model);
         }
@@ -112,175 +116,199 @@ namespace Bagombo.Controllers
     {
       var post = await _qpa.ProcessAsync(new GetBlogPostByIdQuery { Id = id });
 
-      EditBlogPostViewModel ebpvm = new EditBlogPostViewModel
+      if (post != null)
       {
-        Id = id,
-        Title = post.Title,
-        Content = post.Content,
-        Description = post.Description,
-        PublishOn = post.PublishOn,
-        Public = post.Public,
-        TopicsList = new List<TopicsCheckBox>(),
-        CategoriesList = new List<CategoriesCheckBox>()
-      };
-
-      var postHasCategories = await _qpa.ProcessAsync(new GetCategoriesForBlogPostByIdQuery { Id = id });
-
-      foreach (var category in await _qpa.ProcessAsync(new GetCategoriesQuery()))
-      {
-        var categoryCheckBox = new CategoriesCheckBox()
+        EditBlogPostViewModel ebpvm = new EditBlogPostViewModel
         {
-          CategoryId = category.Id,
-          Name = category.Name,
-          IsSelected = false
+          Id = id,
+          Title = post.Title,
+          Content = post.Content,
+          Description = post.Description,
+          PublishOn = post.PublishOn,
+          Public = post.Public,
+          TopicsList = new List<TopicsCheckBox>(),
+          CategoriesList = new List<CategoriesCheckBox>()
         };
 
-        if (postHasCategories.Contains(category))
+        var postHasCategories = await _qpa.ProcessAsync(new GetCategoriesForBlogPostByIdQuery { Id = id });
+
+        foreach (var category in await _qpa.ProcessAsync(new GetCategoriesQuery()))
         {
-          categoryCheckBox.IsSelected = true;
+          var categoryCheckBox = new CategoriesCheckBox()
+          {
+            CategoryId = category.Id,
+            Name = category.Name,
+            IsSelected = false
+          };
+
+          if (postHasCategories.Contains(category))
+          {
+            categoryCheckBox.IsSelected = true;
+          }
+
+          ebpvm.CategoriesList.Add(categoryCheckBox);
         }
 
-        ebpvm.CategoriesList.Add(categoryCheckBox);
+        var postHasTopics = await _qpa.ProcessAsync(new GetTopicsForBlogPostByIdQuery { Id = id });
+
+        foreach (var topic in await _qpa.ProcessAsync(new GetTopicsQuery()))
+        {
+          var topicCheckBox = new TopicsCheckBox()
+          {
+            TopicId = topic.Id,
+            Title = topic.Title,
+            IsSelected = false
+          };
+
+          if (postHasTopics.Contains(topic))
+          {
+            topicCheckBox.IsSelected = true;
+          }
+
+          ebpvm.TopicsList.Add(topicCheckBox);
+        }
+
+        return View(ebpvm);
       }
-
-      var postHasTopics = await _qpa.ProcessAsync(new GetTopicsForBlogPostByIdQuery { Id = id });
-
-      foreach (var topic in await _qpa.ProcessAsync(new GetTopicsQuery()))
+      else
       {
-        var topicCheckBox = new TopicsCheckBox()
-        {
-          TopicId = topic.Id,
-          Title = topic.Title,
-          IsSelected = false
-        };
+        _logger.LogWarning("EditPost called for non-existant BlogPost {0}", id);
 
-        if (postHasTopics.Contains(topic))
-        {
-          topicCheckBox.IsSelected = true;
-        }
-
-        ebpvm.TopicsList.Add(topicCheckBox);
+        return NotFound();
       }
-
-      return View(ebpvm);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditPost(EditBlogPostViewModel model)
     {
-      // fix these queries, the query for author can select from the author table without the join
 
       var post = await _qpa.ProcessAsync(new GetBlogPostByIdQuery { Id = model.Id });
 
-      var ubpc = new UpdateBlogPostCommand();
-
-      if (post.Author == null)
+      if (post != null)
       {
-        var curUser = await _userManager.GetUserAsync(User);
+        var ubpc = new UpdateBlogPostCommand();
 
-        var author = await _qpa.ProcessAsync(new GetAuthorByAppUserIdQuery { Id = curUser.Id });
+        if (post.Author == null)
+        {
+          var curUser = await _userManager.GetUserAsync(User);
 
-        ubpc.NewAuthor = author;
+          var author = await _qpa.ProcessAsync(new GetAuthorByAppUserIdQuery { Id = curUser.Id });
+
+          ubpc.NewAuthor = author;
+        }
+        else
+        {
+          ubpc.NewAuthor = post.Author; // keep the same author
+        }
+
+        ubpc.Id = model.Id;
+        ubpc.NewTitle = model.Title;
+        ubpc.NewDescription = model.Description;
+        ubpc.NewContent = model.Content;
+        ubpc.LastModifiedAt = DateTime.Now;
+        ubpc.NewPublishOn = model.PublishOn;
+        ubpc.NewPublic = model.Public;
+
+        // update the post
+
+        var ubpcResult = await _cp.ProcessAsync(ubpc);
+
+        if (ubpcResult.Succeeded)
+        {
+          // do nothing
+          _logger.LogInformation("Successfully updated BlogPost Id {0}", model.Id);
+        }
+        else
+        {
+          _logger.LogWarning("Unable to update BlogPost {0}", model.Id);
+          // an error
+          return NotFound();
+        }
+
+        List<long> topicIds = new List<long>();
+
+        if (model.TopicsList != null)
+        {
+          foreach (var topic in model.TopicsList)
+          {
+            if (topic.IsSelected)
+            {
+              topicIds.Add(topic.TopicId);
+            }
+          }
+
+          var addTopicsResult =
+            await _cp.ProcessAsync(new SetBlogPostTopicsCommand
+            {
+              BlogPostId = post.Id,
+              TopicIds = topicIds
+            });
+
+          if (addTopicsResult.Succeeded)
+          {
+            // do nothing
+            _logger.LogInformation("Successfully set Topics for BlogPost {0}", model.Id);
+          }
+          else
+          {
+            // log the error
+            _logger.LogInformation("Unable to set Topics for BlogPost {0}", model.Id);
+
+            return NotFound();
+          }
+        }
+        else
+        {
+          model.TopicsList = new List<TopicsCheckBox>();
+        }
+
+        List<long> categoryIds = new List<long>();
+
+        if (model.CategoriesList != null)
+        {
+          foreach (var category in model.CategoriesList)
+          {
+            if (category.IsSelected)
+            {
+              categoryIds.Add(category.CategoryId);
+            }
+          }
+
+          var addCategoriesResult =
+            await _cp.ProcessAsync(new SetBlogPostCategoriesCommand
+            {
+              BlogPostId = post.Id,
+              CategoryIds = categoryIds
+            });
+
+          if (addCategoriesResult.Succeeded)
+          {
+            // do nothing
+            _logger.LogInformation("Successfully set Categories for BlogPost {0}", model.Id);
+          }
+          else
+          {
+            // log the error
+            _logger.LogWarning("Unable to set Categories for BlogPost {0}", model.Id);
+            return NotFound();
+          }
+        }
+        else
+        {
+          model.CategoriesList = new List<CategoriesCheckBox>();
+        }
+
+        ViewData["SavedMessage"] = "Post saved.";
+
+        return View(model); 
       }
       else
-      { 
-        ubpc.NewAuthor = post.Author; // keep the same author
-      }
-
-      ubpc.Id = model.Id;
-      ubpc.NewTitle = model.Title;
-      ubpc.NewDescription = model.Description;
-      ubpc.NewContent = model.Content;
-      ubpc.LastModifiedAt = DateTime.Now;
-      ubpc.NewPublishOn = model.PublishOn;
-      ubpc.NewPublic = model.Public;
-
-      // update the post
-
-      var ubpcResult = await _cp.ProcessAsync(ubpc);
-
-      if (ubpcResult.Succeeded)
       {
-        // do nothing
-      }
-      else
-      {
-        // an error
+        _logger.LogWarning("Post to EditPost for update invoked for a non-existant BlogPost Id {0}", model.Id);
+
         return NotFound();
       }
-
-      List<long> topicIds = new List<long>();
-
-      if (model.TopicsList != null)
-      {
-        foreach (var topic in model.TopicsList)
-        {
-          if (topic.IsSelected)
-          {
-            topicIds.Add(topic.TopicId);
-          }
-        }
-
-        var addTopicsResult = 
-          await _cp.ProcessAsync(new SetBlogPostTopicsCommand
-          {
-            BlogPostId = post.Id,
-            TopicIds = topicIds
-          });
-
-        if (addTopicsResult.Succeeded)
-        {
-          // do nothing
-        }
-        else
-        {
-          // log the error
-          return NotFound();
-        }
-      }
-      else
-      {
-        model.TopicsList = new List<TopicsCheckBox>();
-      }
-
-      List<long> categoryIds = new List<long>();
-
-      if (model.CategoriesList != null)
-      {
-        foreach (var category in model.CategoriesList)
-        {
-          if (category.IsSelected)
-          {
-            categoryIds.Add(category.CategoryId);
-          }
-        }
-
-        var addCategoriesResult =
-          await _cp.ProcessAsync(new SetBlogPostCategoriesCommand
-          {
-            BlogPostId = post.Id,
-            CategoryIds = categoryIds
-          });
-
-        if (addCategoriesResult.Succeeded)
-        {
-          // do nothing
-        }
-        else
-        {
-          // log the error
-          return NotFound();
-        }
-      }
-      else
-      {
-        model.CategoriesList = new List<CategoriesCheckBox>();
-      }
-
-      ViewData["SavedMessage"] = "Post saved.";
-
-      return View(model);
     }
 
     [HttpPost]
