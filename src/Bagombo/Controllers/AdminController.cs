@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Bagombo.Models.ViewModels.Admin;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
-
+using Microsoft.Extensions.Logging;
 
 namespace Bagombo.Controllers
 {
@@ -27,6 +27,7 @@ namespace Bagombo.Controllers
     private IPasswordHasher<ApplicationUser> _passwordHasher;
     private IUserValidator<ApplicationUser> _userValidator;
     private IPasswordValidator<ApplicationUser> _passwordValidator;
+    private ILogger _logger;
 
     public AdminController(ICommandProcessorAsync cp,
                            IQueryProcessorAsync qpa,
@@ -34,7 +35,8 @@ namespace Bagombo.Controllers
                            SignInManager<ApplicationUser> signInManager,
                            IPasswordHasher<ApplicationUser> passwordHasher,
                            IPasswordValidator<ApplicationUser> passwordValidator,
-                           IUserValidator<ApplicationUser> userValidator)
+                           IUserValidator<ApplicationUser> userValidator,
+                           ILogger<AdminController> logger)
     {
       _cp = cp;
       _qpa = qpa;
@@ -43,6 +45,7 @@ namespace Bagombo.Controllers
       _passwordHasher = passwordHasher;
       _passwordValidator = passwordValidator;
       _userValidator = userValidator;
+      _logger = logger;
     }
 
     public IActionResult Index()
@@ -71,11 +74,15 @@ namespace Bagombo.Controllers
 
         if (result.Succeeded)
         {
+          _logger.LogInformation("Added Topic {0}.", model.Title);
+
           return RedirectToAction("ManageTopics"); 
         }
         else
         {
-          // To do, better exeception handling
+          _logger.LogWarning("Unable to add Topic {0}.", model.Title);
+
+          // todo: better error handling
           return NotFound();
         }
       }
@@ -94,11 +101,14 @@ namespace Bagombo.Controllers
 
       if (f != null)
       {
-        return View(new TopicViewModel() { Id = f.Id, Title = f.Title, Description = f.Description } );
+        return View(new TopicViewModel() { Id = f.Id, Title = f.Title, Description = f.Description });
       }
       else
+      {
+        _logger.LogWarning("EditTopic called with non-existant Id {0}", id);
         // need better exception and error handling
         return NotFound();
+      }
     }
 
     [HttpPost]
@@ -117,10 +127,12 @@ namespace Bagombo.Controllers
 
         if (result.Succeeded)
         {
+          _logger.LogInformation("Updated topic with id {0} with title {1} and description {2}", model.Id, model.Title, model.Description);
           return RedirectToAction("ManageTopics");
         }
         else
         {
+          _logger.LogWarning("Unable to update topic with id {0} to title {1} and description {2}", model.Id, model.Title, model.Description);
           // To Do - Better Error handling
           return NotFound();
         }
@@ -150,10 +162,14 @@ namespace Bagombo.Controllers
 
       if (result.Succeeded)
       {
+        _logger.LogInformation("Deleted topic with id {0}", id);
+
         return RedirectToAction("ManageTopics"); 
       }
       else
       {
+        _logger.LogWarning("Unable to delete topic with id {0}", id);
+        // todo: better error handling
         return NotFound();
       }
     }
@@ -176,10 +192,14 @@ namespace Bagombo.Controllers
 
         if (result.Succeeded)
         {
+          _logger.LogInformation("Successfully added Category with name {0} and description {1}", model.Name, model.Description);
+
           return RedirectToAction("ManageCategories"); 
         }
         else
         {
+          _logger.LogWarning("Unable to add category with name {0} and description {1}", model.Name, model.Description);
+          // todo: better error handling
           return NotFound();
         }
       }
@@ -202,6 +222,8 @@ namespace Bagombo.Controllers
       }
       else
       {
+        _logger.LogWarning("EditCategory called with non-existant id {0}", id);
+        // todo: better error handling
         return NotFound();
       }
     }
@@ -222,10 +244,14 @@ namespace Bagombo.Controllers
 
         if (result.Succeeded)
         {
+          _logger.LogInformation("Successfully updated Category with id {0} to name {1} and description {2}", model.Id, model.Name, model.Description);
+
           return RedirectToAction("ManageCategories"); 
         }
         else
         {
+          _logger.LogWarning("Unable to update Category with id {0} to name {1} and description {2}", model.Id, model.Name, model.Description);
+          // todo: better error handling
           return NotFound();
         }
       }
@@ -254,10 +280,14 @@ namespace Bagombo.Controllers
 
       if (result.Succeeded)
       {
+        _logger.LogInformation("Successfully deleted Category with id {0}", id);
+
         return RedirectToAction("ManageCategories"); 
       }
       else
       {
+        _logger.LogWarning("Unable to delete category with id {0}", id);
+        // todo: better error handling
         return NotFound();
       }
     }
@@ -283,11 +313,14 @@ namespace Bagombo.Controllers
 
       if (deletePostResult.Succeeded)
       {
+        _logger.LogInformation("Successfully deleted BlogPost with id {0}", id);
+
         return RedirectToAction("ManagePosts");
       }
       else
       {
-        // log error
+        _logger.LogWarning("Unable to delete post with id {0}", id);
+        // todo: better error handling
         return NotFound();
       }
     }
@@ -325,12 +358,17 @@ namespace Bagombo.Controllers
           UserName = model.UserName,
           Email = model.Email
         };
+
         if (model.Password == null)
         {
           ModelState.AddModelError("", "Password cannot be blank.");
           return View(model);
         }
-        if (model.IsAuthor == true)
+
+        IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+        _logger.LogInformation("Creating user {0}", model.Email);
+
+        if (model.IsAuthor == true && result.Succeeded)
         {
           if (String.IsNullOrEmpty(model.FirstName) || String.IsNullOrEmpty(model.LastName))
           {
@@ -352,13 +390,22 @@ namespace Bagombo.Controllers
           if (aacResult.Succeeded)
           {
             user.Author = aacResult.Command.Author;
+
+            _logger.LogInformation("Setup user {0} as author {1} {2}", model.Email, model.FirstName, model.LastName);
+          }
+          else
+          {
+            _logger.LogWarning("Unable to setup user {0} as authoer {1} {2}", model.Email, model.FirstName, model.LastName);
           }
         }
-        IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+
         if (user.Author != null)
         {
+          _logger.LogInformation("Adding Authors role to user {0}", model.Email);
+
           await _userManager.AddToRoleAsync(user, "Authors");
         }
+
         if (result.Succeeded)
         {
           return RedirectToAction("ManageUsers");
@@ -393,17 +440,26 @@ namespace Bagombo.Controllers
 
           if (!commandResult.Succeeded)
           {
+            _logger.LogWarning("Unable to set AppUserId to Null for author with user {0} with id {1}", user.Email, user.Id);
             // need better error handling ....
             return NotFound();
+          }
+          else
+          {
+            _logger.LogInformation("Set AppUserId to Null for author with user {0} and id {1}", user.Email, user.Id);
           }
         }
         IdentityResult result = await _userManager.DeleteAsync(user);
         if (result.Succeeded)
         {
+          _logger.LogInformation("Removed user {0} with id {1}", user.Email, user.Id);
+
           return RedirectToAction("ManageUsers");
         }
         else
         {
+          _logger.LogWarning("Unable to remove user {0} with id {1}", user.Email, user.Id);
+
           foreach (IdentityError error in result.Errors)
           {
             ModelState.AddModelError("", error.Description);
@@ -412,6 +468,8 @@ namespace Bagombo.Controllers
       }
       else
       {
+        _logger.LogWarning("User not found with id {0}", id);
+
         ModelState.AddModelError("", "User not found!");
       }
       return View("ManageUsers", _userManager.Users);
@@ -444,6 +502,8 @@ namespace Bagombo.Controllers
       }
       else
       {
+        _logger.LogWarning("EditUser called for non-existant user id {0}", id);
+
         return RedirectToAction("ManageUsers");
       }
     }
@@ -457,102 +517,108 @@ namespace Bagombo.Controllers
         //Get some info on the user
         ApplicationUser au = await _userManager.Users.Where(u => u.Id == model.Id).FirstOrDefaultAsync();
 
-        var author = await _qpa.ProcessAsync(new GetAuthorByAppUserIdQuery { Id = au.Id });
-
-        if (author != null)
-        {
-          au.Author = author;
-        }
-
-        // Make the user an author if it's not already, no author fields can be "updated right now"
-        if (model.IsAuthor == true)
-        {
-          if (String.IsNullOrEmpty(model.FirstName) || String.IsNullOrEmpty(model.LastName))
-          {
-            ModelState.AddModelError("", "Author requires both first and last name to be set.");
-            return View(model);
-          }
-          if (au.Author == null)
-          {
-            //Author author = new Author
-            //{
-            //  FirstName = model.FirstName,
-            //  LastName = model.LastName
-            //};
-            //au.Author = author;
-
-            var aac = new AddAuthorCommand
-            {
-              ApplicatoinUserId = model.Id,
-              FirstName = model.FirstName,
-              LastName = model.LastName
-            };
-
-            var aacResult = await _cp.ProcessAsync(aac);
-
-            if (aacResult.Succeeded)
-            {
-              await _userManager.AddToRoleAsync(au, "Authors");
-              au.Author = aacResult.Command.Author;
-            }
-            else
-            {
-              ModelState.AddModelError("", "Error making the user an author, perhaps first and last name are not unique in database");
-              return View(model);
-            }
-          }
-          else
-          {
-            var uac = new UpdateAuthorCommand
-            {
-              Id = au.Author.Id,
-              NewFirstName = model.FirstName,
-              NewLastName = model.LastName
-            };
-
-            var uacResult = await _cp.ProcessAsync(uac);
-
-            if (uacResult.Succeeded)
-            {
-              // do nothing
-            }
-            else
-            {
-              ModelState.AddModelError("", "Error updating the author, perhaps the first and last name are not unique in the database");
-              return View(model); 
-            }
-          }
-        }
-        // It's not an author
-        else
-        {
-          if (au.Author != null)
-          {
-            // Remove it from authors if it was and remove the role
-            //_context.Authors.Remove(au.Author);
-
-            var sauidnfa = new SetAppUserIdNullForAuthorCommand
-            {
-              Id = au.Id
-            };
-
-            var sauidnfaResult = await _cp.ProcessAsync(sauidnfa);
-
-            if (sauidnfaResult.Succeeded)
-            {
-              await _userManager.RemoveFromRoleAsync(au, "Authors");
-            }
-            else
-            {
-              // Error
-              ModelState.AddModelError("", "Error removing author from user!");
-              return View(model);
-            }
-          }
-        }
         // The user should not be null!
         if (au != null)
         {
+          var author = await _qpa.ProcessAsync(new GetAuthorByAppUserIdQuery { Id = au.Id });
+
+          if (author != null)
+          {
+            au.Author = author;
+          }
+
+          // Make the user an author if it's not already, no author fields can be "updated right now"
+          if (model.IsAuthor == true)
+          {
+            if (String.IsNullOrEmpty(model.FirstName) || String.IsNullOrEmpty(model.LastName))
+            {
+              ModelState.AddModelError("", "Author requires both first and last name to be set.");
+              return View(model);
+            }
+            if (au.Author == null)
+            {
+              var aac = new AddAuthorCommand
+              {
+                ApplicatoinUserId = model.Id,
+                FirstName = model.FirstName,
+                LastName = model.LastName
+              };
+
+              var aacResult = await _cp.ProcessAsync(aac);
+
+              if (aacResult.Succeeded)
+              {
+                _logger.LogInformation("Set user {0} to be author {1} {2}", au.Email, model.FirstName, model.LastName);
+
+                await _userManager.AddToRoleAsync(au, "Authors");
+
+                _logger.LogInformation("Added role Authors to user {0}", au.Email);
+
+                au.Author = aacResult.Command.Author;
+              }
+              else
+              {
+                _logger.LogWarning("Unable to make user {0} author {1} {2}", au.Email, model.FirstName, model.LastName);
+
+                ModelState.AddModelError("", "Error making the user an author, perhaps first and last name are not unique in database");
+                return View(model);
+              }
+            }
+            else
+            {
+              var uac = new UpdateAuthorCommand
+              {
+                Id = au.Author.Id,
+                NewFirstName = model.FirstName,
+                NewLastName = model.LastName
+              };
+
+              var uacResult = await _cp.ProcessAsync(uac);
+
+              if (uacResult.Succeeded)
+              {
+                _logger.LogInformation("Updated author {0} {1} to {2} {3}", au.Author.FirstName, au.Author.LastName, model.FirstName, model.LastName);
+                // do nothing
+              }
+              else
+              {
+                _logger.LogWarning("Unable to update author {0} {1} to {2} {3}", au.Author.FirstName, au.Author.LastName, model.FirstName, model.LastName);
+
+                ModelState.AddModelError("", "Error updating the author, perhaps the first and last name are not unique in the database");
+                return View(model);
+              }
+            }
+          }
+          // It's not an author
+          else
+          {
+            if (au.Author != null)
+            {
+              // Remove it from authors if it was and remove the role
+
+              var sauidnfa = new SetAppUserIdNullForAuthorCommand
+              {
+                Id = au.Id
+              };
+
+              var sauidnfaResult = await _cp.ProcessAsync(sauidnfa);
+
+              if (sauidnfaResult.Succeeded)
+              {
+                _logger.LogInformation("Set AppUserId Null for Author {0} {1} with id {3}", au.Author.FirstName, au.Author.LastName, au.Author.Id);
+
+                await _userManager.RemoveFromRoleAsync(au, "Authors");
+              }
+              else
+              {
+                // Error
+                _logger.LogWarning("Unable to set AppUserId {0} to Null for Author {1} ", au.Id, au.Author.Id);
+
+                ModelState.AddModelError("", "Error removing author from user!");
+                return View(model);
+              }
+            }
+          }
           // Logic goes like this:
           // Validate user with new email and username
           // If it has an external login, just change the stuff and update the user assuming it passes validation
@@ -577,10 +643,14 @@ namespace Bagombo.Controllers
             }
             if (result.Succeeded)
             {
+              _logger.LogInformation("Updated user {0} to new email {1} username {2}", au.Id, model.Email, model.UserName);
+
               return RedirectToAction("ManageUsers");
             }
             else
             {
+              _logger.LogWarning("Unable to update user {0} to new email {1} username {2}", au.Id, model.Email, model.UserName);
+
               // something happened, throw an exception or something
               // for now just return to the edit page
             }
@@ -593,13 +663,20 @@ namespace Bagombo.Controllers
               IdentityResult validPassword = await _passwordValidator.ValidateAsync(_userManager, au, model.Password);
               if (validPassword.Succeeded)
               {
+
                 au.PasswordHash = _passwordHasher.HashPassword(au, model.Password);
                 IdentityResult securityStampUpdate = await _userManager.UpdateSecurityStampAsync(au);
+
                 if (securityStampUpdate.Succeeded)
                 {
+                  _logger.LogInformation("Updated security stamp for user {0}", au.Id);
+
                   IdentityResult result = await _userManager.UpdateAsync(au);
+
                   if (result.Succeeded)
                   {
+                    _logger.LogInformation("Updated user and password for user {0}", au.Id);
+
                     if (au == await _userManager.GetUserAsync(User))
                     {
                       await _signInManager.RefreshSignInAsync(au);
@@ -608,14 +685,19 @@ namespace Bagombo.Controllers
                   }
                   else
                   {
+                    _logger.LogWarning("Unable to update user and password for user {0}", au.Id);
+
                     foreach (var error in result.Errors)
                     {
                       ModelState.AddModelError("", error.Description);
                     }
                   }
+
                 }
                 else
                 {
+                  _logger.LogWarning("Unexpected error updating security stamp for user {0}", au.Id);
+
                   foreach (var error in securityStampUpdate.Errors)
                   {
                     ModelState.AddModelError("", error.Description);
@@ -639,8 +721,11 @@ namespace Bagombo.Controllers
             else
             {
               IdentityResult result = await _userManager.UpdateAsync(au);
+
               if (result.Succeeded)
               {
+                _logger.LogInformation("Updated user {0}", au.Id);
+
                 if (au == await _userManager.GetUserAsync(User))
                 {
                   await _signInManager.RefreshSignInAsync(au);
@@ -649,14 +734,21 @@ namespace Bagombo.Controllers
               }
               else
               {
+                _logger.LogWarning("Unable to update user {0}", au.Id);
+
                 foreach (var error in result.Errors)
                 {
                   ModelState.AddModelError("", error.Description);
                 }
               }
+
             }
           }
           // end if au == null
+        }
+        else
+        {
+          _logger.LogWarning("Edit user called with non-existant id {0}", model.Id);
         }
       }
       return View(model);

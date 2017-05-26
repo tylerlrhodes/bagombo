@@ -15,6 +15,7 @@ using Bagombo.Data.Query;
 using Bagombo.Data.Command;
 using Bagombo.Data.Query.Queries;
 using Bagombo.Data.Command.Commands;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,14 +27,17 @@ namespace Bagombo.Controllers
     private IQueryProcessorAsync _qpa;
     private ICommandProcessorAsync _cp;
     private UserManager<ApplicationUser> _userManager;
+    private ILogger _logger;
 
     public AuthorController(IQueryProcessorAsync qpa,
                             ICommandProcessorAsync cp,
-                            UserManager<ApplicationUser> userManager)
+                            UserManager<ApplicationUser> userManager,
+                            ILogger<AuthorController> logger)
     {
       _qpa = qpa;
       _cp = cp;
       _userManager = userManager;
+      _logger = logger;
     }
 
     public IActionResult Index()

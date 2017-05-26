@@ -166,13 +166,17 @@ namespace Bagombo.Controllers
           if (result.Succeeded)
           {
             await _signInManager.SignInAsync(user, isPersistent: false);
-            // _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
+
+            _logger.LogInformation(6, "User created an account {0} using {1} provider.", model.Email, info.LoginProvider);
+
             return RedirectToLocal(returnUrl);
           }
 
         }
         else
         {
+          _logger.LogWarning("Unable to create user with email {0} and login provider {1}.", model.Email, info.LoginProvider);
+
           ModelState.AddModelError("", result.ToString());
         }
 
