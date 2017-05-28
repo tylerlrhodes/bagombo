@@ -104,8 +104,8 @@ namespace Bagombo
 
       ApplicationDbContext.CreateAuthorRole(app.ApplicationServices).Wait();
 
-      loggerFactory.AddConsole();
-      loggerFactory.AddFile("Logs/ts-{Date}.txt");
+      loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+      loggerFactory.AddFile(Configuration.GetSection("Logging"));
 
       app.UseStaticFiles();
 
