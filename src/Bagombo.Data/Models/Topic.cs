@@ -10,6 +10,7 @@ namespace Bagombo.Models
     public long Id { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
+    public bool ShowOnHomePage { get; set; }
     public ICollection<BlogPostTopic> BlogPosts{ get; set; }
   }
 }

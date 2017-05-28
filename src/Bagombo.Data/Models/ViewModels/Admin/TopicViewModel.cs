@@ -15,6 +15,9 @@ namespace Bagombo.Models.ViewModels.Admin
     public string Title { get; set; }
 
     [Required]
+    public bool ShowOnHomePage { get; set; }
+
+    [Required]
     public string Description { get; set; }
   }
 }

@@ -36,18 +36,25 @@
         </div>
     </div>
     <div class="row">
+      @if(Model.TopicPosts.Topic != null)
+      {
         <div class="col-sm-6 col-md-4">
-            <h3>Using Bagombo</h3>
-            <hr />
-            <ul class="nostyle">
-                <li><a href="#">Requirements</a></li>
-                <li><a href="#">How to install Bagombo</a></li>
-                <li><a href="#">How to customize the home page</a></li>
-                <li><a href="#">Best practices</a></li>
-                <li><a href="#">Where to file issues and requests</a></li>
-                <li><a href="#">FAQ</a></li>
-            </ul>
+          <h3>@Model.TopicPosts.Topic.Title</h3>
+          <hr />
+          <ul class="nostyle">
+            @foreach (var p in Model.TopicPosts.BlogPosts)
+            {
+              <li><a asp-action="BlogPost" asp-route-id="@p.Id">@p.Title</a></li>
+            }
+          </ul>
         </div>
+      }
+      else
+      {
+        <div class="col-md-2">
+          &nbsp;
+        </div>
+      }
         <div class="col-sm-6 col-md-4">
             <h3>Recent Posts</h3>
             <hr />

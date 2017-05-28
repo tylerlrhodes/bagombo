@@ -36,9 +36,14 @@ namespace Bagombo.Controllers
 
       var recentPosts = await _qpa.ProcessAsync(grbp);
 
+      var gtphp = new GetTopicPostsForHomePageViewModelQuery();
+
+      var topicPostsViewModel = await _qpa.ProcessAsync(gtphp);
+
       var vhvm = new HomeViewModel()
       {
-        RecentPosts = recentPosts
+        RecentPosts = recentPosts,
+        TopicPosts = topicPostsViewModel
       };
 
       return View(vhvm);

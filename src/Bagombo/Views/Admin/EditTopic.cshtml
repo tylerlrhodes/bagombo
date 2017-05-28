@@ -22,6 +22,11 @@
                         <label asp-for="Description"></label>
                         <input asp-for="Description" class="form-control" />
                     </div>
+                    <div class="form-group">
+                      <label class="checkbox-inline">
+                        <input asp-for="ShowOnHomePage"> Show On Home Page?
+                      </label>
+                    </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                     <a asp-action="ManageTopics" class="btn btn-default">Cancel</a>
                 </form>

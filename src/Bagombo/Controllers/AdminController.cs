@@ -66,7 +66,8 @@ namespace Bagombo.Controllers
           Topic = new Topic()
           {
             Title = model.Title,
-            Description = model.Description
+            Description = model.Description,
+            ShowOnHomePage = model.ShowOnHomePage
           }
         };
 
@@ -101,7 +102,7 @@ namespace Bagombo.Controllers
 
       if (f != null)
       {
-        return View(new TopicViewModel() { Id = f.Id, Title = f.Title, Description = f.Description });
+        return View(new TopicViewModel() { Id = f.Id, Title = f.Title, Description = f.Description, ShowOnHomePage = f.ShowOnHomePage });
       }
       else
       {
@@ -120,7 +121,8 @@ namespace Bagombo.Controllers
         {
           Id = model.Id,
           NewTitle = model.Title,
-          NewDescription = model.Description
+          NewDescription = model.Description,
+          NewShowOnHomePage = model.ShowOnHomePage
         };
 
         var result = await _cp.ProcessAsync(efc);

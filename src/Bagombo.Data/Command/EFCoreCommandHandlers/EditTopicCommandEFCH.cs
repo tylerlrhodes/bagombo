@@ -1,7 +1,9 @@
 ﻿using Bagombo.Data.Command.Commands;
 using Bagombo.EFCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,10 +17,23 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
     {
       try
       {
+        if (command.NewShowOnHomePage == true)
+        {
+          var curTopicOnHomePage = await _context.Topics.Where(t => t.ShowOnHomePage == true).FirstOrDefaultAsync();
+
+          if (curTopicOnHomePage != null)
+          {
+            curTopicOnHomePage.ShowOnHomePage = false;
+
+            await _context.SaveChangesAsync();
+          }
+        }
+
         var f = await _context.Topics.FindAsync(command.Id);
 
         f.Title = command.NewTitle;
         f.Description = command.NewDescription;
+        f.ShowOnHomePage = command.NewShowOnHomePage;
 
         await _context.SaveChangesAsync();
 

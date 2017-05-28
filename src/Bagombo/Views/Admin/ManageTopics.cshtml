@@ -20,6 +20,7 @@
                         <tr>
                             <th>Title</th>
                             <th>Description</th>
+                            <th>Shown On Homepage?</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -30,6 +31,10 @@
                         <tr id="@topic.Id">
                             <td>@topic.Title</td>
                             <td>@topic.Description</td>
+                            <td>@if (topic.ShowOnHomePage == true)
+                                {
+                                  <text>Yes</text>
+                                }</td>
                             <td>
                                 <form asp-controller="Admin" asp-action="DeleteTopic" asp-route-id="@topic.Id" method="post">
                                     <span class="text-nowrap">

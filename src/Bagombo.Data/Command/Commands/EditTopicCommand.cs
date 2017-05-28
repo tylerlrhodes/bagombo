@@ -9,5 +9,6 @@ namespace Bagombo.Data.Command.Commands
     public long Id { get; set; }
     public string NewTitle { get; set; }
     public string NewDescription { get; set; }
+    public bool NewShowOnHomePage { get; set; }
   }
 }
