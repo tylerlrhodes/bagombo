@@ -83,7 +83,7 @@ namespace Bagombo.Controllers
           _logger.LogWarning("Unable to add Topic {0}.", model.Title);
 
           // todo: better error handling
-          return NotFound();
+          ModelState.AddModelError("Error", "Unable to add topic, perhaps the title is not unique.");
         }
       }
       return View(model);
@@ -134,7 +134,7 @@ namespace Bagombo.Controllers
         {
           _logger.LogWarning("Unable to update topic with id {0} to title {1} and description {2}", model.Id, model.Title, model.Description);
           // To Do - Better Error handling
-          return NotFound();
+          ModelState.AddModelError("Error", "Unable to update topic, perhaps the title is not unique.");
         }
       }
       return View(model);

@@ -15,6 +15,7 @@ namespace Bagombo.Data
   /// dotnet ef migrations add test1 --startup-project ..\blog
   /// or
   /// https://github.com/aspnet/EntityFramework/issues/7889   -- using this fix
+  /// https://docs.microsoft.com/en-us/ef/core/miscellaneous/configuring-dbcontext
   /// </summary>
   /// 
   class StartupForEF : IDbContextFactory<BlogDbContext>

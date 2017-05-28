@@ -45,7 +45,12 @@ namespace Bagombo.EFCore
                                 .IsRequired(false);
 
       builder.Entity<Topic>().ToTable("Topic");
+      builder.Entity<Topic>().HasIndex(t => t.Title)
+                             .IsUnique();
+
       builder.Entity<Category>().ToTable("Category");
+      builder.Entity<Category>().HasIndex(c => c.Name)
+                                .IsUnique();
 
       builder.Entity<BlogPostTopic>().HasKey(bpf => new { bpf.TopicId, bpf.BlogPostId });
       builder.Entity<BlogPostTopic>().HasOne(bpf => bpf.BlogPost)
