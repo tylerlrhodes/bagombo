@@ -200,7 +200,7 @@ namespace Bagombo.Controllers
         {
           _logger.LogWarning("Unable to add category with name {0} and description {1}", model.Name, model.Description);
           // todo: better error handling
-          return NotFound();
+          ModelState.AddModelError("Error", "Unable to add category, perhpas the name is not unique.");
         }
       }
       return View(model);
@@ -252,7 +252,7 @@ namespace Bagombo.Controllers
         {
           _logger.LogWarning("Unable to update Category with id {0} to name {1} and description {2}", model.Id, model.Name, model.Description);
           // todo: better error handling
-          return NotFound();
+          ModelState.AddModelError("Error", "Unable to update category, perhaps the name is not unique");
         }
       }
       return View(model);
