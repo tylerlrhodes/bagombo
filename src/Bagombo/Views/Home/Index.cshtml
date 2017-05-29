@@ -11,26 +11,30 @@
     <div class="row">
         <div class="col-md-12">
             <div class="jumbotron">
-                <h1>Welcome to Bagombo</h1>
-                <p>Bagombo is an in-progress open-source MIT licensed blogging application based upon ASP.NET Core MVC and Entity Framework Core.</p>
-                <p>It is designed to work on any platform where .NET Core will run on, and can be customized to work with any database which supports Entity Framework Core.</p>
+                <h2><strong>Bagombo Blog Engine 0.2.3 Alpha Released!</strong></h2>
+                <p>The Bagombo Blog Engine is a free ASP.NET Core based blogging engine with support for multiple authors and editing in Markdown.</p>
+
+                <p>It runs on ASP.NET Core and uses SQL Server as its backend database.</p>
+
+                <p>It's easy to customize the homepage with some basic HTML and CSS skills, and with a basic understanding of ASP.NET it can further be tailored to your specifications.</p>
                 <p>
-                    This is the first instance of it in the wild, which hosts a blog on designing and running Bagombo, as well as other topics, such as:
-                    <blockquote>
-                        <ul>
-                            <li>C#</li>
-                            <li>ASP.NET Core</li>
-                            <li>Algorithms </li>
-                            <li>JavaScript</li>
-                            <li>Node.js and Express</li>
-                            <li>Book Reviews</li>
-                        </ul>
-                    </blockquote>
+                  It has the following functionality built in:
+                  <blockquote>
+                    <ul>
+                      <li>Categorize posts by topic or simple categories for organization</li>
+                      <li>Support for multiple authors</li>
+                      <li>Twitter, Facebook or local authentication </li>
+                      <li>Full text search of blog posts</li>
+                      <li>Author posts in Markdown with a built in preview capability</li>
+                      <li>It's open source under the MIT license, so you can take it and do as you wish</li>
+                    </ul>
+                  </blockquote>
                 </p>
+                <p>You can grab the latest source at Github by clicking the download link and picking a release.</p>
                 <p>
-                    <a class="btn btn-primary btn-lg" asp-controller="home" asp-action="blogpost" asp-route-id="5" role="button">See the Roadmap...</a>
-                    <a class="btn btn-primary btn-lg" asp-controller="home" asp-action="blogpost" asp-route-id="17" role="button">What will be on the Bagombo site?</a>
-                    <a class="btn btn-primary btn-lg" href="https://github.com/tylerlrhodes/bagombo" role="button">Download</a>
+                  <a class="btn btn-primary btn-lg" role="button" href="/home/blogpost/10">See the Roadmap...</a>
+                  <a class="btn btn-primary btn-lg" role="button" href="/home/blogpost/3">What will be on the Bagombo site?</a>
+                  <a class="btn btn-primary btn-lg" href="https://github.com/tylerlrhodes/bagombo/releases" role="button">Download</a>
                 </p>
             </div>
         </div>

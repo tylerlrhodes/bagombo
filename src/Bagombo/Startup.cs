@@ -58,7 +58,7 @@ namespace Bagombo
         }
       }
 
-      services.Configure<BagomboSettings>(Configuration);
+      services.Configure<BagomboSettings>(Configuration.GetSection("BagomboSettings"));
 
       services.AddSession();
 

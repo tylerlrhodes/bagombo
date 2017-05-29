@@ -24,8 +24,9 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
       if (topic != null)
       {
         var posts = await _context.BlogPostTopic.AsNoTracking()
-                                                .Where(t => t.TopicId == topic.Id)
+                                                .Where(t => t.TopicId == topic.Id && t.BlogPost.Public == true && t.BlogPost.PublishOn <= DateTime.Now)
                                                 .Include(t => t.BlogPost)
+                                                .OrderByDescending(t => t.BlogPost.PublishOn)
                                                 //  .ThenInclude(bp => bp.Author)
                                                 //.Include(t => t.BlogPost)
                                                 //  .ThenInclude(bp => bp.BlogPostCategory)
