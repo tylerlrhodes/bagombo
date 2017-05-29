@@ -18,9 +18,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\js\AddEditPostPage.js" />
-    <Content Include="wwwroot\js\AddEditUser.js" />
-    <Content Include="wwwroot\js\Common.js" />
+    <Compile Remove="wwwroot\css\**" />
+    <Compile Remove="wwwroot\js\**" />
+    <Content Remove="wwwroot\css\**" />
+    <Content Remove="wwwroot\js\**" />
+    <EmbeddedResource Remove="wwwroot\css\**" />
+    <EmbeddedResource Remove="wwwroot\js\**" />
+    <None Remove="wwwroot\css\**" />
+    <None Remove="wwwroot\js\**" />
   </ItemGroup>
 
   <ItemGroup>

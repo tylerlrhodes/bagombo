@@ -14,7 +14,7 @@
     "Tyler Rhodes"
   ],
   "license": "MIT",
-  "homepage": "bagombo.org",
+  "homepage": "http://www.bagombo.org",
   "private": true,
   "ignore": [
     "**/.*",
@@ -27,6 +27,7 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "font-awesome": "fontawesome#^4.7.0",
-    "jquery": "^3.1.1"
+    "jquery": "^3.1.1",
+    "highlightjs": "^9.11.0"
   }
 }

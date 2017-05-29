@@ -150,11 +150,7 @@ namespace Bagombo
 
     private void InitializeContainer(IApplicationBuilder app)
     {
-
-
       _container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
-
-
 
       // Add application presentation components:
       _container.RegisterMvcControllers(app);
@@ -162,7 +158,6 @@ namespace Bagombo
 
       // Cross-wire ASP.NET services (if any). For instance:
       _container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());
-
 
       _container.Register<BlogDbContext>(GetAspNetServiceProvider<BlogDbContext>(app), Lifestyle.Scoped);
       _container.Register<ApplicationDbContext>(GetAspNetServiceProvider<ApplicationDbContext>(app), Lifestyle.Scoped);
