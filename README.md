@@ -20,12 +20,12 @@ Contributors welcome : )
     * SQL Server or SQLite backend support (currently just SQL Server)
     * Support for themes and customization
 
-### 0.2.2 Alpha - Released
+### 0.2.3 Alpha - Released
 * [Releases](http://github.com/tylerlrhodes/bagombo/releases)
-* Breaking changes from 0.2.1 in Data Layer, would require a manual update to 0.2.2, some more changes coming in 0.2.3 (Data layer stability and better upgrades being worked on)
-* Mostly some bug fixes and minor tweaks
-* No functionality added
-* Don't update to this from 0.2.1 as its probably not worth the manual post export / copy paste procedure required for the update.
+* Breaking changes from the data layer from all previous releases
+* The Data Layer and the move from dev to production is becoming more stable
+* Bug fixes
+* Renamed Features to Topics to clear up any confusion
 
 ### Goals for 0.3
 * Bug Fixes
@@ -39,7 +39,6 @@ Contributors welcome : )
 * Add Author Profile Page
 
 ### Goals for 0.4
-* Implement Repository pattern for data access (or CQRS)
 * More unit tests
 * GUI enhancements and more color!
 * Easier to install
