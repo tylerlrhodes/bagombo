@@ -20,10 +20,7 @@
 <head>
     <title>@ViewData["Title"]</title>
     <meta name="viewport" content="width=device-width" />
-    <link type="text/css" rel="stylesheet" asp-href-include="lib/bootstrap/dist/css/*.min.css" />
-    <link type="text/css" rel="stylesheet" asp-href-include="lib/simplemde/dist/simplemde.min.css" />
-    <link type="text/css" rel="stylesheet" asp-href-include="css/main.css" />
-    <link type="text/css" rel="stylesheet" asp-href-include="~/lib/highlight/styles/default.css" />
+    <link type="text/css" rel="stylesheet" asp-href-include="lib/css/*.css" />
 </head>
 <body>
 
@@ -92,10 +89,10 @@
         <br />
     </div>
 
-    <script type="text/javascript" asp-src-include="~/lib/jquery/dist/jquery.js"></script>
-    <script type="text/javascript" asp-src-include="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script type="text/javascript" asp-src-include="~/lib/highlight/highlight.pack.js"></script>
-    <script type="text/javascript" src="~/js/Common.js"></script>
+    <script type="text/javascript" asp-src-include="~/lib/js/jquery.min.js"></script>
+    <script type="text/javascript" asp-src-include="~/lib/js/bootstrap.min.js"></script>
+    <script type="text/javascript" asp-src-include="~/lib/js/highlight.pack.min.js"></script>
+    <script type="text/javascript" asp-src-include="~/lib/js/Common.js"></script>
 
     @RenderSection("scripts", false)
     

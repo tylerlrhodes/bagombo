@@ -18,9 +18,9 @@ namespace Bagombo.Models
     public string FirstName { get; set; }
     [Required]
     public string LastName { get; set; }
-    public string Blurb { get; set; }
+    //public string Blurb { get; set; }
     public string Biography { get; set; }
-    public string ImageLink { get; set; }
+    //public string ImageLink { get; set; }
     public virtual ICollection<BlogPost> BlogPosts { get; set; }
   }
 }

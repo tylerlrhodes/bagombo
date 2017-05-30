@@ -18,14 +18,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\asdf\**" />
     <Compile Remove="wwwroot\css\**" />
-    <Compile Remove="wwwroot\js\**" />
+    <Content Remove="wwwroot\asdf\**" />
     <Content Remove="wwwroot\css\**" />
-    <Content Remove="wwwroot\js\**" />
+    <EmbeddedResource Remove="wwwroot\asdf\**" />
     <EmbeddedResource Remove="wwwroot\css\**" />
-    <EmbeddedResource Remove="wwwroot\js\**" />
+    <None Remove="wwwroot\asdf\**" />
     <None Remove="wwwroot\css\**" />
-    <None Remove="wwwroot\js\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -82,6 +82,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\bagombo.data\Bagombo.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
