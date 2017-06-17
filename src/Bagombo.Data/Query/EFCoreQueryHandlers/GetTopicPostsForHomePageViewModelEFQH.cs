@@ -25,12 +25,12 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
       {
         var posts = await _context.BlogPostTopic.AsNoTracking()
                                                 .Where(t => t.TopicId == topic.Id && t.BlogPost.Public == true && t.BlogPost.PublishOn <= DateTime.Now)
-                                                .Include(t => t.BlogPost)
+                                                //.Include(t => t.BlogPost)
                                                 .OrderByDescending(t => t.BlogPost.PublishOn)
                                                 //  .ThenInclude(bp => bp.Author)
                                                 //.Include(t => t.BlogPost)
                                                 //  .ThenInclude(bp => bp.BlogPostCategory)
-                                                    //.ThenInclude(bpc => bpc.Category)
+                                                //.ThenInclude(bpc => bpc.Category)
                                                 .Select(t => new BlogPostViewModel
                                                 {
                                                   Title = t.BlogPost.Title,
