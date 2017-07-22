@@ -11,6 +11,7 @@ using SimpleInjector;
 using SimpleInjector.Lifestyles;
 
 using Bagombo.Models;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Bagombo.EFCore
 {
@@ -25,6 +26,11 @@ namespace Bagombo.EFCore
 
     public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
     {
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+      optionsBuilder.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.QueryClientEvaluationWarning));
     }
 
     protected override void OnModelCreating(ModelBuilder builder)

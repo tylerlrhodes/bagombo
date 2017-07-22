@@ -67,8 +67,9 @@ namespace Bagombo
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
       });
 
-      services.AddDbContext<BlogDbContext>(options =>
-                  options.UseSqlServer(ConnectionString));
+      services.AddDbContext<BlogDbContext>(options => {
+        options.UseSqlServer(ConnectionString);
+      });
 
       services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseSqlServer(ConnectionString));
