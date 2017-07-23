@@ -24,7 +24,7 @@
                             <a asp-action="BlogPost" asp-route-id="@post.Id">@post.Title</a>
                         </h3>
                         <h5>
-                            Author: @post.Author
+                            Author: @post.Author?.FirstName @post.Author?.LastName
                         </h5>
                         <hr />
                         <h5>

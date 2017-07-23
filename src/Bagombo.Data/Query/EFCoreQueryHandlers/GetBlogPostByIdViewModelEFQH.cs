@@ -31,7 +31,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
 
       var bpvm = new BlogPostViewModel()
       {
-        Author = $"{post.Author.FirstName} {post.Author.LastName}",
+        Author = post.Author,
         Title = post.Title,
         Description = post.Description,
         Content = post.Content,

@@ -42,7 +42,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
       {
         var bpView = new BlogPostViewModel()
         {
-          Author = $"{bpf.BlogPost.Author.FirstName} {bpf.BlogPost.Author.LastName}",
+          Author = bpf.BlogPost.Author,
           Title = bpf.BlogPost.Title,
           Description = bpf.BlogPost.Description,
           Categories = bpf.BlogPost.BlogPostCategory.Select(c => c.Category).ToList(),

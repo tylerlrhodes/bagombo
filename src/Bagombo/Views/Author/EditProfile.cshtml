@@ -1,0 +1,75 @@
+﻿@using Bagombo.Models.ViewModels.Author
+@model ProfileViewModel
+
+@{
+  ViewData["Title"] = "Edit Profile";
+  Layout = "_Layout";
+}
+
+<div class="container-fluid">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3>Edit Profile</h3></div>
+      <div class="panel-body">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div SaveUpdate id="UpdateSavedMessage"></div>
+        <form id="EditPost" asp-action="EditProfile" method="post">
+          <input asp-for="Id" type="hidden" />
+          <div class="container-fluid">
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label asp-for="FirstName">First Name:</label>
+                <input class="form-control" asp-for="FirstName" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label asp-for="LastName">Last Name:</label>
+                <input class="form-control" asp-for="LastName" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-12">
+                <label asp-for="Blurb">Blurb:</label>
+                <input class="form-control" asp-for="Blurb" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-12">
+                <label asp-for="ImageLink">Image Link:</label>
+                <input class="form-control" asp-for="ImageLink" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-12">
+                <label asp-for="Biography">Biography:</label>
+                <textarea class="form-control" style="height:600px" asp-for="Biography"></textarea>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-2">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a asp-action="ManagePosts" class="btn btn-danger">Cancel</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+
+  <script type="text/javascript">
+       // var simplemde = new SimpleMDE();
+
+        $(function () {
+            setTimeout(function () {
+                $("#UpdateSavedMessage").fadeOut("slow");
+            }, 10000);
+        });
+
+  </script>
+
+}

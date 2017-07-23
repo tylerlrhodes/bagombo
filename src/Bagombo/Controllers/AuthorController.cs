@@ -46,6 +46,65 @@ namespace Bagombo.Controllers
     }
 
     [HttpGet]
+    public async Task<IActionResult>EditProfile()
+    {
+      var gabauid = new GetAuthorByAppUserIdQuery
+      {
+        Id = await _userManager.GetUserIdAsync(
+            await _userManager.GetUserAsync(User)
+          )
+      };
+
+      var author = await _qpa.ProcessAsync(gabauid);
+
+      var profileViewModel = new ProfileViewModel
+      {
+        Id = author.Id,
+        FirstName = author.FirstName,
+        LastName = author.LastName,
+        Blurb = author.Blurb,
+        Biography = author.Biography
+      };
+
+      return View(profileViewModel);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult>EditProfile(ProfileViewModel model)
+    {
+      if (ModelState.IsValid)
+      {
+        var eapc = new EditAuthorProfileCommand
+        {
+          Id = model.Id,
+          FirstName = model.FirstName,
+          LastName = model.LastName,
+          Blurb = model.Blurb,
+          Biography = model.Biography,
+          ImageLink = model.ImageLink
+        };
+
+        var result = await _cp.ProcessAsync(eapc);
+
+        if (result.Succeeded)
+        {
+          _logger.LogInformation("Successfully updated author profile for id {0}", model.Id);
+          ViewData["SavedMessage"] = "Profile saved.";
+          return View(model);
+        }
+        else
+        {
+          return View(model);
+        }
+      }
+      else
+      {
+        return View(model);
+      }
+    }
+
+    [HttpGet]
     public async Task<IActionResult> ManagePosts()
     {
       AuthorManagePostsViewModel ampvm = new AuthorManagePostsViewModel();
@@ -185,7 +244,7 @@ namespace Bagombo.Controllers
 
       var post = await _qpa.ProcessAsync(new GetBlogPostByIdQuery { Id = model.Id });
 
-      if (post != null)
+      if (post != null && ModelState.IsValid)
       {
         var ubpc = new UpdateBlogPostCommand();
 
@@ -305,9 +364,24 @@ namespace Bagombo.Controllers
       }
       else
       {
-        _logger.LogWarning("Post to EditPost for update invoked for a non-existant BlogPost Id {0}", model.Id);
+        if (post == null)
+        {
+          _logger.LogWarning("Post to EditPost for update invoked for a non-existant BlogPost Id {0}", model.Id);
+          return NotFound();
+        }
 
-        return NotFound();
+        // these are needed for rendering the view when there 
+        // are not categories or topics created in the engine
+        if (model.CategoriesList == null)
+        {
+          model.CategoriesList = new List<CategoriesCheckBox>();
+        }
+        if (model.TopicsList == null)
+        {
+          model.TopicsList = new List<TopicsCheckBox>();
+        }
+
+        return View(model);        
       }
     }
 

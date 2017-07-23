@@ -28,7 +28,12 @@
                 <h5>Author:</h5>
             </div>
             <div class="panel-body">
-                @Model.Author
+              @Model.Author?.FirstName @Model.Author?.LastName <br />
+              @if (Model.Author != null && Model.Author.Blurb != null & Model.Author.Blurb != "")
+	            {
+		            <hr />
+                @Model.Author?.Blurb 
+	            }
             </div>
         </div>
         <div class="panel panel-default">

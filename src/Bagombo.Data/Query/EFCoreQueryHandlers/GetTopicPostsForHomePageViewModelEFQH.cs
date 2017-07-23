@@ -36,7 +36,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
                                                   Title = t.BlogPost.Title,
                                                   Id = t.BlogPost.Id,
                                                   Description = t.BlogPost.Description,
-                                                  Author = $"{t.BlogPost.Author.FirstName} {t.BlogPost.Author.LastName}",
+                                                  Author = t.BlogPost.Author,
                                                   ModifiedAt = t.BlogPost.ModifiedAt,
                                                   PublishOn = t.BlogPost.PublishOn,
                                                   Content = t.BlogPost.Content,
