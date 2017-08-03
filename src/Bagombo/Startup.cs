@@ -80,11 +80,19 @@ namespace Bagombo
       }).AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
 
+      IntegrateSimpleInjector(services);
+    }
+
+    public void IntegrateSimpleInjector(IServiceCollection services)
+    {
+      _container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-      services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(_container) );
-      services.AddSingleton<IViewComponentActivator>( new SimpleInjectorViewComponentActivator(_container) );
+      services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(_container));
+      services.AddSingleton<IViewComponentActivator>(new SimpleInjectorViewComponentActivator(_container));
 
+      services.EnableSimpleInjectorCrossWiring(_container);
       services.UseSimpleInjectorAspNetRequestScoping(_container);
       services.AddSimpleInjectorTagHelperActivation(_container);
     }
@@ -151,7 +159,6 @@ namespace Bagombo
 
     private void InitializeContainer(IApplicationBuilder app)
     {
-      _container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
       // Add application presentation components:
       _container.RegisterMvcControllers(app);
@@ -160,46 +167,24 @@ namespace Bagombo
       // Cross-wire ASP.NET services (if any). For instance:
       _container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());
 
-      _container.Register<BlogDbContext>(GetAspNetServiceProvider<BlogDbContext>(app), Lifestyle.Scoped);
-      _container.Register<ApplicationDbContext>(GetAspNetServiceProvider<ApplicationDbContext>(app), Lifestyle.Scoped);
-      _container.Register<UserManager<ApplicationUser>>(GetAspNetServiceProvider<UserManager<ApplicationUser>>(app), Lifestyle.Scoped);
-      _container.Register<RoleManager<IdentityRole>>(GetAspNetServiceProvider<RoleManager<IdentityRole>>(app), Lifestyle.Scoped);
-      _container.Register<SignInManager<ApplicationUser>>(GetAspNetServiceProvider<SignInManager<ApplicationUser>>(app), Lifestyle.Scoped);
-      _container.Register<IPasswordHasher<ApplicationUser>>(GetAspNetServiceProvider<IPasswordHasher<ApplicationUser>>(app), Lifestyle.Scoped);
-      _container.Register<IPasswordValidator<ApplicationUser>>(GetAspNetServiceProvider<IPasswordValidator<ApplicationUser>>(app), Lifestyle.Scoped);
-      _container.Register<IUserValidator<ApplicationUser>>(GetAspNetServiceProvider<IUserValidator<ApplicationUser>>(app), Lifestyle.Scoped);
-      _container.Register<ILogger<HomeController>>(GetAspNetServiceProvider<ILogger<HomeController>>(app), Lifestyle.Transient);
-      _container.Register<ILogger<AccountController>>(GetAspNetServiceProvider<ILogger<AccountController>>(app), Lifestyle.Transient);
-      _container.Register<ILogger<AdminController>>(GetAspNetServiceProvider<ILogger<AdminController>>(app), Lifestyle.Transient);
-      _container.Register<ILogger<AuthorController>>(GetAspNetServiceProvider<ILogger<AuthorController>>(app), Lifestyle.Transient);
-
-      //_container.Register<BlogDbContext>(app.GetRequestService<BlogDbContext>, Lifestyle.Scoped);
-      //_container.Register<UserManager<ApplicationUser>>(app.GetRequestService<UserManager<ApplicationUser>>, Lifestyle.Scoped);
-      //_container.Register<RoleManager<IdentityRole>>(app.GetRequestService<RoleManager<IdentityRole>>, Lifestyle.Scoped);
-      //_container.Register<SignInManager<ApplicationUser>>(app.GetRequestService<SignInManager<ApplicationUser>>, Lifestyle.Scoped);
-      //_container.Register<IPasswordHasher<ApplicationUser>>(app.GetRequestService<IPasswordHasher<ApplicationUser>>, Lifestyle.Scoped);
-      //_container.Register<IPasswordValidator<ApplicationUser>>(app.GetRequestService<IPasswordValidator<ApplicationUser>>, Lifestyle.Scoped);
-      //_container.Register<IUserValidator<ApplicationUser>>(app.GetRequestService<IUserValidator<ApplicationUser>>, Lifestyle.Scoped);
+      _container.CrossWire<BlogDbContext>(app);
+      _container.CrossWire<ApplicationDbContext>(app);
+      _container.CrossWire<UserManager<ApplicationUser>>(app);
+      _container.CrossWire<RoleManager<IdentityRole>>(app);
+      _container.CrossWire<SignInManager<ApplicationUser>>(app);
+      _container.CrossWire<IPasswordHasher<ApplicationUser>>(app);
+      _container.CrossWire<IPasswordValidator<ApplicationUser>>(app);
+      _container.CrossWire<IUserValidator<ApplicationUser>>(app);
+      _container.CrossWire<ILogger<HomeController>>(app);
+      _container.CrossWire<ILogger<AccountController>>(app);
+      _container.CrossWire<ILogger<AdminController>>(app);
+      _container.CrossWire<ILogger<AuthorController>>(app);
 
       _container.AddEFQueries();
       _container.AddEFCommands();
 
       // NOTE: Do prevent cross-wired instances as much as possible.
       // See: https://simpleinjector.org/blog/2016/07/
-    }
-
-    // From Simple Injector Issue ... forgot which one : (
-    private Func<T> GetAspNetServiceProvider<T>(IApplicationBuilder app)
-    {
-      var appServices = app.ApplicationServices;
-      var accessor = appServices.GetRequiredService<IHttpContextAccessor>();
-      return () => {
-        var services = accessor.HttpContext != null
-            ? accessor.HttpContext.RequestServices
-            : this._container.IsVerifying ? appServices : null;
-        if (services == null) throw new InvalidOperationException("No HttpContext");
-        return services.GetRequiredService<T>();
-      };
     }
   }
 }
