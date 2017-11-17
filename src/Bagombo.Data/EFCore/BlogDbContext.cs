@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +13,7 @@ using SimpleInjector.Lifestyles;
 
 using Bagombo.Models;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Bagombo.EFCore
 {
@@ -41,7 +43,7 @@ namespace Bagombo.EFCore
       builder.Entity<Author>().HasMany(a => a.BlogPosts)
                               .WithOne(bp => bp.Author)
                               .IsRequired(false)
-                              .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.SetNull);
+                              .OnDelete(DeleteBehavior.SetNull);
 
       builder.Entity<BlogPost>().ToTable("BlogPost");
 

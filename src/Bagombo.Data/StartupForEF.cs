@@ -6,6 +6,7 @@ using Bagombo.EFCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Bagombo;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace Bagombo.Data
 {
@@ -18,13 +19,13 @@ namespace Bagombo.Data
   /// https://docs.microsoft.com/en-us/ef/core/miscellaneous/configuring-dbcontext
   /// </summary>
   /// 
-  class StartupForEF : IDbContextFactory<BlogDbContext>
+  class StartupForEF : IDesignTimeDbContextFactory<BlogDbContext>
   {
-    public BlogDbContext Create(DbContextFactoryOptions options)
+    public BlogDbContext CreateDbContext(string[] args)
     {
       var confBuilder = new ConfigurationBuilder()
-        .AddEnvironmentVariables()
-        .AddUserSecrets<StartupForEF>();
+       .AddEnvironmentVariables()
+       .AddUserSecrets<StartupForEF>();
 
       IConfiguration Configuration = confBuilder.Build();
 
@@ -36,7 +37,6 @@ namespace Bagombo.Data
       builder.UseSqlServer(ConnectionString);
 
       return new BlogDbContext(builder.Options);
-
     }
   }
 }

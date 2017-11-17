@@ -79,7 +79,7 @@ namespace Bagombo.Controllers
     public IActionResult FacebookLogin(AccountLoginViewModel alvm, string returnUrl)
     {
       string redirectUrl = Url.Action("FacebookResponse", "Account", new { ReturnUrl = returnUrl, RememberMe = alvm.RememberMe });
-      AuthenticationProperties properties = _signInManager.ConfigureExternalAuthenticationProperties("Facebook", redirectUrl);
+      var properties = _signInManager.ConfigureExternalAuthenticationProperties("Facebook", redirectUrl);
       return new ChallengeResult("Facebook", properties);
     }
 
@@ -113,7 +113,7 @@ namespace Bagombo.Controllers
     public IActionResult TwitterLogin(AccountLoginViewModel alvm, string returnUrl)
     {
       string redirectUrl = Url.Action("TwitterResponse", "Account", new { ReturnUrl = returnUrl, RememberMe = alvm.RememberMe });
-      AuthenticationProperties properties = _signInManager.ConfigureExternalAuthenticationProperties("Twitter", redirectUrl);
+      var properties = _signInManager.ConfigureExternalAuthenticationProperties("Twitter", redirectUrl);
       return new ChallengeResult("Twitter", properties);
     }
 

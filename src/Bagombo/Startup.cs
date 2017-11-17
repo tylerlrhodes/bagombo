@@ -71,14 +71,46 @@ namespace Bagombo
         options.UseSqlServer(ConnectionString);
       });
 
-      services.AddDbContext<ApplicationDbContext>(options =>
-                 options.UseSqlServer(ConnectionString));
+      services.AddDbContext<ApplicationDbContext>(options => {
+        options.UseSqlServer(ConnectionString);
+      });
 
       services.AddIdentity<ApplicationUser, IdentityRole>(opts => {
         opts.User.RequireUniqueEmail = true;
-        opts.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(1);
+        //opts.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(1);
       }).AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
+
+      var authBuilder = services.AddAuthentication();
+
+      var TwitterKey = Configuration[$"{Configuration["TwitterKeyConfigName"]}"];
+      var TwitterSecret = Configuration[$"{Configuration["TwitterSecretConfigName"]}"];
+
+      if (TwitterKey != null && TwitterSecret != null)
+      {
+        authBuilder.AddTwitter(opts =>
+        {
+          opts.ConsumerKey = TwitterKey;
+          opts.ConsumerSecret = TwitterSecret;
+        });
+      }
+
+      var FacebookAppId = Configuration[$"{Configuration["FacebookAppIdConfigName"]}"];
+      var FacebookAppSecret = Configuration[$"{Configuration["FacebookAppSecretConfigName"]}"];
+
+      if (FacebookAppId != null && FacebookAppSecret != null)
+      {
+        authBuilder.AddFacebook(opts =>
+        {
+          opts.AppId = FacebookAppId;
+          opts.AppSecret = FacebookAppSecret;
+        });
+      }
+
+      services.ConfigureApplicationCookie(opts =>
+      {
+        opts.ExpireTimeSpan = TimeSpan.FromDays(1);
+      });
 
       IntegrateSimpleInjector(services);
     }
@@ -126,32 +158,7 @@ namespace Bagombo
         app.UseDeveloperExceptionPage();
       }
 
-      app.UseIdentity();
-
-      var TwitterKey = Configuration[$"{Configuration["TwitterKeyConfigName"]}"];
-      var TwitterSecret = Configuration[$"{Configuration["TwitterSecretConfigName"]}"];
-
-      if (TwitterKey != null && TwitterSecret != null)
-      {
-        app.UseTwitterAuthentication(new TwitterOptions()
-        {
-          ConsumerKey = TwitterKey,
-          ConsumerSecret = TwitterSecret,
-          RetrieveUserDetails = true
-        });
-      }
-
-      var FacebookAppId = Configuration[$"{Configuration["FacebookAppIdConfigName"]}"];
-      var FacebookAppSecret = Configuration[$"{Configuration["FacebookAppSecretConfigName"]}"];
-
-      if (FacebookAppId != null && FacebookAppSecret != null)
-      {
-        app.UseFacebookAuthentication(new FacebookOptions()
-        {
-          AppId = FacebookAppId,
-          AppSecret = FacebookAppSecret
-        });
-      }
+      app.UseAuthentication();
 
       app.UseMvcWithDefaultRoute();
 

@@ -44,13 +44,13 @@ namespace Bagombo.tests
 
         var x = await qpa.ProcessAsync(grbp);
 
-        Assert.Equal(x.Count, 2);
+        Assert.Equal(2, x.Count);
 
         grbp.NumberOfPostsToGet = 3;
 
         x = await qpa.ProcessAsync(grbp);
 
-        Assert.Equal(x.Count, 3);
+        Assert.Equal(3, x.Count);
       }
     }
   }

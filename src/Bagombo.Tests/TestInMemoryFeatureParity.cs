@@ -135,8 +135,8 @@ namespace Bagombo.tests
         .Select(b => b)
         .FirstOrDefault();
 
-      Assert.Equal(bpTest.BlogPostTopic.Select(bpf => bpf.Topic).Count(), 2);
-      Assert.Equal(bpTest.BlogPostCategory.Select(bpc => bpc.Category).Count(), 2);
+      Assert.Equal(2, bpTest.BlogPostTopic.Select(bpf => bpf.Topic).Count());
+      Assert.Equal(2, bpTest.BlogPostCategory.Select(bpc => bpc.Category).Count());
       Assert.Equal(bpTest.Author.FirstName, authorTest.FirstName);
 
     }
