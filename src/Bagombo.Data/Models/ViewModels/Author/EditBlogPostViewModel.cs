@@ -17,7 +17,7 @@ namespace Bagombo.Models.ViewModels.Author
     [Required]
     public string Description { get; set; }
     [Required]
-    [DisplayFormat(DataFormatString = "{0:MMMM dd yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
+    //[DisplayFormat(DataFormatString = "{0:MM/dd/yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
     public DateTime PublishOn { get; set; }
     [Required]
     public bool Public { get; set; }

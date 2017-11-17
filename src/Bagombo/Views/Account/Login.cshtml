@@ -32,11 +32,11 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
                     @{
-                      var loginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
+                      var loginProviders = await SignInManager.GetExternalAuthenticationSchemesAsync();
                       foreach (var p in loginProviders)
                       {
-                          if (p.DisplayName == "Twitter")
-                          {
+                        if (p.DisplayName == "Twitter")
+                        {
                             <!--a class="btn btn-default" asp-action="TwitterLogin" asp-route-returnUrl="@ViewData["returnUrl"]"><img src="~/images/twitter-button.png" /></-->
                             <button class="btn btn-default" type="submit" value="Twitter Login" formaction="TwitterLogin">Login With Twitter</button> 
                           }
