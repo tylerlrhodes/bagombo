@@ -44,7 +44,7 @@
                                 }
                             </td>
                             <td>
-                                <form asp-controller="Admin" asp-action="DeletePost" asp-route-id="@post.Id" method="post">
+                                <form asp-controller="Admin" asp-action="DeletePost" asp-route-id="@post.Id" method="post" onsubmit="return confirm('Do you want to delete @post.Title')">
                                     <span class="text-nowrap">
                                         <a class="btn btn-primary btn-sm" asp-controller="Home" asp-action="blogpost" asp-route-id="@post.Id">View</a>
                                         <a class="btn btn-primary btn-sm" asp-controller="Author" asp-action="editpost" asp-route-id="@post.Id">Edit</a>

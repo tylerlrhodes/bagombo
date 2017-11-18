@@ -305,7 +305,7 @@ namespace Bagombo.Controllers
           return NotFound();
         }
 
-        List<long> topicIds = new List<long>();
+        var topicIds = new List<long>();
 
         if (model.TopicsList != null)
         {
@@ -342,7 +342,7 @@ namespace Bagombo.Controllers
           model.TopicsList = new List<TopicsCheckBox>();
         }
 
-        List<long> categoryIds = new List<long>();
+        var categoryIds = new List<long>();
 
         if (model.CategoriesList != null)
         {
