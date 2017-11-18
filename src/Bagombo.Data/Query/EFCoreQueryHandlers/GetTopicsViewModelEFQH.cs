@@ -21,7 +21,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
       // bug in EF Core that needs a bit more code here than otherwise
       // see: https://github.com/aspnet/EntityFramework/issues/7714
 
-      TopicsViewModel vfvm = new TopicsViewModel();
+      var vfvm = new TopicsViewModel();
 
       // cant select new into a defined type so have to use anon type for the select new here due to EF Core bug
       // code after is a work-around
@@ -37,11 +37,11 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
                              select posts).AsNoTracking().Count()
               };
 
-      List<TopicWithBlogCountViewModel> topicList = new List<TopicWithBlogCountViewModel>();
+      var topicList = new List<TopicWithBlogCountViewModel>();
 
       foreach (var topic in await x.OrderByDescending(t => t.BlogCount).ToListAsync())
       {
-        TopicWithBlogCountViewModel fvm = new TopicWithBlogCountViewModel()
+        var fvm = new TopicWithBlogCountViewModel()
         {
           BlogCount = topic.BlogCount,
           Title = topic.Title,

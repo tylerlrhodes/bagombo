@@ -30,6 +30,8 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
                                 .Where(bp => bp.CategoryId == c.Id && bp.BlogPost.Public == true && bp.BlogPost.PublishOn < DateTime.Now)
                                 .Include(bpc => bpc.BlogPost)
                                   .ThenInclude(bp => bp.Author)
+                                .OrderByDescending(bp => bp.BlogPost.PublishOn)
+                                .ThenByDescending(bp => bp.BlogPost.ModifiedAt)
                                 .ToListAsync();
 
         var vpbc = new PostsByCategoryViewModel()

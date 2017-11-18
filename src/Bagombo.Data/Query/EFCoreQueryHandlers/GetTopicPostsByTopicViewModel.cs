@@ -34,6 +34,8 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
                               .Include(bpf => bpf.BlogPost)
                                 .ThenInclude(bp => bp.BlogPostCategory)
                                 .ThenInclude(bpc => bpc.Category)
+                              .OrderByDescending(bp => bp.BlogPost.PublishOn)
+                              .ThenByDescending(bp => bp.BlogPost.ModifiedAt)
                               .ToListAsync();
 
       List<BlogPostViewModel> viewPosts = new List<BlogPostViewModel>();

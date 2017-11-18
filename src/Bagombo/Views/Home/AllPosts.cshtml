@@ -8,9 +8,9 @@
 @using Bagombo.Models.ViewModels.Home
 @model AllPostsViewModel
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <a class="btn btn-primary" asp-action="AllPosts" asp-route-sortby="1">List by Category</a>
             <a class="btn btn-primary" asp-action="AllPosts" asp-route-sortby="2">List by Date</a>
         </div>
@@ -18,7 +18,7 @@
     @if (Model.SortBy == 1)
     {
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-12">
                 <br />
                 @foreach (var c in Model.Categories)
                 {
@@ -30,14 +30,14 @@
         @foreach (var c in Model.Categories)
         {
             <div class="row">
-                <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-12">
                     <h3 id="@c.Category.Name"><span class="label label-info">@c.Category.Name</span></h3>
                 </div>
             </div>
             <div class="row">
                 @foreach (var bp in c.Posts)
                 {
-                    <div class="col-md-10 col-md-offset-1">
+                    <div class="col-md-12">
                         <a asp-action="BlogPost" asp-route-id="@bp.Id">@bp.Title</a> by @bp.Author.FirstName @bp.Author.LastName - @bp.Description
                     </div>
                 }
@@ -47,11 +47,11 @@
     else
     {
         <div class="row">
-            <div class="col-md-10 col-md-offset-1"><br /><em>Posts are sorted by last modified date and then by publish date.</em><br /><br /></div>
+          <br />
             @foreach (var bp in Model.PostsByDate)
             {
 
-                <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-12">
                     <a asp-action="BlogPost" asp-route-id="@bp.Id">@bp.Title</a> by @bp.Author.FirstName @bp.Author.LastName - @bp.Description <strong>Modified at @bp.ModifiedAt</strong><br />
                 </div>
             }

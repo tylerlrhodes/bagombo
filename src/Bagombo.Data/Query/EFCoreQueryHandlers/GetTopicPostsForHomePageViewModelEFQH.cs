@@ -27,6 +27,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
                                                 .Where(t => t.TopicId == topic.Id && t.BlogPost.Public == true && t.BlogPost.PublishOn <= DateTime.Now)
                                                 //.Include(t => t.BlogPost)
                                                 .OrderByDescending(t => t.BlogPost.PublishOn)
+                                                .ThenByDescending(t => t.BlogPost.ModifiedAt)
                                                 //  .ThenInclude(bp => bp.Author)
                                                 //.Include(t => t.BlogPost)
                                                 //  .ThenInclude(bp => bp.BlogPostCategory)

@@ -24,8 +24,8 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
                                       .AsNoTracking()
                                       .Where(bp => bp.Public == true && bp.PublishOn < DateTime.Now)
                                       .Include(bp => bp.Author)
-                                      .OrderByDescending(bp => bp.ModifiedAt)
-                                      .ThenByDescending(bp => bp.PublishOn)
+                                      .OrderByDescending(bp => bp.PublishOn)
+                                      .ThenByDescending(bp => bp.ModifiedAt)
                                       .ToListAsync(),
         SortBy = 2,
         Categories = null
