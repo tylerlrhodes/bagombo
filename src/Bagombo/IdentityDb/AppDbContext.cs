@@ -32,18 +32,18 @@ namespace Bagombo
         .OnDelete(DeleteBehavior.Cascade);
 
       builder.Entity<ApplicationUser>()
-          .HasMany(e => e.Logins)
-          .WithOne()
-          .HasForeignKey(e => e.UserId)
-          .IsRequired()
-          .OnDelete(DeleteBehavior.Cascade);
+        .HasMany(e => e.Logins)
+        .WithOne()
+        .HasForeignKey(e => e.UserId)
+        .IsRequired()
+        .OnDelete(DeleteBehavior.Cascade);
 
       builder.Entity<ApplicationUser>()
-          .HasMany(e => e.Roles)
-          .WithOne()
-          .HasForeignKey(e => e.UserId)
-          .IsRequired()
-          .OnDelete(DeleteBehavior.Cascade);
+        .HasMany(e => e.Roles)
+        .WithOne()
+        .HasForeignKey(e => e.UserId)
+        .IsRequired()
+        .OnDelete(DeleteBehavior.Cascade);
     }
 
     public static async Task CreateAuthorRole(IServiceProvider container)

@@ -1,8 +1,11 @@
-﻿using Bagombo.Controllers;
+﻿using Bagombo.AuthHandlers;
+using Bagombo.Controllers;
 using Bagombo.Data.Command.EFCoreCommandHandlers;
+using Bagombo.Data.Query;
 using Bagombo.Data.Query.EFCoreQueryHandlers;
 using Bagombo.EFCore;
 using Bagombo.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +21,7 @@ using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
 using System;
+using System.Threading.Tasks;
 
 namespace Bagombo
 {
@@ -112,12 +116,25 @@ namespace Bagombo
         opts.ExpireTimeSpan = TimeSpan.FromDays(1);
       });
 
+      services.AddAuthorization(opts =>
+      {
+        opts.AddPolicy("EditPolicy", policy =>
+        {
+          policy.Requirements.Add(new SameAuthorRequirement());
+        });
+      });
+
+      services.AddScoped<IAuthorizationHandler>(p => new SimpleInjectorAuthorizationHandler(_container));
+
       IntegrateSimpleInjector(services);
     }
 
     public void IntegrateSimpleInjector(IServiceCollection services)
     {
       _container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+
+
+      _container.RegisterCollection<IAuthorizationHandler>(new Type[] { typeof(EditBlogPostAuthorizationHandler) });
 
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -186,6 +203,8 @@ namespace Bagombo
       _container.CrossWire<ILogger<AccountController>>(app);
       _container.CrossWire<ILogger<AdminController>>(app);
       _container.CrossWire<ILogger<AuthorController>>(app);
+      _container.CrossWire<IAuthorizationHandler>(app);
+      _container.CrossWire<IAuthorizationService>(app);
 
       _container.AddEFQueries();
       _container.AddEFCommands();
@@ -193,5 +212,18 @@ namespace Bagombo
       // NOTE: Do prevent cross-wired instances as much as possible.
       // See: https://simpleinjector.org/blog/2016/07/
     }
+  }
+
+  public sealed class SimpleInjectorAuthorizationHandler : IAuthorizationHandler
+  {
+    private readonly Container container;
+    public SimpleInjectorAuthorizationHandler(Container container) { this.container = container; }
+
+    public async Task HandleAsync(AuthorizationHandlerContext context)
+    {
+      foreach (var handler in this.container.GetAllInstances<IAuthorizationHandler>())
+        await handler.HandleAsync(context);
+    }
+
   }
 }

@@ -41,40 +41,40 @@ namespace Bagombo.EFCore
 
       builder.Entity<Author>().ToTable("Author");
       builder.Entity<Author>().HasMany(a => a.BlogPosts)
-                              .WithOne(bp => bp.Author)
-                              .IsRequired(false)
-                              .OnDelete(DeleteBehavior.SetNull);
+        .WithOne(bp => bp.Author)
+        .IsRequired(false)
+        .OnDelete(DeleteBehavior.SetNull);
 
       builder.Entity<BlogPost>().ToTable("BlogPost");
 
       builder.Entity<BlogPost>().HasOne(bp => bp.Author)
-                                .WithMany(a => a.BlogPosts)
-                                .HasForeignKey("AuthorId")
-                                .IsRequired(false);
+        .WithMany(a => a.BlogPosts)
+        .HasForeignKey("AuthorId")
+        .IsRequired(false);
 
       builder.Entity<Topic>().ToTable("Topic");
       builder.Entity<Topic>().HasIndex(t => t.Title)
-                             .IsUnique();
+        .IsUnique();
 
       builder.Entity<Category>().ToTable("Category");
       builder.Entity<Category>().HasIndex(c => c.Name)
-                                .IsUnique();
+        .IsUnique();
 
       builder.Entity<BlogPostTopic>().HasKey(bpf => new { bpf.TopicId, bpf.BlogPostId });
       builder.Entity<BlogPostTopic>().HasOne(bpf => bpf.BlogPost)
-                                       .WithMany(bp => bp.BlogPostTopic)
-                                       .HasForeignKey(bpf => bpf.BlogPostId);
+        .WithMany(bp => bp.BlogPostTopic)
+        .HasForeignKey(bpf => bpf.BlogPostId);
       builder.Entity<BlogPostTopic>().HasOne(bpf => bpf.Topic)
-                                       .WithMany(f => f.BlogPosts)
-                                       .HasForeignKey(bpf => bpf.TopicId);
+        .WithMany(f => f.BlogPosts)
+        .HasForeignKey(bpf => bpf.TopicId);
 
       builder.Entity<BlogPostCategory>().HasKey(bpc => new { bpc.BlogPostId, bpc.CategoryId });
       builder.Entity<BlogPostCategory>().HasOne(bpc => bpc.BlogPost)
-                                        .WithMany(bp => bp.BlogPostCategory)
-                                        .HasForeignKey(bpc => bpc.BlogPostId);
+        .WithMany(bp => bp.BlogPostCategory)
+        .HasForeignKey(bpc => bpc.BlogPostId);
       builder.Entity<BlogPostCategory>().HasOne(bpc => bpc.Category)
-                                        .WithMany(c => c.BlogPosts)
-                                        .HasForeignKey(bpc => bpc.CategoryId);
+        .WithMany(c => c.BlogPosts)
+        .HasForeignKey(bpc => bpc.CategoryId);
     }
 
   }

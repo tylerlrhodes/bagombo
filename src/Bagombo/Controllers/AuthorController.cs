@@ -28,16 +28,19 @@ namespace Bagombo.Controllers
     private ICommandProcessorAsync _cp;
     private UserManager<ApplicationUser> _userManager;
     private ILogger _logger;
+    private readonly IAuthorizationService _authService;
 
     public AuthorController(IQueryProcessorAsync qpa,
                             ICommandProcessorAsync cp,
                             UserManager<ApplicationUser> userManager,
-                            ILogger<AuthorController> logger)
+                            ILogger<AuthorController> logger,
+                            IAuthorizationService authService)
     {
       _qpa = qpa;
       _cp = cp;
       _userManager = userManager;
       _logger = logger;
+      _authService = authService;
     }
 
     public IActionResult Index()
@@ -107,7 +110,7 @@ namespace Bagombo.Controllers
     [HttpGet]
     public async Task<IActionResult> ManagePosts()
     {
-      AuthorManagePostsViewModel ampvm = new AuthorManagePostsViewModel();
+      var ampvm = new AuthorManagePostsViewModel();
 
       var curUser = await _userManager.GetUserAsync(User);
 
@@ -173,11 +176,28 @@ namespace Bagombo.Controllers
     [HttpGet]
     public async Task<IActionResult> EditPost(long id)
     {
+      
       var post = await _qpa.ProcessAsync(new GetBlogPostByIdQuery { Id = id });
 
       if (post != null)
       {
-        EditBlogPostViewModel ebpvm = new EditBlogPostViewModel
+
+        var authResult = await _authService.AuthorizeAsync(User, post, "EditPolicy");
+
+        if (!authResult.Succeeded &&
+            !User.IsInRole("Admins"))
+        {
+          if (User.Identity.IsAuthenticated)
+          {
+            return new ForbidResult();
+          }
+          else
+          {
+            return new ChallengeResult();
+          }
+        }
+
+        var ebpvm = new EditBlogPostViewModel
         {
           Id = id,
           Title = post.Title,
