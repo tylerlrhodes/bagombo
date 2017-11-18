@@ -18,8 +18,8 @@ namespace Bagombo.Controllers
 {
   public class HomeController : Controller
   {
-    private IQueryProcessorAsync _qpa;
-    private ILogger _logger;
+    private readonly IQueryProcessorAsync _qpa;
+    private readonly ILogger _logger;
 
     public HomeController(IQueryProcessorAsync qpa, ILogger<HomeController> logger)
     {

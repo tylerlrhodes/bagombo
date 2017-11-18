@@ -13,9 +13,9 @@ namespace Bagombo.Controllers
 
   public class AccountController : Controller
   {
-    private UserManager<ApplicationUser> _userManager;
-    private SignInManager<ApplicationUser> _signInManager;
-    private ILogger _logger;
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly ILogger _logger;
 
     public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger)
     {

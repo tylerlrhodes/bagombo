@@ -63,4 +63,8 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
+<PropertyGroup>
+    <PublishWithAspNetCoreTargetManifest>true</PublishWithAspNetCoreTargetManifest>
+  </PropertyGroup>
+
 </Project>
