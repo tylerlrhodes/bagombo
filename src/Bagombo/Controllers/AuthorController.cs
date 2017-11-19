@@ -108,20 +108,21 @@ namespace Bagombo.Controllers
     }
 
     [HttpGet]
-    public async Task<IActionResult> ManagePosts()
+    public async Task<IActionResult> ManagePosts(int? page)
     {
+
       var ampvm = new AuthorManagePostsViewModel();
 
       var curUser = await _userManager.GetUserAsync(User);
 
       var gbpbauid = new GetBlogPostsByAppUserIdQuery
       {
-        AppUserId = curUser.Id
+        AppUserId = curUser.Id,
+        CurrentPage = page ?? 1,
+        PageSize = 15
       };
 
-      var posts = await _qpa.ProcessAsync(gbpbauid);
-
-      ampvm.posts = posts;
+      ampvm.posts = await _qpa.ProcessAsync(gbpbauid);
 
       return View(ampvm);
     }

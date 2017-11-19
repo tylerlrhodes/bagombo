@@ -8,6 +8,6 @@ namespace Bagombo.Models.ViewModels.Admin
 {
   public class ManagePostsViewModel
   {
-    public IEnumerable<BlogPost> posts;
+    public PaginatedList<BlogPost> posts;
   }
 }

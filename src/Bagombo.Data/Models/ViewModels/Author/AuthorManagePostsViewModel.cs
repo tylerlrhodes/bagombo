@@ -7,6 +7,6 @@ namespace Bagombo.Models.ViewModels.Author
 {
   public class AuthorManagePostsViewModel
   {
-    public IEnumerable<BlogPost> posts;
+    public PaginatedList<BlogPost> posts;
   }
 }

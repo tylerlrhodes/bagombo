@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Bagombo.EFCore;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using Bagombo.Models;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
@@ -17,10 +19,15 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
 
     public async Task<ManagePostsViewModel> HandleAsync(GetManagePostsViewModelQuery query)
     {
-      ManagePostsViewModel mpvm = new ManagePostsViewModel()
+      var mpvm = new ManagePostsViewModel()
       {
-        posts = await _context.BlogPosts.AsNoTracking().Include(a => a.Author).ToListAsync()
+        posts = await PaginatedList<BlogPost>.CreateAsync(_context.BlogPosts.AsNoTracking()
+          .OrderByDescending(bp => bp.ModifiedAt)
+          .Include(a => a.Author), 
+          query.CurrentPage,
+          query.PageSize)
       };
+
       return mpvm;
     }
   }

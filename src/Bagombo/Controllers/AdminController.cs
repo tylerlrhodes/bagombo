@@ -295,9 +295,13 @@ namespace Bagombo.Controllers
     }
 
     [HttpGet]
-    public async Task<IActionResult> ManagePosts()
+    public async Task<IActionResult> ManagePosts(int? page)
     {
-      var gmpvmq = new GetManagePostsViewModelQuery();
+      var gmpvmq = new GetManagePostsViewModelQuery
+      {
+        CurrentPage = page ?? 1,
+        PageSize = 15
+      };
 
       var mpvm = await _qpa.ProcessAsync(gmpvmq);
 

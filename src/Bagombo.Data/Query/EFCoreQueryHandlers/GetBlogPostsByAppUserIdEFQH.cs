@@ -10,20 +10,23 @@ using Bagombo.Data.Query.Queries;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetBlogPostsByAppUserIdEFQH : EFQHBase, IQueryHandlerAsync<GetBlogPostsByAppUserIdQuery, IEnumerable<BlogPost>>
+  public class GetBlogPostsByAppUserIdEFQH : EFQHBase, IQueryHandlerAsync<GetBlogPostsByAppUserIdQuery, PaginatedList<BlogPost>>
   {
     public GetBlogPostsByAppUserIdEFQH(BlogDbContext context) : base(context)
     {
     }
 
-    public async Task<IEnumerable<BlogPost>> HandleAsync(GetBlogPostsByAppUserIdQuery query)
+    public async Task<PaginatedList<BlogPost>> HandleAsync(GetBlogPostsByAppUserIdQuery query)
     {
-      var posts = await (from a in _context.Authors
-                         where a.ApplicationUserId == query.AppUserId
-                         join bp in _context.BlogPosts on a.Id equals bp.AuthorId
-                         select bp).ToListAsync();
+      var posts = (from a in _context.Authors
+                   where a.ApplicationUserId == query.AppUserId
+                   join bp in _context.BlogPosts on a.Id equals bp.AuthorId
+                   orderby bp.ModifiedAt descending
+                   select bp);
 
-      return posts;
+      var paginatedPosts = await PaginatedList<BlogPost>.CreateAsync(posts, query.CurrentPage, query.PageSize);
+
+      return paginatedPosts;
     }
   }
 }

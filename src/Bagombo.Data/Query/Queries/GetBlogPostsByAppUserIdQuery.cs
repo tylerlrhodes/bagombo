@@ -6,8 +6,10 @@ using Bagombo.Models;
 
 namespace Bagombo.Data.Query.Queries
 {
-  public class GetBlogPostsByAppUserIdQuery : IQuery<IEnumerable<BlogPost>>
+  public class GetBlogPostsByAppUserIdQuery : IQuery<PaginatedList<BlogPost>>
   {
     public string AppUserId { get; set; }
+    public int CurrentPage { get; set; }
+    public int PageSize { get; set; }
   }
 }
