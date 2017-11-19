@@ -8,9 +8,9 @@
 
 <div class="container">
     <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading"><h3>Add Post</h3></div>
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-header"><h3>Add Post</h3></div>
+            <div class="card p-3">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <form asp-action="AddPost" method="post">
                     <div class="form-group">
@@ -26,8 +26,8 @@
 
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#ContentEditorTab" aria-controls="home" role="tab" data-toggle="tab">Markdown</a></li>
-                        <li role="presentation"><a href="#PreviewTab" aria-controls="profile" role="tab" data-toggle="tab">Preview</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link active" href="#ContentEditorTab" aria-controls="home" role="tab" data-toggle="tab">Markdown</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="#PreviewTab" aria-controls="profile" role="tab" data-toggle="tab">Preview</a></li>
                     </ul>
 
                     <!-- Tab panes -->

@@ -6,18 +6,10 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-<form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            <button type="submit" class="btn btn-link navbar-btn navbar-link" style="padding-right: 30px">Log off</button>
-        </li>
-    </ul>
-</form>
+  <li><a class="nav-link" asp-controller="Account" asp-action="LogOff">Log Off&nbsp;&nbsp;</a></li>
 }
 else
 {
   Uri url = new Uri(String.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path, Context.Request.QueryString));
-<ul class="nav navbar-nav navbar-right">
-    <li><a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@url">Log in&nbsp;&nbsp;</a></li>
-</ul>
+    <li><a class="nav-link" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@url">Log in&nbsp;&nbsp;</a></li>
 }

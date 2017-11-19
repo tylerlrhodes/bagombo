@@ -8,52 +8,55 @@
 }
 
 <div class="container">
-    <div class="col-md-9">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h2>@Model.Title</h2>
-                <hr />
-                <p>
-                    @Html.Raw(Model.Content)
-                </p>
-            </div>
-            <div class="panel-footer">
-                @Model.ModifiedAt
-            </div>
-        </div>
-    </div>
+  <div class="row">
+      <div class="col-md-9">
+          <div class="card">
+              <div class="card-body">
+                  <h2>@Model.Title</h2>
+                  <hr />
+                  <p>
+                      @Html.Raw(Model.Content)
+                  </p>
+              </div>
+              <div class="card-footer">
+                  @Model.ModifiedAt
+              </div>
+          </div>
+      </div>
     <div class="col-md-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h5>Author:</h5>
-            </div>
-            <div class="panel-body">
-              @Model.Author?.FirstName @Model.Author?.LastName <br />
-              @if (Model.Author != null && Model.Author.Blurb != null & Model.Author.Blurb != "")
-	            {
-		            <hr />
-                @Model.Author?.Blurb 
-	            }
-            </div>
+      <div class="card mb-2">
+        <div class="card-header">
+          <h5>Author:</h5>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h5>Description:</h5>
-            </div>
-            <div class="panel-body">
-                @Model.Description
-            </div>
+        <div class="card-body">
+          @Model.Author?.FirstName @Model.Author?.LastName <br />
+          @if (Model.Author != null && Model.Author.Blurb != null & Model.Author.Blurb != "")
+          {
+            <hr />
+                  @Model.Author?.Blurb
+          }
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h6>Categories:</h6>
-            </div>
-            <div class="panel-body">
-                @foreach (var cat in Model.Categories)
-                {
-                  <a class="label label-info" asp-action="CategoryPosts" asp-route-id="@cat.Id">@cat.Name</a><br />
-                }
-            </div>
+      </div>
+      <div class="card mb-2">
+        <div class="card-header">
+          <h5>Description:</h5>
         </div>
+        <div class="card-body">
+          @Model.Description
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h6>Categories:</h6>
+        </div>
+        <div class="card-body">
+          @foreach (var cat in Model.Categories)
+          {
+            <a class="label label-info" asp-action="CategoryPosts" asp-route-id="@cat.Id">@cat.Name</a><br />
+          }
+        </div>
+      </div>
     </div>
+
+  </div>
 </div>

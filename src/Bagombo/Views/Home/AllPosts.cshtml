@@ -22,16 +22,16 @@
                 <br />
                 @foreach (var c in Model.Categories)
                 {
-                    <h4 style="display: inline-block"><a class="label label-info" href="#@c.Category.Name">@c.Category.Name</a></h4>
+                  <a class="btn btn-success btn-sm" href="#@c.Category.Name">@c.Category.Name</a>
                 }
             </div>
         </div>
-
+        <br />
         @foreach (var c in Model.Categories)
         {
             <div class="row">
                 <div class="col-md-12">
-                    <h3 id="@c.Category.Name"><span class="label label-info">@c.Category.Name</span></h3>
+                    <h3 id="@c.Category.Name"><span class="badge badge-success">@c.Category.Name</span></h3>
                 </div>
             </div>
             <div class="row">
@@ -47,14 +47,15 @@
     else
     {
         <div class="row">
-          <br />
+          <br /> 
+          <div class="col-md-12 mt-3">
             @foreach (var bp in Model.PostsByDate)
             {
-
-                <div class="col-md-12">
-                    <a asp-action="BlogPost" asp-route-id="@bp.Id">@bp.Title</a> by @bp.Author.FirstName @bp.Author.LastName - @bp.Description <strong>Modified at @bp.ModifiedAt</strong><br />
-                </div>
+              <span>
+                <a asp-action="BlogPost" asp-route-id="@bp.Id">@bp.Title</a> by @bp.Author.FirstName @bp.Author.LastName - @bp.Description <strong>Modified at @bp.ModifiedAt</strong><br />
+              </span>
             }
+          </div>
         </div>
     }
 </div>
