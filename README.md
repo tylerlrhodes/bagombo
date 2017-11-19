@@ -20,12 +20,13 @@ Contributors welcome : )
     * SQL Server or SQLite backend support (currently just SQL Server)
     * Support for themes and customization
 
-### 0.2.3 Alpha - Released
+### 0.2.4 Alpha - Released
 * [Releases](http://github.com/tylerlrhodes/bagombo/releases)
-* Breaking changes from the data layer from all previous releases
 * The Data Layer and the move from dev to production is becoming more stable
 * Bug fixes
-* Renamed Features to Topics to clear up any confusion
+* Security fixes
+* Bootstrap 4'ified
+* Update to ASP.NET Core 2.0
 
 ### Goals for 0.3
 * Bug Fixes
