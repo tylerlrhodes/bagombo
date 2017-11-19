@@ -8,39 +8,39 @@
 
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Posts for @Model.Topic.Title</h3>
-            <hr />
-        </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Posts for @Model.Topic.Title</h3>
+      <hr />
     </div>
-    @foreach (var post in Model.BlogPosts)
-    {
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>
-                            <a asp-action="BlogPost" asp-route-id="@post.Id">@post.Title</a>
-                        </h3>
-                        <h5>
-                            Author: @post.Author?.FirstName @post.Author?.LastName
-                        </h5>
-                        <hr />
-                        <h5>
-                            @post.Description
-                        </h5>
-                        <h5>
-                            @foreach (var c in post.Categories)
-                            {
-                              <span class="label label-info"> @c.Name </span>  
+  </div>
+  @foreach (var post in Model.BlogPosts)
+  {
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h3>
+              <a asp-action="BlogPost" asp-route-id="@post.Id">@post.Title</a>
+            </h3>
+            <h5>
+              Author: @post.Author?.FirstName @post.Author?.LastName
+            </h5>
+            <hr />
+            <h5>
+              @post.Description
+            </h5>
+            <h5>
+              @foreach (var c in post.Categories)
+              {
+                <span class="badge badge-primary"> @c.Name </span>
 
-                            }
-                        </h5>
-                    </div>
-                </div>
-            </div>
+              }
+            </h5>
+          </div>
         </div>
+      </div>
+    </div>
 
-    }
+  }
 </div>

@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
-    <Exec Command="bower install" />
+    <Exec Command="npm install" />
     <Exec Command="grunt clean:build" />
     <Exec Command="grunt copy:build" />
   </Target>
