@@ -19,5 +19,6 @@ namespace Bagombo.Models
     public bool Public { get; set; }
     public ICollection<BlogPostCategory> BlogPostCategory { get; set; }
     public ICollection<BlogPostTopic> BlogPostTopic { get; set; }
+    public string Image { get; set; }
   }
 }

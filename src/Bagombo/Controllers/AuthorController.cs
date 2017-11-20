@@ -176,13 +176,11 @@ namespace Bagombo.Controllers
 
     [HttpGet]
     public async Task<IActionResult> EditPost(long id)
-    {
-      
+    {   
       var post = await _qpa.ProcessAsync(new GetBlogPostByIdQuery { Id = id });
 
       if (post != null)
       {
-
         var authResult = await _authService.AuthorizeAsync(User, post, "EditPolicy");
 
         if (!authResult.Succeeded &&
@@ -262,7 +260,6 @@ namespace Bagombo.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditPost(EditBlogPostViewModel model)
     {
-
       var post = await _qpa.ProcessAsync(new GetBlogPostByIdQuery { Id = model.Id });
 
       if (post != null && ModelState.IsValid)
