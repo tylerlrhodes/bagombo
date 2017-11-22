@@ -29,11 +29,12 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
       if (category != null)
       {
         var bpcs = await _context.BlogPostCategory
-                                .AsNoTracking()
-                                .Where(bp => bp.CategoryId == category.Id && bp.BlogPost.Public == true && bp.BlogPost.PublishOn < DateTime.Now)
-                                .Include(bpc => bpc.BlogPost)
-                                  .ThenInclude(bp => bp.Author)
-                                .ToListAsync();
+          .AsNoTracking()
+          .Where(bp => bp.CategoryId == category.Id && bp.BlogPost.Public == true && bp.BlogPost.PublishOn < DateTime.Now)
+          .Include(bpc => bpc.BlogPost)
+            .ThenInclude(bp => bp.Author)
+          .OrderByDescending(bp => bp.BlogPost.PublishOn)
+          .ToListAsync();
 
         vcpvm.Category = category;
         vcpvm.Posts = bpcs.Select(bp => bp.BlogPost).ToList();
