@@ -81,7 +81,6 @@ namespace Bagombo
 
       services.AddIdentity<ApplicationUser, IdentityRole>(opts => {
         opts.User.RequireUniqueEmail = true;
-        //opts.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(1);
       }).AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
 
@@ -113,7 +112,14 @@ namespace Bagombo
 
       services.ConfigureApplicationCookie(opts =>
       {
-        opts.ExpireTimeSpan = TimeSpan.FromDays(1);
+        opts.Cookie.Expiration = TimeSpan.FromDays(14); 
+        opts.ExpireTimeSpan = TimeSpan.FromDays(14);
+        opts.Cookie.Name = "SecurityLogin";
+      });
+
+      services.AddAntiforgery(opts =>
+      {
+       opts.Cookie.Name = "SecurityAntiForgery";
       });
 
       services.AddAuthorization(opts =>
