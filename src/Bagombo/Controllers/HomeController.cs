@@ -178,6 +178,8 @@ namespace Bagombo.Controllers
       return RedirectToAction(nameof(BlogPost), new { id = blogPostId });
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddComment(AddCommentViewModel model)
     {
       if (ModelState.IsValid)

@@ -6,6 +6,8 @@
   Layout = "_Layout";
 }
 @using Bagombo.Models.ViewModels.Home
+@using System.Linq;
+
 @model AllPostsViewModel
 
 <div class="container">
@@ -46,17 +48,30 @@
     }
     else
     {
-        <div class="row">
-          <br /> 
-          <div class="col-md-12 mt-3">
-            @foreach (var bp in Model.PostsByDate)
+      <div class="row">
+        <br /> 
+        <div class="col-md-12 mt-3">
+          @{ 
+            var posts = from bp in Model.PostsByDate
+                        group bp by new { year = bp.PublishOn.Year, month = bp.PublishOn.Month };
+
+            posts = posts.OrderByDescending(p => p.Key.year)
+              .ThenByDescending(p => p.Key.month);
+
+            foreach (var postGroup in posts)
             {
-              <span>
-                <a asp-action="BlogPost" asp-route-id="@bp.Id">@bp.Title</a> by @bp.Author.FirstName @bp.Author.LastName - @bp.Description <strong>Modified at @bp.ModifiedAt</strong><br />
-              </span>
+              <h4>@postGroup.Key.month/@postGroup.Key.year</h4>
+              foreach (var p in postGroup)
+              {
+                <span>
+                  <a asp-action="BlogPost" asp-route-id="@p.Id">@p.Title</a> by @p.Author.FirstName @p.Author.LastName - @p.Description <br />
+                </span>
+              }
+              <br />
             }
-          </div>
+          }
         </div>
+      </div>
     }
 </div>
 

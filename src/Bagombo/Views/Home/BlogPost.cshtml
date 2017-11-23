@@ -13,7 +13,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-9">
-      <div class="container">
+      <div class="container p-0">
         <div class="row mb-3">
           <div class="col-12">
             <div class="card">
@@ -59,7 +59,7 @@
                     <div class="col-md-11">
                       <span><a href="@comment.WebSite"> @comment.Name </a> </span> <br />
                       <span>@Html.Raw(CommonMarkConverter.Convert(comment.Text))</span>
-                      <span><i>@comment.Added</i></span>
+                      <span><i>@comment.Added</i></span> <br />
                       @if (User.IsInRole("Admins"))
                       {
                         <a asp-action="DeleteComment" asp-route-Id="@comment.Id" asp-route-BlogPostId=@Model.Id>Delete Comment</a> <br />

@@ -49,7 +49,7 @@ namespace Bagombo.Controllers
     }
 
     [HttpGet]
-    public async Task<IActionResult>EditProfile()
+    public async Task<IActionResult> EditProfile()
     {
       var gabauid = new GetAuthorByAppUserIdQuery
       {
@@ -74,7 +74,7 @@ namespace Bagombo.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult>EditProfile(ProfileViewModel model)
+    public async Task<IActionResult> EditProfile(ProfileViewModel model)
     {
       if (ModelState.IsValid)
       {
@@ -176,7 +176,7 @@ namespace Bagombo.Controllers
 
     [HttpGet]
     public async Task<IActionResult> EditPost(long id)
-    {   
+    {
       var post = await _qpa.ProcessAsync(new GetBlogPostByIdQuery { Id = id });
 
       if (post != null)
@@ -378,7 +378,7 @@ namespace Bagombo.Controllers
 
         ViewData["SavedMessage"] = "Post saved.";
 
-        return View(model); 
+        return View(model);
       }
       else
       {
@@ -399,7 +399,7 @@ namespace Bagombo.Controllers
           model.TopicsList = new List<TopicsCheckBox>();
         }
 
-        return View(model);        
+        return View(model);
       }
     }
 
