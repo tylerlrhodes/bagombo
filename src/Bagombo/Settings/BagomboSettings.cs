@@ -7,10 +7,8 @@ namespace Bagombo
 {
   public class BagomboSettings
   {
-    public BagomboSettings()
-    {
-      Title = "Bagombo Demo";
-    }
-    public string Title { get; set; }
+    public string Brand { get; set; } = "Bagombo Demo";
+    public string HomePageTitle { get; set; } = "Bagombo Blog";
+    public string CopyRight { get; set; } = "Change me";
   }
 }

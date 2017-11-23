@@ -18,7 +18,7 @@
 
 <html>
 <head>
-    <title>@ViewData["Title"]</title>
+    <title>@_settings.Value.HomePageTitle</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link type="text/css" rel="stylesheet" asp-href-include="lib/css/*.css" />
@@ -26,7 +26,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div class="container">
-        <span class="navbar-brand" href="#">@_settings.Value.Title</span>
+        <span class="navbar-brand" href="#">@_settings.Value.Brand</span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -87,63 +87,13 @@
         </div>
       </div>
     </nav>
-    <!--nav class="navbar navbar-expand-lg navbar-light fixed-top">
 
-        <div class="navbar-brand">@_settings.Value.Title</div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-      <div class="collapse navbar-collapse" id="navbar1">
-        <ul class="nav navbar-nav">
-          <li class="@((string)(ViewContext.RouteData.Values["action"]) == "Index" ? "active" : "")"><a asp-controller="Home" asp-action="Index">Home</a></li>
-          <li class="@((string)(ViewContext.RouteData.Values["action"]) == "Topics" ? "active" : "")"><a asp-controller="Home" asp-action="Topics">Topics</a></li>
-          <li class="@((string)(ViewContext.RouteData.Values["action"]) == "AllPosts" ? "active" : "")"><a asp-controller="Home" asp-action="AllPosts">All Posts</a></li>
-        </ul>
-        <form asp-controller="Home" asp-action="Search" method="get" class="navbar-form navbar-left input-group-sm" role="search">
-          <div class="form-group">
-            <input name="SearchText" type="text" class="form-control" placeholder="Search">
-          </div>
-          <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-        </form>
-        @await Html.PartialAsync("_LoginPartial")
-        <ul class="nav navbar-nav navbar-right">
-          @if (admin == true)
-          {
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin Tools <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a asp-controller="Admin" asp-action="ManagePosts">Manage Posts</a></li>
-                <li><a asp-controller="Admin" asp-action="ManageTopics">Manage Topics</a></li>
-                <li><a asp-controller="Admin" asp-action="ManageCategories">Manage Categories</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a asp-controller="Admin" asp-action="ManageUsers">Manage Users</a></li>
-              </ul>
-            </li>
-          }
-          @if (author == true)
-          {
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Author Tools <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a asp-controller="Author" asp-action="ManagePosts">Manage Posts</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a asp-controller="Author" asp-action="AddPost">Add New Post</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a asp-controller="Author" asp-action="EditProfile">Edit Profile</a></li>
-              </ul>
-            </li>
-          }
-        </ul>
-      </div>
-    </!--nav>-->
-  </div>
 
         @RenderBody()
 
     <div class="center-text container">
         <hr />
-        &copy; 2017
+        &copy; @DateTime.Now.Year - @_settings.Value.CopyRight
         <br />
         <br />
     </div>
