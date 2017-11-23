@@ -25,6 +25,7 @@ namespace Bagombo.EFCore
     public DbSet<BlogPostTopic> BlogPostTopic { get; set; }
     public DbSet<BlogPostCategory> BlogPostCategory { get; set; }
     public DbSet<Category> Categories { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 
     public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
     {
@@ -46,11 +47,18 @@ namespace Bagombo.EFCore
         .OnDelete(DeleteBehavior.SetNull);
 
       builder.Entity<BlogPost>().ToTable("BlogPost");
-
       builder.Entity<BlogPost>().HasOne(bp => bp.Author)
         .WithMany(a => a.BlogPosts)
         .HasForeignKey("AuthorId")
         .IsRequired(false);
+
+      //builder.Entity<Comment>().ToTable("Comment");
+      //builder.Entity<Comment>().HasOne(c => c.BlogPost)
+      //  .WithMany(c => c.Comments);
+
+      //builder.Entity<BlogPost>().HasMany(bp => bp.Comments)
+      //  .WithOne(c => c.BlogPost)
+      //  .IsRequired(false);
 
       builder.Entity<Topic>().ToTable("Topic");
       builder.Entity<Topic>().HasIndex(t => t.Title)

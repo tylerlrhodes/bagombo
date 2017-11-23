@@ -17,5 +17,8 @@ namespace Bagombo.Models.ViewModels.Home
     public DateTime PublishOn { get; set; }
     public IEnumerable<Category> Categories { get; set; }
     public IEnumerable<Topic> Topics { get; set; }
+    public IEnumerable<Comment> Comments { get; set; }
+
+    public AddCommentViewModel NewComment { get; set; }
   }
 }

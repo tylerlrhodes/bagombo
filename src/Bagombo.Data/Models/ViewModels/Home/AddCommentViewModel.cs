@@ -3,19 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Bagombo.Models
+namespace Bagombo.Models.ViewModels.Home
 {
-  public class Comment
+  public class AddCommentViewModel
   {
+    [Required]
     public long Id { get; set; }
     [Required]
     public string Name { get; set; }
     public string Email { get; set; }
-    public string WebSite { get; set; }
-    [Required]
-    public long BlogPostId { get; set; }
-    public BlogPost BlogPost { get; set; }
-
+    public string Website { get; set; }
     [Required]
     public string Text { get; set; }
   }

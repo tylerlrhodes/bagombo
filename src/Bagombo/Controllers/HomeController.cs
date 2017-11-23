@@ -1,9 +1,12 @@
-﻿using Bagombo.Data.Query;
+﻿using Bagombo.Data.Command;
+using Bagombo.Data.Command.Commands;
+using Bagombo.Data.Query;
 using Bagombo.Data.Query.Queries;
 using Bagombo.EFCore;
 using Bagombo.Models;
 using Bagombo.Models.ViewModels.Home;
 using CommonMark;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -19,19 +22,23 @@ namespace Bagombo.Controllers
   public class HomeController : Controller
   {
     private readonly IQueryProcessorAsync _qpa;
+    private readonly ICommandProcessorAsync _cp;
     private readonly ILogger _logger;
 
-    public HomeController(IQueryProcessorAsync qpa, ILogger<HomeController> logger)
+    public HomeController(IQueryProcessorAsync qpa,
+                          ICommandProcessorAsync cp,
+                          ILogger<HomeController> logger)
     {
       _logger = logger;
       _qpa = qpa;
+      _cp = cp;
     }
 
     public async Task<IActionResult> Index()
     {
       var grbp = new GetRecentBlogPostsQuery()
       {
-        NumberOfPostsToGet = 7
+        NumberOfPostsToGet = 10
       };
 
       var recentPosts = await _qpa.ProcessAsync(grbp);
@@ -156,6 +163,47 @@ namespace Bagombo.Controllers
     public IActionResult About()
     {
       return View();
+    }
+
+    [Authorize(Roles = "Admins")]
+    public async Task<IActionResult> DeleteComment(long id, long blogPostId)
+    {
+      var result = await _cp.ProcessAsync(new DeleteCommentCommand { Id = id });
+
+      if (!result.Succeeded)
+      {
+        _logger.LogError($"Error deleting comment with Id = {id}");
+      }
+
+      return RedirectToAction(nameof(BlogPost), new { id = blogPostId });
+    }
+
+    public async Task<IActionResult> AddComment(AddCommentViewModel model)
+    {
+      if (ModelState.IsValid)
+      {
+        var addComment = new AddCommentCommand()
+        {
+          Name = model.Name,
+          Email = model.Email,
+          Website = model.Website,
+          Text = model.Text,
+          BlogPostId = model.Id
+        };
+
+        var result = await _cp.ProcessAsync(addComment);
+
+        if (result.Succeeded)
+        {
+          return RedirectToAction(nameof(BlogPost), new { id = model.Id });
+        }
+        else
+        {
+          _logger.LogError("Error adding comment...");
+        }
+      }
+
+      return RedirectToAction(nameof(BlogPost), new { id = model.Id });
     }
 
     public async Task<IActionResult> BlogPost(long? id)

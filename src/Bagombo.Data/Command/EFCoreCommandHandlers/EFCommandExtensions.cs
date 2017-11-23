@@ -25,6 +25,8 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
       provider.Register<ICommandHandlerAsync<EditTopicCommand>, EditTopicCommandEFCH>();
       provider.Register<ICommandHandlerAsync<AddTopicCommand>, AddTopicCommandEFCH>();
       provider.Register<ICommandHandlerAsync<EditAuthorProfileCommand>, EditAuthorProfileCommandEFCH>();
+      provider.Register<ICommandHandlerAsync<AddCommentCommand>, AddCommentCommandEFCH>();
+      provider.Register<ICommandHandlerAsync<DeleteCommentCommand>, DeleteCommentCommandEFCH>();
 
       provider.Register<ICommandProcessorAsync, CommandProcessor>(Lifestyle.Scoped);
     }

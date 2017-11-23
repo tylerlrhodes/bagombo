@@ -1,5 +1,7 @@
 ﻿
 @using Bagombo.Models.ViewModels.Home
+@using System.Text;
+
 @model BlogPostViewModel
 
 @{
@@ -9,20 +11,92 @@
 
 <div class="container">
   <div class="row">
-      <div class="col-md-9">
-          <div class="card">
+    <div class="col-md-9">
+      <div class="container">
+        <div class="row mb-3">
+          <div class="col-12">
+            <div class="card">
               <div class="card-body">
-                  <h2>@Model.Title</h2>
-                  <hr />
-                  <p>
-                      @Html.Raw(Model.Content)
-                  </p>
+                <h2>@Model.Title</h2>
+                <hr />
+                <p>
+                  @Html.Raw(Model.Content)
+                </p>
               </div>
               <div class="card-footer">
-                  @Model.ModifiedAt
+                @Model.ModifiedAt
               </div>
+            </div>
           </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            @foreach (var comment in Model.Comments)
+            {
+              <div class="card p-2 mb-2">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-1 pt-3">
+                      @{ 
+                        var md5 = System.Security.Cryptography.MD5.Create();
+                        byte[] hash = md5.ComputeHash(Encoding.Default.GetBytes(comment.Email));
+                        var sb = new StringBuilder();
+                        for (var i = 0; i < hash.Length; i++)
+                        {
+                          sb.Append(hash[i].ToString("x2"));
+
+                        }
+                        <img src="https://www.gravatar.com/avatar/@sb.ToString()?s=50&d=robohash" />
+                      }
+                    </div>
+                    <div class="col-md-11">
+                      <span>Name: @comment.Name</span> <br />
+                      <span>Email: @comment.Email</span> <br />
+                      <span>Website: <a href="@comment.WebSite">@comment.WebSite</a> </span> <br />
+                      <span>Comment: @comment.Text</span> <br />
+                      @if (User.IsInRole("Admins"))
+                      {
+                        <a asp-action="DeleteComment" asp-route-Id="@comment.Id" asp-route-BlogPostId=@Model.Id>Delete Comment</a> <br />
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+            <div class="card">
+              <div class="card-header">
+                Add Comment:
+              </div>
+              <div class="card-body p-3">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <form asp-action="AddComment" method="post">
+                  <input asp-for="Id" type="hidden" />
+                  <div class="form-group">
+                    <label name="Name">Name:</label>
+                    <input class="form-control" name="Name" />
+                  </div>
+                  <div class="form-group">
+                    <label for="Email">Email (for gravitar): </label>
+                    <input class="form-control" name="Email" />
+                  </div>
+                  <div class="form-group">
+                    <label for="Website">Website:</label>
+                    <input class="form-control" name="Website" />
+                  </div>
+                  <div class="form-group">
+                    <label for="Text">Comment:</label>
+                    <textarea class="form-control" name="Text"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
     <div class="col-md-3">
       <div class="card mb-2">
         <div class="card-header">
@@ -58,5 +132,9 @@
       </div>
     </div>
 
+  </div>
+
+  <div class="row">
+    
   </div>
 </div>

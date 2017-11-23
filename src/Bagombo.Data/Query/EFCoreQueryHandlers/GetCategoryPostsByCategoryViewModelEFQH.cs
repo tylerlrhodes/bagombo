@@ -30,10 +30,10 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
       {
         var bpcs = await _context.BlogPostCategory
           .AsNoTracking()
-          .Where(bp => bp.CategoryId == category.Id && bp.BlogPost.Public == true && bp.BlogPost.PublishOn < DateTime.Now)
+          .Where(bpc => bpc.CategoryId == category.Id && bpc.BlogPost.Public == true && bpc.BlogPost.PublishOn < DateTime.Now)
           .Include(bpc => bpc.BlogPost)
             .ThenInclude(bp => bp.Author)
-          .OrderByDescending(bp => bp.BlogPost.PublishOn)
+          .OrderByDescending(bpc => bpc.BlogPost.PublishOn)
           .ToListAsync();
 
         vcpvm.Category = category;

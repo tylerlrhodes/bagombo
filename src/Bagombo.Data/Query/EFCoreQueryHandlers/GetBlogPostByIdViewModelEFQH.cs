@@ -21,6 +21,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
       var post = await _context.BlogPosts
                           .AsNoTracking()
                           .Include(bp => bp.Author)
+                          .Include(bp => bp.Comments)
                           .Include(bp => bp.BlogPostCategory)
                             .ThenInclude(bpc => bpc.Category)
                           .Where(bp => bp.Id == query.Id && bp.Public == true && bp.PublishOn < DateTime.Now)
@@ -31,10 +32,12 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
 
       var bpvm = new BlogPostViewModel()
       {
+        Id = post.Id,
         Author = post.Author,
         Title = post.Title,
         Description = post.Description,
         Content = post.Content,
+        Comments = post.Comments,
         ModifiedAt = post.ModifiedAt,
         Categories = post.BlogPostCategory.Select(c => c.Category).ToList()
       };

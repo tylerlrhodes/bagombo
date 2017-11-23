@@ -20,5 +20,6 @@ namespace Bagombo.Models
     public ICollection<BlogPostCategory> BlogPostCategory { get; set; }
     public ICollection<BlogPostTopic> BlogPostTopic { get; set; }
     public string Image { get; set; }
+    public ICollection<Comment> Comments { get; set; }
   }
 }
