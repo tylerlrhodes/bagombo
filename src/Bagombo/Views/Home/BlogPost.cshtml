@@ -1,6 +1,7 @@
 ﻿
 @using Bagombo.Models.ViewModels.Home
 @using System.Text;
+@using CommonMark;
 
 @model BlogPostViewModel
 
@@ -31,15 +32,21 @@
         </div>
         <div class="row">
           <div class="col-12">
+            @if(Model.Comments.Count() > 0)
+            {
+              <h3>Comments:</h3>
+
+            }
             @foreach (var comment in Model.Comments)
             {
               <div class="card p-2 mb-2">
                 <div class="container">
                   <div class="row">
-                    <div class="col-md-1 pt-3">
+                    <div class="col-md-1 pt-2">
                       @{ 
+                        var email = comment.Email ?? comment.Name;
                         var md5 = System.Security.Cryptography.MD5.Create();
-                        byte[] hash = md5.ComputeHash(Encoding.Default.GetBytes(comment.Email));
+                        byte[] hash = md5.ComputeHash(Encoding.Default.GetBytes(email));
                         var sb = new StringBuilder();
                         for (var i = 0; i < hash.Length; i++)
                         {
@@ -50,10 +57,9 @@
                       }
                     </div>
                     <div class="col-md-11">
-                      <span>Name: @comment.Name</span> <br />
-                      <span>Email: @comment.Email</span> <br />
-                      <span>Website: <a href="@comment.WebSite">@comment.WebSite</a> </span> <br />
-                      <span>Comment: @comment.Text</span> <br />
+                      <span><a href="@comment.WebSite"> @comment.Name </a> </span> <br />
+                      <span>@Html.Raw(CommonMarkConverter.Convert(comment.Text))</span>
+                      <span><i>@comment.Added</i></span>
                       @if (User.IsInRole("Admins"))
                       {
                         <a asp-action="DeleteComment" asp-route-Id="@comment.Id" asp-route-BlogPostId=@Model.Id>Delete Comment</a> <br />
@@ -84,7 +90,7 @@
                     <input class="form-control" name="Website" />
                   </div>
                   <div class="form-group">
-                    <label for="Text">Comment:</label>
+                    <label for="Text">Comment (supports markdown):</label>
                     <textarea class="form-control" name="Text"></textarea>
                   </div>
                   <div class="form-group">
