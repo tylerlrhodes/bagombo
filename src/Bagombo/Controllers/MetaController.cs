@@ -95,7 +95,7 @@ namespace Bagombo.Controllers
             Id = host + bp.GetUrl(),
             Published = bp.PublishOn,
             LastUpdated = bp.ModifiedAt,
-            ContentType = "html",
+            ContentType = "html"
           };
 
           foreach (var c in bp.BlogPostCategory.Select(bpc => bpc.Category).ToList())
