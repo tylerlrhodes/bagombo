@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
@@ -205,10 +206,12 @@ namespace Bagombo
       _container.CrossWire<IPasswordHasher<ApplicationUser>>(app);
       _container.CrossWire<IPasswordValidator<ApplicationUser>>(app);
       _container.CrossWire<IUserValidator<ApplicationUser>>(app);
+      _container.CrossWire<IOptions<BagomboSettings>>(app);
       _container.CrossWire<ILogger<HomeController>>(app);
       _container.CrossWire<ILogger<AccountController>>(app);
       _container.CrossWire<ILogger<AdminController>>(app);
       _container.CrossWire<ILogger<AuthorController>>(app);
+      _container.CrossWire<ILogger<MetaController>>(app);
       _container.CrossWire<IAuthorizationHandler>(app);
       _container.CrossWire<IAuthorizationService>(app);
 

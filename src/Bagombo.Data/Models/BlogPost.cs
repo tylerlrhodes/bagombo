@@ -22,4 +22,12 @@ namespace Bagombo.Models
     public string Image { get; set; }
     public ICollection<Comment> Comments { get; set; }
   }
+
+  public static class BlogPostExtensions
+  {
+    public static string GetUrl(this BlogPost bp)
+    {
+      return $"/Home/BlogPost/{bp.Id}";
+    }
+  }
 }
