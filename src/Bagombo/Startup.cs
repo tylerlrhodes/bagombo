@@ -1,7 +1,6 @@
 ﻿using Bagombo.AuthHandlers;
 using Bagombo.Controllers;
 using Bagombo.Data.Command.EFCoreCommandHandlers;
-using Bagombo.Data.Query;
 using Bagombo.Data.Query.EFCoreQueryHandlers;
 using Bagombo.EFCore;
 using Bagombo.Models;
@@ -11,7 +10,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.EntityFrameworkCore;
@@ -186,10 +184,9 @@ namespace Bagombo
         app.UseDeveloperExceptionPage();
       }
 
-      app.Use(async (context, _next) =>
+      // need this for metaweblog to work with SimpleInjector : (
+      app.Use(async (context, next) =>
       {
-        var mwlp = _container.GetInstance<MetaWeblogService>();
-
         if (context.Request.Method == "POST" &&
         context.Request.Path.StartsWithSegments("/metaweblog") &&
         context.Request != null &&
@@ -199,6 +196,7 @@ namespace Bagombo
           var rdr = new StreamReader(context.Request.Body);
           var xml = rdr.ReadToEnd();
           //_logger.LogInformation($"Request XMLRPC: {xml}");
+          var mwlp = _container.GetInstance<MetaWeblogService>();
           var result = mwlp.Invoke(xml);
           //_logger.LogInformation($"Result XMLRPC: {result}");
           await context.Response.WriteAsync(result, Encoding.UTF8);
@@ -206,7 +204,7 @@ namespace Bagombo
         }
 
         // Continue On
-        await _next.Invoke();
+        await next.Invoke();
 
       });
 

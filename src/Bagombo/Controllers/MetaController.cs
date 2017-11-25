@@ -15,6 +15,7 @@ using Microsoft.SyndicationFeed.Atom;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using CommonMark;
 
 namespace Bagombo.Controllers
 {
@@ -91,7 +92,8 @@ namespace Bagombo.Controllers
           var item = new AtomEntry
           {
             Title = bp.Title,
-            Description = bp.Description,
+            Description = type.Equals("rss", StringComparison.OrdinalIgnoreCase) ? bp.Description 
+              : CommonMarkConverter.Convert(bp.Content),
             Id = host + bp.GetUrl(),
             Published = bp.PublishOn,
             LastUpdated = bp.ModifiedAt,
