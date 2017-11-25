@@ -2,17 +2,14 @@
 using Bagombo.Data.Command.Commands;
 using Bagombo.Data.Query;
 using Bagombo.Data.Query.Queries;
-using Bagombo.EFCore;
-using Bagombo.Models;
 using Bagombo.Models.ViewModels.Home;
 using CommonMark;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -24,33 +21,34 @@ namespace Bagombo.Controllers
     private readonly IQueryProcessorAsync _qpa;
     private readonly ICommandProcessorAsync _cp;
     private readonly ILogger _logger;
+    private readonly BagomboSettings _settings;
 
     public HomeController(IQueryProcessorAsync qpa,
                           ICommandProcessorAsync cp,
-                          ILogger<HomeController> logger)
+                          ILogger<HomeController> logger,
+                          IOptions<BagomboSettings> options)
     {
       _logger = logger;
       _qpa = qpa;
       _cp = cp;
+      _settings = options.Value;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int? page)
     {
-      var grbp = new GetRecentBlogPostsQuery()
+      var curPage = page ?? 1;
+
+      var gbpfhp = new GetBlogPostsForHomePageQuery
       {
-        NumberOfPostsToGet = 10
+        CurrentPage = curPage,
+        PageSize = _settings.PostsOnHomePage
       };
 
-      var recentPosts = await _qpa.ProcessAsync(grbp);
-
-      var gtphp = new GetTopicPostsForHomePageViewModelQuery();
-
-      var topicPostsViewModel = await _qpa.ProcessAsync(gtphp);
+      var recentPosts = await _qpa.ProcessAsync(gbpfhp);
 
       var vhvm = new HomeViewModel()
       {
-        RecentPosts = recentPosts,
-        TopicPosts = topicPostsViewModel
+        RecentPosts = recentPosts
       };
 
       return View(vhvm);

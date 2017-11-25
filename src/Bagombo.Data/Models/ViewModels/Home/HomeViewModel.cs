@@ -7,7 +7,6 @@ namespace Bagombo.Models.ViewModels.Home
 {
   public class HomeViewModel
   {
-    public IEnumerable<BlogPost> RecentPosts { get; set; }
-    public TopicPostsViewModel TopicPosts { get; set; }
+    public PaginatedList<BlogPost> RecentPosts { get; set; }
   }
 }

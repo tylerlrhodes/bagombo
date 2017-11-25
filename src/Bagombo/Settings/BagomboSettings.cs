@@ -12,5 +12,7 @@ namespace Bagombo
     public string CopyRight { get; set; } = "Change me";
     public string Description { get; set; } = "A technical blog on various topics";
     public string ContactEmail { get; set; } = "info@bagombo.org";
+    public int PostsOnHomePage { get; set; } = 8;
+    public int LinesPerPost { get; set; } = 5;
   }
 }
