@@ -2,10 +2,33 @@
 @{
   ViewData["Title"] = "Bagombo Home";
   Layout = "_Layout";
+
+  var host = Context.Request.Scheme + "://" + Context.Request.Host;
 }
+
 @using Bagombo.Models.ViewModels.Home
+@using Microsoft.Extensions.Options
+
 @model HomeViewModel
 
+@inject IOptions<BagomboSettings> _settings
+
+@section opengraph {
+
+<meta property="og:type" content="article" />
+<meta property="og:url" content="@host@Context.Request.Path" />
+<meta property="og:title" content="@_settings.Value.HomePageTitle" />
+<meta property="og:description" content="@_settings.Value.Description" />
+<meta property="og:url" content="@(host + Context.Request.Path)" />
+<meta property="og:image" content="@host/images/bagombo-logo.png" />
+<meta property="og:image:width" content="256" />
+<meta property="og:image:height" content="256" />
+ 
+<meta property="twitter:url" content="@host@Context.Request.Path" />
+<meta property="twitter:title" content="@_settings.Value.HomePageTitle" />
+<meta property="twitter:description" content="@_settings.Value.Description" />
+
+}
 
 <div class="container">
     <div class="row">

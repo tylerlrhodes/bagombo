@@ -25,7 +25,10 @@ module.exports = function (grunt) {
           { expand: true, src: ['node_modules/jquery/dist/jquery.min.js'], dest: 'wwwroot/lib/js/', filter: 'isFile', flatten: true },
           { expand: true, src: ['css/*'], dest: 'wwwroot/lib/css/', filter: 'isFile', flatten: true },
           { expand: true, src: ['javascript/*.js'], dest: 'wwwroot/lib/js/', filter: 'isFile', flatten: true },
-          { expand: true, src: ['assets/favicon.ico'], dest: 'wwwroot/', filter: 'isFile', flatten: true }
+          { expand: true, src: ['assets/favicon.ico'], dest: 'wwwroot/', filter: 'isFile', flatten: true },
+          { expand: true, src: ['assets/bagombo-logo.png'], dest: 'wwwroot/images/', filter: 'isFile', flatten: true },
+          { expand: true, src: ['assets/*.png'], dest: 'wwwroot/images/', filter: 'isFile', flatten: true },
+          { expand: true, src: ['assets/fonts/*.*'], dest: 'wwwroot/lib/fonts/', filter: 'isFile', flatten: true }
         ]
       }
     }
