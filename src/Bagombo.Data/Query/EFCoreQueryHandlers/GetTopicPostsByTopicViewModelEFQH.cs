@@ -32,6 +32,8 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
                               .Include(bpf => bpf.BlogPost)
                                 .ThenInclude(bp => bp.Author)
                               .Include(bpf => bpf.BlogPost)
+                                .ThenInclude(bp => bp.Comments)
+                              .Include(bpf => bpf.BlogPost)
                                 .ThenInclude(bp => bp.BlogPostCategory)
                                 .ThenInclude(bpc => bpc.Category)
                               .OrderByDescending(bp => bp.BlogPost.PublishOn)
@@ -49,7 +51,9 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
           Description = bpf.BlogPost.Description,
           Categories = bpf.BlogPost.BlogPostCategory.Select(c => c.Category).ToList(),
           ModifiedAt = bpf.BlogPost.ModifiedAt,
-          Id = bpf.BlogPost.Id
+          Id = bpf.BlogPost.Id,
+          Content = bpf.BlogPost.Content,
+          Comments = bpf.BlogPost.Comments
         };
         viewPosts.Add(bpView);
       }
