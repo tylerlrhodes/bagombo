@@ -1,10 +1,15 @@
 ﻿
 @using Bagombo.Models.ViewModels.Home
+@using CommonMark
+@using Microsoft.Extensions.Options;
+
+@inject IOptions<BagomboSettings> _settings
 @model SearchResultsViewModel
 
 @{
   ViewData["Title"] = $"Posts for Search: {Model.SearchTerm}";
   Layout = "_Layout";
+  var host = Context.Request.Scheme + "://" + Context.Request.Host;
 }
 
 <div class="container">
@@ -14,33 +19,44 @@
             <hr />
         </div>
     </div>
-    @foreach (var post in Model.BlogPosts)
-    {
+   @foreach (var post in Model.BlogPosts)
+   {
+     var bp = post.BlogPost;
     <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <h3>
-                        <a asp-action="BlogPost" asp-route-id="@post.BlogPost.Id">@post.BlogPost.Title</a>
-                    </h3>
-                    <h5>
-                        Author: @post.BlogPost.Author.FirstName @post.BlogPost.Author.LastName
-                    </h5>
-                    <hr />
-                    <h5>
-                        @post.BlogPost.Description
-                    </h5>
-                  <h5>
-                    @foreach (var c in post.Categories)
-                    {
-                      <span class="label label-info"> @c.Name </span>
-
-                    }
-                  </h5>
+      <div class="col-12">
+        <div class="card mb-3">
+          <div class="card-header">
+            <a asp-action="BlogPost" asp-route-id="@bp.Id">@bp.Title</a> by @bp.Author.FirstName @bp.Author.LastName on @bp.PublishOn
+            @if (bp.Comments != null)
+        {
+              <div class="float-right">@bp.Comments?.Count() Comments</div>
+            }
+          </div>
+          <div class="card-body pl-0">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-1 col-12">
+                  @{
+                    var img = bp.Image ?? $"{host}/images/bagombo-logo.png";
+                  }
+                  <img height="100" width="100" src="@img" />
                 </div>
+                <div class="col-lg-11 col-12 pl-4">
+                  @{
+                    var content = bp.Content.Split('\n').Take(_settings.Value.LinesPerPost);
+                    var contentString = string.Join('\n', content);
+                  }
+                  @Html.Raw(CommonMarkConverter.Convert(contentString))
+                  <div class="float-right">
+                    <a asp-action="BlogPost" asp-route-id="@bp.Id">Read more</a>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
 
-    }
+   }
 </div>

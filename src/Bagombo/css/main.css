@@ -33,3 +33,8 @@ ul.nostyle, ul.nostyle > li {
 .label {
     margin: 2px;
 }
+
+img {
+  max-width: 95%;
+  max-height: 95%;
+}

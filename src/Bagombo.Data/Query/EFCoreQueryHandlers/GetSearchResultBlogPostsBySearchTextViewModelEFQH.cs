@@ -26,6 +26,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
                           .OrderByDescending(bp => bp.PublishOn)
                           .ThenByDescending(bp => bp.ModifiedAt)
                           .Include(bp => bp.Author)
+                          .Include(bp => bp.Comments)
                           .Include(bp => bp.BlogPostCategory)
                             .ThenInclude(bpc => bpc.Category)
                           .ToListAsync();

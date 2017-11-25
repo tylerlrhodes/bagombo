@@ -31,6 +31,7 @@
     <PackageReference Include="SimpleInjector" Version="4.0.12" />
     <PackageReference Include="SimpleInjector.Integration.AspNetCore" Version="4.0.12" />
     <PackageReference Include="SimpleInjector.Integration.AspNetCore.Mvc" Version="4.0.12" />
+    <PackageReference Include="WilderMinds.MetaWeblog" Version="1.2.3" />
   </ItemGroup>
 
   <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">

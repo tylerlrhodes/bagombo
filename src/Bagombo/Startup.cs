@@ -5,6 +5,7 @@ using Bagombo.Data.Query;
 using Bagombo.Data.Query.EFCoreQueryHandlers;
 using Bagombo.EFCore;
 using Bagombo.Models;
+using Bagombo.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,7 +23,10 @@ using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
 using System;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
+using WilderMinds.MetaWeblog;
 
 namespace Bagombo
 {
@@ -182,6 +186,30 @@ namespace Bagombo
         app.UseDeveloperExceptionPage();
       }
 
+      app.Use(async (context, _next) =>
+      {
+        var mwlp = _container.GetInstance<MetaWeblogService>();
+
+        if (context.Request.Method == "POST" &&
+        context.Request.Path.StartsWithSegments("/metaweblog") &&
+        context.Request != null &&
+        context.Request.ContentType.ToLower().Contains("text/xml"))
+        {
+          context.Response.ContentType = "text/xml";
+          var rdr = new StreamReader(context.Request.Body);
+          var xml = rdr.ReadToEnd();
+          //_logger.LogInformation($"Request XMLRPC: {xml}");
+          var result = mwlp.Invoke(xml);
+          //_logger.LogInformation($"Result XMLRPC: {result}");
+          await context.Response.WriteAsync(result, Encoding.UTF8);
+          return;
+        }
+
+        // Continue On
+        await _next.Invoke();
+
+      });
+
       app.UseAuthentication();
 
       app.UseMvcWithDefaultRoute();
@@ -195,9 +223,12 @@ namespace Bagombo
       _container.RegisterMvcControllers(app);
       _container.RegisterMvcViewComponents(app);
 
+      _container.Register<MetaWeblogService>();
+      _container.Register<IMetaWeblogProvider, MetaWebLogProvider>();
       // Cross-wire ASP.NET services (if any). For instance:
       _container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());
 
+      _container.CrossWire<IHttpContextAccessor>(app);
       _container.CrossWire<BlogDbContext>(app);
       _container.CrossWire<ApplicationDbContext>(app);
       _container.CrossWire<UserManager<ApplicationUser>>(app);
@@ -212,6 +243,7 @@ namespace Bagombo
       _container.CrossWire<ILogger<AdminController>>(app);
       _container.CrossWire<ILogger<AuthorController>>(app);
       _container.CrossWire<ILogger<MetaController>>(app);
+      _container.CrossWire<ILogger<MetaWeblogService>>(app);
       _container.CrossWire<IAuthorizationHandler>(app);
       _container.CrossWire<IAuthorizationService>(app);
 
