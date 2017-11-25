@@ -11,6 +11,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using WilderMinds.MetaWeblog;
 using Microsoft.Extensions.Options;
+using System.Xml.Linq;
+using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Bagombo.Services
 {
@@ -22,13 +26,15 @@ namespace Bagombo.Services
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IHttpContextAccessor _context;
     private readonly BagomboSettings _settings;
+    private readonly IImageService _imageService;
 
     public MetaWebLogProvider(IQueryProcessorAsync qp,
                               ICommandProcessorAsync cp,
                               UserManager<ApplicationUser> userManager,
                               SignInManager<ApplicationUser> signInManager,
                               IOptions<BagomboSettings> settings,
-                              IHttpContextAccessor context)
+                              IHttpContextAccessor context,
+                              IImageService imageService)
     {
       _qp = qp;
       _cp = cp;
@@ -36,6 +42,7 @@ namespace Bagombo.Services
       _signInManager = signInManager;
       _settings = settings.Value;
       _context = context;
+      _imageService = imageService;
     }
 
     private bool validateUser(string username, string password)
@@ -62,6 +69,19 @@ namespace Bagombo.Services
       .GetResult();
     }
 
+    private string getImgUrl(string content)
+    {
+      string img = Regex.Match(content, "<img.+?src=[\"'](.+?)[\"'].*?>", RegexOptions.IgnoreCase).Groups[1].Value;
+
+      if (img != null)
+      {
+        var url = _context.HttpContext.Request.Scheme + "://" + _context.HttpContext.Request.Host + img;
+        return url;
+      }
+
+      return null;
+    }
+
     public int AddCategory(string key, string username, string password, NewCategory category)
     {
       throw new NotImplementedException();
@@ -82,7 +102,8 @@ namespace Bagombo.Services
           CreatedAt = post.dateCreated,
           ModifiedAt = DateTime.Now,
           Public = publish,
-          PublishOn = DateTime.Now
+          PublishOn = DateTime.Now,
+          Image = getImgUrl(post.description)
         };
 
         var result = _cp.ProcessAsync(np).GetAwaiter().GetResult();
@@ -147,6 +168,7 @@ namespace Bagombo.Services
             NewDescription = post.mt_excerpt,
             NewPublic = publish,
             NewPublishOn = publish ? DateTime.Now : DateTime.Now.AddDays(365),
+            NewImage = getImgUrl(post.description),
             LastModifiedAt = DateTime.Now
           };
 
@@ -293,7 +315,14 @@ namespace Bagombo.Services
 
     public MediaObjectInfo NewMediaObject(string blogid, string username, string password, MediaObject mediaObject)
     {
-      throw new NotImplementedException();
+      if (validateUser(username, password))
+      {
+        byte[] bytes = Convert.FromBase64String(mediaObject.bits);
+        var path = _imageService.SaveImage(bytes, mediaObject.name).GetAwaiter().GetResult();
+
+        return new MediaObjectInfo { url = path };
+      }
+      return null;
     }
   }
 }

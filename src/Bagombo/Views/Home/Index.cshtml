@@ -78,7 +78,10 @@
                   </div>
                   <div class="col-lg-11 col-12 pl-4">
                     @{
-                      var content = bp.Content.Split('\n').Take(_settings.Value.LinesPerPost);
+                      var content = bp.Content.Split('\n')
+                        .Where(line => !line.Contains("<pre><code"))
+                        .Where(line => !line.Contains("</code></pre>"))
+                        .Take(_settings.Value.LinesPerPost);
                       var contentString = string.Join('\n', content);
                     }
                     @Html.Raw(CommonMarkConverter.Convert(contentString))

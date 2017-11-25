@@ -15,7 +15,7 @@ namespace Bagombo.Data.Command.Commands
     public DateTime ModifiedAt { get; set; }
     public bool Public { get; set; }
     public DateTime PublishOn { get; set; }
-
+    public string Image { get; set; }
     public long Id { get; set; }
   }
 }

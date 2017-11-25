@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SimpleInjector;
@@ -176,6 +177,19 @@ namespace Bagombo
 
       app.UseStaticFiles();
 
+      var settings = _container.GetInstance<IOptions<BagomboSettings>>();
+
+      if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), settings.Value.PostImagesRelativePath)))
+      {
+        Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), settings.Value.PostImagesRelativePath));
+      }
+
+      app.UseStaticFiles(new StaticFileOptions()
+      {
+        FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), settings.Value.PostImagesRelativePath)),
+        RequestPath = new PathString($"/{settings.Value.PostImagesRelativePath}")
+      });
+
       app.UseSession();
 
       if (env.IsDevelopment())
@@ -221,6 +235,7 @@ namespace Bagombo
       _container.RegisterMvcControllers(app);
       _container.RegisterMvcViewComponents(app);
 
+      _container.Register<IImageService, FileSystemImageService>();
       _container.Register<MetaWeblogService>();
       _container.Register<IMetaWeblogProvider, MetaWebLogProvider>();
       // Cross-wire ASP.NET services (if any). For instance:

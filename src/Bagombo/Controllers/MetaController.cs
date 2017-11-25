@@ -50,6 +50,40 @@ namespace Bagombo.Controllers
       return sb.ToString();
     }
 
+    [Route("/rsd.xml")]
+    public void RsdXml()
+    {
+      string host = Request.Scheme + "://" + Request.Host;
+
+      Response.ContentType = "application/xml";
+      Response.Headers["cache-control"] = "no-cache, no-store, must-revalidate";
+
+      using (var xml = XmlWriter.Create(Response.Body, new XmlWriterSettings { Indent = true }))
+      {
+        xml.WriteStartDocument();
+        xml.WriteStartElement("rsd");
+        xml.WriteAttributeString("version", "1.0");
+
+        xml.WriteStartElement("service");
+
+        xml.WriteElementString("enginename", "Bagombo Blog Engine");
+        xml.WriteElementString("enginelink", "http://github.com/tylerlrhodes/bagombo/");
+        xml.WriteElementString("homepagelink", host);
+
+        xml.WriteStartElement("apis");
+        xml.WriteStartElement("api");
+        xml.WriteAttributeString("name", "MetaWeblog");
+        xml.WriteAttributeString("preferred", "true");
+        xml.WriteAttributeString("apilink", host + "/metaweblog");
+        xml.WriteAttributeString("blogid", "1");
+
+        xml.WriteEndElement(); // api
+        xml.WriteEndElement(); // apis
+        xml.WriteEndElement(); // service
+        xml.WriteEndElement(); // rsd
+      }
+    }
+
     [Route("/sitemap.xml")]
     public async Task SitemapXml()
     {

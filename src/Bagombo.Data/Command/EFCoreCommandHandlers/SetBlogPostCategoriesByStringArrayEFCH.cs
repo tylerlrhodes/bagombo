@@ -24,7 +24,14 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
       }
       else
       {
-        try { 
+        try {
+
+          var bpcts = await _context.BlogPostCategory.Where(bpc => bpc.BlogPostId == command.BlogPostId).ToListAsync();
+
+          _context.BlogPostCategory.RemoveRange(bpcts);
+
+          await _context.SaveChangesAsync();
+
           foreach (var category in command.Categories)
           {
             // find the category
@@ -41,6 +48,7 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
               _context.BlogPostCategory.Add(bpc);
             }
           }
+
           await _context.SaveChangesAsync();
 
           return new CommandResult<SetBlogPostCategoriesByStringArrayCommand>(command, true);

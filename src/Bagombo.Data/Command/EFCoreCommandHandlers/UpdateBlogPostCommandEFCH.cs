@@ -31,6 +31,7 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
           post.ModifiedAt = command.LastModifiedAt;
           post.PublishOn = command.NewPublishOn;
           post.Public = command.NewPublic;
+          post.Image = command.NewImage;
 
           await _context.SaveChangesAsync();
 

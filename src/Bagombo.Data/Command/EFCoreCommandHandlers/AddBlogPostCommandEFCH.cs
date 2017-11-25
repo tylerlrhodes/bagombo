@@ -28,7 +28,8 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
           CreatedAt = command.CreatedAt,
           ModifiedAt = command.ModifiedAt,
           Public = command.Public,
-          PublishOn = command.PublishOn
+          PublishOn = command.PublishOn,
+          Image = command.Image
         };
 
         _context.BlogPosts.Add(bp);

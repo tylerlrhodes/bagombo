@@ -14,5 +14,6 @@ namespace Bagombo
     public string ContactEmail { get; set; } = "info@bagombo.org";
     public int PostsOnHomePage { get; set; } = 8;
     public int LinesPerPost { get; set; } = 5;
+    public string PostImagesRelativePath { get; set; } = "PostImages";
   }
 }
