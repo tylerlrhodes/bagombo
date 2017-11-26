@@ -32,31 +32,29 @@
 }
 
 <div class="container">
-    @if (Model.RecentPosts.PageIndex == 1)
-    {
-      <div class="row mb-2">
-          <div class="col-md-12 mb-0 pb-0">
-              <div class="jumbotron mb-2 pt-5 pb-5">
-                  <h4><strong>Bagombo Blog Engine (alpha release)</strong></h4>
-                <div class="container p-0">
-                  <div class="row">
-                    <div class="col-md-9">
-                      <p>
-                        The Bagombo Blog Engine is a free ASP.NET Core based blogging engine with support for multiple authors and editing in Markdown.
-                      
-                      </p>
-                    </div>
-                    <div class="col-md-3">
-                      <a class="btn btn-primary btn-lg" href="https://github.com/tylerlrhodes/bagombo/releases" role="button">Download 0.2.5a</a>
-                    </div>
-                  </div>
+    
+    <div class="row mt-0">
+     
+      <div class="col-md-10 col-12 mt-0">
+        @if (Model.RecentPosts.PageIndex == 1)
+        {
+          <div class="jumbotron mb-3 pt-5 pb-5">
+            <h4><strong>Bagombo Blog Engine (alpha release)</strong></h4>
+            <div class="container p-0">
+              <div class="row">
+                <div class="col-md-9">
+                  <p>
+                    The Bagombo Blog Engine is a free ASP.NET Core based blogging engine with support for multiple authors and editing in Markdown.
+
+                  </p>
+                </div>
+                <div class="col-md-3">
+                  <a class="btn btn-primary btn-lg" href="https://github.com/tylerlrhodes/bagombo/releases" role="button">Download 0.2.5a</a>
                 </div>
               </div>
+            </div>
           </div>
-      </div>
-    }
-    <div class="row mt-0">
-      <div class="col-md-12 mt-0">
+        }
         @foreach (var bp in Model.RecentPosts)
         {
           <div class="card mb-3">
@@ -89,9 +87,17 @@
           </div>
         }
       </div>
+      <div class="col-md-2 col-12">
+        <div class="mb-2" style="font-size: 1.3rem; white-space: pre-wrap">Categories</div>
+        @foreach (var category in Model.Categories)
+        {
+          <div class="mb-2" style="font-size: 1.3rem; white-space: pre-wrap"><a asp-action="CategoryPosts" asp-route-id="@category.Id">@category.Name</a></div>
+
+        }
+        </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-10 col-12">
         @{
           var hasPrevious = Model.RecentPosts.HasPreviousPage ? "" : "disabled";
           var hasNext = Model.RecentPosts.HasNextPage ? "" : "disabled";

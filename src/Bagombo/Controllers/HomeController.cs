@@ -46,8 +46,11 @@ namespace Bagombo.Controllers
 
       var recentPosts = await _qpa.ProcessAsync(gbpfhp);
 
+      var categories = await _qpa.ProcessAsync(new GetCategoriesQuery());
+
       var vhvm = new HomeViewModel()
       {
+        Categories = categories,
         RecentPosts = recentPosts
       };
 
