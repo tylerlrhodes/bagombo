@@ -15,6 +15,7 @@ using System.Xml.Linq;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Logging;
 
 namespace Bagombo.Services
 {
@@ -27,6 +28,7 @@ namespace Bagombo.Services
     private readonly IHttpContextAccessor _context;
     private readonly BagomboSettings _settings;
     private readonly IImageService _imageService;
+    private readonly ILogger _logger;
 
     public MetaWebLogProvider(IQueryProcessorAsync qp,
                               ICommandProcessorAsync cp,
@@ -34,7 +36,8 @@ namespace Bagombo.Services
                               SignInManager<ApplicationUser> signInManager,
                               IOptions<BagomboSettings> settings,
                               IHttpContextAccessor context,
-                              IImageService imageService)
+                              IImageService imageService,
+                              ILogger<MetaWebLogProvider> logger)
     {
       _qp = qp;
       _cp = cp;
@@ -43,6 +46,7 @@ namespace Bagombo.Services
       _settings = settings.Value;
       _context = context;
       _imageService = imageService;
+      _logger = logger;
     }
 
     private bool validateUser(string username, string password)
@@ -53,9 +57,11 @@ namespace Bagombo.Services
 
       if (result.Succeeded)
       {
+        _logger.LogInformation($"Successful login for MetaWeblog for {username}");
         return true;
       }
 
+      _logger.LogWarning($"Failed login for MetaWeblog for {username}");
       return false;
     }
 
@@ -84,6 +90,7 @@ namespace Bagombo.Services
 
     public int AddCategory(string key, string username, string password, NewCategory category)
     {
+      _logger.LogError("MetaWeblog - AddCategory not supported");
       throw new NotImplementedException();
     }
 
@@ -110,6 +117,7 @@ namespace Bagombo.Services
 
         if (result.Succeeded)
         {
+          _logger.LogInformation($"Successfully added post through metaweblog {post.title}");
           if (post.categories.Count() > 0)
           { 
             var sc = new SetBlogPostCategoriesByStringArrayCommand
@@ -122,6 +130,7 @@ namespace Bagombo.Services
 
             if (scResult.Succeeded)
             {
+              _logger.LogInformation($"Successfully added categories for post {post.title} through metaweblog");
               return result.Command.Id.ToString();
             }
           }
@@ -131,6 +140,7 @@ namespace Bagombo.Services
           }
         }
       }
+      _logger.LogError($"Error adding post through metaweblog {post.title}");
       return "-1";
     }
 
@@ -144,10 +154,12 @@ namespace Bagombo.Services
 
           if (result.Succeeded)
           {
+            _logger.LogInformation($"Successfully deleted post via metaweblog with id {postid}");
             return true;
           }
         }
       }
+      _logger.LogError($"Failed to delete post via metaweblog with id {postid}");
       return false;
     }
 
@@ -177,7 +189,8 @@ namespace Bagombo.Services
           if (result.Succeeded)
           {
             if(post.categories.Count() > 0)
-            { 
+            {
+              _logger.LogInformation($"Successfully edited post via metaweblog {post.title}");
               var sc = new SetBlogPostCategoriesByStringArrayCommand
               {
                 Categories = post.categories.ToList(),
@@ -188,10 +201,12 @@ namespace Bagombo.Services
 
               if (scResult.Succeeded)
               {
+                _logger.LogInformation($"Successfully set categories for post {post.title}");
                 return true;
               }
               else
               {
+                _logger.LogError($"Failed to set categories for post {post.title}");
                 return false;
               }
             }
@@ -202,6 +217,7 @@ namespace Bagombo.Services
           }
         }
       }
+      _logger.LogError($"Failed to edit post {post.title}");
       return false;
     }
 
@@ -320,6 +336,7 @@ namespace Bagombo.Services
         byte[] bytes = Convert.FromBase64String(mediaObject.bits);
         var path = _imageService.SaveImage(bytes, mediaObject.name).GetAwaiter().GetResult();
 
+        _logger.LogInformation($"Uploaded image via metaweblog {path}");
         return new MediaObjectInfo { url = path };
       }
       return null;

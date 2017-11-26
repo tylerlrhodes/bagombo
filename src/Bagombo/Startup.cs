@@ -257,6 +257,7 @@ namespace Bagombo
       _container.CrossWire<ILogger<AuthorController>>(app);
       _container.CrossWire<ILogger<MetaController>>(app);
       _container.CrossWire<ILogger<MetaWeblogService>>(app);
+      _container.CrossWire<ILogger<MetaWebLogProvider>>(app);
       _container.CrossWire<IAuthorizationHandler>(app);
       _container.CrossWire<IAuthorizationService>(app);
 

@@ -36,13 +36,7 @@
          <div class="card-body pl-0">
            <div class="container">
              <div class="row">
-               <div class="col-lg-1 col-12">
-                 @{
-                   var img = bp.Image ?? $"{host}/images/bagombo-logo.png";
-                 }
-                 <img height="100" width="100" src="@img" />
-               </div>
-               <div class="col-lg-11 col-12 pl-4">
+               <div class="col-12 pl-4">
                  @{
                    var content = bp.Content.Split('\n').Take(_settings.Value.LinesPerPost);
                    var contentString = string.Join('\n', content);
