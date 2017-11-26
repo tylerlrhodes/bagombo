@@ -1,6 +1,11 @@
 ﻿
+
+@model HomeViewModel
+
+@inject IOptions<BagomboSettings> _settings
+
 @{
-  ViewData["Title"] = "Bagombo Home";
+  ViewData["Title"] = _settings.Value.HomePageTitle;
   Layout = "_Layout";
 
   var host = Context.Request.Scheme + "://" + Context.Request.Host;
@@ -9,10 +14,6 @@
 @using Bagombo.Models.ViewModels.Home
 @using Microsoft.Extensions.Options
 @using CommonMark
-
-@model HomeViewModel
-
-@inject IOptions<BagomboSettings> _settings
 
 @section opengraph {
 
@@ -87,7 +88,28 @@
           </div>
         }
       </div>
-      <div class="col-md-2 col-12">
+      <div class="col-md-2 col-12"> 
+        <div class="mb-2" style="font-size: 1.3rem"><a asp-controller="Meta" asp-action="feed" asp-route-type="atom">Feed <i class="fa fa-rss" aria-hidden="true"></i></a></div>
+        @if (_settings.Value.EnableTwitterLink)
+        {
+          <a class="twitter-follow-button" data-show-count="false" data-size="large" href="https://twitter.com/@_settings.Value.TwitterHandle"> Follow @@@_settings.Value.TwitterHandle </a>
+        }
+        @if (_settings.Value.EnableFacebookLink)
+        {
+          <a href="http://www.facebook.com/tylerlrhodes"><img src="~/images/FB-FindUsonFacebook-online-100.png" /></a>
+        }
+        @if (_settings.Value.EnableGithubLinks)
+        {
+          <!-- Place this tag where you want the button to render. -->
+          <a class="github-button" href="https://github.com/@_settings.Value.GitHubUserName" data-size="large" data-show-count="true" aria-label="Follow @@@_settings.Value.GitHubUserName on GitHub">Follow @@@_settings.Value.GitHubUserName</a> <br />
+          <!-- Place this tag where you want the button to render. -->
+          <a class="github-button" href="https://github.com/@_settings.Value.GitHubUserName/@_settings.Value.GitHubRepo" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star @_settings.Value.GitHubUserName/@_settings.Value.GitHubRepo">Star</a> <br />
+          <!-- Place this tag where you want the button to render. -->
+          <a class="github-button" href="https://github.com/@_settings.Value.GitHubUserName/@_settings.Value.GitHubRepo/fork" data-icon="octicon-repo-forked" data-size="large" data-show-count="true" aria-label="Fork @_settings.Value.GitHubUserName/@_settings.Value.GitHubRepo on GitHub">Fork</a> <br />
+          <!-- Place this tag where you want the button to render. -->
+          <a class="github-button" href="https://github.com/@_settings.Value.GitHubUserName/@_settings.Value.GitHubRepo/issues" data-icon="octicon-issue-opened" data-size="large" data-show-count="true" aria-label="Issue @_settings.Value.GitHubUserName/@_settings.Value.GitHubRepo on GitHub">Issue</a> <br />
+        }
+        <hr />
         <div class="mb-2" style="font-size: 1.3rem; white-space: pre-wrap">Categories</div>
         @foreach (var category in Model.Categories)
         {
@@ -112,3 +134,29 @@
     </div>
 
 </div>
+
+@section scripts {
+
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<script>
+window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+
+
+}

@@ -15,5 +15,13 @@ namespace Bagombo
     public int PostsOnHomePage { get; set; } = 6;
     public int LinesPerPost { get; set; } = 5;
     public string PostImagesRelativePath { get; set; } = "PostImages";
+    public bool EnableTwitterLink { get; set; } = true;
+    public string TwitterHandle { get; set; } = "bagomboblog";
+    public bool EnableFacebookLink { get; set; } = false;
+    public string FacebookLink { get; set; } = "";
+    public bool EnableGithubLinks { get; set; } = true;
+    public string GitHubUserName { get; set; } = "tylerlrhodes";
+    public string GitHubRepo { get; set; } = "bagombo";
+    public bool HideLoginLink { get; set; } = true;
   }
 }

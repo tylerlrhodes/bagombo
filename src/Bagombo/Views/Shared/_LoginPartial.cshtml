@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Bagombo.Models
 
+@model bool
+
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -8,7 +10,7 @@
 {
   <li><a class="nav-link" asp-controller="Account" asp-action="LogOff">Log Off&nbsp;&nbsp;</a></li>
 }
-else
+else if (Model == false)
 {
   Uri url = new Uri(String.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path, Context.Request.QueryString));
     <li><a class="nav-link" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@url">Log in&nbsp;&nbsp;</a></li>

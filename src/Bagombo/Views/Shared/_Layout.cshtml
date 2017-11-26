@@ -18,7 +18,7 @@
 
 <html>
 <head>
-    <title>@_settings.Value.HomePageTitle</title>
+    <title>@ViewData["title"]</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -88,7 +88,7 @@
             </ul>
           }
           <ul class="navbar-nav">
-            @await Html.PartialAsync("_LoginPartial")
+            @await Html.PartialAsync("_LoginPartial", _settings.Value.HideLoginLink)
           </ul>
           
         </div>
