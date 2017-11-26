@@ -25,5 +25,5 @@
   <ItemGroup>
     <None Include="Query\EFCoreQueryHandlers\GetAllPostsByDateViewModelEFQH.cs" />
   </ItemGroup>
-  
+
 </Project>
