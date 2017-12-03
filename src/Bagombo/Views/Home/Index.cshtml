@@ -37,7 +37,7 @@
     <div class="row mt-0">
      
       <div class="col-md-10 col-12 mt-0">
-        @if (Model.RecentPosts.PageIndex == 1)
+        @if (Model.RecentPosts.PageIndex == 1 && _settings.Value.ShowBagomboDownloadLink)
         {
           <div class="jumbotron mb-3 pt-5 pb-5">
             <h4><strong>Bagombo Blog Engine (alpha release)</strong></h4>

@@ -23,5 +23,10 @@ namespace Bagombo
     public string GitHubUserName { get; set; } = "tylerlrhodes";
     public string GitHubRepo { get; set; } = "bagombo";
     public bool HideLoginLink { get; set; } = true;
+
+    public string Theme { get; set; } = "Default";
+    public bool ShowTopicLink { get; set; } = false;
+
+    public bool ShowBagomboDownloadLink { get; set; } = true;
   }
 }

@@ -12,6 +12,8 @@
 
   var admin = User.IsInRole("Admins");
   var author = User.IsInRole("Authors");
+
+  var showTopicLink = _settings.Value.ShowTopicLink;
 }
 
 <!doctype html>
@@ -42,7 +44,10 @@
           <ul class="navbar-nav">
 
               <li class="@((string)(ViewContext.RouteData.Values["action"]) == "Index" ? "active" : "")"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
-              <li class="@((string)(ViewContext.RouteData.Values["action"]) == "Topics" ? "active" : "")"><a class="nav-link" asp-controller="Home" asp-action="Topics">Topics</a></li>
+              @if (showTopicLink)
+              {
+                <li class="@((string)(ViewContext.RouteData.Values["action"]) == "Topics" ? "active" : "")"><a class="nav-link" asp-controller="Home" asp-action="Topics">Topics</a></li>
+              }
               <li class="@((string)(ViewContext.RouteData.Values["action"]) == "AllPosts" ? "active" : "")"><a class="nav-link" asp-controller="Home" asp-action="AllPosts">All Posts</a></li>
 
           </ul>
