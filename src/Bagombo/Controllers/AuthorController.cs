@@ -78,27 +78,51 @@ namespace Bagombo.Controllers
     {
       if (ModelState.IsValid)
       {
-        var eapc = new EditAuthorProfileCommand
-        {
-          Id = model.Id,
-          FirstName = model.FirstName,
-          LastName = model.LastName,
-          Blurb = model.Blurb,
-          Biography = model.Biography,
-          ImageLink = model.ImageLink
-        };
+        // need to validate that the current user is this author before allowing change
+        var author = await _qpa.ProcessAsync(new GetAuthorByIdQuery { Id = model.Id });
+        if (author != null)
+        { 
+          var authResult = await _authService.AuthorizeAsync(User, author, "EditAuthorProfile");
 
-        var result = await _cp.ProcessAsync(eapc);
+          if (!authResult.Succeeded &&
+            !User.IsInRole("Admins"))
+          {
+            if (User.Identity.IsAuthenticated)
+            {
+              return new ForbidResult();
+            }
+            else
+            {
+              return new ChallengeResult();
+            }
+          }
 
-        if (result.Succeeded)
-        {
-          _logger.LogInformation("Successfully updated author profile for id {0}", model.Id);
-          ViewData["SavedMessage"] = "Profile saved.";
-          return View(model);
+          var eapc = new EditAuthorProfileCommand
+          {
+            Id = model.Id,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            Blurb = model.Blurb,
+            Biography = model.Biography,
+            ImageLink = model.ImageLink
+          };
+
+          var result = await _cp.ProcessAsync(eapc);
+
+          if (result.Succeeded)
+          {
+            _logger.LogInformation("Successfully updated author profile for id {0}", model.Id);
+            ViewData["SavedMessage"] = "Profile saved.";
+            return View(model);
+          }
+          else
+          {
+            return View(model);
+          }
         }
         else
         {
-          return View(model);
+          return NotFound();
         }
       }
       else
@@ -264,9 +288,24 @@ namespace Bagombo.Controllers
 
       if (post != null && ModelState.IsValid)
       {
+        var authResult = await _authService.AuthorizeAsync(User, post, "EditPolicy");
+
+        if (!authResult.Succeeded &&
+            !User.IsInRole("Admins"))
+        {
+          if (User.Identity.IsAuthenticated)
+          {
+            return new ForbidResult();
+          }
+          else
+          {
+            return new ChallengeResult();
+          }
+        }
+
         var ubpc = new UpdateBlogPostCommand();
 
-        if (post.Author == null)
+        if (await _userManager.Users.Where(u => u.Id == post.Author.ApplicationUserId).FirstOrDefaultAsync() == null)
         {
           var curUser = await _userManager.GetUserAsync(User);
 

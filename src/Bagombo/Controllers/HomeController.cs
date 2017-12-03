@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Bagombo.Controllers
 {
@@ -92,7 +91,7 @@ namespace Bagombo.Controllers
     {
       var gvcpbc = new GetCategoryPostsByCategoryViewModelQuery()
       {
-        Id = (long)id
+        Id = id
       };
 
       var vcpvm = await _qpa.ProcessAsync(gvcpbc);

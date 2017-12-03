@@ -132,6 +132,10 @@ namespace Bagombo
         {
           policy.Requirements.Add(new SameAuthorRequirement());
         });
+        opts.AddPolicy("EditAuthorProfile", policy =>
+        {
+          policy.Requirements.Add(new AuthorIsUserRequirement());
+        });
       });
 
       services.AddScoped<IAuthorizationHandler>(p => new SimpleInjectorAuthorizationHandler(_container));
@@ -144,7 +148,7 @@ namespace Bagombo
       _container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
 
-      _container.RegisterCollection<IAuthorizationHandler>(new Type[] { typeof(EditBlogPostAuthorizationHandler) });
+      _container.RegisterCollection<IAuthorizationHandler>(new Type[] { typeof(EditBlogPostAuthorizationHandler), typeof(EditAuthorProfileAuthorizationHandler) });
 
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
