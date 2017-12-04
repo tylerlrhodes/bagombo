@@ -46,7 +46,7 @@
                  }
                  @Html.Raw(CommonMarkConverter.Convert(contentString))
                  <div class="float-right">
-                   <a asp-action="BlogPost" asp-route-id="@bp.Id">Read more</a>
+                   <a asp-action="BlogPostBySlug" asp-route-slug="@bp.Slug">Read more</a>
                  </div>
                </div>
              </div>
