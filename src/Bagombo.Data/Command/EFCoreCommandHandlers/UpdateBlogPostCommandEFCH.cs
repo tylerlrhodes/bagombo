@@ -25,6 +25,7 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
         if (post != null)
         {
           post.Author = command.NewAuthor;
+          post.Slug = BlogPostExtensions.CreateSlug(command.NewTitle);
           post.Title = command.NewTitle;
           post.Description = command.NewDescription;
           post.Content = command.NewContent;

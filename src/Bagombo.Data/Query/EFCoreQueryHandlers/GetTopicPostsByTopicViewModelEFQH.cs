@@ -52,8 +52,10 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
           Categories = bpf.BlogPost.BlogPostCategory.Select(c => c.Category).ToList(),
           ModifiedAt = bpf.BlogPost.ModifiedAt,
           Id = bpf.BlogPost.Id,
+          Slug = bpf.BlogPost.Slug,
           Content = bpf.BlogPost.Content,
-          Comments = bpf.BlogPost.Comments
+          Comments = bpf.BlogPost.Comments,
+          PublishOn = bpf.BlogPost.PublishOn
         };
         viewPosts.Add(bpView);
       }

@@ -1,22 +1,23 @@
 ﻿using Bagombo.Data.Query.Queries;
-using Bagombo.Models.ViewModels.Home;
+using Bagombo.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Bagombo.EFCore;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Bagombo.EFCore;
+using Bagombo.Models.ViewModels.Home;
 
 namespace Bagombo.Data.Query.EFCoreQueryHandlers
 {
-  public class GetBlogPostByIdViewModelEFQH : EFQHBase, IQueryHandlerAsync<GetBlogPostByIdViewModelQuery, BlogPostViewModel>
+  public class GetBlogPostBySlugViewModelEFQH : EFQHBase, IQueryHandlerAsync<GetBlogPostBySlugViewModelQuery, BlogPostViewModel>
   {
-    public GetBlogPostByIdViewModelEFQH(BlogDbContext context) : base(context)
+    public GetBlogPostBySlugViewModelEFQH(BlogDbContext context) : base(context)
     {
     }
 
-    public async Task<BlogPostViewModel> HandleAsync(GetBlogPostByIdViewModelQuery query)
+    public async Task<BlogPostViewModel> HandleAsync(GetBlogPostBySlugViewModelQuery query)
     {
       var post = await _context.BlogPosts
                           .AsNoTracking()
@@ -24,7 +25,7 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
                           .Include(bp => bp.Comments)
                           .Include(bp => bp.BlogPostCategory)
                             .ThenInclude(bpc => bpc.Category)
-                          .Where(bp => bp.Id == query.Id && bp.Public == true && bp.PublishOn < DateTime.Now)
+                          .Where(bp => bp.Slug == query.Slug && bp.Public == true && bp.PublishOn < DateTime.Now)
                           .FirstOrDefaultAsync();
 
       if (post == null)

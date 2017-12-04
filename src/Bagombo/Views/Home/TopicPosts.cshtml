@@ -27,7 +27,7 @@
      <div class="col-12">
        <div class="card mb-3">
          <div class="card-header">
-           <a asp-action="BlogPost" asp-route-id="@bp.Id">@bp.Title</a> by @bp.Author.FirstName @bp.Author.LastName on @bp.PublishOn
+           <a asp-action="BlogPostBySlug" asp-route-id="@bp.Slug">@bp.Title</a> by @bp.Author.FirstName @bp.Author.LastName on @bp.PublishOn
            @if (bp.Comments != null)
         {
              <div class="float-right">@bp.Comments?.Count() Comments</div>
@@ -38,7 +38,10 @@
              <div class="row">
                <div class="col-12 pl-4">
                  @{
-                   var content = bp.Content.Split('\n').Take(_settings.Value.LinesPerPost);
+                   var content = bp.Content.Split('\n')
+                        .Where(line => !line.Contains("<pre><code"))
+                        .Where(line => !line.Contains("</code></pre>"))
+                        .Take(_settings.Value.LinesPerPost);
                    var contentString = string.Join('\n', content);
                  }
                  @Html.Raw(CommonMarkConverter.Convert(contentString))

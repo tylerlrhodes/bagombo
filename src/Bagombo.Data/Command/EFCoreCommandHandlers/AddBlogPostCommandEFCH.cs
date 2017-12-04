@@ -20,6 +20,7 @@ namespace Bagombo.Data.Command.EFCoreCommandHandlers
       {
         var bp = new BlogPost
         {
+          Slug = BlogPostExtensions.CreateSlug(command.Title),
           Author = command.Author,
           AuthorId = command.Author.Id,
           Title = command.Title,

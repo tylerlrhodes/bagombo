@@ -52,6 +52,9 @@ namespace Bagombo.EFCore
         .HasForeignKey("AuthorId")
         .IsRequired(false);
 
+      builder.Entity<BlogPost>().HasIndex(bp => bp.Slug)
+        .IsUnique();
+
       //builder.Entity<Comment>().ToTable("Comment");
       //builder.Entity<Comment>().HasOne(c => c.BlogPost)
       //  .WithMany(c => c.Comments);
@@ -85,6 +88,20 @@ namespace Bagombo.EFCore
         .HasForeignKey(bpc => bpc.CategoryId);
     }
 
+    public static async Task UpdateSlugs(IServiceProvider container)
+    {
+      using (var serviceScope = container.GetRequiredService<IServiceScopeFactory>().CreateScope())
+      {
+        var _context = serviceScope.ServiceProvider.GetRequiredService<BlogDbContext>();
+
+        foreach (var bp in _context.BlogPosts)
+        {
+          bp.Slug = BlogPostExtensions.CreateSlug(bp.Title);
+        }
+
+        await _context.SaveChangesAsync();
+      }
+    }
   }
 
 }

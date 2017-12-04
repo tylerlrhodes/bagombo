@@ -40,7 +40,7 @@
                 @foreach (var bp in c.Posts)
                 {
                     <div class="col-md-12">
-                        <a asp-action="BlogPost" asp-route-id="@bp.Id">@bp.Title</a> by @bp.Author.FirstName @bp.Author.LastName - @bp.Description
+                        <a asp-action="BlogPostBySlug" asp-route-slug="@bp.Slug">@bp.Title</a> by @bp.Author.FirstName @bp.Author.LastName - @bp.Description
                     </div>
                 }
             </div>
@@ -64,7 +64,7 @@
               foreach (var p in postGroup)
               {
                 <span>
-                  <a asp-action="BlogPost" asp-route-id="@p.Id">@p.Title</a> by @p.Author.FirstName @p.Author.LastName - @p.Description <br />
+                  <a asp-action="BlogPostBySlug" asp-route-id="@p.Slug">@p.Title</a> by @p.Author.FirstName @p.Author.LastName - @p.Description <br />
                 </span>
               }
               <br />

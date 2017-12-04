@@ -10,6 +10,8 @@ namespace Bagombo.Models.ViewModels.Home
     [Required]
     public long Id { get; set; }
     [Required]
+    public string Slug { get; set; }
+    [Required]
     public string Name { get; set; }
     public string Email { get; set; }
     public string Website { get; set; }

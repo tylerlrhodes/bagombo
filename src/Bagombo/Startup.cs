@@ -176,6 +176,14 @@ namespace Bagombo
 
       ApplicationDbContext.CreateAuthorRole(app.ApplicationServices).Wait();
 
+      if (bool.TryParse(Configuration["UpdateSlugs"], out var update))
+      {
+        if (update)
+        {
+          BlogDbContext.UpdateSlugs(app.ApplicationServices).Wait();
+        }
+      }
+
       loggerFactory.AddConsole(Configuration.GetSection("Logging"));
       loggerFactory.AddFile(Configuration.GetSection("Logging"));
 

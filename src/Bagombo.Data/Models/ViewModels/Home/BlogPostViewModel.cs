@@ -9,6 +9,7 @@ namespace Bagombo.Models.ViewModels.Home
   public class BlogPostViewModel
   {
     public long Id { get; set; }
+    public string Slug { get; set; }
     public string Title { get; set; }
     public Bagombo.Models.Author Author { get; set; }
     public string Description { get; set; }

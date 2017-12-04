@@ -197,7 +197,7 @@ namespace Bagombo.Controllers
 
         if (result.Succeeded)
         {
-          return RedirectToAction(nameof(BlogPost), new { id = model.Id });
+          return RedirectToAction(nameof(BlogPostBySlug), new { slug = model.Slug });
         }
         else
         {
@@ -205,7 +205,36 @@ namespace Bagombo.Controllers
         }
       }
 
-      return RedirectToAction(nameof(BlogPost), new { id = model.Id });
+      return RedirectToAction(nameof(BlogPostBySlug), new { slug = model.Slug });
+    }
+
+    [Route("blog/{slug}")]
+    public async Task<IActionResult> BlogPostBySlug(string slug)
+    {
+      if (slug == null)
+      {
+        _logger.LogWarning("Warning - BlogPost with null slug called.");
+
+        return NotFound();
+      }
+
+      var gbpbs = new GetBlogPostBySlugViewModelQuery()
+      {
+        Slug = slug
+      };
+
+      var bpvm = await _qpa.ProcessAsync(gbpbs);
+
+      if (bpvm == null)
+      {
+        _logger.LogWarning("Warning - BlogPost with slug {0} was not found.", slug);
+
+        return NotFound();
+      }
+
+      bpvm.Content = CommonMarkConverter.Convert(bpvm.Content);
+
+      return View("BlogPost", bpvm);
     }
 
     public async Task<IActionResult> BlogPost(long? id)
