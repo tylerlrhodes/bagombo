@@ -184,6 +184,11 @@ namespace Bagombo.Controllers
     {
       if (ModelState.IsValid)
       {
+        if (model.Text != null)
+        {
+          model.Text = model.Text.Replace("<", "&lt;");
+          model.Text = model.Text.Replace(">", "&gt;");
+        }
         var addComment = new AddCommentCommand()
         {
           Name = model.Name,
