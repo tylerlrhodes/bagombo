@@ -31,8 +31,8 @@ namespace Bagombo
 {
   public class Startup
   {
-    IConfiguration Configuration;
-    private Container _container = new Container();
+    private readonly IConfiguration _configuration;
+    private readonly Container _container = new Container();
 
     public Startup(IHostingEnvironment env)
     {
@@ -46,7 +46,7 @@ namespace Bagombo
           builder.AddUserSecrets<Startup>();
       }
 
-      Configuration = builder.Build();
+      _configuration = builder.Build();
     }
 
     public void ConfigureServices(IServiceCollection services)
@@ -54,19 +54,19 @@ namespace Bagombo
       
       // This is for a mutli-tenant Environment, so the ConnectionString Env Var name can be set
       // In AppSettings.json
-      var ConnectionStringConfigName = Configuration["ConnectionStringConfigName"];
-      var ConnectionString = Configuration[$"{ConnectionStringConfigName}"];
+      var connectionStringConfigName = _configuration["ConnectionStringConfigName"];
+      var connectionString = _configuration[$"{connectionStringConfigName}"];
 
-      if (ConnectionString == null)
+      if (connectionString == null)
       {
-        ConnectionString = Configuration["ConnectionString"];
-        if (ConnectionString == null)
+        connectionString = _configuration["ConnectionString"];
+        if (connectionString == null)
         {
-          throw new System.Exception("Unable to determine the Connection String to the database.");
+          throw new Exception("Unable to determine the Connection String to the database.");
         }
       }
 
-      services.Configure<BagomboSettings>(Configuration.GetSection("BagomboSettings"));
+      services.Configure<BagomboSettings>(_configuration.GetSection("BagomboSettings"));
 
       services.AddSession();
 
@@ -76,11 +76,11 @@ namespace Bagombo
       });
 
       services.AddDbContext<BlogDbContext>(options => {
-        options.UseSqlServer(ConnectionString);
+        options.UseSqlServer(connectionString);
       });
 
       services.AddDbContext<ApplicationDbContext>(options => {
-        options.UseSqlServer(ConnectionString);
+        options.UseSqlServer(connectionString);
       });
 
       services.AddIdentity<ApplicationUser, IdentityRole>(opts => {
@@ -90,27 +90,27 @@ namespace Bagombo
 
       var authBuilder = services.AddAuthentication();
 
-      var TwitterKey = Configuration[$"{Configuration["TwitterKeyConfigName"]}"];
-      var TwitterSecret = Configuration[$"{Configuration["TwitterSecretConfigName"]}"];
+      var twitterKey = _configuration[$"{_configuration["TwitterKeyConfigName"]}"];
+      var twitterSecret = _configuration[$"{_configuration["TwitterSecretConfigName"]}"];
 
-      if (TwitterKey != null && TwitterSecret != null)
+      if (twitterKey != null && twitterSecret != null)
       {
         authBuilder.AddTwitter(opts =>
         {
-          opts.ConsumerKey = TwitterKey;
-          opts.ConsumerSecret = TwitterSecret;
+          opts.ConsumerKey = twitterKey;
+          opts.ConsumerSecret = twitterSecret;
         });
       }
 
-      var FacebookAppId = Configuration[$"{Configuration["FacebookAppIdConfigName"]}"];
-      var FacebookAppSecret = Configuration[$"{Configuration["FacebookAppSecretConfigName"]}"];
+      var facebookAppId = _configuration[$"{_configuration["FacebookAppIdConfigName"]}"];
+      var facebookAppSecret = _configuration[$"{_configuration["FacebookAppSecretConfigName"]}"];
 
-      if (FacebookAppId != null && FacebookAppSecret != null)
+      if (facebookAppId != null && facebookAppSecret != null)
       {
         authBuilder.AddFacebook(opts =>
         {
-          opts.AppId = FacebookAppId;
-          opts.AppSecret = FacebookAppSecret;
+          opts.AppId = facebookAppId;
+          opts.AppSecret = facebookAppSecret;
         });
       }
 
@@ -148,7 +148,7 @@ namespace Bagombo
       _container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
 
-      _container.RegisterCollection<IAuthorizationHandler>(new Type[] { typeof(EditBlogPostAuthorizationHandler), typeof(EditAuthorProfileAuthorizationHandler) });
+      _container.RegisterCollection<IAuthorizationHandler>(new[] { typeof(EditBlogPostAuthorizationHandler), typeof(EditAuthorProfileAuthorizationHandler) });
 
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -168,20 +168,8 @@ namespace Bagombo
 
       _container.Verify();
 
-      // Able to move this after verify after discovering how to create the scoped instances correctly
-      // See - https://github.com/aspnet/EntityFramework/issues/5096  and
-      // https://github.com/simpleinjector/SimpleInjector/issues/398
-
-      if (bool.TryParse(Configuration["UpdateSlugs"], out var update))
-      {
-        if (update)
-        {
-          BlogDbContext.UpdateSlugs(app.ApplicationServices).Wait();
-        }
-      }
-
-      loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-      loggerFactory.AddFile(Configuration.GetSection("Logging"));
+      loggerFactory.AddConsole(_configuration.GetSection("Logging"));
+      loggerFactory.AddFile(_configuration.GetSection("Logging"));
 
       app.UseStaticFiles();
 

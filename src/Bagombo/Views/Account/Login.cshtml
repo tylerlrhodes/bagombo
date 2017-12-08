@@ -27,7 +27,7 @@
                         <label for="Password">Password:</label>
                         <input type="password" class="form-control" asp-for="Password" />
                     </div>
-                    <div class="radio form-group">
+                    <div class="form-group">
                         <input asp-for="RememberMe" /><label asp-for="RememberMe">Remember Me</label>
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
@@ -38,13 +38,13 @@
                         if (p.DisplayName == "Twitter")
                         {
                             <!--a class="btn btn-default" asp-action="TwitterLogin" asp-route-returnUrl="@ViewData["returnUrl"]"><img src="~/images/twitter-button.png" /></-->
-                            <button class="btn btn-default" type="submit" value="Twitter Login" formaction="TwitterLogin">Login With Twitter</button> 
-                          }
-                          else if (p.DisplayName == "Facebook")
-                          {
+                          <button class="btn btn-secondary" type="submit" value="Twitter Login" formaction="TwitterLogin">Login With Twitter</button>
+                        }
+                        else if (p.DisplayName == "Facebook")
+                        {
                             <!--a class="btn btn-default" asp-action="FacebookLogin" asp-route-returnUrl="@ViewData["returnUrl"]">Login with Facebook</-->
-                            <button class="btn btn-default" type="submit" value="Facebook Login" formaction="FacebookLogin">Login With Facebook</button>
-                          }
+                          <button class="btn btn-secondary" type="submit" value="Facebook Login" formaction="FacebookLogin">Login With Facebook</button>
+                        }
                       }
                     }
                 </form>

@@ -24,12 +24,6 @@ namespace Bagombo.Controllers
       _logger = logger;
     }
 
-    // GET: /<controller>/
-    public IActionResult Index()
-    {
-      return View();
-    }
-
     public IActionResult Login(string returnUrl)
     {
       ViewData["returnUrl"] = returnUrl;
@@ -40,26 +34,25 @@ namespace Bagombo.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(AccountLoginViewModel alvm, string returnUrl)
     {
-      if (ModelState.IsValid)
+      if (!ModelState.IsValid) return View(alvm);
+
+      var au = await _userManager.FindByEmailAsync(alvm.Email);
+
+      if (au != null)
       {
-        ApplicationUser au = await _userManager.FindByEmailAsync(alvm.Email);
-
-        if (au != null)
+        await _signInManager.SignOutAsync();
+        var result = await _signInManager.PasswordSignInAsync(au, alvm.Password, alvm.RememberMe, false);
+        if (result.Succeeded)
         {
-          await _signInManager.SignOutAsync();
-          Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(au, alvm.Password, alvm.RememberMe, false);
-          if (result.Succeeded)
-          {
-            _logger.LogInformation("Info - Successful login for {0}", au.Email);
+          _logger.LogInformation("Info - Successful login for {0}", au.Email);
 
-            return Redirect(returnUrl ?? "/");
-          }
+          return Redirect(returnUrl ?? "/");
         }
-
-        _logger.LogWarning("Warning - unsuccessful login attempt for {0}", au.Email);
-
-        ModelState.AddModelError(nameof(AccountLoginViewModel.Email), "Invalid user or passsword");
       }
+
+      _logger.LogWarning("Warning - unsuccessful login attempt for {0}", au?.Email);
+
+      ModelState.AddModelError(nameof(AccountLoginViewModel.Email), "Invalid user or passsword");
 
       return View(alvm);
     }
@@ -72,7 +65,7 @@ namespace Bagombo.Controllers
 
       await _signInManager.SignOutAsync();
 
-      return RedirectToAction("Login");
+      return RedirectToAction($"Login");
     }
 
     [HttpPost]
@@ -88,7 +81,7 @@ namespace Bagombo.Controllers
       ExternalLoginInfo info = await _signInManager.GetExternalLoginInfoAsync();
       if (info == null)
       {
-        return RedirectToAction(nameof(Login));
+        return RedirectToAction(actionName: nameof(Login));
       }
 
       var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, RememberMe);

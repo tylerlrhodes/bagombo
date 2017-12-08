@@ -18,10 +18,11 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
 
     public async Task<PaginatedList<BlogPost>> HandleAsync(GetBlogPostsForHomePageQuery query)
     {
-      var posts = _context.BlogPosts.Include(bp => bp.Comments)
+      var posts = _context.BlogPosts
         .Where(bp => bp.PublishOn < DateTime.Now && bp.Public == true)
+        .OrderByDescending(bp => bp.PublishOn)
         .Include(bp => bp.Author)
-        .OrderByDescending(bp => bp.PublishOn);
+        .Include(bp => bp.Comments);
 
       return await PaginatedList<BlogPost>.CreateAsync(posts, query.CurrentPage, query.PageSize);
     }

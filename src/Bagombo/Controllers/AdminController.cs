@@ -168,12 +168,10 @@ namespace Bagombo.Controllers
 
         return RedirectToAction("ManageTopics"); 
       }
-      else
-      {
-        _logger.LogWarning("Unable to delete topic with id {0}", id);
-        // todo: better error handling
-        return NotFound();
-      }
+
+      _logger.LogWarning("Unable to delete topic with id {0}", id);
+      // todo: better error handling
+      return NotFound();
     }
     
     [HttpGet]
@@ -483,7 +481,7 @@ namespace Bagombo.Controllers
 
     public async Task<IActionResult> EditUser(string id)
     {
-      ApplicationUser user = _userManager.Users.AsNoTracking().Where(u => u.Id == id).Include(u => u.Logins).FirstOrDefault();
+      var user = _userManager.Users.AsNoTracking().Where(u => u.Id == id).Include(u => u.Logins).FirstOrDefault();
 
       if (user != null)
       {
@@ -500,10 +498,10 @@ namespace Bagombo.Controllers
           UserName = user.UserName,
           Email = user.Email,
           Password = "",
-          IsAuthor = user.Author == null ? false : true,
+          IsAuthor = user.Author != null,
           FirstName = user.Author?.FirstName,
           LastName = user.Author?.LastName,
-          ExternalLogins = user.Logins.Count() == 0 ? false : true
+          ExternalLogins = user.Logins.Count != 0
         });
       }
       else

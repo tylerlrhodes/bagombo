@@ -8,6 +8,7 @@ using Microsoft.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Bagombo.EFCore;
 
 namespace Bagombo
 {
@@ -15,13 +16,11 @@ namespace Bagombo
   {
     public static void Main(string[] args)
     {
-
       var host = BuildWebHost(args);
 
       using (var scope = host.Services.CreateScope())
       {
         var services = scope.ServiceProvider;
-
         try
         {
           var env = services.GetRequiredService<IHostingEnvironment>();
@@ -34,6 +33,15 @@ namespace Bagombo
           ApplicationDbContext.CreateAdminAccount(services, config).Wait();
 
           ApplicationDbContext.CreateAuthorRole(services).Wait();
+
+          if (bool.TryParse(config["UpdateSlugs"], out var update))
+          {
+            if (update)
+            {
+              BlogDbContext.UpdateSlugs(services).Wait();
+            }
+          }
+
         }
         catch (Exception ex)
         {
@@ -43,7 +51,6 @@ namespace Bagombo
       }
 
       host.Run();
-
     }
 
     public static IWebHost BuildWebHost(string[] args) =>
