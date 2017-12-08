@@ -24,7 +24,10 @@ namespace Bagombo
 
         try
         {
+          var env = services.GetRequiredService<IHostingEnvironment>();
+
           var config = new ConfigurationBuilder()
+            .SetBasePath(env.ContentRootPath)
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .AddEnvironmentVariables().Build();
 
