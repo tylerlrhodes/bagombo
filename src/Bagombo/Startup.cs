@@ -172,10 +172,6 @@ namespace Bagombo
       // See - https://github.com/aspnet/EntityFramework/issues/5096  and
       // https://github.com/simpleinjector/SimpleInjector/issues/398
 
-      ApplicationDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
-
-      ApplicationDbContext.CreateAuthorRole(app.ApplicationServices).Wait();
-
       if (bool.TryParse(Configuration["UpdateSlugs"], out var update))
       {
         if (update)
