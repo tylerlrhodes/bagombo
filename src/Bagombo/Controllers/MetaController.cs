@@ -118,7 +118,7 @@ namespace Bagombo.Controllers
 
       using (var xmlWriter = XmlWriter.Create(Response.Body, new XmlWriterSettings { Async = true, Indent = true }))
       {
-        var blogPosts = await _qp.ProcessAsync(new GetBlogPostsQuery());
+        var blogPosts = (await _qp.ProcessAsync(new GetBlogPostsQuery())).ToList();
         var writer = await GetWriter(type, xmlWriter, blogPosts.Max(bp => bp.ModifiedAt));
 
         foreach (var bp in blogPosts)

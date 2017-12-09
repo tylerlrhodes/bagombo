@@ -10,8 +10,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
-
+using TylerRhodes.Akismet;
 
 namespace Bagombo.Controllers
 {
@@ -21,16 +22,19 @@ namespace Bagombo.Controllers
     private readonly ICommandProcessorAsync _cp;
     private readonly ILogger _logger;
     private readonly BagomboSettings _settings;
+    private readonly AkismetClient _akismetClient;
 
     public HomeController(IQueryProcessorAsync qpa,
                           ICommandProcessorAsync cp,
                           ILogger<HomeController> logger,
-                          IOptions<BagomboSettings> options)
+                          IOptions<BagomboSettings> options,
+                          AkismetClient akismetClient)
     {
       _logger = logger;
       _qpa = qpa;
       _cp = cp;
       _settings = options.Value;
+      _akismetClient = akismetClient;
     }
 
     public async Task<IActionResult> Index(int? page)
@@ -189,6 +193,25 @@ namespace Bagombo.Controllers
           model.Text = model.Text.Replace("<", "&lt;");
           model.Text = model.Text.Replace(">", "&gt;");
         }
+
+        // validate comment isn't spam
+        var comment = new AkismetComment()
+        {
+          UserIp = Request.HttpContext.Connection.RemoteIpAddress.ToString(),
+          UserAgent = Request.Headers["User-Agent"].ToString(),
+          Author = model.Name,
+          AuthorEmail = model.Email,
+          AuthorUrl = model.Website,
+          CommentType = "comment",
+          Content = model.Text,
+          Permalink = _akismetClient.BlogUrl + Url.Action(nameof(BlogPostBySlug), new {slug = model.Slug})
+        };
+
+        if (await _akismetClient.IsCommentSpam(comment))
+        {
+          return RedirectToAction(nameof(BlogPostBySlug), new { slug = model.Slug });
+        }
+
         var addComment = new AddCommentCommand()
         {
           Name = model.Name,

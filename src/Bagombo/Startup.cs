@@ -23,8 +23,11 @@ using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
 using System;
 using System.IO;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.HttpOverrides;
+using TylerRhodes.Akismet;
 using WilderMinds.MetaWeblog;
 
 namespace Bagombo
@@ -194,6 +197,11 @@ namespace Bagombo
         app.UseDeveloperExceptionPage();
       }
 
+      app.UseForwardedHeaders(new ForwardedHeadersOptions()
+      {
+        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto 
+      });
+
       // need this for metaweblog to work with SimpleInjector : (
       app.Use(async (context, next) =>
       {
@@ -236,6 +244,19 @@ namespace Bagombo
       _container.Register<IMetaWeblogProvider, MetaWebLogProvider>();
       // Cross-wire ASP.NET services (if any). For instance:
       _container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());
+
+      _container.RegisterSingleton(new HttpClient());
+
+      _container.Register(() =>
+      {
+        var context = _container.GetInstance<IHttpContextAccessor>();
+        var url = context?.HttpContext?.Request?.Scheme + "://" + context?.HttpContext?.Request?.Host;
+
+        var keyConfName = _configuration["AkismetApiKeyConfigName"];
+        var key = _configuration[keyConfName];
+
+        return new AkismetClient(url, key, _container.GetInstance<HttpClient>());
+      });
 
       _container.CrossWire<IHttpContextAccessor>(app);
       _container.CrossWire<BlogDbContext>(app);
