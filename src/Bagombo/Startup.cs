@@ -247,6 +247,7 @@ namespace Bagombo
 
       _container.RegisterSingleton(new HttpClient());
 
+      //todo: Null checking, what if Akismet isn't being used?
       _container.Register(() =>
       {
         var context = _container.GetInstance<IHttpContextAccessor>();
@@ -255,7 +256,7 @@ namespace Bagombo
         var keyConfName = _configuration["AkismetApiKeyConfigName"];
         var key = _configuration[keyConfName];
 
-        return new AkismetClient(url, key, _container.GetInstance<HttpClient>());
+        return new AkismetClient(url, key ?? "nogo", _container.GetInstance<HttpClient>());
       });
 
       _container.CrossWire<IHttpContextAccessor>(app);
