@@ -20,5 +20,6 @@ namespace Bagombo.Models.ViewModels.Home
     public IEnumerable<Topic> Topics { get; set; }
     public IEnumerable<Comment> Comments { get; set; }
     public string Image { get; set; }
+    public bool IsHtml { get; set; } = false;
   }
 }

@@ -204,7 +204,7 @@ namespace Bagombo.Controllers
           AuthorUrl = model.Website,
           CommentType = "comment",
           Content = model.Text,
-          Permalink = _akismetClient.BlogUrl + Url.Action(nameof(BlogPostBySlug), new {slug = model.Slug})
+          Permalink = _akismetClient.BlogUrl + Url.Action(nameof(BlogPostBySlug), new { slug = model.Slug })
         };
 
         if (await _akismetClient.IsCommentSpam(comment))
@@ -260,7 +260,7 @@ namespace Bagombo.Controllers
         return NotFound();
       }
 
-      bpvm.Content = CommonMarkConverter.Convert(bpvm.Content);
+      if (!bpvm.IsHtml) bpvm.Content = CommonMarkConverter.Convert(bpvm.Content);
 
       return View("BlogPost", bpvm);
     }
@@ -288,7 +288,7 @@ namespace Bagombo.Controllers
         return NotFound();
       }
 
-      bpvm.Content = CommonMarkConverter.Convert(bpvm.Content);
+      if (!bpvm.IsHtml) bpvm.Content = CommonMarkConverter.Convert(bpvm.Content);
 
       return View(bpvm);
     }

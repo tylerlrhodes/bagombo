@@ -41,7 +41,8 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
         Content = post.Content,
         Comments = post.Comments,
         ModifiedAt = post.ModifiedAt,
-        Categories = post.BlogPostCategory.Select(c => c.Category).ToList()
+        Categories = post.BlogPostCategory.Select(c => c.Category).ToList(),
+        IsHtml = post.IsHtml
       };
 
       return bpvm;

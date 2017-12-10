@@ -17,5 +17,6 @@ namespace Bagombo.Data.Command.Commands
     public DateTime PublishOn { get; set; }
     public string Image { get; set; }
     public long Id { get; set; }
+    public bool IsHtml { get; set; } = false;
   }
 }

@@ -110,7 +110,8 @@ namespace Bagombo.Services
           ModifiedAt = DateTime.Now,
           Public = publish,
           PublishOn = DateTime.Now,
-          Image = getImgUrl(post.description)
+          Image = getImgUrl(post.description),
+          IsHtml = true
         };
 
         var result = _cp.ProcessAsync(np).GetAwaiter().GetResult();

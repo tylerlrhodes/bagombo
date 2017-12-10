@@ -24,6 +24,7 @@ namespace Bagombo.Models
     public ICollection<BlogPostTopic> BlogPostTopic { get; set; }
     public string Image { get; set; }
     public ICollection<Comment> Comments { get; set; }
+    public bool IsHtml { get; set; }
   }
 
   public static class BlogPostExtensions
