@@ -28,5 +28,7 @@ namespace Bagombo
     public bool ShowTopicLink { get; set; } = false;
 
     public bool ShowBagomboDownloadLink { get; set; } = true;
+
+    public string GoogleAnalyticsApiKey { get; set; }
   }
 }

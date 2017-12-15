@@ -40,13 +40,13 @@ namespace Bagombo
     public Startup(IHostingEnvironment env)
     {
       var builder = new ConfigurationBuilder()
-          .SetBasePath(env.ContentRootPath)
-          .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-          .AddEnvironmentVariables();
+        .SetBasePath(env.ContentRootPath)
+        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+        .AddEnvironmentVariables();
 
       if (env.IsDevelopment())
-      { 
-          builder.AddUserSecrets<Startup>();
+      {
+        builder.AddUserSecrets<Startup>();
       }
 
       _configuration = builder.Build();
@@ -54,7 +54,6 @@ namespace Bagombo
 
     public void ConfigureServices(IServiceCollection services)
     {
-      
       // This is for a mutli-tenant Environment, so the ConnectionString Env Var name can be set
       // In AppSettings.json
       var connectionStringConfigName = _configuration["ConnectionStringConfigName"];
@@ -78,17 +77,12 @@ namespace Bagombo
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
       });
 
-      services.AddDbContext<BlogDbContext>(options => {
-        options.UseSqlServer(connectionString);
-      });
+      services.AddDbContext<BlogDbContext>(options => { options.UseSqlServer(connectionString); });
 
-      services.AddDbContext<ApplicationDbContext>(options => {
-        options.UseSqlServer(connectionString);
-      });
+      services.AddDbContext<ApplicationDbContext>(options => { options.UseSqlServer(connectionString); });
 
-      services.AddIdentity<ApplicationUser, IdentityRole>(opts => {
-        opts.User.RequireUniqueEmail = true;
-      }).AddEntityFrameworkStores<ApplicationDbContext>()
+      services.AddIdentity<ApplicationUser, IdentityRole>(opts => { opts.User.RequireUniqueEmail = true; })
+        .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
 
       var authBuilder = services.AddAuthentication();
@@ -119,26 +113,17 @@ namespace Bagombo
 
       services.ConfigureApplicationCookie(opts =>
       {
-        opts.Cookie.Expiration = TimeSpan.FromDays(14); 
+        opts.Cookie.Expiration = TimeSpan.FromDays(14);
         opts.ExpireTimeSpan = TimeSpan.FromDays(14);
         opts.Cookie.Name = "SecurityLogin";
       });
 
-      services.AddAntiforgery(opts =>
-      {
-       opts.Cookie.Name = "SecurityAntiForgery";
-      });
+      services.AddAntiforgery(opts => { opts.Cookie.Name = "SecurityAntiForgery"; });
 
       services.AddAuthorization(opts =>
       {
-        opts.AddPolicy("EditPolicy", policy =>
-        {
-          policy.Requirements.Add(new SameAuthorRequirement());
-        });
-        opts.AddPolicy("EditAuthorProfile", policy =>
-        {
-          policy.Requirements.Add(new AuthorIsUserRequirement());
-        });
+        opts.AddPolicy("EditPolicy", policy => { policy.Requirements.Add(new SameAuthorRequirement()); });
+        opts.AddPolicy("EditAuthorProfile", policy => { policy.Requirements.Add(new AuthorIsUserRequirement()); });
       });
 
       services.AddScoped<IAuthorizationHandler>(p => new SimpleInjectorAuthorizationHandler(_container));
@@ -151,7 +136,8 @@ namespace Bagombo
       _container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
 
-      _container.RegisterCollection<IAuthorizationHandler>(new[] { typeof(EditBlogPostAuthorizationHandler), typeof(EditAuthorProfileAuthorizationHandler) });
+      _container.RegisterCollection<IAuthorizationHandler>(new[]
+        {typeof(EditBlogPostAuthorizationHandler), typeof(EditAuthorProfileAuthorizationHandler)});
 
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -166,7 +152,6 @@ namespace Bagombo
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
     {
-
       InitializeContainer(app);
 
       _container.Verify();
@@ -185,7 +170,9 @@ namespace Bagombo
 
       app.UseStaticFiles(new StaticFileOptions()
       {
-        FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), settings.Value.PostImagesRelativePath)),
+        FileProvider =
+          new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),
+            settings.Value.PostImagesRelativePath)),
         RequestPath = new PathString($"/{settings.Value.PostImagesRelativePath}")
       });
 
@@ -199,16 +186,16 @@ namespace Bagombo
 
       app.UseForwardedHeaders(new ForwardedHeadersOptions()
       {
-        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto 
+        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
       });
 
       // need this for metaweblog to work with SimpleInjector : (
       app.Use(async (context, next) =>
       {
         if (context.Request.Method == "POST" &&
-        context.Request.Path.StartsWithSegments("/metaweblog") &&
-        context.Request != null &&
-        context.Request.ContentType.ToLower().Contains("text/xml"))
+            context.Request.Path.StartsWithSegments("/metaweblog") &&
+            context.Request != null &&
+            context.Request.ContentType.ToLower().Contains("text/xml"))
         {
           context.Response.ContentType = "text/xml";
           var rdr = new StreamReader(context.Request.Body);
@@ -223,18 +210,15 @@ namespace Bagombo
 
         // Continue On
         await next.Invoke();
-
       });
 
       app.UseAuthentication();
 
       app.UseMvcWithDefaultRoute();
-
     }
 
     private void InitializeContainer(IApplicationBuilder app)
     {
-
       // Add application presentation components:
       _container.RegisterMvcControllers(app);
       _container.RegisterMvcViewComponents(app);
@@ -289,14 +273,17 @@ namespace Bagombo
 
   public sealed class SimpleInjectorAuthorizationHandler : IAuthorizationHandler
   {
-    private readonly Container container;
-    public SimpleInjectorAuthorizationHandler(Container container) { this.container = container; }
+    private readonly Container _container;
+
+    public SimpleInjectorAuthorizationHandler(Container container)
+    {
+      this._container = container;
+    }
 
     public async Task HandleAsync(AuthorizationHandlerContext context)
     {
-      foreach (var handler in this.container.GetAllInstances<IAuthorizationHandler>())
+      foreach (var handler in this._container.GetAllInstances<IAuthorizationHandler>())
         await handler.HandleAsync(context);
     }
-
   }
 }
