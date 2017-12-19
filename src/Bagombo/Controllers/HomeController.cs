@@ -164,11 +164,6 @@ namespace Bagombo.Controllers
       return View(vfvm);
     }
 
-    public IActionResult About()
-    {
-      return View();
-    }
-
     [Authorize(Roles = "Admins")]
     public async Task<IActionResult> DeleteComment(long id, long blogPostId)
     {
@@ -186,51 +181,50 @@ namespace Bagombo.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddComment(AddCommentViewModel model)
     {
-      if (ModelState.IsValid)
+      if (!ModelState.IsValid) return RedirectToAction(nameof(BlogPostBySlug), new {slug = model.Slug});
+
+      if (model.Text != null)
       {
-        if (model.Text != null)
-        {
-          model.Text = model.Text.Replace("<", "&lt;");
-          model.Text = model.Text.Replace(">", "&gt;");
-        }
+        model.Text = model.Text.Replace("<", "&lt;");
+        model.Text = model.Text.Replace(">", "&gt;");
+      }
 
-        // validate comment isn't spam
-        var comment = new AkismetComment()
-        {
-          UserIp = Request.HttpContext.Connection.RemoteIpAddress.ToString(),
-          UserAgent = Request.Headers["User-Agent"].ToString(),
-          Author = model.Name,
-          AuthorEmail = model.Email,
-          AuthorUrl = model.Website,
-          CommentType = "comment",
-          Content = model.Text,
-          Permalink = _akismetClient.BlogUrl + Url.Action(nameof(BlogPostBySlug), new { slug = model.Slug })
-        };
+      // validate comment isn't spam
+      var comment = new AkismetComment()
+      {
+        UserIp = Request.HttpContext.Connection.RemoteIpAddress.ToString(),
+        UserAgent = Request.Headers["User-Agent"].ToString(),
+        Author = model.Name,
+        AuthorEmail = model.Email,
+        AuthorUrl = model.Website,
+        CommentType = "comment",
+        Content = model.Text,
+        Permalink = _akismetClient.BlogUrl + Url.Action(nameof(BlogPostBySlug), new { slug = model.Slug })
+      };
 
-        if (await _akismetClient.IsCommentSpam(comment))
-        {
-          return RedirectToAction(nameof(BlogPostBySlug), new { slug = model.Slug });
-        }
+      if (await _akismetClient.IsCommentSpam(comment))
+      {
+        return RedirectToAction(nameof(BlogPostBySlug), new { slug = model.Slug });
+      }
 
-        var addComment = new AddCommentCommand()
-        {
-          Name = model.Name,
-          Email = model.Email,
-          Website = model.Website,
-          Text = model.Text,
-          BlogPostId = model.Id
-        };
+      var addComment = new AddCommentCommand()
+      {
+        Name = model.Name,
+        Email = model.Email,
+        Website = model.Website,
+        Text = model.Text,
+        BlogPostId = model.Id
+      };
 
-        var result = await _cp.ProcessAsync(addComment);
+      var result = await _cp.ProcessAsync(addComment);
 
-        if (result.Succeeded)
-        {
-          return RedirectToAction(nameof(BlogPostBySlug), new { slug = model.Slug });
-        }
-        else
-        {
-          _logger.LogError("Error adding comment...");
-        }
+      if (result.Succeeded)
+      {
+        return RedirectToAction(nameof(BlogPostBySlug), new { slug = model.Slug });
+      }
+      else
+      {
+        _logger.LogError("Error adding comment...");
       }
 
       return RedirectToAction(nameof(BlogPostBySlug), new { slug = model.Slug });
