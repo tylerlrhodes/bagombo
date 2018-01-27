@@ -18,8 +18,8 @@ namespace Bagombo.Data.Query.EFCoreQueryHandlers
 
     public async Task<Author> HandleAsync(GetAuthorByAppUserIdQuery query)
     {
-      // This needs to be returned as tracking or another query needs to be made
-      return await _context.Authors.Where(a => a.ApplicationUserId == query.Id).FirstOrDefaultAsync();
+      // testing this with no tracking ... This needs to be returned as tracking or another query needs to be made
+      return await _context.Authors.AsNoTracking().Where(a => a.ApplicationUserId == query.Id).FirstOrDefaultAsync();
     }
   }
 }

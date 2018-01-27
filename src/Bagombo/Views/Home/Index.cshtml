@@ -97,7 +97,7 @@
         }
         @if (_settings.Value.EnableFacebookLink)
         {
-          <a href="http://www.facebook.com/tylerlrhodes"><img src="~/images/FB-FindUsonFacebook-online-100.png" /></a>
+          <a href="@_settings.Value.FacebookLink"><img src="~/images/FB-FindUsonFacebook-online-100.png" /></a>
         }
         @if (_settings.Value.EnableGithubLinks)
         {
@@ -140,6 +140,5 @@
 
 
 <script src="https://buttons.github.io/buttons.js"></script>
-
 
 }

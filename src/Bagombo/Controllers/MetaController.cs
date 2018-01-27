@@ -27,9 +27,9 @@ namespace Bagombo.Controllers
     private readonly UserManager<ApplicationUser> _userManager;
 
     public MetaController(IQueryProcessorAsync qp,
-                          ILogger<MetaController> logger,
-                          IOptions<BagomboSettings> settings,
-                          UserManager<ApplicationUser> userManager)
+      ILogger<MetaController> logger,
+      IOptions<BagomboSettings> settings,
+      UserManager<ApplicationUser> userManager)
     {
       _qp = qp;
       _logger = logger;

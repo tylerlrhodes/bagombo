@@ -12,8 +12,8 @@ namespace Bagombo.AuthHandlers
 {
   public class EditBlogPostAuthorizationHandler : AuthorizationHandler<SameAuthorRequirement, BlogPost>
   {
-    private IQueryProcessorAsync _qpa;
-    private UserManager<ApplicationUser> _userManager;
+    private readonly IQueryProcessorAsync _qpa;
+    private readonly UserManager<ApplicationUser> _userManager;
 
     public EditBlogPostAuthorizationHandler(IQueryProcessorAsync qpa,
                                             UserManager<ApplicationUser> userManager)

@@ -51,7 +51,7 @@ namespace Bagombo.Services
 
     private bool validateUser(string username, string password)
     {
-      var user = _userManager.Users.Where(u => u.Email == username).FirstOrDefault();
+      var user = _userManager.Users.FirstOrDefault(u => u.Email == username);
 
       var result = _signInManager.PasswordSignInAsync(user, password, false, false).GetAwaiter().GetResult();
 
@@ -69,7 +69,7 @@ namespace Bagombo.Services
     {
       return _qp.ProcessAsync(new GetAuthorByAppUserIdQuery
       {
-        Id = _userManager.Users.Where(u => u.Email == username).FirstOrDefault().Id
+        Id = _userManager.Users.FirstOrDefault(u => u.Email == username)?.Id
       })
       .GetAwaiter()
       .GetResult();
@@ -119,7 +119,7 @@ namespace Bagombo.Services
         if (result.Succeeded)
         {
           _logger.LogInformation($"Successfully added post through metaweblog {post.title}");
-          if (post.categories.Count() > 0)
+          if (post.categories.Any())
           { 
             var sc = new SetBlogPostCategoriesByStringArrayCommand
             {
@@ -189,7 +189,7 @@ namespace Bagombo.Services
 
           if (result.Succeeded)
           {
-            if(post.categories.Count() > 0)
+            if(post.categories.Any())
             {
               _logger.LogInformation($"Successfully edited post via metaweblog {post.title}");
               var sc = new SetBlogPostCategoriesByStringArrayCommand
@@ -224,90 +224,67 @@ namespace Bagombo.Services
 
     public CategoryInfo[] GetCategories(string blogid, string username, string password)
     {
-      if (validateUser(username, password))
+      if (!validateUser(username, password)) return null;
+
+      var categories = _qp.ProcessAsync(new GetCategoriesQuery()).GetAwaiter().GetResult();
+
+      return categories.Select(category => new CategoryInfo()
       {
-        var categories = _qp.ProcessAsync(new GetCategoriesQuery()).GetAwaiter().GetResult();
-
-        var catInfoList = new List<CategoryInfo>();
-
-        foreach (var category in categories)
-        {
-          catInfoList.Add(new CategoryInfo()
-          {
-            categoryid = category.Id.ToString(),
-            title = category.Name
-          });
-        }
-
-        return catInfoList.ToArray();
-      }
-      return null;
+        categoryid = category.Id.ToString(),
+        title = category.Name
+      }).ToArray();
     }
 
     public Post GetPost(string postid, string username, string password)
     {
-      if (validateUser(username, password))
+      if (!validateUser(username, password)) return null;
+
+      if (!long.TryParse(postid, out var pid)) return null;
+
+      var bp = _qp.ProcessAsync(new GetBlogPostByIdQuery { Id = pid }).GetAwaiter().GetResult();
+
+      if (bp == null) return null;
+
+      var cats = bp.BlogPostCategory?.Select(c => c.Category.Name)?.ToArray();
+      var url = _context.HttpContext.Request.Scheme + "://" + _context.HttpContext.Request.Host + bp.GetUrl();
+
+      return new Post
       {
-        if (long.TryParse(postid, out var pid))
-        {
-          var bp = _qp.ProcessAsync(new GetBlogPostByIdQuery { Id = pid }).GetAwaiter().GetResult();
-
-          if (bp != null)
-          {
-            var cats = bp.BlogPostCategory?.Select(c => c.Category.Name)?.ToArray();
-            var url = _context.HttpContext.Request.Scheme + "://" + _context.HttpContext.Request.Host + bp.GetUrl();
-
-            return new Post
-            {
-              categories = cats ?? new string[] { "" },
-              title = bp.Title,
-              dateCreated = bp.CreatedAt,
-              description = bp.Content,
-              mt_excerpt = bp.Description,
-              postid = bp.Id.ToString(),
-              link = url,
-              permalink = url,
-              userid = username
-            };
-          }
-        }
-      }
-      return null;
+        categories = cats ?? new string[] { "" },
+        title = bp.Title,
+        dateCreated = bp.CreatedAt,
+        description = bp.Content,
+        mt_excerpt = bp.Description,
+        postid = bp.Id.ToString(),
+        link = url,
+        permalink = url,
+        userid = username
+      };
     }
 
     public Post[] GetRecentPosts(string blogid, string username, string password, int numberOfPosts)
     {
-      if (validateUser(username, password))
+      if (!validateUser(username, password)) return null;
+
+      var bps = _qp.ProcessAsync(new GetRecentBlogPostsQuery { NumberOfPostsToGet = numberOfPosts }).GetAwaiter().GetResult();
+
+      if (bps != null)
       {
-        var bps = _qp.ProcessAsync(new GetRecentBlogPostsQuery { NumberOfPostsToGet = numberOfPosts }).GetAwaiter().GetResult();
-
-        if (bps != null)
-        {
-          var postList = new List<Post>();
-
-          foreach (var bp in bps)
+        return (from bp in bps
+          let cats = bp.BlogPostCategory?.Select(c => c.Category.Name)?.ToArray()
+          let url = _context.HttpContext.Request.Scheme + "://" + _context.HttpContext.Request.Host + bp.GetUrl()
+          select new Post
           {
-            var cats = bp.BlogPostCategory?.Select(c => c.Category.Name)?.ToArray();
-            var url = _context.HttpContext.Request.Scheme + "://" + _context.HttpContext.Request.Host + bp.GetUrl();
-
-            var post = new Post
-            {
-              categories = cats ?? new string[] { "" },
-              title = bp.Title,
-              dateCreated = bp.CreatedAt,
-              description = bp.Content,
-              mt_excerpt = bp.Description,
-              postid = bp.Id.ToString(),
-              link = url,
-              permalink = url,
-              userid = username
-            };
-
-            postList.Add(post);
-          }
-
-          return postList.ToArray();
-        }
+            categories = cats ?? new string[] {""},
+            title = bp.Title,
+            dateCreated = bp.CreatedAt,
+            description = bp.Content,
+            mt_excerpt = bp.Description,
+            postid = bp.Id.ToString(),
+            link = url,
+            permalink = url,
+            userid = username
+          }).ToArray();
       }
       return null;
     }
@@ -332,15 +309,15 @@ namespace Bagombo.Services
 
     public MediaObjectInfo NewMediaObject(string blogid, string username, string password, MediaObject mediaObject)
     {
-      if (validateUser(username, password))
-      {
-        byte[] bytes = Convert.FromBase64String(mediaObject.bits);
-        var path = _imageService.SaveImage(bytes, mediaObject.name).GetAwaiter().GetResult();
+      if (!validateUser(username, password)) return null;
 
-        _logger.LogInformation($"Uploaded image via metaweblog {path}");
-        return new MediaObjectInfo { url = path };
-      }
-      return null;
+      byte[] bytes = Convert.FromBase64String(mediaObject.bits);
+
+      var path = _imageService.SaveImage(bytes, mediaObject.name).GetAwaiter().GetResult();
+
+      _logger.LogInformation($"Uploaded image via metaweblog {path}");
+
+      return new MediaObjectInfo { url = path };
     }
   }
 }
