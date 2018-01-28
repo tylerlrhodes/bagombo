@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Bagombo.Models;
+﻿using System.Threading.Tasks;
 using Bagombo.Data.Query;
-using Microsoft.AspNetCore.Identity;
 using Bagombo.Data.Query.Queries;
+using Bagombo.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Bagombo.AuthHandlers
 {
@@ -16,13 +13,14 @@ namespace Bagombo.AuthHandlers
     private readonly UserManager<ApplicationUser> _userManager;
 
     public EditBlogPostAuthorizationHandler(IQueryProcessorAsync qpa,
-                                            UserManager<ApplicationUser> userManager)
+      UserManager<ApplicationUser> userManager)
     {
       _userManager = userManager;
       _qpa = qpa;
     }
 
-    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, SameAuthorRequirement requirement, BlogPost resource)
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
+      SameAuthorRequirement requirement, BlogPost resource)
     {
       var user = await _userManager.GetUserAsync(context.User);
 
@@ -35,13 +33,11 @@ namespace Bagombo.AuthHandlers
 
       if (!string.IsNullOrEmpty(blogPostUserId) &&
           blogPostUserId == user.Id)
-      {
         context.Succeed(requirement);
-      }
-
     }
   }
 
-  public class SameAuthorRequirement : IAuthorizationRequirement { }
-
+  public class SameAuthorRequirement : IAuthorizationRequirement
+  {
+  }
 }
