@@ -1,4 +1,7 @@
-﻿using Bagombo.Data.Command;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Bagombo.Data.Command;
 using Bagombo.Data.Command.Commands;
 using Bagombo.Data.Query;
 using Bagombo.Data.Query.Queries;
@@ -8,27 +11,23 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 using TylerRhodes.Akismet;
 
 namespace Bagombo.Controllers
 {
   public class HomeController : Controller
   {
-    private readonly IQueryProcessorAsync _qpa;
+    private readonly AkismetClient _akismetClient;
     private readonly ICommandProcessorAsync _cp;
     private readonly ILogger _logger;
+    private readonly IQueryProcessorAsync _qpa;
     private readonly BagomboSettings _settings;
-    private readonly AkismetClient _akismetClient;
 
     public HomeController(IQueryProcessorAsync qpa,
-                          ICommandProcessorAsync cp,
-                          ILogger<HomeController> logger,
-                          IOptions<BagomboSettings> options,
-                          AkismetClient akismetClient)
+      ICommandProcessorAsync cp,
+      ILogger<HomeController> logger,
+      IOptions<BagomboSettings> options,
+      AkismetClient akismetClient)
     {
       _logger = logger;
       _qpa = qpa;
@@ -51,7 +50,7 @@ namespace Bagombo.Controllers
 
       var categories = await _qpa.ProcessAsync(new GetCategoriesQuery());
 
-      var vhvm = new HomeViewModel()
+      var vhvm = new HomeViewModel
       {
         Categories = categories,
         RecentPosts = recentPosts
@@ -64,7 +63,7 @@ namespace Bagombo.Controllers
     {
       var search = "\"*" + searchText + "*\"";
 
-      var gbpbst = new GetSearchResultBlogPostsBySearchTextViewModelQuery()
+      var gbpbst = new GetSearchResultBlogPostsBySearchTextViewModelQuery
       {
         SearchText = search
       };
@@ -82,7 +81,7 @@ namespace Bagombo.Controllers
         bps = new List<SearchResultBlogPostViewModel>();
       }
 
-      var vsrvm = new SearchResultsViewModel()
+      var vsrvm = new SearchResultsViewModel
       {
         SearchTerm = searchText,
         BlogPosts = bps
@@ -93,7 +92,7 @@ namespace Bagombo.Controllers
 
     public async Task<IActionResult> CategoryPosts(long id)
     {
-      var gvcpbc = new GetCategoryPostsByCategoryViewModelQuery()
+      var gvcpbc = new GetCategoryPostsByCategoryViewModelQuery
       {
         Id = id
       };
@@ -101,15 +100,11 @@ namespace Bagombo.Controllers
       var vcpvm = await _qpa.ProcessAsync(gvcpbc);
 
       if (vcpvm != null)
-      {
         return View(vcpvm);
-      }
-      else
-      {
-        _logger.LogWarning("Warning - CategoryPosts called with invalid Category Id {0}", id);
 
-        return NotFound();
-      }
+      _logger.LogWarning("Warning - CategoryPosts called with invalid Category Id {0}", id);
+
+      return NotFound();
     }
 
     public async Task<IActionResult> AllPosts(int? sortby = 1)
@@ -119,11 +114,9 @@ namespace Bagombo.Controllers
       // Sort by Category
       if (sortby == 1)
       {
-
         var gvapbc = new GetAllPostsByCategoryViewModelQuery();
 
         vm = await _qpa.ProcessAsync(gvapbc);
-
       }
       // return sorted by date
       else
@@ -138,7 +131,7 @@ namespace Bagombo.Controllers
 
     public async Task<IActionResult> TopicPosts(long id)
     {
-      var gvfpbf = new GetTopicPostsByTopicViewModelQuery()
+      var gvfpbf = new GetTopicPostsByTopicViewModelQuery
       {
         Id = id
       };
@@ -147,7 +140,8 @@ namespace Bagombo.Controllers
 
       if (vfpvm == null)
       {
-        _logger.LogWarning("Warning - TopicPosts called with a Topic Id that returned null from query. Topic Id = {0}", id);
+        _logger.LogWarning("Warning - TopicPosts called with a Topic Id that returned null from query. Topic Id = {0}",
+          id);
 
         return NotFound();
       }
@@ -167,14 +161,12 @@ namespace Bagombo.Controllers
     [Authorize(Roles = "Admins")]
     public async Task<IActionResult> DeleteComment(long id, long blogPostId)
     {
-      var result = await _cp.ProcessAsync(new DeleteCommentCommand { Id = id });
+      var result = await _cp.ProcessAsync(new DeleteCommentCommand {Id = id});
 
       if (!result.Succeeded)
-      {
         _logger.LogError($"Error deleting comment with Id = {id}");
-      }
 
-      return RedirectToAction(nameof(BlogPost), new { id = blogPostId });
+      return RedirectToAction(nameof(BlogPost), new {id = blogPostId});
     }
 
     [HttpPost]
@@ -190,7 +182,7 @@ namespace Bagombo.Controllers
       }
 
       // validate comment isn't spam
-      var comment = new AkismetComment()
+      var comment = new AkismetComment
       {
         UserIp = Request.HttpContext.Connection.RemoteIpAddress.ToString(),
         UserAgent = Request.Headers["User-Agent"].ToString(),
@@ -199,15 +191,13 @@ namespace Bagombo.Controllers
         AuthorUrl = model.Website,
         CommentType = "comment",
         Content = model.Text,
-        Permalink = _akismetClient.BlogUrl + Url.Action(nameof(BlogPostBySlug), new { slug = model.Slug })
+        Permalink = _akismetClient.BlogUrl + Url.Action(nameof(BlogPostBySlug), new {slug = model.Slug})
       };
 
       if (await _akismetClient.IsCommentSpam(comment))
-      {
-        return RedirectToAction(nameof(BlogPostBySlug), new { slug = model.Slug });
-      }
+        return RedirectToAction(nameof(BlogPostBySlug), new {slug = model.Slug});
 
-      var addComment = new AddCommentCommand()
+      var addComment = new AddCommentCommand
       {
         Name = model.Name,
         Email = model.Email,
@@ -219,15 +209,10 @@ namespace Bagombo.Controllers
       var result = await _cp.ProcessAsync(addComment);
 
       if (result.Succeeded)
-      {
-        return RedirectToAction(nameof(BlogPostBySlug), new { slug = model.Slug });
-      }
-      else
-      {
-        _logger.LogError("Error adding comment...");
-      }
+        return RedirectToAction(nameof(BlogPostBySlug), new {slug = model.Slug});
+      _logger.LogError("Error adding comment...");
 
-      return RedirectToAction(nameof(BlogPostBySlug), new { slug = model.Slug });
+      return RedirectToAction(nameof(BlogPostBySlug), new {slug = model.Slug});
     }
 
     [Route("blog/{slug}")]
@@ -240,7 +225,7 @@ namespace Bagombo.Controllers
         return NotFound();
       }
 
-      var gbpbs = new GetBlogPostBySlugViewModelQuery()
+      var gbpbs = new GetBlogPostBySlugViewModelQuery
       {
         Slug = slug
       };
@@ -268,9 +253,9 @@ namespace Bagombo.Controllers
         return NotFound();
       }
 
-      var gvbpbi = new GetBlogPostByIdViewModelQuery()
+      var gvbpbi = new GetBlogPostByIdViewModelQuery
       {
-        Id = (long)id
+        Id = (long) id
       };
 
       var bpvm = await _qpa.ProcessAsync(gvbpbi);
@@ -286,7 +271,5 @@ namespace Bagombo.Controllers
 
       return View(bpvm);
     }
-
   }
-
 }

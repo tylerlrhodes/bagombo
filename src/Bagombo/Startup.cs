@@ -27,6 +27,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using TylerRhodes.Akismet;
 using WilderMinds.MetaWeblog;
 
@@ -71,6 +73,11 @@ namespace Bagombo
       services.Configure<BagomboSettings>(_configuration.GetSection("BagomboSettings"));
 
       services.AddSession();
+
+      services.Configure<MvcOptions>(options =>
+      {
+        options.Filters.Add(new RequireHttpsAttribute());
+      });
 
       services.AddMvc().AddJsonOptions(options =>
       {
@@ -158,6 +165,11 @@ namespace Bagombo
 
       loggerFactory.AddConsole(_configuration.GetSection("Logging"));
       loggerFactory.AddFile(_configuration.GetSection("Logging"));
+
+      var options = new RewriteOptions()
+        .AddRedirectToHttps();
+
+      app.UseRewriter(options);
 
       app.UseStaticFiles();
 
